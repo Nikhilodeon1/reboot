@@ -11,7 +11,8 @@ Exported without development history, because commit metadata identifies the
 authors. The history is preserved and will be released with the de-anonymized
 repository. It shows the detector 5 pre-registration
 (`detectors/PREREGISTRATION.md`) committed before the external-validation code
-whose results it governs.
+whose results it governs; anonymized patches of those two commits, with their
+full hashes, are in `detectors/preregistration_evidence/`.
 
 ## Deliberately absent
 

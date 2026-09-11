@@ -32,6 +32,7 @@ Five detectors, one per confound type:
     TAXONOMY.md             the four diagnostic failure modes
     docs/RESULTS_NOTES.md   detailed results record
     detectors/PREREGISTRATION.md, PREREGISTRATION_OUTCOME.md
+    detectors/preregistration_evidence/   anonymized patches fixing the pre-registration order
 
 ## Requirements
 
@@ -101,7 +102,9 @@ Internal validation suite, demonstration scale:
 | **Total** | **6/0/1/12** | precision 1.00, recall 0.86 |
 
 Full-scale external results, uncertainty and failure-mode findings:
-`docs/RESULTS_NOTES.md`.
+`docs/RESULTS_NOTES.md` and the paper. Archived full-scale logs: `detectors/logs/full2.out` (detector 2),
+`detectors/logs/full5.out` (detector 5). Scale of each result file:
+`detectors/results/README.md`.
 
 ## Not included
 
@@ -110,6 +113,7 @@ Full-scale external results, uncertainty and failure-mode findings:
 - Detector 1 full-scale logs (lost in transfer). Its full-scale figures are
   transcribed from run output.
 - Development history. Commit metadata identifies the authors; released with the
-  de-anonymized repository. See `CONTRIBUTORS.md`.
+  de-anonymized repository. The two commits that fix the pre-registration order
+  are in `detectors/preregistration_evidence/`. See `CONTRIBUTORS.md`.
 
 Absolute paths in `detectors/logs/` are redacted to `<repo>`.

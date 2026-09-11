@@ -11,8 +11,8 @@ and 4 live. It needs nothing else in this directory and no clinical data.
 ## Scale — read this before quoting a number
 
 Some files are demo-scale and some are full-scale. **They are not
-interchangeable, and the headline figures in `../../docs/RESULTS_NOTES.md` are the
-full-scale ones.**
+interchangeable, and the headline figures in `../../docs/RESULTS_NOTES.md` and
+the paper are the full-scale ones.**
 
     file                     scale   notes
     check1.json              demo    PhysioNet; the paper's full-scale row is in README
@@ -35,7 +35,8 @@ full-scale ones.**
 bootstrap: kappa 0.651, CI [0.528, 0.776], P(flag) = 0.216 at n=117. The paper
 reports the FULL-scale figures — kappa 0.602, audit-500 CI [0.539, 0.663],
 **P(flag) = 0.484** — which are transcribed from run output, because the
-full-scale logs were lost (see "Archival gap" in `docs/RESULTS_NOTES.md`). The
+full-scale logs were lost (see `CONTRIBUTORS.md` and the provenance section of
+`docs/RESULTS_NOTES.md`). The
 demo-scale file is kept because it is a real archived artifact; it is not the
 result of record.
 

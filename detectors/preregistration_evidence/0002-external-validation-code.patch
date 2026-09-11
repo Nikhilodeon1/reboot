@@ -1,0 +1,639 @@
+From 1600d91071cf97307924d4b1c85482b4d894eef9 Mon Sep 17 00:00:00 2001
+From: Anonymous <anonymous@example.invalid>
+Date: Thu, 6 Aug 2026 01:03:15 -0700
+Subject: [PATCH] feat: detector 5 external testbed on MIMIC-IV and eICU demo
+
+Implements the pre-registered variants and cases. The diagnostic itself
+is split into run_check_on_stays so external data runs the SAME code as
+PhysioNet rather than a reimplementation, which would validate the
+rewrite instead of the detector.
+
+Two constraints the external path must respect: read raw_ts, never
+sample["values"], because the processed values are MinMax-normalized and
+forward-filled and both would destroy the signal; and the oxygen term is
+the Severinghaus relation rather than PhysioNet's O2Sat-vs-SaO2 pair,
+since the demo datasets record no SaO2. The external component set is
+analogous, not identical.
+
+Ground truth is controlled ablation: observations are deleted, the
+surviving values are untouched, so physiology is fixed and only recording
+availability moves.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+---
+ .../checks/check5_missingness_scale.py        |  55 ++++--
+ detectors/external/__init__.py |   0
+ .../detectors/external/pipeline5.py           | 131 ++++++++++++++
+ .../detectors/external/run_external5.py       | 170 ++++++++++++++++++
+ .../detectors/tests/test_pipeline5.py         | 113 ++++++++++++
+ .../detectors/tests/test_variants5.py         |  66 +++++++
+ 6 files changed, 524 insertions(+), 11 deletions(-)
+ create mode 100644 detectors/external/__init__.py
+ create mode 100644 detectors/external/pipeline5.py
+ create mode 100644 detectors/external/run_external5.py
+ create mode 100644 detectors/tests/test_pipeline5.py
+ create mode 100644 detectors/tests/test_variants5.py
+
+diff --git a/detectors/checks/check5_missingness_scale.py b/detectors/checks/check5_missingness_scale.py
+index 2d45542..62dc246 100644
+--- a/detectors/checks/check5_missingness_scale.py
++++ b/detectors/checks/check5_missingness_scale.py
+@@ -39,6 +39,27 @@ AVAIL_RATIO_FLAG = 2.0     # component availability differing by more than this
+ COMP_EXPLAINS_FLAG = 0.30  # composition alone must explain >30% of the gap
+ 
+ 
++# ── decision rules ───────────────────────────────────────────────────────────
++# Two variants, specified in detectors/PREREGISTRATION.md BEFORE any external
++# result existed. Variant A is the detector as originally written. Variant B
++# drops the composition gate, which would recover the PhysioNet A/B true
++# positive -- which is exactly why it may not be adopted on the strength of
++# that case. It is tested prospectively on external data instead.
++
++def variant_a(stats):
++    """Conjunction: availability skew AND composition explaining much of the gap."""
++    return bool(stats["max_avail_ratio"] > AVAIL_RATIO_FLAG
++                and stats["explained"] > COMP_EXPLAINS_FLAG)
++
++
++def variant_b(stats):
++    """Availability-only. Reports the composition share but does not gate on it."""
++    return bool(stats["max_avail_ratio"] > AVAIL_RATIO_FLAG)
++
++
++VARIANTS = {"A_conjunction": variant_a, "B_availability_only": variant_b}
++
++
+ def components(df):
+     """Per-timestep residuals for each constraint, normalized to comparable units.
+     Returns {name: array} using only timesteps where that constraint is computable."""
+@@ -81,10 +102,23 @@ def scan(files):
+     return stays, hours
+ 
+ 
+-def run_check(name_a, files_a, name_b, files_b, verbose=True):
+-    A, hA = scan(files_a)
+-    B, hB = scan(files_b)
+-    keys = ["MAP", "HH", "SpO2"]
++def run_check(name_a, files_a, name_b, files_b, verbose=True, rule=variant_a):
++    """Path-based entry point: read PSVs, then run the shared diagnostic."""
++    A, _ = scan(files_a)
++    B, _ = scan(files_b)
++    return run_check_on_stays(name_a, A, name_b, B, verbose=verbose, rule=rule,
++                              keys=["MAP", "HH", "SpO2"])
++
++
++def run_check_on_stays(name_a, A, name_b, B, verbose=True, rule=variant_a,
++                       keys=("MAP", "HH", "SpO2")):
++    """The diagnostic itself, over per-stay {component: mean residual} dicts.
++
++    Split out from run_check so external datasets run the SAME code rather than
++    a reimplementation of it -- a reimplementation would validate the rewrite,
++    not the detector.
++    """
++    keys = list(keys)
+ 
+     def avail(stays, k):
+         return sum(1 for s in stays if k in s) / max(len(stays), 1)
+@@ -126,14 +160,17 @@ def run_check(name_a, files_a, name_b, files_b, verbose=True):
+         elif a != b:
+             max_ratio = float("inf")
+ 
+-    flagged = (max_ratio > AVAIL_RATIO_FLAG) and (explained > COMP_EXPLAINS_FLAG)
++    stats = {"max_avail_ratio": float(max_ratio), "explained": float(explained),
++             "naive_gap": float(naive_gap), "comp_gap": float(comp_gap),
++             "n_stays_a": len(A), "n_stays_b": len(B)}
++    flagged = rule(stats)
+ 
+     if verbose:
+         print(f"")
+         print(f"--- {name_a}  vs  {name_b} ---")
+         print(f"{'component':<10}{'avail A':>10}{'avail B':>10}{'ratio':>9}"
+               f"{'mean A':>11}{'mean B':>11}{'scale':>8}")
+-        base = pooled["MAP"]
++        base = pooled[keys[0]]      # scale column is relative to the first term
+         for k in keys:
+             a, b = avail(A, k), avail(B, k)
+             r = max(a, b) / min(a, b) if min(a, b) > 0 else float("inf")
+@@ -148,11 +185,7 @@ def run_check(name_a, files_a, name_b, files_b, verbose=True):
+         print(f"  share of gap explained by composition alone: {explained:.2f} "
+               f"(flag > {COMP_EXPLAINS_FLAG})")
+         print(f"  ==> {'FLAGGED: composition artifact' if flagged else 'clean'}")
+-    return flagged, {"max_avail_ratio": float(max_ratio),
+-                     "explained": float(explained),
+-                     "naive_gap": float(naive_gap),
+-                     "comp_gap": float(comp_gap),
+-                     "n_stays_a": len(A), "n_stays_b": len(B)}
++    return flagged, stats
+ 
+ 
+ def sample_files(seed, n, legacy=False):
+diff --git a/detectors/external/__init__.py b/detectors/external/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/detectors/external/pipeline5.py b/detectors/external/pipeline5.py
+new file mode 100644
+index 0000000..a99ea05
+--- /dev/null
++++ b/detectors/external/pipeline5.py
+@@ -0,0 +1,131 @@
++"""External testbed for detector 5: MIMIC-IV demo and eICU demo.
++
++Detector 5 was built and tuned against PhysioNet 2019 raw PSV files. This module
++puts the SAME diagnostic (`run_check_on_stays`) on data it was not built for.
++
++Two things must be got right or the external result is meaningless:
++
++  * Read `raw_ts` (loader called with keep_raw=True), never `sample["values"]`.
++    The processed values are MinMax-normalized and forward-filled. Normalization
++    breaks the physiological identities the residuals are built on, and
++    forward-filling erases the pre-imputation missingness pattern that IS the
++    signal detector 5 measures.
++
++  * The oxygen term differs from the PhysioNet instantiation. On PhysioNet,
++    detector 5's third component compares two saturation channels (O2Sat vs
++    SaO2). The demo datasets record SpO2 and PaO2 but no SaO2, so the external
++    oxygen term is the Severinghaus saturation/tension relation instead. The
++    external component set is therefore analogous, not identical, and results
++    are not a like-for-like replication of the PhysioNet component set.
++
++Ground truth comes from controlled ablation (see detectors/PREREGISTRATION.md):
++physiology is held fixed and only recording availability is changed, so the
++expected verdict is known by construction rather than assumed.
++"""
++import os
++import sys
++
++import numpy as np
++
++sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(
++    os.path.abspath(__file__)))))
++
++from src.data.variables import VAR_TO_IDX
++
++# Per-term inputs, in canonical variable names.
++TERMS = {
++    "MAP":          ["SBP", "DBP", "MAP"],
++    "HH":           ["pH", "HCO3", "pCO2"],
++    "Severinghaus": ["SpO2", "PaO2"],
++}
++EXTERNAL_KEYS = ["MAP", "HH", "Severinghaus"]
++
++
++def load_site(which, keep_raw=True):
++    """('mimic'|'eicu') -> list of raw_ts arrays, one per stay."""
++    from config import MIMIC_DIR, EICU_DIR
++    if which == "mimic":
++        from src.data.mimic4 import load_mimic4
++        samples, _ = load_mimic4(MIMIC_DIR, fraction=1.0, seed=0,
++                                 keep_raw=keep_raw)
++    elif which == "eicu":
++        from src.data.eicu import load_eicu
++        samples, _ = load_eicu(EICU_DIR, fraction=1.0, seed=0,
++                               keep_raw=keep_raw)
++    else:
++        raise ValueError(f"unknown site {which!r}")
++    missing = [s for s in samples if "raw_ts" not in s]
++    if missing:
++        raise RuntimeError("loader returned no raw_ts; keep_raw was not honoured")
++    return [np.asarray(s["raw_ts"], dtype=float) for s in samples]
++
++
++def stay_components(ts):
++    """Per-stay {term: mean residual}, in the same normalized units the
++    PhysioNet version uses, over timesteps where the term is computable."""
++    out = {}
++    col = {v: VAR_TO_IDX[v] for v in VAR_TO_IDX}
++
++    sbp, dbp, mp = ts[:, col["SBP"]], ts[:, col["DBP"]], ts[:, col["MAP"]]
++    ok = ~np.isnan(sbp) & ~np.isnan(dbp) & ~np.isnan(mp)
++    if ok.any():
++        out["MAP"] = float(np.mean(
++            np.abs((mp[ok] - (dbp[ok] + (sbp[ok] - dbp[ok]) / 3.0)) / 180.0)))
++
++    ph, hco3, pco2 = ts[:, col["pH"]], ts[:, col["HCO3"]], ts[:, col["pCO2"]]
++    ok = (~np.isnan(ph) & ~np.isnan(hco3) & ~np.isnan(pco2)
++          & (hco3 > 0) & (pco2 > 0))
++    if ok.any():
++        pred = 6.1 + np.log10(hco3[ok] / (0.0307 * pco2[ok]))
++        out["HH"] = float(np.mean(((ph[ok] - pred) / 1.4) ** 2))
++
++    spo2, pao2 = ts[:, col["SpO2"]], ts[:, col["PaO2"]]
++    ok = ~np.isnan(spo2) & ~np.isnan(pao2) & (pao2 > 0)
++    if ok.any():
++        # Severinghaus: predicted saturation from oxygen tension.
++        inner = 23400.0 / (pao2[ok] ** 3 + 150.0 * pao2[ok]) + 1.0
++        pred = 100.0 / inner
++        out["Severinghaus"] = float(np.mean(((spo2[ok] - pred) / 50.0) ** 2))
++
++    return out
++
++
++def to_stays(arrays):
++    """Per-stay component dicts, dropping stays where nothing is computable."""
++    out = []
++    for ts in arrays:
++        c = stay_components(ts)
++        if c:
++            out.append(c)
++    return out
++
++
++def ablate(arrays, variable, p, seed):
++    """Delete a fraction `p` of one variable's observations, per stay.
++
++    Physiology is untouched -- the remaining values are the original ones. Only
++    whether a value was RECORDED changes, which is precisely the confound
++    detector 5 exists to catch, so the expected verdict is known by
++    construction.
++    """
++    idx = VAR_TO_IDX[variable]
++    rng = np.random.default_rng(seed)
++    out = []
++    for ts in arrays:
++        a = ts.copy()
++        obs = np.flatnonzero(~np.isnan(a[:, idx]))
++        if len(obs):
++            n_drop = int(round(p * len(obs)))
++            if n_drop:
++                a[rng.permutation(obs)[:n_drop], idx] = np.nan
++        out.append(a)
++    return out
++
++
++def split_arrays(arrays, seed):
++    """Two disjoint random halves."""
++    rng = np.random.default_rng(seed)
++    perm = rng.permutation(len(arrays))
++    half = len(arrays) // 2
++    return ([arrays[i] for i in perm[:half]],
++            [arrays[i] for i in perm[half:]])
+diff --git a/detectors/external/run_external5.py b/detectors/external/run_external5.py
+new file mode 100644
+index 0000000..fff4c1b
+--- /dev/null
++++ b/detectors/external/run_external5.py
+@@ -0,0 +1,170 @@
++"""Detector 5 external validation — the cases fixed in PREREGISTRATION.md.
++
++  E1  injected positive : eICU split in two, arm 2's HCO3 ablated   -> expect flag
++  E2  negative control  : eICU split in two, no ablation            -> expect silent
++  E3  natural pair      : MIMIC-IV demo vs eICU demo                -> DESCRIPTIVE ONLY
++  E4  regression guard  : PhysioNet Site A against itself           -> expect silent
++
++E3 is never scored: we have no independent knowledge of whether the two demo
++databases truly differ in recording practice, and deciding that from the
++availability ratio would be circular, since that is Variant B's whole signal.
++
++Both variants run on every case. The decision rule between them is fixed in the
++pre-registration and is NOT re-derived here.
++
++    PCL_TEST_MODE=1 python detectors/external/run_external5.py --seeds 5
++"""
++import argparse
++import json
++import os
++import sys
++
++import numpy as np
++
++sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(
++    os.path.abspath(__file__)))))
++
++from detectors.harness import Case, confusion, fmt_matrix
++from detectors.checks.check5_missingness_scale import (
++    VARIANTS, run_check_on_stays, run_check, sample_files)
++from detectors.external.pipeline5 import (EXTERNAL_KEYS, ablate, load_site,
++                                          split_arrays, to_stays)
++
++HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
++RESULTS = os.path.join(HERE, "results")
++ABLATION_LEVELS = [0.50, 0.80, 0.95]
++
++
++def _run(name_a, A, name_b, B, rule, verbose):
++    return run_check_on_stays(name_a, A, name_b, B, verbose=verbose, rule=rule,
++                              keys=EXTERNAL_KEYS)
++
++
++def cases_for_seed(eicu, mimic, seed, rule, physionet_n, verbose=False):
++    """All four pre-registered cases at one seed, under one decision rule."""
++    out = []
++    arm1, arm2 = split_arrays(eicu, seed)
++
++    # E1 — injected positive, one case per ablation level.
++    for p in ABLATION_LEVELS:
++        A = to_stays(arm1)
++        B = to_stays(ablate(arm2, "HCO3", p=p, seed=seed))
++        flagged, st = _run(f"eICU arm1", A, f"eICU arm2 (HCO3 ablated {int(p*100)}%)",
++                           B, rule, verbose)
++        out.append(Case(f"E1 ablation {int(p * 100)}%", flagged, True,
++                        dict(st, seed=seed, level=p)))
++
++    # E2 — negative control, identical recording practice on both arms.
++    flagged, st = _run("eICU arm1", to_stays(arm1), "eICU arm2", to_stays(arm2),
++                       rule, verbose)
++    out.append(Case("E2 eICU split, no ablation", flagged, False,
++                    dict(st, seed=seed)))
++
++    # E4 — regression guard on the original dataset.
++    fa, _ = sample_files(seed, physionet_n)
++    half = len(fa) // 2
++    flagged, st = run_check(f"PhysioNet A (half 1)", fa[:half],
++                            f"PhysioNet A (half 2)", fa[half:],
++                            verbose=verbose, rule=rule)
++    out.append(Case("E4 PhysioNet A vs itself", flagged, False,
++                    dict(st, seed=seed)))
++
++    return out
++
++
++def descriptive_e3(eicu, mimic, rule, verbose=False):
++    """E3 is reported, never scored. Returns the statistics only."""
++    flagged, st = _run("MIMIC-IV demo", to_stays(mimic), "eICU demo",
++                       to_stays(eicu), rule, verbose)
++    return flagged, st
++
++
++def main():
++    ap = argparse.ArgumentParser()
++    ap.add_argument("--seeds", type=int, default=5)
++    ap.add_argument("--physionet-n", type=int, default=800,
++                    help="stays per arm for the E4 regression guard")
++    args = ap.parse_args()
++    seeds = list(range(args.seeds))
++
++    print("=" * 78)
++    print("DETECTOR 5 — external validation (pre-registered)")
++    print("=" * 78)
++    print("loading external sites ...", flush=True)
++    eicu = load_site("eicu")
++    mimic = load_site("mimic")
++    print(f"eICU {len(eicu)} stays | MIMIC-IV {len(mimic)} stays", flush=True)
++    print(f"components: {EXTERNAL_KEYS} "
++          "(oxygen term is Severinghaus, not the PhysioNet O2Sat-vs-SaO2 pair)")
++    print(f"E4 uses {args.physionet_n} PhysioNet stays per arm, "
++          f"{len(seeds)} seeds\n", flush=True)
++
++    report = {}
++    for vname, rule in sorted(VARIANTS.items()):
++        print("=" * 78)
++        print(f"VARIANT {vname}")
++        print("=" * 78, flush=True)
++        per_seed = []
++        for s in seeds:
++            per_seed.append(cases_for_seed(eicu, mimic, s, rule,
++                                           args.physionet_n))
++            print(f"  seed {s} done", flush=True)
++
++        by_name = {}
++        for cases in per_seed:
++            for c in cases:
++                by_name.setdefault(c.name, []).append(c)
++
++        print()
++        for name, cs in by_name.items():
++            n_flag = sum(c.flagged for c in cs)
++            ratios = [c.stats["max_avail_ratio"] for c in cs]
++            shares = [c.stats["explained"] for c in cs]
++            print(f"  {name:<34} flagged {n_flag}/{len(cs)}  "
++                  f"expected={cs[0].expected}  "
++                  f"avail_ratio={np.mean(ratios):.1f}  "
++                  f"share={np.mean(shares):.3f}")
++
++        flat = [c for cases in per_seed for c in cases]
++        counts = confusion(flat)
++        print("\n  " + fmt_matrix(vname, counts))
++        report[vname] = {
++            "counts": counts,
++            "cases": {n: {"flag_rate": sum(c.flagged for c in cs) / len(cs),
++                          "expected": cs[0].expected,
++                          "mean_avail_ratio": float(np.mean(
++                              [c.stats["max_avail_ratio"] for c in cs])),
++                          "mean_share": float(np.mean(
++                              [c.stats["explained"] for c in cs]))}
++                      for n, cs in by_name.items()},
++        }
++
++        flagged, st = descriptive_e3(eicu, mimic, rule)
++        report[vname]["E3_descriptive"] = {"flagged": bool(flagged), **st}
++        print(f"\n  E3 (MIMIC vs eICU, NOT SCORED): flagged={flagged}  "
++              f"avail_ratio={st['max_avail_ratio']:.1f}  "
++              f"share={st['explained']:.3f}")
++
++    os.makedirs(RESULTS, exist_ok=True)
++    with open(os.path.join(RESULTS, "external5.json"), "w", encoding="utf-8") as fh:
++        json.dump(report, fh, indent=2)
++
++    print("\n" + "=" * 78)
++    print("PRE-REGISTERED DECISION RULE")
++    print("=" * 78)
++    a, b = report["A_conjunction"], report["B_availability_only"]
++    b_clean = all(b["cases"][n]["flag_rate"] == 0.0
++                  for n in b["cases"] if not b["cases"][n]["expected"])
++    print(f"  B false positives on E2/E4: "
++          f"{'none' if b_clean else 'PRESENT — B is rejected'}")
++    for p in ABLATION_LEVELS:
++        n = f"E1 ablation {int(p * 100)}%"
++        print(f"  {n:<24} A {a['cases'][n]['flag_rate']:.2f}   "
++              f"B {b['cases'][n]['flag_rate']:.2f}")
++    print("\nAdoption of B additionally requires detection at a strictly lower "
++          "ablation level than A, consistent in sign across seeds.")
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/detectors/tests/test_pipeline5.py b/detectors/tests/test_pipeline5.py
+new file mode 100644
+index 0000000..b4bdad7
+--- /dev/null
++++ b/detectors/tests/test_pipeline5.py
+@@ -0,0 +1,113 @@
++"""Unit tests for the detector-5 external testbed, on synthetic arrays.
++
++No dataset needed: these pin the ablation and component mechanics, which is
++where a silent error would invalidate the external result.
++"""
++import os
++import sys
++import unittest
++
++import numpy as np
++
++sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(
++    os.path.abspath(__file__)))))
++
++from src.data.variables import VAR_TO_IDX
++from detectors.external.pipeline5 import (ablate, split_arrays, stay_components,
++                                          to_stays, TERMS)
++
++
++def make_stay(n=48, seed=0):
++    """A stay with all three terms observable and physiologically consistent."""
++    rng = np.random.default_rng(seed)
++    ts = np.full((n, len(VAR_TO_IDX)), np.nan)
++    sbp = rng.uniform(100, 140, n)
++    dbp = rng.uniform(55, 85, n)
++    ts[:, VAR_TO_IDX["SBP"]] = sbp
++    ts[:, VAR_TO_IDX["DBP"]] = dbp
++    ts[:, VAR_TO_IDX["MAP"]] = dbp + (sbp - dbp) / 3.0
++    ts[:, VAR_TO_IDX["HCO3"]] = rng.uniform(20, 28, n)
++    ts[:, VAR_TO_IDX["pCO2"]] = rng.uniform(35, 45, n)
++    ts[:, VAR_TO_IDX["pH"]] = 7.4
++    ts[:, VAR_TO_IDX["PaO2"]] = rng.uniform(70, 110, n)
++    ts[:, VAR_TO_IDX["SpO2"]] = rng.uniform(94, 99, n)
++    return ts
++
++
++class TestComponents(unittest.TestCase):
++    def test_all_three_terms_computable_on_a_complete_stay(self):
++        c = stay_components(make_stay())
++        self.assertEqual(sorted(c), sorted(TERMS))
++
++    def test_exact_map_identity_gives_zero_residual(self):
++        c = stay_components(make_stay())
++        self.assertAlmostEqual(c["MAP"], 0.0, places=12)
++
++    def test_a_term_with_no_observations_is_absent_not_zero(self):
++        ts = make_stay()
++        ts[:, VAR_TO_IDX["HCO3"]] = np.nan
++        c = stay_components(ts)
++        self.assertNotIn("HH", c)
++        self.assertIn("MAP", c)
++
++    def test_stay_with_nothing_observable_is_dropped(self):
++        self.assertEqual(to_stays([np.full((48, len(VAR_TO_IDX)), np.nan)]), [])
++
++
++class TestAblation(unittest.TestCase):
++    def test_removes_roughly_the_requested_fraction(self):
++        arrays = [make_stay(seed=i) for i in range(40)]
++        out = ablate(arrays, "HCO3", p=0.75, seed=0)
++        idx = VAR_TO_IDX["HCO3"]
++        before = sum(int((~np.isnan(a[:, idx])).sum()) for a in arrays)
++        after = sum(int((~np.isnan(a[:, idx])).sum()) for a in out)
++        self.assertAlmostEqual(after / before, 0.25, delta=0.02)
++
++    def test_does_not_modify_the_input_arrays(self):
++        arrays = [make_stay(seed=1)]
++        idx = VAR_TO_IDX["HCO3"]
++        before = int((~np.isnan(arrays[0][:, idx])).sum())
++        ablate(arrays, "HCO3", p=1.0, seed=0)
++        self.assertEqual(int((~np.isnan(arrays[0][:, idx])).sum()), before,
++                         "ablation must not mutate its input")
++
++    def test_leaves_other_variables_untouched(self):
++        arrays = [make_stay(seed=2)]
++        out = ablate(arrays, "HCO3", p=1.0, seed=0)
++        for v in ("SBP", "DBP", "MAP", "pH", "pCO2", "SpO2", "PaO2"):
++            np.testing.assert_array_equal(
++                arrays[0][:, VAR_TO_IDX[v]], out[0][:, VAR_TO_IDX[v]])
++
++    def test_surviving_values_are_the_original_ones(self):
++        """Physiology must be held fixed: ablation removes observations, it
++        never perturbs the values that remain."""
++        arrays = [make_stay(seed=3)]
++        out = ablate(arrays, "HCO3", p=0.5, seed=0)
++        idx = VAR_TO_IDX["HCO3"]
++        kept = ~np.isnan(out[0][:, idx])
++        np.testing.assert_array_equal(out[0][kept, idx], arrays[0][kept, idx])
++
++    def test_full_ablation_removes_the_term_entirely(self):
++        arrays = [make_stay(seed=4)]
++        out = ablate(arrays, "HCO3", p=1.0, seed=0)
++        self.assertNotIn("HH", stay_components(out[0]))
++
++
++class TestSplit(unittest.TestCase):
++    def test_halves_are_disjoint_and_cover_everything(self):
++        arrays = [make_stay(seed=i) for i in range(21)]
++        a, b = split_arrays(arrays, seed=0)
++        self.assertEqual(len(a) + len(b), len(arrays))
++        ids_a = {id(x) for x in a}
++        ids_b = {id(x) for x in b}
++        self.assertEqual(ids_a & ids_b, set())
++
++    def test_seed_changes_the_split(self):
++        arrays = [make_stay(seed=i) for i in range(20)]
++        a0, _ = split_arrays(arrays, seed=0)
++        a1, _ = split_arrays(arrays, seed=1)
++        self.assertNotEqual([id(x) for x in a0], [id(x) for x in a1])
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/detectors/tests/test_variants5.py b/detectors/tests/test_variants5.py
+new file mode 100644
+index 0000000..26df35d
+--- /dev/null
++++ b/detectors/tests/test_variants5.py
+@@ -0,0 +1,66 @@
++"""The two detector-5 decision rules fixed in detectors/PREREGISTRATION.md.
++
++Thresholds are frozen there and must not drift: AVAIL_RATIO_FLAG = 2.0,
++COMP_EXPLAINS_FLAG = 0.30.
++"""
++import os
++import sys
++import unittest
++
++sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(
++    os.path.abspath(__file__)))))
++
++from detectors.checks.check5_missingness_scale import (
++    AVAIL_RATIO_FLAG, COMP_EXPLAINS_FLAG, VARIANTS, variant_a, variant_b)
++
++
++def stats(ratio, explained):
++    return {"max_avail_ratio": ratio, "explained": explained}
++
++
++class TestFrozenThresholds(unittest.TestCase):
++    def test_thresholds_match_the_preregistration(self):
++        self.assertEqual(AVAIL_RATIO_FLAG, 2.0)
++        self.assertEqual(COMP_EXPLAINS_FLAG, 0.30)
++
++
++class TestVariantA(unittest.TestCase):
++    def test_needs_both_signals(self):
++        self.assertTrue(variant_a(stats(5.0, 0.50)))
++        self.assertFalse(variant_a(stats(5.0, 0.20)), "composition gate")
++        self.assertFalse(variant_a(stats(1.5, 0.50)), "availability gate")
++        self.assertFalse(variant_a(stats(1.5, 0.20)))
++
++    def test_is_silent_on_the_physionet_positive_case(self):
++        """The measured PhysioNet A/B values: availability far past its gate,
++        composition just under its own. This is the documented false negative."""
++        self.assertFalse(variant_a(stats(36.4, 0.274)))
++
++
++class TestVariantB(unittest.TestCase):
++    def test_ignores_the_composition_share(self):
++        self.assertTrue(variant_b(stats(5.0, 0.50)))
++        self.assertTrue(variant_b(stats(5.0, 0.02)))
++        self.assertFalse(variant_b(stats(1.5, 0.99)))
++
++    def test_would_flag_the_physionet_positive_case(self):
++        self.assertTrue(variant_b(stats(36.4, 0.274)))
++
++    def test_still_respects_the_availability_gate(self):
++        """B drops one constraint; it must not become unconditional."""
++        self.assertFalse(variant_b(stats(2.0, 0.90)),
++                         "gate is strictly greater-than")
++
++
++class TestRegistry(unittest.TestCase):
++    def test_exactly_the_two_preregistered_variants(self):
++        self.assertEqual(sorted(VARIANTS), ["A_conjunction",
++                                            "B_availability_only"])
++
++    def test_registry_entries_are_the_functions(self):
++        self.assertIs(VARIANTS["A_conjunction"], variant_a)
++        self.assertIs(VARIANTS["B_availability_only"], variant_b)
++
++
++if __name__ == "__main__":
++    unittest.main()
+-- 
+2.52.0.windows.1
+
