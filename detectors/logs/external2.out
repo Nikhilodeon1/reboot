@@ -4,21 +4,21 @@ DETECTOR 2 — external validation, MIMIC-IV demo -> eICU demo
 model d=64 layers=2 | device=cpu | 5 seeds | 3 epochs
 data path: sample['values'] (fixed PLAUS bounds, shared across datasets) — see module docstring
 source(MIMIC)=117  leak pool(eICU, capped)=117  probe(eICU)=391
-C:\Users\nikhi\Codes\pclCodebase\chat1_protocol\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+<repo>\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
   self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
-C:\Users\nikhi\Codes\pclCodebase\chat1_protocol\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+<repo>\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
   self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
   seed 42 done (1/5)
-C:\Users\nikhi\Codes\pclCodebase\chat1_protocol\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+<repo>\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
   self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
   seed 43 done (2/5)
-C:\Users\nikhi\Codes\pclCodebase\chat1_protocol\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+<repo>\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
   self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
   seed 44 done (3/5)
-C:\Users\nikhi\Codes\pclCodebase\chat1_protocol\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+<repo>\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
   self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
   seed 45 done (4/5)
-C:\Users\nikhi\Codes\pclCodebase\chat1_protocol\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+<repo>\src\models\backbone.py:90: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
   self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
   seed 46 done (5/5)
 

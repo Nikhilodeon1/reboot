@@ -1,7 +1,8 @@
+data/
 __pycache__/
 *.pyc
 detectors/checks/_leak_*.pt
-
+docs/
 detectors/results/*.npz
 detectors/results/*.pkl
 detectors/results/*.pt

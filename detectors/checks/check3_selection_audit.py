@@ -1,7 +1,7 @@
 """Check 3: OOD-contaminated hyperparameter selection (static AST audit).
 
 Flags a sweep whose in-loop evaluation reads OOD data and never validation
-data. Ground truth: the buggy sweep from commit c7cb42f and its fix.
+data. Ground truth: a historical buggy sweep and its fix.
 """
 import ast
 import os
@@ -167,7 +167,7 @@ def run(paths=None, verbose=False):
 
 
 def main():
-    cases = [("BUGGY (commit c7cb42f)", os.path.join(FIX, "sweep_BUGGY.py"), "CONTAMINATED"),
+    cases = [("BUGGY (historical)", os.path.join(FIX, "sweep_BUGGY.py"), "CONTAMINATED"),
              ("FIXED (current)", os.path.join(FIX, "sweep_FIXED.py"), "OK")]
     print("=" * 74)
     print("CHECK 3 — OOD-contaminated hyperparameter selection (static audit)")

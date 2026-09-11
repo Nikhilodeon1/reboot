@@ -308,13 +308,13 @@ def load_eicu(data_path, fraction=1.0, seed=42, keep_raw=False):
             skipped["no_hemo"] += 1
             continue
 
-        # ICU-UNIT-level death, not hospital-level — kept as-is because chat1_protocol's
-        # already-validated detector results (incl. EXP4 mortality linear probe) depend
+        # ICU-UNIT-level death, not hospital-level — kept as-is because the validated
+        # detector results (incl. EXP4 mortality linear probe) depend
         # on this exact definition. Do NOT redefine this field to fix the mismatch below.
         mortality  = int(pat.get("unitdischargestatus", "") == "Expired")
         # HOSPITAL-level death, comparable to MIMIC-IV's hospital_expire_flag
         # (mimic4.py load_stays). Use this, not `mortality`, for any cross-site
-        # in-hospital-mortality task — e.g. pcl-legacy2.
+        # in-hospital-mortality task.
         mortality_hospital = int(pat.get("hospitaldischargestatus", "") == "Expired")
         los_3d     = int(pat["los_h"] > 72)
         los_h_val  = float(pat["los_h"])  # continuous ICU-unit length of stay, hours

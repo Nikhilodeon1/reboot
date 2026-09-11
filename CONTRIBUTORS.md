@@ -1,60 +1,29 @@
-# Provenance and history
+# Provenance
 
 ## Authorship
 
-Work by Nikhil Tamvada, with Claude (Anthropic) as a coding and analysis
-assistant throughout. Commits carry `Co-Authored-By: Claude` where that applies.
-Every result, decision rule and retraction recorded in `README.md` and
-`detectors/PREREGISTRATION_OUTCOME.md` was reviewed by the author; the
-pre-registration was committed before the code that produced the numbers it
-governs (`63f5d95`).
+Anonymized for review. Development used Claude (Anthropic) as a coding and
+analysis assistant.
 
-## The git history interleaves two separate papers
+## History
 
-This directory is one work-stream inside a shared repository. A second paper
-lives in `chat2_papers/` and is not part of this work. For most of the history
-the two are cleanly separated by directory, but **two commits touch both**:
+Exported without development history, because commit metadata identifies the
+authors. The history is preserved and will be released with the de-anonymized
+repository. It shows the detector 5 pre-registration
+(`detectors/PREREGISTRATION.md`) committed before the external-validation code
+whose results it governs.
 
-    51a311d  2026-08-17  "clean up time"
-    1b9beab  2026-08-05  "ig bro"
+## Deliberately absent
 
-`1b9beab` is the substantial one: it adds this project's `run_all.py`,
-`run_seeds.py` and their tests (then under `rebootpcl/`, renamed to `detectors/`
-later) in the same commit as a rebuild of the other paper's `.docx`/`.pdf` and
-its figures. `51a311d` is a wide rename/path cleanup across this project that
-also changed one line of `chat2_papers/README.md`.
+Per-stay caches derived from restricted clinical data (`full_labels.npz`,
+`full_d5_arrays.npz`, `full_d2_pools.pkl`) are excluded by `.gitignore`, per the
+PhysioNet data use agreement. Aggregate results are in
+`detectors/results/*.json`. Regenerate the caches with your own credentials via
+`detectors/TODO.md` section 0; `run_all.py` does not need them.
 
-**Nothing is missing or damaged.** Every file is intact at `HEAD`, the test
-suite passes, and `run_all.py` reproduces the results table. The history is
-recorded here rather than rewritten: rewriting it would invalidate the commit
-SHAs that `PREREGISTRATION_OUTCOME.md` and `README.md` cite as evidence of
-ordering, and that ordering is part of this paper's argument.
+## Lost
 
-The practical consequence for a reader: `git log -- chat1_protocol/` is the
-correct way to see this project's history. A plain `git log` includes the other
-paper's commits, and those two SHAs will appear in both views.
-
-An earlier note recorded only `1b9beab`. The second, `51a311d`, was found by
-enumerating every commit that touches both directories rather than trusting the
-note — the same check the paper argues diagnostics should make on themselves.
-
-## What is deliberately absent
-
-**By decision, and settled:** per-stay caches derived from restricted clinical
-data (`full_labels.npz`, `full_d5_arrays.npz`, `full_d2_pools.pkl`) are excluded,
-and `.gitignore` enforces it. That is what the PhysioNet DUA calls for at
-individual-stay granularity. Aggregate results are committed in
-`detectors/results/*.json`; regenerate the caches with your own credentials via
-`detectors/TODO.md` section 0. `run_all.py` does not need them. This is a policy
-choice, not a missing file.
-
-**By accident, and not recoverable:** detector 1's full-scale logs
-(`full1_probe.out`, `full1_bootstrap.out`) came back empty when copied off the
-machine that produced them. These are aggregate text, the same class of artifact
-as the committed `detectors/logs/full2.out` and `full5.out`, so nothing prevented
-publishing them — they were simply lost. Detector 1's full-scale figures are
-therefore transcribed from run output rather than read from an archive.
-
-The two are unrelated and should not be reported as one item. The first needs no
-apology; the second is a genuine limitation on detector 1's provenance, and
-`README.md` states it under "Provenance of detector 1's full-scale figures".
+Detector 1's full-scale logs (`full1_probe.out`, `full1_bootstrap.out`) were
+empty when copied off the machine that ran them. Detector 1's full-scale figures
+are transcribed from run output. Detectors 2 and 5 are backed by
+`detectors/logs/full2.out` and `detectors/logs/full5.out`.

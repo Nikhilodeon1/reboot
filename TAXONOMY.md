@@ -93,7 +93,7 @@ even when the redesign is well reasoned. Only decision rules fixed in advance
 escape this.
 
 Instances (`detectors/PREREGISTRATION.md`, `detectors/PREREGISTRATION_OUTCOME.md`;
-the pre-registration was committed at `63f5d95`, before the code that produced
+the pre-registration was committed before the code that produced
 the numbers it governs):
 
     Variant B rejected under the rule as written, despite higher recall

@@ -7,7 +7,7 @@ TEST_MODE = os.environ.get("PCL_TEST_MODE", "1") == "1"
 SEED = int(os.environ.get("PCL_SEED", "42"))
 
 # ── Paths ────────────────────────────────────────────────────────────────────
-# Override any path via env var (e.g. on RunPod: export MIMIC_DIR=/workspace/mimic-iv)
+# Override any path via env var (e.g. export MIMIC_DIR=/path/to/mimic-iv)
 _BASE_DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 PHYSIONET_DIR = os.environ.get("PHYSIONET_DIR", os.path.join(_BASE_DATA_DIR, "physionet2019"))
 MIMIC_DIR     = os.environ.get("MIMIC_DIR",     os.path.join(_BASE_DATA_DIR, "mimic4-demo"))

@@ -331,8 +331,7 @@ def evaluate_model(model, loader, task_name, device="cpu", split_name="Val"):
 
 # ── REGRESSION FINE-TUNING (continuous targets, e.g. LOS) ──────────────────────
 # Additive only — does not touch run_finetuning/evaluate_model above, which stay
-# binary-classification-only and are shared with chat1_protocol's existing usage
-# (pcl-legacy2/README.md). Same two-phase freeze/unfreeze schedule, swapped for
+# binary-classification-only. Same two-phase freeze/unfreeze schedule, swapped for
 # MSE loss and MAE/RMSE/R^2 evaluation instead of BCE/AUROC.
 
 def run_finetuning_regression(

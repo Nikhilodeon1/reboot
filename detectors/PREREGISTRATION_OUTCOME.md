@@ -1,7 +1,7 @@
 # Outcome — detector 5 variant pre-registration
 
 Kept separate from `PREREGISTRATION.md` so the pre-specification stays as
-written. Git history records that the pre-registration was committed (`63f5d95`)
+written. The development history (withheld during review) records that the pre-registration was committed
 before the code that produced these numbers.
 
 ## Results

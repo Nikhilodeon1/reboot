@@ -1,7 +1,7 @@
 ==============================================================================
 CHECK 1 — label-definition shift across sites
 ==============================================================================
-data: C:\Users\nikhi\Codes\pclCodebase\data\eICU-demo
+data: <repo>\data\eICU-demo
 cohort n=1627   ICD prevalence=0.146   SOFA prevalence=0.058
 
 --- POSITIVE: site1=ICD, site2=SOFA ---

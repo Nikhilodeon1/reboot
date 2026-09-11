@@ -40,7 +40,7 @@ eICU-CRD 2.0. `run_all.py` does NOT need any of this — it reproduces the resul
 table from the committed aggregate JSON on a machine with no clinical data at
 all. What follows is only for re-deriving those aggregates from raw data.
 
-    cd <repo>/chat1_protocol
+    cd <repo>
     export PHYSIONET_DIR=<dir CONTAINING training_setA and training_setB>
     export MIMIC_DIR=<.../mimiciv/3.1>
     export EICU_DIR=<.../eicu-crd/2.0>
