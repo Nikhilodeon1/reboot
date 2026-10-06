@@ -1,0 +1,6 @@
+detector,positives internal,controls internal,positives external,controls external,controls discriminating (m<=3),controls ceiling (m>3),controls margin unknown,external ground truth,scale,seeds,uncertainty,baseline coverage,manual-label coverage
+1,1,1,2,6,1,7,4,two published Sepsis-3 operationalizations,demo eICU; full MIMIC-IV + eICU-CRD,1 (verdict); 5000 bootstrap resamples,bootstrap CI + P(flag),Task 5c (pending),n/a
+2,3,1,3,1,0,0,1,controlled injection (dose),demo PhysioNet 900/site; full MIMIC-IV->eICU,5,"paired t, df 4","published (demo, different n) + Task 5a",n/a
+3,1,1,0,0,0,0,0,"historical defect in own history; 727 third-party files, 0 recognised","code corpus, 18 repos",-,deterministic,"Task 3f (Yang et al., pending)",Task 3 (pending)
+4,1,8,0,0,0,0,0,no external positive found,"code, 9 constraint/loader pairs",-,deterministic,live search (pending),n/a
+5,1,1,3,2,0,0,2,controlled ablation (dose),demo PhysioNet 1200/arm; external eICU,"5 (external), 1 (internal)",flag rate across seeds,out of scope (5e),n/a

@@ -1,0 +1,16 @@
+detector,control,scale,statistic,threshold,native margin,sd,m (z units),class,note,provenance
+1,"MIMIC SOFA win[-48,+24] vs SOFA single-point",demo n=117,0.6506,0.60,0.0506,MISSING,MISSING,MISSING,"audit==cohort, no draw variance",archived
+1,"MIMIC SOFA win[-48,+24] vs SOFA win[-24,+12]",demo n=117,0.9313,0.60,0.3313,MISSING,MISSING,MISSING,"audit==cohort, no draw variance",archived
+1,"MIMIC SOFA win[-48,+24] vs SOFA win[-72,+24]",demo n=117,1.0000,0.60,0.4000,MISSING,MISSING,MISSING,"audit==cohort, no draw variance",archived
+1,"eICU SOFA win[-48,+24] vs SOFA single-point",demo n=1627,0.7795,0.60,0.1795,0.04591,3.91,ceiling,,archived
+1,"eICU SOFA win[-48,+24] vs SOFA win[-24,+12]",demo n=1627,0.9806,0.60,0.3806,0.01246,30.56,ceiling,,archived
+1,"eICU SOFA win[-48,+24] vs SOFA win[-72,+24]",demo n=1627,0.9962,0.60,0.3962,0.00368,107.75,ceiling,,archived
+1,MIMIC ctrl win vs single-point,full n=74829,0.6020,0.60,0.0020,0.03163,0.06,discriminating,SD derived from published audit CI,transcribed
+1,"MIMIC ctrl win[-24,+12]",full n=74829,0.9130,0.60,0.3130,0.01837,17.04,ceiling,SD derived from published audit CI,transcribed
+1,"MIMIC ctrl win[-72,+24]",full n=74829,0.9930,0.60,0.3930,0.00510,77.03,ceiling,SD derived from published audit CI,transcribed
+1,eICU ctrl win vs single-point,full n=132900,0.8260,0.60,0.2260,0.04184,5.40,ceiling,SD derived from published audit CI,transcribed
+1,"eICU ctrl win[-24,+12]",full n=132900,0.9860,0.60,0.3860,0.01046,36.90,ceiling,SD derived from published audit CI,transcribed
+1,"eICU ctrl win[-72,+24]",full n=132900,1.0000,0.60,0.4000,MISSING,MISSING,MISSING,SD derived from published audit CI,transcribed
+2,0% leakage control (t vs crit),"demo 900/site, 5 seeds",0.0000,2.13,2.1320,MISSING,MISSING,MISSING,"flag rule is t <= -2.132 with all-negative signs; t at 0% is 0 by construction, no archived SD of t",archived
+5,negative (PhysioNet Site A vs itself) (composition gate),"demo n=1200 stays/arm, 1 seed",0.1569,0.30,0.1431,MISSING,MISSING,MISSING,"single seed archived, no dispersion",archived
+5,negative (PhysioNet Site A vs itself) (availability gate),"demo n=1200 stays/arm, 1 seed",1.0628,2.00,0.9372,MISSING,MISSING,MISSING,"single seed archived, no dispersion",archived
