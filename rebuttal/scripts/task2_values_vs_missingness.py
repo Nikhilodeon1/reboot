@@ -188,6 +188,10 @@ def analyse():
         if not os.path.exists(p):
             raise SystemExit(f"missing {p}")
         runs.append(json.load(open(p)))
+    cfg = {(r["stays"], r["epochs"], r["device"]) for r in runs}
+    if len(cfg) != 1 or next(iter(cfg))[:2] != (900, 3):
+        raise SystemExit(f"seed files disagree or are not the 900-stay, 3-epoch "
+                         f"configuration: {sorted(cfg)}; rerun the offending seeds")
     base = np.array([r["loss"]["A0"] for r in runs])
     res = {"seeds": SEEDS, "A0_mean_loss": float(base.mean()), "levels": {}}
     rows = ["level,arm,mean_r,sd_r,t_vs_A0,per_seed_r"]
