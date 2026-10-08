@@ -56,7 +56,11 @@ def main():
         import torch
         line("torch", torch.__version__)
         if not torch.cuda.is_available():
-            HARD_FAIL.append("torch.cuda.is_available() is False")
+            if os.environ.get("REQUIRE_GPU", "1") == "1":
+                HARD_FAIL.append("torch.cuda.is_available() is False "
+                                 "(set REQUIRE_GPU=0 on a CPU-only pod)")
+            else:
+                line("gpu", "none (REQUIRE_GPU=0, CPU-only pod)")
         else:
             cap = torch.cuda.get_device_capability(0)
             sm = f"sm_{cap[0]}{cap[1]}"

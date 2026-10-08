@@ -27,3 +27,12 @@ fails if `CACHE_DIR` is inside the repository.
 A V100 is compute capability 7.0. If preflight reports that the installed torch
 has no `sm_70` kernels, rerun with another wheel index, for example
 `TORCH_INDEX=https://download.pytorch.org/whl/cu118 bash rebuttal/pod/setup_env.sh`.
+
+## CPU-only pod
+
+Task 2's demo tier runs on CPU. On a pod without a GPU use the CPU torch wheel
+and tell preflight not to require one:
+
+```bash
+TORCH_INDEX=https://download.pytorch.org/whl/cpu REQUIRE_GPU=0 bash rebuttal/pod/setup_env.sh
+```
