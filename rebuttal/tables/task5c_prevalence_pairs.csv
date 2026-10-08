@@ -1,0 +1,26 @@
+mimic_def,eicu_def,prev_mimic,prev_eicu,log_pr,group,identical_definition
+SOFA win[-48,+24],SOFA win[-48,+24],0.5556,0.0885,1.837,non-mismatch,True
+SOFA win[-48,+24],SOFA single-point,0.5556,0.0584,2.253,non-mismatch,False
+SOFA win[-48,+24],SOFA win[-24,+12],0.5556,0.0854,1.872,non-mismatch,False
+SOFA win[-48,+24],SOFA win[-72,+24],0.5556,0.0891,1.830,non-mismatch,False
+SOFA win[-48,+24],ICD,0.5556,0.1457,1.339,mismatch,False
+SOFA single-point,SOFA win[-48,+24],0.3761,0.0885,1.447,non-mismatch,False
+SOFA single-point,SOFA single-point,0.3761,0.0584,1.863,non-mismatch,True
+SOFA single-point,SOFA win[-24,+12],0.3761,0.0854,1.482,non-mismatch,False
+SOFA single-point,SOFA win[-72,+24],0.3761,0.0891,1.440,non-mismatch,False
+SOFA single-point,ICD,0.3761,0.1457,0.948,mismatch,False
+SOFA win[-24,+12],SOFA win[-48,+24],0.5214,0.0885,1.773,non-mismatch,False
+SOFA win[-24,+12],SOFA single-point,0.5214,0.0584,2.189,non-mismatch,False
+SOFA win[-24,+12],SOFA win[-24,+12],0.5214,0.0854,1.809,non-mismatch,True
+SOFA win[-24,+12],SOFA win[-72,+24],0.5214,0.0891,1.766,non-mismatch,False
+SOFA win[-24,+12],ICD,0.5214,0.1457,1.275,mismatch,False
+SOFA win[-72,+24],SOFA win[-48,+24],0.5556,0.0885,1.837,non-mismatch,False
+SOFA win[-72,+24],SOFA single-point,0.5556,0.0584,2.253,non-mismatch,False
+SOFA win[-72,+24],SOFA win[-24,+12],0.5556,0.0854,1.872,non-mismatch,False
+SOFA win[-72,+24],SOFA win[-72,+24],0.5556,0.0891,1.830,non-mismatch,True
+SOFA win[-72,+24],ICD,0.5556,0.1457,1.339,mismatch,False
+ICD,SOFA win[-48,+24],0.2051,0.0885,0.841,mismatch,False
+ICD,SOFA single-point,0.2051,0.0584,1.256,mismatch,False
+ICD,SOFA win[-24,+12],0.2051,0.0854,0.876,mismatch,False
+ICD,SOFA win[-72,+24],0.2051,0.0891,0.834,mismatch,False
+ICD,ICD,0.2051,0.1457,0.342,non-mismatch,True

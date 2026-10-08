@@ -1,0 +1,277 @@
+{
+ "source": "detectors/results/external1.json (whole-cohort prevalences)",
+ "scale": "demo: MIMIC-IV 117 stays, eICU 1627 stays; full-scale values MISSING (label arrays not archived)",
+ "n_pairs": {
+  "mismatch": 8,
+  "non_mismatch": 17,
+  "identical_definition": 5
+ },
+ "abs_log_pr_range": {
+  "mismatch": [
+   0.8336392603486529,
+   1.3386463011817877
+  ],
+  "non_mismatch": [
+   0.34231286163409613,
+   2.252829550716378
+  ],
+  "identical_definition": [
+   0.34231286163409613,
+   1.862631914739002
+  ]
+ },
+ "auroc_mismatch_vs_non_mismatch": 0.058823529411764705,
+ "reading": "an AUROC at or below 0.5 means a flag-on-large-ratio rule cannot pick out the mismatch pairs",
+ "rows": [
+  {
+   "mimic_def": "SOFA win[-48,+24]",
+   "eicu_def": "SOFA win[-48,+24]",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.08850645359557467,
+   "log_pr": 1.8368931427409183,
+   "abs_log_pr": 1.8368931427409183,
+   "group": "non-mismatch",
+   "identical_definition": true
+  },
+  {
+   "mimic_def": "SOFA win[-48,+24]",
+   "eicu_def": "SOFA single-point",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.05838967424708052,
+   "log_pr": 2.252829550716378,
+   "abs_log_pr": 2.252829550716378,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-48,+24]",
+   "eicu_def": "SOFA win[-24,+12]",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.08543331284572833,
+   "log_pr": 1.872232509186227,
+   "abs_log_pr": 1.872232509186227,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-48,+24]",
+   "eicu_def": "SOFA win[-72,+24]",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.08912108174554395,
+   "log_pr": 1.8299726998963444,
+   "abs_log_pr": 1.8299726998963444,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-48,+24]",
+   "eicu_def": "ICD",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.14566687154271665,
+   "log_pr": 1.3386463011817877,
+   "abs_log_pr": 1.3386463011817877,
+   "group": "mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA single-point",
+   "eicu_def": "SOFA win[-48,+24]",
+   "prev_mimic": 0.37606837606837606,
+   "prev_eicu": 0.08850645359557467,
+   "log_pr": 1.4466955067635423,
+   "abs_log_pr": 1.4466955067635423,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA single-point",
+   "eicu_def": "SOFA single-point",
+   "prev_mimic": 0.37606837606837606,
+   "prev_eicu": 0.05838967424708052,
+   "log_pr": 1.862631914739002,
+   "abs_log_pr": 1.862631914739002,
+   "group": "non-mismatch",
+   "identical_definition": true
+  },
+  {
+   "mimic_def": "SOFA single-point",
+   "eicu_def": "SOFA win[-24,+12]",
+   "prev_mimic": 0.37606837606837606,
+   "prev_eicu": 0.08543331284572833,
+   "log_pr": 1.482034873208851,
+   "abs_log_pr": 1.482034873208851,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA single-point",
+   "eicu_def": "SOFA win[-72,+24]",
+   "prev_mimic": 0.37606837606837606,
+   "prev_eicu": 0.08912108174554395,
+   "log_pr": 1.4397750639189684,
+   "abs_log_pr": 1.4397750639189684,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA single-point",
+   "eicu_def": "ICD",
+   "prev_mimic": 0.37606837606837606,
+   "prev_eicu": 0.14566687154271665,
+   "log_pr": 0.9484486652044116,
+   "abs_log_pr": 0.9484486652044116,
+   "group": "mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-24,+12]",
+   "eicu_def": "SOFA win[-48,+24]",
+   "prev_mimic": 0.5213675213675214,
+   "prev_eicu": 0.08850645359557467,
+   "log_pr": 1.7733797370185924,
+   "abs_log_pr": 1.7733797370185924,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-24,+12]",
+   "eicu_def": "SOFA single-point",
+   "prev_mimic": 0.5213675213675214,
+   "prev_eicu": 0.05838967424708052,
+   "log_pr": 2.189316144994052,
+   "abs_log_pr": 2.189316144994052,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-24,+12]",
+   "eicu_def": "SOFA win[-24,+12]",
+   "prev_mimic": 0.5213675213675214,
+   "prev_eicu": 0.08543331284572833,
+   "log_pr": 1.8087191034639014,
+   "abs_log_pr": 1.8087191034639014,
+   "group": "non-mismatch",
+   "identical_definition": true
+  },
+  {
+   "mimic_def": "SOFA win[-24,+12]",
+   "eicu_def": "SOFA win[-72,+24]",
+   "prev_mimic": 0.5213675213675214,
+   "prev_eicu": 0.08912108174554395,
+   "log_pr": 1.7664592941740185,
+   "abs_log_pr": 1.7664592941740185,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-24,+12]",
+   "eicu_def": "ICD",
+   "prev_mimic": 0.5213675213675214,
+   "prev_eicu": 0.14566687154271665,
+   "log_pr": 1.2751328954594618,
+   "abs_log_pr": 1.2751328954594618,
+   "group": "mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-72,+24]",
+   "eicu_def": "SOFA win[-48,+24]",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.08850645359557467,
+   "log_pr": 1.8368931427409183,
+   "abs_log_pr": 1.8368931427409183,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-72,+24]",
+   "eicu_def": "SOFA single-point",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.05838967424708052,
+   "log_pr": 2.252829550716378,
+   "abs_log_pr": 2.252829550716378,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-72,+24]",
+   "eicu_def": "SOFA win[-24,+12]",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.08543331284572833,
+   "log_pr": 1.872232509186227,
+   "abs_log_pr": 1.872232509186227,
+   "group": "non-mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "SOFA win[-72,+24]",
+   "eicu_def": "SOFA win[-72,+24]",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.08912108174554395,
+   "log_pr": 1.8299726998963444,
+   "abs_log_pr": 1.8299726998963444,
+   "group": "non-mismatch",
+   "identical_definition": true
+  },
+  {
+   "mimic_def": "SOFA win[-72,+24]",
+   "eicu_def": "ICD",
+   "prev_mimic": 0.5555555555555556,
+   "prev_eicu": 0.14566687154271665,
+   "log_pr": 1.3386463011817877,
+   "abs_log_pr": 1.3386463011817877,
+   "group": "mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "ICD",
+   "eicu_def": "SOFA win[-48,+24]",
+   "prev_mimic": 0.20512820512820512,
+   "prev_eicu": 0.08850645359557467,
+   "log_pr": 0.8405597031932266,
+   "abs_log_pr": 0.8405597031932266,
+   "group": "mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "ICD",
+   "eicu_def": "SOFA single-point",
+   "prev_mimic": 0.20512820512820512,
+   "prev_eicu": 0.05838967424708052,
+   "log_pr": 1.2564961111686863,
+   "abs_log_pr": 1.2564961111686863,
+   "group": "mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "ICD",
+   "eicu_def": "SOFA win[-24,+12]",
+   "prev_mimic": 0.20512820512820512,
+   "prev_eicu": 0.08543331284572833,
+   "log_pr": 0.8758990696385355,
+   "abs_log_pr": 0.8758990696385355,
+   "group": "mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "ICD",
+   "eicu_def": "SOFA win[-72,+24]",
+   "prev_mimic": 0.20512820512820512,
+   "prev_eicu": 0.08912108174554395,
+   "log_pr": 0.8336392603486529,
+   "abs_log_pr": 0.8336392603486529,
+   "group": "mismatch",
+   "identical_definition": false
+  },
+  {
+   "mimic_def": "ICD",
+   "eicu_def": "ICD",
+   "prev_mimic": 0.20512820512820512,
+   "prev_eicu": 0.14566687154271665,
+   "log_pr": 0.34231286163409613,
+   "abs_log_pr": 0.34231286163409613,
+   "group": "non-mismatch",
+   "identical_definition": true
+  }
+ ]
+}

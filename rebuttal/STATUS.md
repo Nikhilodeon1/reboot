@@ -305,3 +305,25 @@ stays and seeds with the original component set and with MAP + HH only.
   supersedes it and the paper's external A figures should be checked against it.
 - Undecidable: 0 in every cell. At 95% ablation HH is absent from one side in 4 of
   5 seeds, which sends the availability ratio to infinity by construction.
+
+**Task 5c — done (existing artifacts only).** The standard check for detector 1 is
+the cross-site prevalence ratio. With five definitions per site there are 25
+cross-site pairs: 8 are labeller mismatches (ICD at one site, SOFA at the other)
+and 17 use the same construct at both sites. The mismatch pairs have |log
+prevalence ratio| 0.83 to 1.34. The same-construct pairs run from 0.34 (ICD at both)
+to 2.25, and SOFA at both sites gives about 1.4 to 2.3, because MIMIC-IV demo
+prevalence (0.52 to 0.56) is about six times eICU's (0.06 to 0.09). A
+flag-on-large-ratio rule therefore flags the legitimate SOFA-vs-SOFA comparisons
+more strongly than the real mismatches: AUROC 0.059 for picking mismatches, i.e.
+inverted, not merely uninformative. Descriptive only (8 against 17 pairs built
+from 10 prevalences, demo cohorts of 117 and 1627 stays). Full-scale values are
+MISSING. The archived `prevalence_ratio` field in `external1.json` is a split-half
+within-site quantity and was not used.
+
+**Task 5e — paragraph written** (`results/task5e_detector5_scope.md`).
+**Task 4f — done**, output in `results/task4f_demo_output.txt`. On the verbatim
+fragments, a NaN record listed first wins the `max(..., key=...)`, a NaN listed
+later is ignored, an empty list raises, and both a NaN value and an empty list
+pass the `any([v==-1 ...])` guard (the empty list yields NaN through 0/0). The
+script states that this is the semantics of the pattern, not a bug in shipped
+DomainBed; whether callers can produce these inputs was not traced.
