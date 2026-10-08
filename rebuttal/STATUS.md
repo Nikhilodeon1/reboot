@@ -76,3 +76,46 @@ validation depth.
 Tasks 3a and 4a enumeration start once the corpus is re-cloned. Task 2 demo and
 Task 5a need the data junction. GPU estimates for Task 2 full-scale and Task 5b
 go to the user at Checkpoint B.
+
+## 2026-10-08
+
+**Task 2 (Q-D2), demo tier — run, analysed, provisional until the result files
+are committed.** PhysioNet A to B, 900 stays/site, 5 seeds, CPU, `--analyse`
+output transcribed from the pod terminal; the five `task2_seed*.json` files are
+not yet in the repo, so the ledger rows wait for them.
+
+Mean relative probe-loss reduction versus A0 (r), paired within seed, df 4,
+critical t 2.132:
+
+| level | A1 shipped | A2 extra source | A3 joint mask | A4 marginal fill | R | verdict |
+|---|---|---|---|---|---|---|
+| 5% | 0.0313 (t 3.96) | 0.0096 (t 1.18) | 0.0100 (t 1.10) | 0.0165 (t 1.94) | 0.02 | values-dominated |
+| 20% (primary) | 0.0901 (t 12.02) | 0.0436 (t 10.40) | 0.0385 (t 6.82) | 0.0584 (t 10.36) | -0.11 | values-dominated |
+
+- A1 minus A2 clears the critical value at both levels (t 8.18 and 7.67), so R
+  is defined at both. A3 minus A2 is not significant (t 0.16 and -1.46).
+- **The pre-stated prediction missed.** It was "mixed, leaning values-dominated,
+  0.25 < R < 0.6". Observed R is 0.02 and -0.11, below the predicted range, so
+  the verdict class agrees with the lean but the magnitude does not. Missingness
+  carried less than predicted.
+- **Corpus size explains a large share of the 20% effect.** r2 / r1 = 0.48 at
+  20% (0.31 at 5%). The pre-registered confound rule is r2 >= 0.5 r1, so the
+  result is not "confounded with corpus size", but it clears the line by 0.017.
+  The paper must report 0.48, not just the verdict. Target exposure still adds
+  beyond volume (A1 minus A2 t 7.67).
+- **Joint mask structure does not help; marginal fill might.** A3 is below A2
+  at 20% (R negative). A4 is above A2 at 20%. Exploratory and post hoc, not
+  pre-registered: A4 minus A2 per-seed t is about 4.5, and A4 minus A3 about 3.6.
+  A3's achieved fill (0.22 on the 300-stay smoke test, against a target of 0.30)
+  is below the target because the transplant can only remove observations, so A3
+  confounds mask structure with extra sparsity. The A3 versus A4 contrast is
+  therefore not clean, and the honest statement is that this design cannot
+  separate them.
+- **Reproducibility.** The CPU rerun reproduces the archived detector 2 numbers
+  to six digits: A0 mean 0.0067391 against archived 0.0067391, 5% delta 3.129%
+  against 3.129%. The earlier V100 run differed by about 1% (5% delta 4.0%), so
+  GPU runs of this check are not bit-comparable with the archive.
+
+Claim-relevant for the paper: detector 2's scope statement does not need
+loosening toward "values only" being false, but the 20% effect is roughly half
+corpus size, and that belongs in the limitations.
