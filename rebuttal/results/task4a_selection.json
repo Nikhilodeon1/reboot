@@ -1,0 +1,122 @@
+[
+ {
+  "topic": "domain generalization benchmark",
+  "query": "domain generalization benchmark language:python",
+  "timestamp_utc": "2026-10-08T08:37:58Z",
+  "scanned": [
+   {
+    "rank": 1,
+    "repo": "CHAOZHAO-1/Domain-generalization-fault-diagnosis-benchmark",
+    "stars": 153,
+    "skipped": "README has no paper link"
+   },
+   {
+    "rank": 2,
+    "repo": "KaiyangZhou/ssdg-benchmark",
+    "stars": 72,
+    "chosen": true,
+    "sha": "8c0b9a497f846fc489bbb1bab1bfc3b9cab8f990"
+   },
+   {
+    "rank": 3,
+    "repo": "xxgege/NICO-plus",
+    "stars": 44,
+    "chosen": true,
+    "sha": "397942ec7263d2e0536ae695a041a0fa3f0448c0"
+   }
+  ],
+  "chosen": [
+   "KaiyangZhou/ssdg-benchmark",
+   "xxgege/NICO-plus"
+  ]
+ },
+ {
+  "topic": "distribution shift benchmark",
+  "query": "distribution shift benchmark language:python",
+  "timestamp_utc": "2026-10-08T08:38:09Z",
+  "scanned": [
+   {
+    "rank": 1,
+    "repo": "p-lambda/wilds",
+    "stars": 602,
+    "chosen": true,
+    "sha": "472677590de351857197a9bf24958838c39c272b"
+   },
+   {
+    "rank": 2,
+    "repo": "mlfoundations/tableshift",
+    "stars": 75,
+    "chosen": true,
+    "sha": "fca9429814703a07e3902d005d46563a207b7f0a"
+   }
+  ],
+  "chosen": [
+   "p-lambda/wilds",
+   "mlfoundations/tableshift"
+  ]
+ },
+ {
+  "topic": "fairness toolkit",
+  "query": "fairness toolkit language:python",
+  "timestamp_utc": "2026-10-08T08:38:20Z",
+  "scanned": [
+   {
+    "rank": 1,
+    "repo": "GestaltCogTeam/BasicTS",
+    "stars": 1826,
+    "chosen": true,
+    "sha": "c2bb6e31e591167e84459775a21a62e70a5893ce"
+   },
+   {
+    "rank": 2,
+    "repo": "facebookresearch/fairseq2",
+    "stars": 1152,
+    "chosen": true,
+    "sha": "7f06d6f4f5d497eec02b1a238d2071eb5dc48df3"
+   }
+  ],
+  "chosen": [
+   "GestaltCogTeam/BasicTS",
+   "facebookresearch/fairseq2"
+  ]
+ },
+ {
+  "topic": "hyperparameter / model-selection benchmark",
+  "query": "hyperparameter model selection benchmark language:python",
+  "timestamp_utc": "2026-10-08T08:38:31Z",
+  "scanned": [
+   {
+    "rank": 1,
+    "repo": "mr-ashish-panday/MetaLoRA-Meta-Learning-for-Adaptive-LoRA-Configuration-Selection",
+    "stars": 0,
+    "skipped": "no README found"
+   },
+   {
+    "rank": 2,
+    "repo": "mriksas/MammoML",
+    "stars": 0,
+    "skipped": "README has no paper link"
+   },
+   {
+    "rank": 3,
+    "repo": "HuzaifaAbdulRehman/budget-tune",
+    "stars": 0,
+    "skipped": "README has no paper link"
+   },
+   {
+    "rank": 4,
+    "repo": "priyanshipeswani/GPFL-main",
+    "stars": 0,
+    "skipped": "README has no paper link"
+   }
+  ],
+  "chosen": []
+ },
+ {
+  "topic": "calibration / uncertainty evaluation library",
+  "query": "calibration uncertainty evaluation library language:python",
+  "timestamp_utc": "2026-10-08T08:38:42Z",
+  "scanned": [],
+  "chosen": []
+ }
+]
