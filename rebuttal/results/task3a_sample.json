@@ -1,0 +1,426 @@
+[
+ {
+  "file": "examples/eol/model_lr.py",
+  "start": 49,
+  "end": 49,
+  "pattern": "P1",
+  "repo": "omop-learn",
+  "sha": "a33440af2b"
+ },
+ {
+  "file": "related_code/bayesian_train.py",
+  "start": 306,
+  "end": 314,
+  "pattern": "P2",
+  "repo": "time_aware_attention",
+  "sha": "0191878624"
+ },
+ {
+  "file": "model/behrt_train.py",
+  "start": 215,
+  "end": 219,
+  "pattern": "P2",
+  "repo": "MIMIC-IV-Data-Pipeline",
+  "sha": "43ff2393da"
+ },
+ {
+  "file": "domainbed/hparams_registry.py",
+  "start": 19,
+  "end": 26,
+  "pattern": "P4",
+  "repo": "DomainBed",
+  "sha": "b93c22a1cf"
+ },
+ {
+  "file": "notebooks/mmd_grud_utils.py",
+  "start": 210,
+  "end": 397,
+  "pattern": "P3",
+  "repo": "MIMIC_Extract",
+  "sha": "d8d2dea551"
+ },
+ {
+  "file": "models/final_experiment_scripts/best_hyperparameters.py",
+  "start": 1,
+  "end": 13,
+  "pattern": "P4",
+  "repo": "TPC-LoS-prediction",
+  "sha": "aa2a602c1a"
+ },
+ {
+  "file": "preprocessing/steps/get_17_features_raw.py",
+  "start": 142,
+  "end": 142,
+  "pattern": "P1",
+  "repo": "Benchmarking_DL_MIMICIII",
+  "sha": "eae5f27719"
+ },
+ {
+  "file": "src/args.py",
+  "start": 8,
+  "end": 21,
+  "pattern": "P4",
+  "repo": "eICU-GNN-LSTM",
+  "sha": "5167eea88b"
+ },
+ {
+  "file": "mimic3models/keras_utils.py",
+  "start": 219,
+  "end": 219,
+  "pattern": "P1",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "icu_benchmarks/synthetic_data/collect_stats.py",
+  "start": 35,
+  "end": 35,
+  "pattern": "P1",
+  "repo": "HIRID-ICU-Benchmark",
+  "sha": "bee770094b"
+ },
+ {
+  "file": "circews/classes/lgbm_model.py",
+  "start": 479,
+  "end": 481,
+  "pattern": "P2",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "scripts/utils.py",
+  "start": 145,
+  "end": 156,
+  "pattern": "P2",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "experiments/outcome_pretraining.py",
+  "start": 141,
+  "end": 147,
+  "pattern": "P3",
+  "repo": "clinical-outcome-prediction",
+  "sha": "b376f4bcd7"
+ },
+ {
+  "file": "FIDDLE/helpers.py",
+  "start": 111,
+  "end": 127,
+  "pattern": "P4",
+  "repo": "FIDDLE",
+  "sha": "7dd6d98819"
+ },
+ {
+  "file": "train.py",
+  "start": 303,
+  "end": 303,
+  "pattern": "P1",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "preprocessing/hosp_module_preproc/feature_selection_icu.py",
+  "start": 169,
+  "end": 223,
+  "pattern": "P4",
+  "repo": "MIMIC-IV-Data-Pipeline",
+  "sha": "43ff2393da"
+ },
+ {
+  "file": "domainbed/hparams_registry.py",
+  "start": 10,
+  "end": 250,
+  "pattern": "P4",
+  "repo": "DomainBed",
+  "sha": "b93c22a1cf"
+ },
+ {
+  "file": "models/final_experiment_scripts/best_hyperparameters.py",
+  "start": 50,
+  "end": 75,
+  "pattern": "P4",
+  "repo": "TPC-LoS-prediction",
+  "sha": "aa2a602c1a"
+ },
+ {
+  "file": "Codes/SuperLearnerPyVer/python/pgbart/src/bart_utils.py",
+  "start": 1179,
+  "end": 1179,
+  "pattern": "P1",
+  "repo": "Benchmarking_DL_MIMICIII",
+  "sha": "eae5f27719"
+ },
+ {
+  "file": "src/args.py",
+  "start": 24,
+  "end": 34,
+  "pattern": "P4",
+  "repo": "eICU-GNN-LSTM",
+  "sha": "5167eea88b"
+ },
+ {
+  "file": "mimic3models/keras_utils.py",
+  "start": 156,
+  "end": 156,
+  "pattern": "P1",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "icu_benchmarks/models/wrappers.py",
+  "start": 299,
+  "end": 350,
+  "pattern": "P3",
+  "repo": "HIRID-ICU-Benchmark",
+  "sha": "bee770094b"
+ },
+ {
+  "file": "evaluation/precision_recall.py",
+  "start": 149,
+  "end": 149,
+  "pattern": "P1",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "scripts/finetune_on_target.py",
+  "start": 433,
+  "end": 433,
+  "pattern": "P3",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "experiments/doc_classification.py",
+  "start": 161,
+  "end": 167,
+  "pattern": "P3",
+  "repo": "clinical-outcome-prediction",
+  "sha": "b376f4bcd7"
+ },
+ {
+  "file": "utils/scripts/ptb_utils.py",
+  "start": 100,
+  "end": 100,
+  "pattern": "P1",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "preprocess_outcomes.py",
+  "start": 151,
+  "end": 151,
+  "pattern": "P1",
+  "repo": "MIMIC-IV-Data-Pipeline",
+  "sha": "43ff2393da"
+ },
+ {
+  "file": "domainbed/algorithms.py",
+  "start": 1496,
+  "end": 1496,
+  "pattern": "P1",
+  "repo": "DomainBed",
+  "sha": "b93c22a1cf"
+ },
+ {
+  "file": "models/final_experiment_scripts/best_hyperparameters.py",
+  "start": 77,
+  "end": 96,
+  "pattern": "P4",
+  "repo": "TPC-LoS-prediction",
+  "sha": "aa2a602c1a"
+ },
+ {
+  "file": "preprocessing/steps/get_99plus_features_raw.py",
+  "start": 188,
+  "end": 188,
+  "pattern": "P1",
+  "repo": "Benchmarking_DL_MIMICIII",
+  "sha": "eae5f27719"
+ },
+ {
+  "file": "train_dynamic.py",
+  "start": 124,
+  "end": 124,
+  "pattern": "P3",
+  "repo": "eICU-GNN-LSTM",
+  "sha": "5167eea88b"
+ },
+ {
+  "file": "mimic3models/keras_utils.py",
+  "start": 60,
+  "end": 60,
+  "pattern": "P1",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "icu_benchmarks/synthetic_data/collect_stats.py",
+  "start": 36,
+  "end": 36,
+  "pattern": "P1",
+  "repo": "HIRID-ICU-Benchmark",
+  "sha": "bee770094b"
+ },
+ {
+  "file": "circews/classes/imputer_ffill.py",
+  "start": 255,
+  "end": 255,
+  "pattern": "P1",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "scripts/utils.py",
+  "start": 130,
+  "end": 139,
+  "pattern": "P3",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "train.py",
+  "start": 306,
+  "end": 306,
+  "pattern": "P1",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "preprocessing/hosp_module_preproc/feature_selection_hosp.py",
+  "start": 188,
+  "end": 236,
+  "pattern": "P4",
+  "repo": "MIMIC-IV-Data-Pipeline",
+  "sha": "43ff2393da"
+ },
+ {
+  "file": "domainbed/lib/query.py",
+  "start": 16,
+  "end": 44,
+  "pattern": "P4",
+  "repo": "DomainBed",
+  "sha": "b93c22a1cf"
+ },
+ {
+  "file": "models/final_experiment_scripts/best_hyperparameters.py",
+  "start": 99,
+  "end": 130,
+  "pattern": "P4",
+  "repo": "TPC-LoS-prediction",
+  "sha": "aa2a602c1a"
+ },
+ {
+  "file": "train_ns_gnn.py",
+  "start": 114,
+  "end": 114,
+  "pattern": "P3",
+  "repo": "eICU-GNN-LSTM",
+  "sha": "5167eea88b"
+ },
+ {
+  "file": "mimic3models/rerun.py",
+  "start": 177,
+  "end": 177,
+  "pattern": "P1",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "icu_benchmarks/models/wrappers.py",
+  "start": 180,
+  "end": 189,
+  "pattern": "P2",
+  "repo": "HIRID-ICU-Benchmark",
+  "sha": "bee770094b"
+ },
+ {
+  "file": "shapelet_features/shapelets/analyse_extracted_shapelets.py",
+  "start": 134,
+  "end": 134,
+  "pattern": "P1",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "scripts/utils.py",
+  "start": 148,
+  "end": 156,
+  "pattern": "P2",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "utils/scripts/utils.py",
+  "start": 362,
+  "end": 364,
+  "pattern": "P2",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "domainbed/algorithms.py",
+  "start": 714,
+  "end": 714,
+  "pattern": "P1",
+  "repo": "DomainBed",
+  "sha": "b93c22a1cf"
+ },
+ {
+  "file": "models/final_experiment_scripts/best_hyperparameters.py",
+  "start": 15,
+  "end": 48,
+  "pattern": "P4",
+  "repo": "TPC-LoS-prediction",
+  "sha": "aa2a602c1a"
+ },
+ {
+  "file": "train_ns_lstmgnn.py",
+  "start": 179,
+  "end": 179,
+  "pattern": "P3",
+  "repo": "eICU-GNN-LSTM",
+  "sha": "5167eea88b"
+ },
+ {
+  "file": "mimic3models/rerun.py",
+  "start": 95,
+  "end": 95,
+  "pattern": "P1",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "icu_benchmarks/labels/utils.py",
+  "start": 48,
+  "end": 48,
+  "pattern": "P1",
+  "repo": "HIRID-ICU-Benchmark",
+  "sha": "bee770094b"
+ },
+ {
+  "file": "shapelet_features/shapelets/analyse_extracted_shapelets.py",
+  "start": 139,
+  "end": 139,
+  "pattern": "P1",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "scripts/finetune_on_target.py",
+  "start": 596,
+  "end": 596,
+  "pattern": "P1",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "reproduce_scripts/slab-tune.py",
+  "start": 85,
+  "end": 88,
+  "pattern": "P2",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ }
+]

@@ -119,3 +119,25 @@ critical t 2.132:
 Claim-relevant for the paper: detector 2's scope statement does not need
 loosening toward "values only" being false, but the 20% effect is roughly half
 corpus size, and that belongs in the limitations.
+
+**Task 3a — enumeration done.** Patterns P1-P4 were committed alone as
+`b845cc0` (2026-10-08 00:50:04 -0700) before the scan ran. Over the 18 pinned
+repos: 688 Python files parsed, **103 candidate sites** (P1 argmax/max 61, P2
+best-update 10, P3 early stopping 12, P4 named selectors 20), **53 sampled** at
+most 5 per repo with seed 20261006. The cap of 60 was not reached because the
+corpus only has 103 sites. Three repos yield no site (mimic-code, retain,
+sepsis3-mimic).
+
+Coverage gaps that the paper must carry with any sensitivity figure:
+- **126 notebooks were not scanned.** The pinned corpus is notebook-heavy
+  (Benchmarking_DL_MIMICIII 43, MIMIC-IV-Data-Pipeline 24, mimic-code 20,
+  sepsis3-mimic 13, robustdg 10). Selection logic that lives only in notebook
+  cells is invisible to this enumeration, and to the shipped detector, which
+  reads `.py` files.
+- **8 files did not parse** (retain 3 of 3, Benchmarking_DL_MIMICIII 4,
+  robustdg 1), consistent with Python 2 sources. Counted as unparseable, never
+  as clean. `retain` has no parsed file at all.
+- 47 test-directory files were excluded by rule.
+
+Next is 3b labelling by the committed rubric, done before detector 3 is run on
+any sampled file so labels cannot be influenced by its verdicts.
