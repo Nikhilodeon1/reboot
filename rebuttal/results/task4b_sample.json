@@ -1,0 +1,706 @@
+[
+ {
+  "file": "tableshift/third_party/node/data.py",
+  "start": 216,
+  "end": 216,
+  "pattern": "S3",
+  "repo": "tableshift",
+  "sha": "fca9429814"
+ },
+ {
+  "file": "tasks/adm_dis_match_i2b2/adm_dis_match_i2b2.py",
+  "start": 132,
+  "end": 133,
+  "pattern": "S3",
+  "repo": "clinical-outcome-prediction",
+  "sha": "b376f4bcd7"
+ },
+ {
+  "file": "src/models/utils.py",
+  "start": 39,
+  "end": 50,
+  "pattern": "S4",
+  "repo": "eICU-GNN-LSTM",
+  "sha": "5167eea88b"
+ },
+ {
+  "file": "evaluation/privacy_loss_attack.py",
+  "start": 222,
+  "end": 222,
+  "pattern": "S2",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "domainbed/model_selection.py",
+  "start": 153,
+  "end": 153,
+  "pattern": "S3",
+  "repo": "DomainBed",
+  "sha": "b93c22a1cf"
+ },
+ {
+  "file": "graph_construction/get_diagnosis_strings.py",
+  "start": 28,
+  "end": 28,
+  "pattern": "S3",
+  "repo": "eICU-GNN-LSTM",
+  "sha": "5167eea88b"
+ },
+ {
+  "file": "scripts/finetune_on_pregenerated.py",
+  "start": 253,
+  "end": 253,
+  "pattern": "S3",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "experiments/utils.py",
+  "start": 107,
+  "end": 107,
+  "pattern": "S2",
+  "repo": "clinical-outcome-prediction",
+  "sha": "b376f4bcd7"
+ },
+ {
+  "file": "utils/scripts/utils.py",
+  "start": 391,
+  "end": 391,
+  "pattern": "S4",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "tableshift/datasets/college_scorecard.py",
+  "start": 170,
+  "end": 170,
+  "pattern": "S2",
+  "repo": "tableshift",
+  "sha": "fca9429814"
+ },
+ {
+  "file": "mimic3models/keras_utils.py",
+  "start": 62,
+  "end": 62,
+  "pattern": "S2",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "model/behrt_train.py",
+  "start": 215,
+  "end": 215,
+  "pattern": "S2",
+  "repo": "MIMIC-IV-Data-Pipeline",
+  "sha": "43ff2393da"
+ },
+ {
+  "file": "mimic3models/keras_utils.py",
+  "start": 219,
+  "end": 219,
+  "pattern": "S1",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "aif360/datasets/structured_dataset.py",
+  "start": 188,
+  "end": 189,
+  "pattern": "S3",
+  "repo": "AIF360",
+  "sha": "34877916b7"
+ },
+ {
+  "file": "model/ml_models.py",
+  "start": 205,
+  "end": 225,
+  "pattern": "S4",
+  "repo": "MIMIC-IV-Data-Pipeline",
+  "sha": "43ff2393da"
+ },
+ {
+  "file": "scripts/finetune_on_pregenerated.py",
+  "start": 305,
+  "end": 305,
+  "pattern": "S2",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "examples/train.py",
+  "start": 125,
+  "end": 125,
+  "pattern": "S2",
+  "repo": "wilds",
+  "sha": "472677590d"
+ },
+ {
+  "file": "examples/eol/model_lr.py",
+  "start": 49,
+  "end": 49,
+  "pattern": "S1",
+  "repo": "omop-learn",
+  "sha": "a33440af2b"
+ },
+ {
+  "file": "tableshift/core/tabular_dataset.py",
+  "start": 480,
+  "end": 480,
+  "pattern": "S1",
+  "repo": "tableshift",
+  "sha": "fca9429814"
+ },
+ {
+  "file": "src/fairseq2/data/parquet/arrow_transform.py",
+  "start": 288,
+  "end": 288,
+  "pattern": "S3",
+  "repo": "fairseq2",
+  "sha": "7f06d6f4f5"
+ },
+ {
+  "file": "src/basicts/utils/misc.py",
+  "start": 76,
+  "end": 76,
+  "pattern": "S3",
+  "repo": "BasicTS",
+  "sha": "c2bb6e31e5"
+ },
+ {
+  "file": "aif360/algorithms/postprocessing/deterministic_reranking.py",
+  "start": 137,
+  "end": 140,
+  "pattern": "S1",
+  "repo": "AIF360",
+  "sha": "34877916b7"
+ },
+ {
+  "file": "finetuning/interpolated_mimic_hirid.py",
+  "start": 149,
+  "end": 149,
+  "pattern": "S1",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "FIDDLE/steps.py",
+  "start": 507,
+  "end": 507,
+  "pattern": "S1",
+  "repo": "FIDDLE",
+  "sha": "7dd6d98819"
+ },
+ {
+  "file": "domainbed/model_selection.py",
+  "start": 127,
+  "end": 127,
+  "pattern": "S1",
+  "repo": "DomainBed",
+  "sha": "b93c22a1cf"
+ },
+ {
+  "file": "FIDDLE/steps.py",
+  "start": 314,
+  "end": 314,
+  "pattern": "S3",
+  "repo": "FIDDLE",
+  "sha": "7dd6d98819"
+ },
+ {
+  "file": "mimic3models/keras_utils.py",
+  "start": 137,
+  "end": 137,
+  "pattern": "S4",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "shapelet_features/utils/mp.py",
+  "start": 245,
+  "end": 245,
+  "pattern": "S4",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "examples/optimizer.py",
+  "start": 20,
+  "end": 20,
+  "pattern": "S3",
+  "repo": "wilds",
+  "sha": "472677590d"
+ },
+ {
+  "file": "icu_benchmarks/labels/utils.py",
+  "start": 47,
+  "end": 47,
+  "pattern": "S1",
+  "repo": "HIRID-ICU-Benchmark",
+  "sha": "bee770094b"
+ },
+ {
+  "file": "domainbed/model_selection.py",
+  "start": 125,
+  "end": 125,
+  "pattern": "S3",
+  "repo": "NICO-plus",
+  "sha": "397942ec72"
+ },
+ {
+  "file": "notebooks/mmd_grud_utils.py",
+  "start": 373,
+  "end": 373,
+  "pattern": "S2",
+  "repo": "MIMIC_Extract",
+  "sha": "d8d2dea551"
+ },
+ {
+  "file": "src/omop_learn/backends/postgres.py",
+  "start": 281,
+  "end": 282,
+  "pattern": "S4",
+  "repo": "omop-learn",
+  "sha": "a33440af2b"
+ },
+ {
+  "file": "icu_benchmarks/labels/utils.py",
+  "start": 44,
+  "end": 44,
+  "pattern": "S2",
+  "repo": "HIRID-ICU-Benchmark",
+  "sha": "bee770094b"
+ },
+ {
+  "file": "Codes/SuperLearnerPyVer/python/pgbart/src/bart_utils.py",
+  "start": 692,
+  "end": 692,
+  "pattern": "S2",
+  "repo": "Benchmarking_DL_MIMICIII",
+  "sha": "eae5f27719"
+ },
+ {
+  "file": "shapelet_features/shapelets/extract_all_patient_timepoints.py",
+  "start": 63,
+  "end": 63,
+  "pattern": "S2",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "aif360/detectors/mdss/ScoringFunctions/Poisson.py",
+  "start": 59,
+  "end": 59,
+  "pattern": "S2",
+  "repo": "AIF360",
+  "sha": "34877916b7"
+ },
+ {
+  "file": "utils/scripts/utils.py",
+  "start": 579,
+  "end": 579,
+  "pattern": "S1",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "related_code/bayesian_train.py",
+  "start": 306,
+  "end": 306,
+  "pattern": "S2",
+  "repo": "time_aware_attention",
+  "sha": "0191878624"
+ },
+ {
+  "file": "scripts/finetune_on_target.py",
+  "start": 588,
+  "end": 588,
+  "pattern": "S1",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "src/fairseq2/recipe/config.py",
+  "start": 546,
+  "end": 546,
+  "pattern": "S2",
+  "repo": "fairseq2",
+  "sha": "7f06d6f4f5"
+ },
+ {
+  "file": "domainbed/model_selection.py",
+  "start": 139,
+  "end": 139,
+  "pattern": "S1",
+  "repo": "NICO-plus",
+  "sha": "397942ec72"
+ },
+ {
+  "file": "shapelet_features/utils/data.py",
+  "start": 139,
+  "end": 139,
+  "pattern": "S3",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "aif360/algorithms/preprocessing/lfr.py",
+  "start": 53,
+  "end": 53,
+  "pattern": "S4",
+  "repo": "AIF360",
+  "sha": "34877916b7"
+ },
+ {
+  "file": "src/fairseq2/model_checkpoint/native.py",
+  "start": 128,
+  "end": 128,
+  "pattern": "S4",
+  "repo": "fairseq2",
+  "sha": "7f06d6f4f5"
+ },
+ {
+  "file": "domainbed/algorithms.py",
+  "start": 1689,
+  "end": 1689,
+  "pattern": "S4",
+  "repo": "DomainBed",
+  "sha": "b93c22a1cf"
+ },
+ {
+  "file": "domainbed/algorithms.py",
+  "start": 1416,
+  "end": 1416,
+  "pattern": "S4",
+  "repo": "NICO-plus",
+  "sha": "397942ec72"
+ },
+ {
+  "file": "preprocessing/notes_preproc.py",
+  "start": 180,
+  "end": 180,
+  "pattern": "S3",
+  "repo": "MIMIC-IV-Data-Pipeline",
+  "sha": "43ff2393da"
+ },
+ {
+  "file": "src/fairseq2/recipe/internal/trainer.py",
+  "start": 212,
+  "end": 212,
+  "pattern": "S1",
+  "repo": "fairseq2",
+  "sha": "7f06d6f4f5"
+ },
+ {
+  "file": "src/basicts/runners/callback/early_stopping.py",
+  "start": 28,
+  "end": 28,
+  "pattern": "S2",
+  "repo": "BasicTS",
+  "sha": "c2bb6e31e5"
+ },
+ {
+  "file": "domainbed/lib/swad.py",
+  "start": 134,
+  "end": 134,
+  "pattern": "S2",
+  "repo": "NICO-plus",
+  "sha": "397942ec72"
+ },
+ {
+  "file": "tableshift/third_party/node/data.py",
+  "start": 166,
+  "end": 166,
+  "pattern": "S3",
+  "repo": "tableshift",
+  "sha": "fca9429814"
+ },
+ {
+  "file": "tasks/adm_dis_match_i2b2/adm_dis_match_i2b2.py",
+  "start": 296,
+  "end": 297,
+  "pattern": "S3",
+  "repo": "clinical-outcome-prediction",
+  "sha": "b376f4bcd7"
+ },
+ {
+  "file": "src/models/utils.py",
+  "start": 68,
+  "end": 90,
+  "pattern": "S4",
+  "repo": "eICU-GNN-LSTM",
+  "sha": "5167eea88b"
+ },
+ {
+  "file": "utils/scripts/utils.py",
+  "start": 521,
+  "end": 521,
+  "pattern": "S2",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "scripts/finetune_on_pregenerated.py",
+  "start": 255,
+  "end": 255,
+  "pattern": "S3",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "test.py",
+  "start": 393,
+  "end": 393,
+  "pattern": "S4",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "tableshift/core/discretization.py",
+  "start": 301,
+  "end": 301,
+  "pattern": "S2",
+  "repo": "tableshift",
+  "sha": "fca9429814"
+ },
+ {
+  "file": "mimic3models/keras_utils.py",
+  "start": 348,
+  "end": 348,
+  "pattern": "S2",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "mimic3models/keras_utils.py",
+  "start": 221,
+  "end": 221,
+  "pattern": "S1",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "aif360/sklearn/detectors/facts/predicate.py",
+  "start": 140,
+  "end": 140,
+  "pattern": "S3",
+  "repo": "AIF360",
+  "sha": "34877916b7"
+ },
+ {
+  "file": "scripts/adversarial_finetune_on_pregen.py",
+  "start": 472,
+  "end": 472,
+  "pattern": "S2",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "wilds/common/metrics/all_metrics.py",
+  "start": 152,
+  "end": 152,
+  "pattern": "S2",
+  "repo": "wilds",
+  "sha": "472677590d"
+ },
+ {
+  "file": "tableshift/third_party/node/utils.py",
+  "start": 95,
+  "end": 95,
+  "pattern": "S1",
+  "repo": "tableshift",
+  "sha": "fca9429814"
+ },
+ {
+  "file": "src/fairseq2/data/parquet/arrow_transform.py",
+  "start": 306,
+  "end": 306,
+  "pattern": "S3",
+  "repo": "fairseq2",
+  "sha": "7f06d6f4f5"
+ },
+ {
+  "file": "aif360/algorithms/postprocessing/deterministic_reranking.py",
+  "start": 131,
+  "end": 133,
+  "pattern": "S1",
+  "repo": "AIF360",
+  "sha": "34877916b7"
+ },
+ {
+  "file": "evaluation/precision_recall.py",
+  "start": 150,
+  "end": 150,
+  "pattern": "S1",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "FIDDLE/steps.py",
+  "start": 509,
+  "end": 509,
+  "pattern": "S1",
+  "repo": "FIDDLE",
+  "sha": "7dd6d98819"
+ },
+ {
+  "file": "domainbed/model_selection.py",
+  "start": 100,
+  "end": 100,
+  "pattern": "S1",
+  "repo": "DomainBed",
+  "sha": "b93c22a1cf"
+ },
+ {
+  "file": "FIDDLE/steps.py",
+  "start": 35,
+  "end": 35,
+  "pattern": "S3",
+  "repo": "FIDDLE",
+  "sha": "7dd6d98819"
+ },
+ {
+  "file": "mimic3models/keras_utils.py",
+  "start": 138,
+  "end": 138,
+  "pattern": "S4",
+  "repo": "mimic3-benchmarks",
+  "sha": "ea0314c7cb"
+ },
+ {
+  "file": "preprocessing/step1a_2_remove_oor_values.py",
+  "start": 108,
+  "end": 129,
+  "pattern": "S4",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "examples/optimizer.py",
+  "start": 21,
+  "end": 21,
+  "pattern": "S3",
+  "repo": "wilds",
+  "sha": "472677590d"
+ },
+ {
+  "file": "icu_benchmarks/labels/utils.py",
+  "start": 48,
+  "end": 48,
+  "pattern": "S1",
+  "repo": "HIRID-ICU-Benchmark",
+  "sha": "bee770094b"
+ },
+ {
+  "file": "src/omop_learn/torch/data.py",
+  "start": 129,
+  "end": 130,
+  "pattern": "S4",
+  "repo": "omop-learn",
+  "sha": "a33440af2b"
+ },
+ {
+  "file": "icu_benchmarks/endpoints/endpoint_benchmark.py",
+  "start": 727,
+  "end": 727,
+  "pattern": "S2",
+  "repo": "HIRID-ICU-Benchmark",
+  "sha": "bee770094b"
+ },
+ {
+  "file": "Codes/SuperLearnerPyVer/python/pgbart/src/bart_utils.py",
+  "start": 887,
+  "end": 887,
+  "pattern": "S2",
+  "repo": "Benchmarking_DL_MIMICIII",
+  "sha": "eae5f27719"
+ },
+ {
+  "file": "circews/classes/lgbm_model.py",
+  "start": 479,
+  "end": 479,
+  "pattern": "S2",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "aif360/algorithms/postprocessing/reject_option_classification.py",
+  "start": 192,
+  "end": 192,
+  "pattern": "S2",
+  "repo": "AIF360",
+  "sha": "34877916b7"
+ },
+ {
+  "file": "utils/scripts/ptb_utils.py",
+  "start": 130,
+  "end": 130,
+  "pattern": "S1",
+  "repo": "robustdg",
+  "sha": "3eee1730ae"
+ },
+ {
+  "file": "scripts/finetune_on_target.py",
+  "start": 596,
+  "end": 596,
+  "pattern": "S1",
+  "repo": "HurtfulWords",
+  "sha": "b59181585a"
+ },
+ {
+  "file": "src/fairseq2/recipe/config.py",
+  "start": 540,
+  "end": 540,
+  "pattern": "S2",
+  "repo": "fairseq2",
+  "sha": "7f06d6f4f5"
+ },
+ {
+  "file": "domainbed/lib/swad.py",
+  "start": 94,
+  "end": 94,
+  "pattern": "S1",
+  "repo": "NICO-plus",
+  "sha": "397942ec72"
+ },
+ {
+  "file": "shapelet_features/shapelets/collect_time_series.py",
+  "start": 26,
+  "end": 26,
+  "pattern": "S3",
+  "repo": "circEWS",
+  "sha": "dc5f5ccbc0"
+ },
+ {
+  "file": "aif360/algorithms/intersectional_fairness.py",
+  "start": 479,
+  "end": 479,
+  "pattern": "S4",
+  "repo": "AIF360",
+  "sha": "34877916b7"
+ },
+ {
+  "file": "src/fairseq2/models/llama/checkpoint.py",
+  "start": 104,
+  "end": 104,
+  "pattern": "S4",
+  "repo": "fairseq2",
+  "sha": "7f06d6f4f5"
+ },
+ {
+  "file": "src/basicts/runners/basicts_runner.py",
+  "start": 1033,
+  "end": 1033,
+  "pattern": "S2",
+  "repo": "BasicTS",
+  "sha": "c2bb6e31e5"
+ },
+ {
+  "file": "domainbed/lib/swad.py",
+  "start": 155,
+  "end": 155,
+  "pattern": "S2",
+  "repo": "NICO-plus",
+  "sha": "397942ec72"
+ }
+]
