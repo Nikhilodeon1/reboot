@@ -1,0 +1,17 @@
+scale,case,n_cohort,n_audit,kappa,sd_cohort,sd_audit,pred_P_flag_cohort,obs_P_flag_cohort,pred_P_flag_audit,obs_P_flag_audit,note,provenance
+demo,"MIMIC SOFA win[-48,+24] vs SOFA single-point",117,117,0.6506,0.06312,0.00000,0.211,0.216,0.000,0.0000,"audit==cohort, no draw variance",archived
+demo,"MIMIC SOFA win[-48,+24] vs SOFA win[-24,+12]",117,117,0.9313,0.03176,0.00000,0.000,0.000,0.000,0.0000,"audit==cohort, no draw variance",archived
+demo,"MIMIC SOFA win[-48,+24] vs SOFA win[-72,+24]",117,117,1.0000,0.00000,0.00000,0.000,0.000,0.000,0.0000,"audit==cohort, no draw variance",archived
+demo,MIMIC POSITIVE ICD vs SOFA,117,117,0.1497,0.06917,0.00000,1.000,1.000,1.000,1.0000,"audit==cohort, no draw variance",archived
+demo,"eICU SOFA win[-48,+24] vs SOFA single-point",1627,500,0.7795,0.03017,0.04591,0.000,0.000,0.000,0.0005,,archived
+demo,"eICU SOFA win[-48,+24] vs SOFA win[-24,+12]",1627,500,0.9806,0.00858,0.01246,0.000,0.000,0.000,0.0000,,archived
+demo,"eICU SOFA win[-48,+24] vs SOFA win[-72,+24]",1627,500,0.9962,0.00310,0.00368,0.000,0.000,0.000,0.0000,,archived
+demo,eICU POSITIVE ICD vs SOFA,1627,500,0.3836,0.03254,0.05068,1.000,1.000,1.000,1.0000,,archived
+full,MIMIC ctrl win vs single-point,74829,500,0.6020,0.00255,0.03163,0.217,MISSING,0.475,0.484,,transcribed
+full,"MIMIC ctrl win[-24,+12]",74829,500,0.9130,0.00153,0.01837,0.000,MISSING,0.000,0.000,,transcribed
+full,"MIMIC ctrl win[-72,+24]",74829,500,0.9930,0.00051,0.00510,0.000,MISSING,0.000,0.000,,transcribed
+full,MIMIC POSITIVE ICD vs SOFA,74829,500,0.1740,0.00281,0.03546,1.000,MISSING,1.000,1.000,,transcribed
+full,eICU ctrl win vs single-point,132900,500,0.8260,0.00255,0.04184,0.000,MISSING,0.000,0.000,,transcribed
+full,"eICU ctrl win[-24,+12]",132900,500,0.9860,0.00077,0.01046,0.000,MISSING,0.000,0.000,,transcribed
+full,"eICU ctrl win[-72,+24]",132900,500,1.0000,0.00000,0.00000,0.000,MISSING,0.000,0.000,,transcribed
+full,eICU POSITIVE ICD vs SOFA,132900,500,0.4510,0.00357,0.05765,1.000,MISSING,0.995,0.996,,transcribed

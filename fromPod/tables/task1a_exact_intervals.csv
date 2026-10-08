@@ -1,0 +1,28 @@
+case,scale,metric,point,n,ci_lo,ci_hi
+detector 1 (internal),demo eICU,precision,1.000,1,0.025,1.000
+detector 1 (internal),demo eICU,recall,1.000,1,0.025,1.000
+detector 1 (internal),demo eICU,FPR,0.000,1,0.000,0.975
+detector 2 (internal),demo PhysioNet A->B 900/site,precision,1.000,3,0.292,1.000
+detector 2 (internal),demo PhysioNet A->B 900/site,recall,1.000,3,0.292,1.000
+detector 2 (internal),demo PhysioNet A->B 900/site,FPR,0.000,1,0.000,0.975
+detector 3 (internal),code fixtures,precision,1.000,1,0.025,1.000
+detector 3 (internal),code fixtures,recall,1.000,1,0.025,1.000
+detector 3 (internal),code fixtures,FPR,0.000,1,0.000,0.975
+detector 4 (internal),"code, 9 pairs",precision,1.000,1,0.025,1.000
+detector 4 (internal),"code, 9 pairs",recall,1.000,1,0.025,1.000
+detector 4 (internal),"code, 9 pairs",FPR,0.000,8,0.000,0.369
+detector 5 (internal),demo PhysioNet 1200/arm,precision,undefined,0,MISSING,MISSING
+detector 5 (internal),demo PhysioNet 1200/arm,recall,0.000,1,0.000,0.975
+detector 5 (internal),demo PhysioNet 1200/arm,FPR,0.000,1,0.000,0.975
+"pooled (reference only, heterogeneous cases)",mixed,precision,1.000,6,0.541,1.000
+"pooled (reference only, heterogeneous cases)",mixed,recall,0.857,7,0.421,0.996
+"pooled (reference only, heterogeneous cases)",mixed,FPR,0.000,12,0.000,0.265
+detector 1 external MIMIC,"full MIMIC-IV, transcribed",precision,1.000,1,0.025,1.000
+detector 1 external MIMIC,"full MIMIC-IV, transcribed",recall,1.000,1,0.025,1.000
+detector 1 external MIMIC,"full MIMIC-IV, transcribed",FPR,0.000,3,0.000,0.708
+detector 1 external eICU,"full eICU-CRD, transcribed",precision,1.000,1,0.025,1.000
+detector 1 external eICU,"full eICU-CRD, transcribed",recall,1.000,1,0.025,1.000
+detector 1 external eICU,"full eICU-CRD, transcribed",FPR,0.000,3,0.000,0.708
+detector 2 external full,full MIMIC-IV->eICU,precision,1.000,3,0.292,1.000
+detector 2 external full,full MIMIC-IV->eICU,recall,1.000,3,0.292,1.000
+detector 2 external full,full MIMIC-IV->eICU,FPR,0.000,1,0.000,0.975
