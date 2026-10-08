@@ -170,3 +170,44 @@ any sampled file. 53 sites: **0 CONTAMINATED, 1 DISCLOSED_ORACLE, 1 AMBIGUOUS,
   contaminated category; that is what the draw gave and it was not redrawn.
 - Not started: 3f (Yang et al. via Docker, 90-minute gate) and the live
   search for other baselines.
+
+## 2026-10-08 (later)
+
+**Task 5a — run on the CPU pod, provisional until the result files are
+committed.** Detector 2 and the three baselines read off the same models: 900
+stays/site nominal, 5 seeds, thresholds unchanged. Numbers transcribed from the
+pod terminal; the seed files are not in the repo yet, so no ledger rows yet.
+
+| level | detector 2 (paired rel. delta, t) | k-fold instability | train/test gap | external floor |
+|---|---|---|---|---|
+| 0% | not testable (0% vs itself) | flags 5/5 | flags 4/4 (1 undecidable) | flags 4/5 |
+| 5% | -3.1%, t -3.96, flag | 5/5 | 4/4 | 4/5 |
+| 20% | -9.0%, t -12.02, flag | 5/5 | 4/4 | 4/5 |
+| 100% | -15.6%, t -9.54, flag | 5/5 | 4/4 | 3/5 |
+
+- **The baselines fire at 0% leakage.** FPR is 5/5, 4/4 and 4/5, so on identical
+  data they carry no information, the same as the archived 2400-stay result
+  (TP 3, FP 1, TN 0). The paper's "fire at every level including 0%" is
+  confirmed, now at the same scale as detector 2 and with 5 seeds.
+- **Paper claim that needs softening: "leakage does move downstream performance
+  in the expected direction".** Change in target AUROC versus 0%: 5% -0.0003
+  [-0.0066, +0.0060]; 20% +0.0094 [-0.0113, +0.0302]; 100% +0.0100 [-0.0117,
+  +0.0318]. Every interval includes zero and the 5% point estimate is negative.
+  The point estimates at 20% and 100% are positive; the data do not establish a
+  direction. The paper's gap figures (0.117 to 0.103) came from 3 seeds with no
+  interval.
+- **Paper claim that needs softening: "an order of magnitude larger".** The
+  0% source-to-target AUROC gap is 0.090 [0.039, 0.142] (4 seeds with the
+  quantity defined). Signal-to-nuisance ratio, per-seed mean: 5% -0.04
+  [-0.16, 0.08]; 20% 0.007 [-0.29, 0.30]; 100% 0.024 [-0.32, 0.37]. Ratios of
+  means are -0.02, 0.05, 0.06, so "roughly an order of magnitude" holds for the
+  point estimates, but the intervals cannot exclude a ratio as large as 0.37 at
+  100%. State the point estimates and the intervals together.
+- **Paper claim that needs qualifying: detector 2's "clean 0% control".**
+  The shipped detector compares its 0% arm with itself, so the relative delta is
+  exactly 0 and it cannot flag; TN=1 is by construction. The exploratory (not
+  pre-registered) null replicates retrain the 0% arm with four other
+  initialisation/shuffle seeds on the same splits and apply the detector's test
+  against the original: 0 of 4 flagged, Clopper-Pearson 95% [0.000, 0.602]. That
+  is consistent with no false positives but is weak evidence, and the table's
+  "FPR 0.00" should read as 0/4 [0, 0.60] with that provenance.
