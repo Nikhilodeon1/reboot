@@ -263,3 +263,15 @@ AUROC built on a handful of positives cannot resolve a 0.01 change, which is
 the plain reason the downstream baselines cannot see this leakage. The paper's
 "order of magnitude" sentence should say this instead of implying a measured
 separation.
+
+**Task 3f — done (gate: started 02:06, image ready about 02:30, run 02:32).**
+Yang et al. built only after three environment changes (base image 20.04,
+`--unsafe-perm`, Node 14); the unmodified Dockerfile does not build. Run on both
+fixtures it reports 0 in all three categories, identically for the buggy and the
+corrected file, and its own relations show it recognised no model pairing at all
+in either (ModelPair, TestDataWithModel, TrainingDataWithModel all 0 rows). So it
+neither detects the contamination nor separates the two files, and a zero is not
+a clean verdict. Full record in `results/task3f_yang.md`. Live search for other
+baselines: none found for detector 3 beyond Yang et al., none found for detector 4
+in two queries (`results/task3f_search.md`). Two citations verified in
+`CITATIONS_VERIFIED.md`.
