@@ -141,3 +141,32 @@ Coverage gaps that the paper must carry with any sensitivity figure:
 
 Next is 3b labelling by the committed rubric, done before detector 3 is run on
 any sampled file so labels cannot be influenced by its verdicts.
+
+**Task 3b/3c — labelled and run.** Rubric addendum `4c461eb` and labels
+`e82be15` (2026-10-08 00:55:44 -0700) were committed before detector 3 was run on
+any sampled file. 53 sites: **0 CONTAMINATED, 1 DISCLOSED_ORACLE, 1 AMBIGUOUS,
+21 SOUND, 30 NOT_SELECTION.** Only 23 sites are real selections, and they sit in
+15 distinct files, so they are not independent.
+
+- **The sensitivity denominator is zero.** k = CONTAMINATED = 0, so sensitivity
+  is undefined; it is not "0%". The pre-registered hope that "0/k converts no
+  coverage into no sensitivity with a denominator" does not apply: there is no
+  k. What the corpus does give is a prevalence statement: undisclosed
+  contamination was 0 of 23 real selection sites, Wilson 95% upper bound 0.143.
+- **The one disclosed oracle** is robustdg `train.py:303`: `np.max` over
+  per-epoch test accuracy, printed as "Final Test Accuracy (Target Validation)".
+  The ambiguous site is robustdg `utils.py:357-364`, which selects on a loader
+  passed as an argument (`te_dl`) with no caller in the corpus.
+- **Detector 3 returned INDETERMINATE on all 53 sites, under both vocabularies**
+  (36 distinct files). It issues no clean verdict, so no specificity claim may
+  be made, and it did not flag the disclosed oracle. This is the same
+  recognition-rate gap the paper already reports, now with a denominator.
+- Verdicts are file-level and labels are site-level; reported as a granularity
+  mismatch, not corrected.
+- **3e is only partly done.** A blind relabel of 20 sites by the same model that
+  holds the labels in context cannot be blind, so none was run and no agreement
+  figure is claimed. `USER_SPOTCHECK.md` has six randomly drawn sites (seed
+  20261008). Five of the six are NOT_SELECTION, so it is weak at testing the
+  contaminated category; that is what the draw gave and it was not redrawn.
+- Not started: 3f (Yang et al. via Docker, 90-minute gate) and the live
+  search for other baselines.
