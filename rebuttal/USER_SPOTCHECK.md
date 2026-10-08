@@ -171,3 +171,151 @@ Selection split / reported split: ______
 
 Your label: ______
 Selection split / reported split: ______
+
+---
+
+# Part 2: Task 4c spot check
+
+Six of the 88 sampled Type 1 candidate sites, drawn at random (seed 20261009). Label each
+independently with `rebuttal/RUBRIC_4C.md`, WITHOUT opening `rebuttal/results/task4c_labels.json`:
+GUARDED, UNREACHABLE, REACHABLE_UNGUARDED or NOT_APPLICABLE. The question is whether a falsy or
+degenerate value (NaN, None, empty collection, zero standing for missing) can reach the site
+under supported use and silently change the output; if it would crash, the label is GUARDED.
+
+## Site 1: mimic3-benchmarks @ ea0314c7cb, `mimic3models/keras_utils.py` lines 62-62 (S2)
+
+```python
+   53     def on_epoch_end(self, epoch, logs={}):
+   54         print("\n==>predicting on train")
+   55         self.calc_metrics(self.train_data_gen, self.train_history, 'train', logs)
+   56         print("\n==>predicting on validation")
+   57         self.calc_metrics(self.val_data_gen, self.val_history, 'val', logs)
+   58 
+   59         if self.early_stopping:
+   60             max_auc = np.max([x["auroc"] for x in self.val_history])
+   61             cur_auc = self.val_history[-1]["auroc"]
+   62             if max_auc > 0.88 and cur_auc < 0.86:
+   63                 self.model.stop_training = True
+   64 
+   65 
+   66 class InHospitalMortalityMetrics(keras.callbacks.Callback):
+   67     def __init__(self, train_data, val_data, target_repl, batch_size=32, early_stopping=True, verbose=2):
+```
+
+Your label: ______
+One line why: ______
+
+## Site 2: omop-learn @ a33440af2b, `examples/eol/model_lr.py` lines 49-49 (S1)
+
+```python
+   40     model.gen_pipeline(C)
+   41     model.fit()
+   42     # Eval on validation data
+   43     pred = model._pipeline.predict_proba(windowed_dataset.val['X'])[:, 1]
+   44     score = roc_auc_score(windowed_dataset.val['y'], pred)
+   45     scores.append(score)
+   46     print("C: %.4f, Val AUC: %.2f" % (C, score))
+   47 
+   48 # Gen and fit on best C
+   49 best_C = Cs[np.argmax(scores)]
+   50 model.gen_pipeline(best_C)
+   51 model.fit()
+   52 # Eval on test data
+   53 pred = model._pipeline.predict_proba(windowed_dataset.test['X'])[:, 1]
+   54 score = roc_auc_score(windowed_dataset.test['y'], pred)
+```
+
+Your label: ______
+One line why: ______
+
+## Site 3: FIDDLE @ 7dd6d98819, `FIDDLE/steps.py` lines 314-314 (S3)
+
+```python
+  305         time_invariant_features = pd.concat(out, axis=1)
+  306         feature_names_all = time_invariant_features.columns.values
+  307         sdf = time_invariant_features.astype(pd.SparseDtype(int, fill_value=0))
+  308         S_ = sparse.COO(sdf.sparse.to_coo())
+  309     else:
+  310         # Split a mixed column into numeric and string columns
+  311         for col in df.columns:
+  312             col_data = df[col]
+  313             col_is_numeric = [is_numeric(v) for v in col_data if not pd.isnull(v)]
+  314             if not all(col_is_numeric) and any(col_is_numeric): # have mixed type values
+  315                 numeric_mask = col_data.apply(is_numeric)
+  316                 df[col+'_str'] = df[col].copy()
+  317                 df.loc[~numeric_mask, col] = np.nan
+  318                 df.loc[numeric_mask, col+'_str'] = np.nan
+  319 
+```
+
+Your label: ______
+One line why: ______
+
+## Site 4: circEWS @ dc5f5ccbc0, `shapelet_features/utils/data.py` lines 139-139 (S3)
+
+```python
+  130 
+  131     def _matches(self, column_name):
+  132         '''
+  133         Checks whether a given column name is a substring of at least
+  134         one variable of the list of filter variables.
+  135         '''
+  136         if 'vm' in self.variables:
+  137             return any([True if re.search(variable, column_name) else False for variable in self.variables])
+  138         else:
+  139             return any([True if variable.upper().lower() == column_name.upper().lower() else False for variable in self.variables])
+  140 
+  141     def __call__(self, variable_names):
+  142         '''
+  143         Returns all variables that are *kept*, i.e. the ones that
+  144         survive the filter operation.
+```
+
+Your label: ______
+One line why: ______
+
+## Site 5: mimic3-benchmarks @ ea0314c7cb, `mimic3models/keras_utils.py` lines 221-221 (S1)
+
+```python
+  212     def on_epoch_end(self, epoch, logs={}):
+  213         print("\n==>predicting on train")
+  214         self.calc_metrics(self.train_data_gen, self.train_history, 'train', logs)
+  215         print("\n==>predicting on validation")
+  216         self.calc_metrics(self.val_data_gen, self.val_history, 'val', logs)
+  217 
+  218         if self.early_stopping:
+  219             max_kappa = np.max([x["kappa"] for x in self.val_history])
+  220             cur_kappa = self.val_history[-1]["kappa"]
+  221             max_train_kappa = np.max([x["kappa"] for x in self.train_history])
+  222             if max_kappa > 0.38 and cur_kappa < 0.35 and max_train_kappa > 0.47:
+  223                 self.model.stop_training = True
+  224 
+  225 
+  226 class MultitaskMetrics(keras.callbacks.Callback):
+```
+
+Your label: ______
+One line why: ______
+
+## Site 6: fairseq2 @ 7f06d6f4f5, `src/fairseq2/models/llama/checkpoint.py` lines 104-104 (S4)
+
+```python
+   95             if options.state_dict_converter is not None:
+   96                 tp_shard = options.state_dict_converter(tp_shard)
+   97 
+   98             tp_shards.append(tp_shard)
+   99 
+  100         memo = set()
+  101 
+  102         # Assume that the very first tensor parallel shard contains all the
+  103         # checkpoint keys.
+  104         keys = list(tp_shards[0].keys())
+  105 
+  106         for key in keys:
+  107             splits = []
+  108 
+  109             for tp_shard in tp_shards:
+```
+
+Your label: ______
+One line why: ______

@@ -211,3 +211,46 @@ pod terminal; the seed files are not in the repo yet, so no ledger rows yet.
   against the original: 0 of 4 flagged, Clopper-Pearson 95% [0.000, 0.602]. That
   is consistent with no false positives but is weak evidence, and the table's
   "FPR 0.00" should read as 0/4 [0, 0.60] with that provenance.
+
+**Task 4 — enumerated and labelled (4a-4c).** Frozen before use: selection rule
+`bc365cf`, S1-S4 patterns `073d042`, rubric `879d885` (01:41:00 -0700, before any
+site was read). AIF360 was not previously pinned; it is now pinned at
+`34877916b7` (default-branch HEAD at clone time).
+
+- **Selection.** The mechanical rule chose 6 new repositories: ssdg-benchmark,
+  NICO-plus, WILDS, TableShift, BasicTS, fairseq2. Two of them are off-topic for
+  "fairness toolkit" (a time-series forecasting library and a sequence-modelling
+  library): the star-sorted search for that phrase returned only two results and
+  both passed the README-paper test. Topic 4 returned four tiny repositories
+  none of which had a paper link, and topic 5 returned nothing. Nothing was
+  swapped by hand. Task 4 therefore rests on the 19 pinned repositories plus 6
+  of mixed relevance.
+- **236 candidate sites, 88 sampled** (cap 120 not reached). 126 notebooks are
+  still not scanned, as in Task 3.
+- **Labels (88): 4 REACHABLE_UNGUARDED, 20 GUARDED, 24 UNREACHABLE, 40
+  NOT_APPLICABLE** (3 of those undecidable). REACHABLE_UNGUARDED is 4 of 48
+  applicable sites, **8.3%, Wilson 95% [3.3%, 19.6%]**; among verdict or
+  selection sites 1 of 27, 3.7% [0.7%, 18.3%].
+- **The convention decides the headline.** I treated NaN that arises only when
+  training diverges as outside supported use. If it counts, 12 more sites flip
+  (comparisons against a best-so-far, `argmin` over losses, early-stopping
+  thresholds that a NaN silently fails) and the figure is **16 of 48, 33.3%
+  [21.7%, 47.5%]**. Both figures must be reported together; the rubric did not
+  settle this in advance and I chose the narrower reading, which lowers the count.
+- **The 4 positives** (3 files, 3 repositories; two are one hazard in one file):
+  tableshift `college_scorecard.py:170`, where `(target > 0.5).astype(int)`
+  turns a NaN target into 0 because the preprocess function runs before the NaN
+  drop (reachability inferred from the dataset's `na_values`, not executed);
+  fairseq2 `arrow_transform.py:288` and `:306`, where `pc.all` skips nulls so null
+  rows pass a length filter; robustdg `utils/scripts/utils.py:579`, where
+  `max(loss_tr, loss_te)` returns `loss_tr` when `loss_te` is NaN, defeating the
+  `np.isfinite` guard on the next line. Only the last is verdict-type.
+- **Pre-stated reading 4e.** The paper claims the pattern is structurally
+  present in verdict-rendering code, not common in evaluation code. A low figure
+  is consistent with that; the honest statement is 3.7% to 8.3% under the narrow
+  convention and up to a third under the broad one, each with its denominator.
+- 4d is only partly done: a blind relabel by the same model that holds the labels
+  cannot be blind, so none was run. Six more sites are in `USER_SPOTCHECK.md`,
+  part 2, for you to label.
+- Docker Desktop is not running (CLI present, daemon unreachable), so 3f has not
+  started; its 90-minute clock has not begun.
