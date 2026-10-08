@@ -1,0 +1,87 @@
+{
+ "seed": 46,
+ "stays": 900,
+ "epochs": 3,
+ "device": "cpu",
+ "levels": {
+  "0.0": {
+   "probe_loss": 0.00709738964131018,
+   "kfold_sd": 0.11574805050972115,
+   "indomain_auroc": 0.7689655172413793,
+   "target_auroc": 0.6910197869101978,
+   "n_source": 602,
+   "n_target": 222,
+   "target_prevalence": 0.013513513840734959
+  },
+  "0.05": {
+   "probe_loss": 0.006905859369818155,
+   "kfold_sd": 0.11577964590525984,
+   "indomain_auroc": 0.767816091954023,
+   "target_auroc": 0.6910197869101978,
+   "n_source": 602,
+   "n_target": 222,
+   "target_prevalence": 0.013513513840734959
+  },
+  "0.2": {
+   "probe_loss": 0.006581647984415024,
+   "kfold_sd": 0.11304142754931103,
+   "indomain_auroc": 0.767816091954023,
+   "target_auroc": 0.6910197869101978,
+   "n_source": 602,
+   "n_target": 222,
+   "target_prevalence": 0.013513513840734959
+  },
+  "1.0": {
+   "probe_loss": 0.006148159134763855,
+   "kfold_sd": 0.1121579529816547,
+   "indomain_auroc": 0.767816091954023,
+   "target_auroc": 0.7047184170471842,
+   "n_source": 602,
+   "n_target": 222,
+   "target_prevalence": 0.013513513840734959
+  }
+ },
+ "null": [
+  {
+   "probe_loss": 0.007953204340427308,
+   "kfold_sd": 0.12185198090508138,
+   "indomain_auroc": 0.7183908045977011,
+   "target_auroc": 0.7123287671232876,
+   "n_source": 602,
+   "n_target": 222,
+   "target_prevalence": 0.013513513840734959
+  },
+  {
+   "probe_loss": 0.007708207511150085,
+   "kfold_sd": 0.1127911453058735,
+   "indomain_auroc": 0.7310344827586207,
+   "target_auroc": 0.7184170471841704,
+   "n_source": 602,
+   "n_target": 222,
+   "target_prevalence": 0.013513513840734959
+  },
+  {
+   "probe_loss": 0.007256738279383999,
+   "kfold_sd": 0.12378551853952477,
+   "indomain_auroc": 0.6988505747126437,
+   "target_auroc": 0.7382039573820396,
+   "n_source": 602,
+   "n_target": 222,
+   "target_prevalence": 0.013513513840734959
+  },
+  {
+   "probe_loss": 0.006949713352966953,
+   "kfold_sd": 0.11962595244183037,
+   "indomain_auroc": 0.7367816091954023,
+   "target_auroc": 0.7047184170471842,
+   "n_source": 602,
+   "n_target": 222,
+   "target_prevalence": 0.013513513840734959
+  }
+ ],
+ "env": {
+  "torch": "2.14.1+cpu",
+  "numpy": "2.5.3"
+ },
+ "seconds": 134.7
+}

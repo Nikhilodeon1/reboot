@@ -1,0 +1,87 @@
+{
+ "seed": 43,
+ "stays": 900,
+ "epochs": 3,
+ "device": "cpu",
+ "levels": {
+  "0.0": {
+   "probe_loss": 0.006225600660675102,
+   "kfold_sd": 0.1579653801636727,
+   "indomain_auroc": NaN,
+   "target_auroc": 0.4309954751131222,
+   "n_source": 604,
+   "n_target": 225,
+   "target_prevalence": 0.017777778208255768
+  },
+  "0.05": {
+   "probe_loss": 0.0059833845785922475,
+   "kfold_sd": 0.15388837146475348,
+   "indomain_auroc": NaN,
+   "target_auroc": 0.43778280542986425,
+   "n_source": 604,
+   "n_target": 225,
+   "target_prevalence": 0.017777778208255768
+  },
+  "0.2": {
+   "probe_loss": 0.005738190432182617,
+   "kfold_sd": 0.15873665864846118,
+   "indomain_auroc": NaN,
+   "target_auroc": 0.4592760180995475,
+   "n_source": 604,
+   "n_target": 225,
+   "target_prevalence": 0.017777778208255768
+  },
+  "1.0": {
+   "probe_loss": 0.005338424873641796,
+   "kfold_sd": 0.16474621101191064,
+   "indomain_auroc": NaN,
+   "target_auroc": 0.4592760180995475,
+   "n_source": 604,
+   "n_target": 225,
+   "target_prevalence": 0.017777778208255768
+  }
+ },
+ "null": [
+  {
+   "probe_loss": 0.007058368244518836,
+   "kfold_sd": 0.20877373258540552,
+   "indomain_auroc": NaN,
+   "target_auroc": 0.6798642533936652,
+   "n_source": 604,
+   "n_target": 225,
+   "target_prevalence": 0.017777778208255768
+  },
+  {
+   "probe_loss": 0.0066016994685762454,
+   "kfold_sd": 0.17720161592197808,
+   "indomain_auroc": NaN,
+   "target_auroc": 0.746606334841629,
+   "n_source": 604,
+   "n_target": 225,
+   "target_prevalence": 0.017777778208255768
+  },
+  {
+   "probe_loss": 0.00661101781245735,
+   "kfold_sd": 0.13632595633306213,
+   "indomain_auroc": NaN,
+   "target_auroc": 0.6029411764705882,
+   "n_source": 604,
+   "n_target": 225,
+   "target_prevalence": 0.017777778208255768
+  },
+  {
+   "probe_loss": 0.006330999825149774,
+   "kfold_sd": 0.19292260482986628,
+   "indomain_auroc": NaN,
+   "target_auroc": 0.7579185520361991,
+   "n_source": 604,
+   "n_target": 225,
+   "target_prevalence": 0.017777778208255768
+  }
+ ],
+ "env": {
+  "torch": "2.14.1+cpu",
+  "numpy": "2.5.3"
+ },
+ "seconds": 155.1
+}

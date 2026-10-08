@@ -254,3 +254,12 @@ site was read). AIF360 was not previously pinned; it is now pinned at
   part 2, for you to label.
 - Docker Desktop is not running (CLI present, daemon unreachable), so 3f has not
   started; its 90-minute clock has not begun.
+
+**Task 5a — files in the repo, all numbers match the pod output.** One more fact
+from the seed files bears on every AUROC in this section: target prevalence is
+1.3% to 3.1%, so the 222-225-stay target probe holds roughly 3 to 7 positive
+stays per seed, and in one seed the in-domain AUROC is undefined. A cross-site
+AUROC built on a handful of positives cannot resolve a 0.01 change, which is
+the plain reason the downstream baselines cannot see this leakage. The paper's
+"order of magnitude" sentence should say this instead of implying a measured
+separation.
