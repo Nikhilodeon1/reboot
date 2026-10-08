@@ -275,3 +275,33 @@ a clean verdict. Full record in `results/task3f_yang.md`. Live search for other
 baselines: none found for detector 3 beyond Yang et al., none found for detector 4
 in two queries (`results/task3f_search.md`). Two citations verified in
 `CITATIONS_VERIFIED.md`.
+
+**Task 6 — done (CPU, local, no model).** Detector 5 unchanged, run on identical
+stays and seeds with the original component set and with MAP + HH only.
+
+- **Pre-stated reading resolved: the false negative is instantiation-dependent.**
+  Original set, PhysioNet A vs B: composition_gap_ratio 0.277 (n=900) and 0.287
+  (n=1500), mean over 5 seeds against the 0.30 gate; variant A flags the flagship
+  in **only 3 of 5 seeds** at both sizes (per-seed range 0.17 to 0.40), so even
+  the original instantiation is a seed-level coin flip near the gate, not a
+  uniform miss. Restricted to MAP + HH the ratio is 0.935 and 0.942 and A flags
+  5/5. The paper's sentence "composition ratio is 0.27 against a 0.30 gate, just
+  under" is the mean of a quantity that straddles the gate across seeds, and it
+  depends on the oxygen term.
+- **That does not make the restricted detector validated.** The ratio is a ratio
+  of two gaps and is unstable when the naive gap is near zero: on the same-site
+  control it averages 2.905 (sd 5.5, range 0.16 to 12.8) at n=900 and 0.336 at
+  n=1500, above the gate in both. The controls stay silent (0/5) only because the
+  availability ratio is about 1; the flagship is separated from controls by
+  availability alone (ratio about 35). This is the "one of two gates is
+  decorative" finding again, now on PhysioNet as well as at full scale.
+- **External, five seeds, detector unchanged.** Original set: variant A flags 1/5,
+  4/5, 4/5 at 50/80/95% HCO3 ablation, variant B 1/5, 5/5, 5/5; controls 0/5.
+  Restricted: A and B both 1/5, 5/5, 5/5; controls 0/5. The detection floor is
+  between 50% and 80% either way. The restricted composition ratio separates
+  ablation from control here (80%: 0.70 to 4.48 against control 0.09 to 0.56). The
+  committed `detectors/results/external5.json` records variant A silent at every
+  level, which is the single-seed run noted before; the five-seed rerun above
+  supersedes it and the paper's external A figures should be checked against it.
+- Undecidable: 0 in every cell. At 95% ablation HH is absent from one side in 4 of
+  5 seeds, which sends the availability ratio to infinity by construction.
