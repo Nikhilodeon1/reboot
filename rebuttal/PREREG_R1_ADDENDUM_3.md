@@ -60,3 +60,12 @@ paired test, and the signal-to-nuisance ratio, all as in 5a.
 - Data handling: raw MIMIC-IV and eICU files and every per-stay cache live only
   under the pod's scratch directory and are deleted when the runs are done; only
   aggregates are written to the repository.
+
+## Clarification added before any run (2026-10-09)
+
+The loader field `sepsis` is the SOFA-based label computed in `single-point` mode
+for both databases (`mimic_sofa_sepsis_labels` / `eicu_sofa_sepsis_labels`),
+which is the Sepsis-3 operationalisation meant above. Comments in the loaders
+that call it ICD-based are stale. The label's operational definition is the same
+in both databases; detector 1 is a separate question about whether two
+legitimate definitions agree.
