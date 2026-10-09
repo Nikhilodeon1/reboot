@@ -1,0 +1,105 @@
+{
+ "n_sites": 88,
+ "n_applicable": 48,
+ "convention_note": "The convention was not fixed in advance; both readings are reported and neither is chosen after the fact.",
+ "positives_narrow": [
+  {
+   "repo": "tableshift",
+   "file": "tableshift/datasets/college_scorecard.py",
+   "start": 170,
+   "end": 170,
+   "sha": "fca9429814",
+   "kind": "O",
+   "note": "tableshift college_scorecard.py:170 (target > 0.5).astype(int) turns a NaN target into 0; preprocess_fn runs in data_source.py:75 before _dropna at tabular_dataset.py:305. Reachability of NaN targets inferred from the dataset's na_values, not executed"
+  },
+  {
+   "repo": "fairseq2",
+   "file": "src/fairseq2/data/parquet/arrow_transform.py",
+   "start": 288,
+   "end": 288,
+   "sha": "7f06d6f4f5",
+   "kind": "O",
+   "note": "fairseq2 arrow_transform.py:288 pc.all skips nulls, so null list max/min rows pass and the table is returned unfiltered; data filter, not a verdict"
+  },
+  {
+   "repo": "robustdg",
+   "file": "utils/scripts/utils.py",
+   "start": 579,
+   "end": 579,
+   "sha": "3eee1730ae",
+   "kind": "V",
+   "note": "robustdg utils.py:579 max(loss_tr, loss_te) returns loss_tr when loss_te is NaN, so the np.isfinite guard on the next line cannot see a NaN test loss; divergence-type input"
+  },
+  {
+   "repo": "fairseq2",
+   "file": "src/fairseq2/data/parquet/arrow_transform.py",
+   "start": 306,
+   "end": 306,
+   "sha": "7f06d6f4f5",
+   "kind": "O",
+   "note": "fairseq2 arrow_transform.py:306 pc.all(and_kleene(...)) skips nulls, same hazard as site 19; data filter"
+  }
+ ],
+ "readings": {
+  "narrow": {
+   "overall": {
+    "k": 4,
+    "n": 48,
+    "rate": 0.08333333333333333,
+    "cp95": [
+     0.02317349513676098,
+     0.19982801419938095
+    ]
+   },
+   "verdict_selection": {
+    "k": 1,
+    "n": 27,
+    "rate": 0.037037037037037035,
+    "cp95": [
+     0.0009372570919447543,
+     0.18970561741304465
+    ]
+   },
+   "other": {
+    "k": 3,
+    "n": 21,
+    "rate": 0.14285714285714285,
+    "cp95": [
+     0.030488967621515484,
+     0.363423987016981
+    ]
+   },
+   "fisher_two_sided_p_V_vs_O": 0.30550416281221093
+  },
+  "broad": {
+   "overall": {
+    "k": 16,
+    "n": 48,
+    "rate": 0.3333333333333333,
+    "cp95": [
+     0.2039597355809994,
+     0.4841083204461719
+    ]
+   },
+   "verdict_selection": {
+    "k": 11,
+    "n": 27,
+    "rate": 0.4074074074074074,
+    "cp95": [
+     0.2238972913505814,
+     0.6120160697403181
+    ]
+   },
+   "other": {
+    "k": 5,
+    "n": 21,
+    "rate": 0.23809523809523808,
+    "cp95": [
+     0.08217587559302247,
+     0.47165982765462144
+    ]
+   },
+   "fisher_two_sided_p_V_vs_O": 0.3549307746577874
+  }
+ }
+}

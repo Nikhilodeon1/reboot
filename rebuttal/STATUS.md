@@ -327,3 +327,32 @@ later is ignored, an empty list raises, and both a NaN value and an empty list
 pass the `any([v==-1 ...])` guard (the empty list yields NaN through 0/0). The
 script states that this is the semantics of the pattern, not a bug in shipped
 DomainBed; whether callers can produce these inputs was not traced.
+
+## 2026-10-09
+
+**Addendum 2 committed first** (`d14687a`, 2026-10-09 11:43:38 -0700), before any of
+the analyses below: Task 4 reporting, the 20-replicate detector 2 null, 5a-prime,
+the detector 5 per-seed archive, spot-check reporting.
+
+**Task 4 reporting, both conventions, exact intervals (strategy decision 1).** The
+NaN convention was not fixed in advance; the narrow reading was applied while
+labelling. Neither is chosen. Headline pair: **4 of 48 (CP95 [0.023, 0.200]) and
+16 of 48 ([0.204, 0.484])** applicable sites. Split by site kind:
+
+| reading | verdict/selection | other | Fisher two-sided p |
+|---|---|---|---|
+| narrow | 1/27 [0.001, 0.190] | 3/21 [0.030, 0.363] | 0.306 |
+| broad | 11/27 [0.224, 0.612] | 5/21 [0.082, 0.472] | 0.355 |
+
+The strategy agent's hand figure (1/27 against 3/21, p about 0.3) is confirmed:
+exact p = 0.3055, matching `scipy.stats.fisher_exact`. Neither split is
+significant, so the data do not show verdict/selection code to be more or less
+exposed than other evaluation code. The four narrow-reading positives:
+- tableshift `tableshift/datasets/college_scorecard.py:170` @ `fca9429814` (other)
+- fairseq2 `src/fairseq2/data/parquet/arrow_transform.py:288` @ `7f06d6f4f5` (other)
+- fairseq2 `src/fairseq2/data/parquet/arrow_transform.py:306` @ `7f06d6f4f5` (other)
+- robustdg `utils/scripts/utils.py:579` @ `3eee1730ae` (verdict/selection)
+
+(Four sites in three files; the earlier report counted files, not sites.) These
+intervals are exact Clopper-Pearson and replace the Wilson figures used on
+2026-10-08.
