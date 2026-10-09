@@ -356,3 +356,27 @@ exposed than other evaluation code. The four narrow-reading positives:
 (Four sites in three files; the earlier report counted files, not sites.) These
 intervals are exact Clopper-Pearson and replace the Wilson figures used on
 2026-10-08.
+
+**Detector 5 per-seed archive and Type 2 check (addendum 2, section D) — done.**
+- The strategy agent's hand estimates are confirmed. From the archived summary
+  statistics, P(flag) = Phi((mean - 0.30) / sd) = **0.418** at n = 1200 (mean 0.283,
+  sd 0.082; observed 2/5) and **0.235** at n = 4000 (mean 0.274, sd 0.036; observed
+  0/3).
+- Re-running the shipped procedure reproduces the n = 1200 archive exactly
+  (per-seed 0.270, 0.289, 0.345, 0.152, 0.358; the two seeds above 0.30 are the
+  two flags) and the first three n = 4000 seeds (0.2328, 0.2909, 0.2986). Two
+  further n = 4000 seeds (0.255, 0.281) give mean 0.272, sd 0.027, **P(flag) =
+  0.148, observed 0/5**, CP95 [0, 0.52]. The availability ratio is 28 to 62 in
+  every run, so the conjunction reduces to the composition gate.
+- At the Task 6 sizes the same model gives 0.411 (n = 900) and 0.435 (n = 1500),
+  observed 3/5 at both.
+- **Reconciliation, one sentence.** The 3 of 5 (Task 6, n = 900 and 1500) and the 2
+  of 5 (n = 1200) are different five-seed samples from one process whose predicted
+  per-seed flag probability is about 0.42, so a one-seed difference is ordinary
+  binomial variation (Fisher exact p = 1.0 for 3/5 against 2/5; P(3 or more of 5)
+  = 0.35 at p = 0.42).
+- **`detectors/results/external5.json` replaced** by the unchanged five-seed
+  runner (old one-seed file stays in git history). Variant A: TP 9, FP 0, FN 6,
+  TN 10, i.e. precision 9/9 and FPR 0/10; flag rates 0.2, 0.8, 0.8 at 50/80/95%
+  ablation (B: 0.2, 1.0, 1.0); both controls 0/5. It agrees exactly with Task 6's
+  full-component external numbers.
