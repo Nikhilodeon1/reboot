@@ -78,8 +78,8 @@ def analyse():
             x, y = a["levels"][str(f)], b["levels"][str(f)]
             ident.append({"seed": a["seed"], "level": f,
                           "d_probe_loss": abs(x["probe_loss"] - y["probe_loss"]),
-                          "d_probe_auroc": (abs(x["target_auroc_probe"] - y["target_auroc_probe"])
-                                            if np.isfinite(y["target_auroc_probe"]) else None),
+                          "d_probe_auroc": (abs(x["target_auroc_probe"] - y["target_auroc"])
+                                            if np.isfinite(y["target_auroc"]) else None),
                           "d_indomain": (abs(x["indomain_auroc"] - y["indomain_auroc"])
                                          if np.isfinite(y["indomain_auroc"]) else None)})
     lv = lambda k, f: np.array([r["levels"][str(f)][k] for r in runs], float)

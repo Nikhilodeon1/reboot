@@ -380,3 +380,32 @@ intervals are exact Clopper-Pearson and replace the Wilson figures used on
   TN 10, i.e. precision 9/9 and FPR 0/10; flag rates 0.2, 0.8, 0.8 at 50/80/95%
   ablation (B: 0.2, 1.0, 1.0); both controls 0/5. It agrees exactly with Task 6's
   full-component external numbers.
+
+**Detector 2 null with 20 replicates (addendum 2 B, exploratory) — done.**
+**1 of 20 replicates flagged, Clopper-Pearson 95% [0.001, 0.249].** The pre-stated
+reading (3 or fewer of 20 is consistent with 5%) is met. Two cautions, neither
+changes the reading: (i) three of the 20 replicates have |t| above 2.132 (one
+flagged, one negative but not all five deltas negative, one in the opposite
+direction); three or more of 20 at a nominal 5% has probability 0.075, so the
+paired t may be mildly anti-conservative in a two-sided sense; (ii) the null
+uses independent model seeds for the two arms, whereas detector 2's own arms
+share a model seed within a draw, so the per-draw noise in the null (sd of the
+relative difference 0.070) is larger than in the real comparison. This replaces
+"FPR 0.00 by construction" with an observed 1/20 on a harder null.
+
+**5a-prime (addendum 2 C, exploratory) — done.** The full held-out target site has
+13,879 to 13,888 stays and 285 to 289 positives per seed (about 2.1%), against the
+3 to 7 positives of the 5a probe. Change in target AUROC versus 0%: **+0.0007
+[-0.0010, +0.0025] at 5%; +0.0027 [-0.0009, +0.0062] at 20%; +0.0037 [+0.00003,
++0.0074] at 100%.** By the pre-stated reading a direction is established only at
+100% leakage (interval excludes zero by a hair, all five seeds positive), not at
+5% or 20%, and the effect is about 0.004 AUROC. The 0% in-domain minus
+full-target gap is 0.142 [0.029, 0.254], so the leakage effect is about 2.6% of
+the nuisance gap at 100% (0.5% at 5%, 1.9% at 20%): the "order of magnitude"
+statement holds with room to spare, and it can now be said with a properly
+sized target. The paper's "moves downstream performance in the expected
+direction" should read: detectable only at 100% leakage, by about 0.004 AUROC.
+Identity check against the committed 5a files: probe loss differs by at most
+3.2e-8, probe AUROC by at most 0.0015, in-domain AUROC by 0.0011; the 5a run was
+on torch 2.14.1 / numpy 2.5.3 and this one on 2.13.0 / 2.4.3, so the models are
+numerically the same but the downstream logistic fit is not bit-identical.
