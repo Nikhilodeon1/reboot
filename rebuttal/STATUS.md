@@ -439,3 +439,42 @@ control) and the Task 5b baselines. Source 59,686, hold-out 14,921, pool 59,686,
 Started 18:46 PT in three processes, seeds 42 to 46. A separate local job regenerates the
 full-scale detector 1 label arrays (about 1.5 hours, saved to the same local folder) for
 the whole-cohort kappa, the cohort bootstrap and the control dispersions.
+
+## 2026-10-09 (night): full-scale results are in
+
+**Full-scale detector 1, observed (replaces the transcribed and predicted figures).**
+Whole-cohort kappa for the MIMIC control is **0.6019** (the paper's 0.602), cohort bootstrap
+CI [0.597, 0.607]. **The cohort-bootstrap P(kappa <= 0.60) is 0.241** at full scale (I had
+predicted 0.217), against 0.216 on the demo cohort. Like for like, the flag probability
+barely moved with 640 times more data (0.216 to 0.241); the paper's "worse at full scale"
+compared the demo cohort bootstrap with the full-scale audit draw (0.484). The audit-draw
+P(flag) of 0.484 and the margin 0.06 are reproduced exactly. The eICU control margin is
+**5.39** (ceiling), as computed before. New: the eICU window-vs-[-72,+24] control now has a
+dispersion (SD 0.0014, margin 291, previously MISSING); the eICU window-vs-[-24,+12]
+margin is 33.0 (36.9 was a transcription); the eICU positive sits at margin 2.59 (a
+discriminating positive, P(flag) 0.996) and the MIMIC positive at 12.1. Findings 1 and 2
+are therefore confirmed on observed values, not just predicted ones.
+
+**5c at full scale.** The prevalence-ratio rule is still inverted: mismatch pairs |log PR|
+0.49 to 1.21, same-construct pairs 0.25 to 1.77, AUROC for picking mismatches 0.125.
+
+**Task 2 at full scale (A0, A1, A2; A3 and A4 not buildable).** Detector 2's own effect
+reproduces the paper's full-scale deltas: **-2.5%, -7.6%, -20.9%** at 5/20/100% (paper
+-3.2, -7.4, -21.1). **The corpus-size control crosses the pre-registered 0.5 line at both
+levels: r2/r1 = 0.55 at 5% and 0.69 at 20%** (0.31 and 0.48 on the demo). Under the
+pre-registered rule this is reported as: detector 2's effect is confounded with corpus
+size, a new limitation, and the detector is not changed. Target exposure still adds beyond
+volume (A1 minus A2, t = 9.0 and 15.4). R remains undetermined (no A3).
+
+**Task 5b at full scale (sepsis label; same models).** Detector 2 flags at all three levels
+(t -3.7, -15.3, -35.1). The standard checks behave differently from the demo story: **k-fold
+instability is silent at every level (0/5), the external floor is silent at 0, 5 and 20% and
+flags 2/5 at 100%, and only the train/test gap fires, at 0% too (5/5)**. So at full scale two
+of the three baselines miss the leakage instead of firing on everything, and the third fires
+regardless: none carries information, but the paper's "all three fire at every level
+including 0%" is demo-scale (qualitatively, scale changed what they do). Downstream target
+AUROC does not move: +0.0007 [-0.0058, 0.0071], -0.0000 [-0.0052, 0.0051], -0.0025
+[-0.0180, 0.0130] at 5/20/100%, with a 0% source-to-target gap of 0.059 [0.052, 0.066] and
+about 2,900 target positives per seed, so the null is precise. Hospital mortality (secondary,
+exploratory) gives the same picture (all intervals include zero). The paper's "leakage moves
+downstream performance in the expected direction" is not supported at full scale at any level.

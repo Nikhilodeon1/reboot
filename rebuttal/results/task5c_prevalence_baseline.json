@@ -1,6 +1,6 @@
 {
  "source": "detectors/results/external1.json (whole-cohort prevalences)",
- "scale": "demo: MIMIC-IV 117 stays, eICU 1627 stays; full-scale values MISSING (label arrays not archived)",
+ "scale": "demo: MIMIC-IV 117 stays, eICU 1627 stays",
  "n_pairs": {
   "mismatch": 8,
   "non_mismatch": 17,

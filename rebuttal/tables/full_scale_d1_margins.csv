@@ -1,0 +1,9 @@
+case,n_cohort,kappa_whole_cohort,cohort_bootstrap_ci_lo,cohort_bootstrap_ci_hi,p_flag_cohort_bootstrap,audit_ci_lo,audit_ci_hi,p_flag_audit_draw,audit_sd,margin_m,class_by_rule_m_le_3
+"MIMIC SOFA win[-48,+24] vs SOFA single-point",74829,0.6019,0.5965,0.6073,0.241,0.5387,0.6626,0.484,0.032,0.06,discriminating
+"MIMIC SOFA win[-48,+24] vs SOFA win[-24,+12]",74829,0.9134,0.9104,0.9163,0.0,0.8764,0.9479,0.0,0.0183,17.14,ceiling
+"MIMIC SOFA win[-48,+24] vs SOFA win[-72,+24]",74829,0.9932,0.9924,0.994,0.0,0.98,1.0,0.0,0.0052,75.03,ceiling
+MIMIC POSITIVE ICD vs SOFA,74829,0.1739,0.1684,0.1795,1.0,0.1042,0.2427,1.0,0.0351,12.13,ceiling
+"eICU SOFA win[-48,+24] vs SOFA single-point",132900,0.826,0.8208,0.831,0.0,0.7371,0.901,0.0,0.0419,5.39,ceiling
+"eICU SOFA win[-48,+24] vs SOFA win[-24,+12]",132900,0.9859,0.9844,0.9872,0.0,0.9591,1.0,0.0,0.0117,33.04,ceiling
+"eICU SOFA win[-48,+24] vs SOFA win[-72,+24]",132900,0.9998,0.9996,1.0,0.0,1.0,1.0,0.0,0.0014,291.4,ceiling
+eICU POSITIVE ICD vs SOFA,132900,0.451,0.4442,0.4579,1.0,0.3341,0.5599,0.9962,0.0576,2.59,discriminating
