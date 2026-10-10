@@ -131,3 +131,55 @@ pre-registered is already on the remote). Code agent: paper edits for the seven
 claims above; response text; the 4open.science mirror update; Checkpoint B and C
 notes. Any new citation in the response must first be added to
 `CITATIONS_VERIFIED.md` after checking its page.
+
+---
+
+## Update, 2026-10-09 night: addendum 2 and the full-scale tier
+
+All experiments set by the strategy decisions are finished. Ledger and status are
+current; the commit column is filled.
+
+**Addendum 2 (committed before it ran, `d14687a`).** Task 4 under both conventions
+with exact intervals: 4/48 [0.023, 0.200] narrow, 16/48 [0.204, 0.484] broad; verdict
+or selection against other sites 1/27 against 3/21 (Fisher p = 0.306, verified with
+scipy) narrow and 11/27 against 5/21 (p = 0.355) broad; all four narrow positives
+listed. Detector 2 null with 20 replicates: **1 of 20 flagged, CP95 [0.001, 0.249]**,
+reading met (3 or fewer); three of 20 replicates had |t| above 2.132, and the null uses
+independent model seeds, so it is harder than detector 2's own shared-seed comparison.
+5a-prime on the full held-out target site (about 13,880 stays, 285 to 289 positives):
+change in AUROC +0.0007 [-0.0010, 0.0025], +0.0027 [-0.0009, 0.0062], +0.0037
+[0.00003, 0.0074] at 5/20/100%, an effect established only at 100% and only by a hair;
+the 0% gap is 0.142, so the effect is 2.6% of it at most. Detector 5: the hand estimates
+are confirmed (0.418 and 0.235 from the archived summaries); re-archived per-seed values
+reproduce the n = 1200 archive exactly and give 0/5 at n = 4000 (P(flag) = 0.148);
+3/5 against 2/5 is binomial noise (Fisher p = 1.0); the one-seed `external5.json` is
+replaced by the five-seed result.
+
+**Full-scale tier (addenda 3 and 3b).** The pod plan was dropped because the data-use
+terms keep credentialed MIMIC-IV and eICU-CRD data, and derivatives, on the owner's
+machine. It ran on CPU from the existing full-cohort caches. Arms A3 and A4 cannot be
+built from those caches (no pre-forward-fill series), so R stays undetermined at full
+scale. Results:
+- **Detector 1, observed at full scale:** whole-cohort kappa 0.6019 (the paper's 0.602);
+  the cohort-bootstrap P(kappa <= 0.60) is **0.241** (predicted 0.217; demo 0.216), the
+  audit-draw P(flag) 0.484 and margin 0.06 reproduce exactly; the eICU control margin is
+  5.39. Findings 1 and 2 are now confirmed on observed values.
+- **Detector 2 corpus-size control:** r2/r1 = **0.55 at 5% and 0.69 at 20%**, both over
+  the pre-registered 0.5 line, so by the rule detector 2's effect is confounded with
+  corpus size at full scale (reported as a new limitation; the detector is unchanged);
+  A1 minus A2 is still strongly significant (t = 9.0 and 15.4). Detector 2's own deltas
+  reproduce the paper's (-2.5, -7.6, -20.9% against -3.2, -7.4, -21.1%).
+- **Task 5b, same models:** detector 2 flags at all levels. K-fold instability is silent
+  at every level, the external floor silent except 2/5 at 100%, and the train/test gap
+  fires everywhere including 0%: none carries information, but the paper's "all three
+  fire at every level" is demo-scale only. Downstream AUROC does not move at any level
+  (CIs include zero, about 2,900 positives, 0% gap 0.059).
+
+**Decisions left for the strategy agent.** (1) The corpus-size result is the single
+most damaging new finding for detector 2: both levels exceed 0.5 at full scale, against
+0.31 and 0.48 on the demo. The pre-registered wording is "confounded with corpus size,
+a new limitation"; how prominently it goes in the response is a framing call. (2)
+Whether to state the demo-to-full change for the baselines (all fire at demo, two silent
+at full scale) as a result in its own right; it supports the paper's existing theme that
+scale changes diagnostics qualitatively. (3) The remaining open item is the owner's
+twelve spot-check labels; agreement will be reported as k of 12.
