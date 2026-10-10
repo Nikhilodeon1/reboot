@@ -69,3 +69,41 @@ which is the Sepsis-3 operationalisation meant above. Comments in the loaders
 that call it ICD-based are stale. The label's operational definition is the same
 in both databases; detector 1 is a separate question about whether two
 legitimate definitions agree.
+
+## Addendum 3b: revised before any full-scale run (2026-10-09, evening)
+
+Supersedes the pod-based execution plan above. Reason: the data-use terms the
+owner works under, as recorded in the handoff note for this machine, do not allow
+credentialed MIMIC-IV or eICU-CRD files, or any patient-level derivative of them,
+to be uploaded to a pod. The earlier statement that holding them on the pod was
+acceptable is superseded by that stricter rule. The pod is not used for this tier,
+and the fetch helper written for it is removed.
+
+Changes to the design, all fixed before any run:
+
+1. **Execution: this machine, CPU, no GPU.** The earlier time estimate (1 to 3 h
+   on a GPU) no longer applies. Written estimate: about 84,000 optimisation steps
+   per seed (arms A0, A1 at 5/20/100%, A2 at 5/20%), roughly 420,000 over five
+   seeds. At an assumed 10 to 20 steps per second per process that is about 70 to
+   140 minutes per seed and, with two or three processes, 3 to 6 hours of wall
+   time. The first run reports its measured speed; if the projection for all runs
+   exceeds 9 hours the tier is stopped and reported as not completed.
+2. **Data: existing full-cohort preprocessed caches** (74,607 MIMIC-IV stays and
+   130,446 eICU-CRD stays, built by the repository's own loaders; 17 variables, 48 h
+   window, SOFA-based single-point Sepsis-3 label) instead of a fresh parse, which
+   took 7 hours for MIMIC-IV alone. The cohorts differ slightly from the 74,829
+   and 132,900 used elsewhere because the caches apply the loaders' extra filters.
+   The caches hold fixed-bounds scaled values and the post-forward-fill mask, **not
+   the raw pre-forward-fill series**.
+3. **Arms A3 and A4 cannot be built** from these caches (they need the raw
+   observation pattern before forward-fill) and are not run at full scale. So the
+   missingness share R is undetermined at full scale, and the full-scale tier
+   answers only: the corpus-size control (r2 against r1, the pre-registered 0.5
+   rule) and the Task 5b baselines. No substitute manipulation on the post-fill
+   mask is used, because it would not be the same intervention.
+4. Everything else is as in addendum 3: 20% source hold-out for A2, A0 rerun on the
+   80% source, probe 25%, pool capped at the source size, seeds 42..46, 3 epochs,
+   same decision rules and readings.
+5. Per-stay arrays derived from the caches are written only to a local scratch
+   folder outside the repository, never committed and never moved off this machine.
+   Only aggregates are written to the repository.
