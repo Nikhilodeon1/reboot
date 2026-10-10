@@ -422,3 +422,20 @@ the demo file is restored to its committed content. This file has per-draw kappa
 whole-cohort prevalences only: the whole-cohort kappa, the cohort bootstrap and the
 control dispersions still need the label arrays, which have to be regenerated
 (about 1.6 hours) and this time kept outside the scratch folder.
+
+## 2026-10-09 (evening): full-scale tier moved from the pod to this machine
+
+The owner's data-use terms, as recorded in the handoff note on this machine, do not
+allow credentialed MIMIC-IV or eICU-CRD files or patient-level derivatives to go to a
+pod, and a fresh PhysioNet download is rate-limited. The pod plan and its fetch helper
+are removed (addendum 3b, `69148a9`). The full-scale tier now runs on CPU here from
+the existing full-cohort caches (74,607 MIMIC-IV and 130,446 eICU stays; same variable
+order and plausibility bounds as this repository, checked). Patient-level arrays derived
+from them live in a local folder outside the repository and are never committed. Arms
+A3 and A4 cannot be built from these caches (no pre-forward-fill series), so the missingness
+share R stays undetermined at full scale; the run covers A0, A1 and A2 (corpus-size
+control) and the Task 5b baselines. Source 59,686, hold-out 14,921, pool 59,686, probe
+32,612 stays; the 20% level needs 11,937 extra source stays and fits in the hold-out.
+Started 18:46 PT in three processes, seeds 42 to 46. A separate local job regenerates the
+full-scale detector 1 label arrays (about 1.5 hours, saved to the same local folder) for
+the whole-cohort kappa, the cohort bootstrap and the control dispersions.
