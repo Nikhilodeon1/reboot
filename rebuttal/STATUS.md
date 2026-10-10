@@ -409,3 +409,16 @@ Identity check against the committed 5a files: probe loss differs by at most
 3.2e-8, probe AUROC by at most 0.0015, in-domain AUROC by 0.0011; the 5a run was
 on torch 2.14.1 / numpy 2.5.3 and this one on 2.13.0 / 2.4.3, so the models are
 numerically the same but the downstream logistic fit is not bit-identical.
+
+**Full-scale detector 1 labels regenerated (the job completed 2026-10-09 13:22; its
+stdout and the saved label arrays were lost with a scratch clean-up, the aggregate
+JSON survives).** Unchanged `run_external1.py` on the full MIMIC-IV (74,829 stays)
+and eICU-CRD (132,900 stays) data, audit draw of 500 at audit seed 0. The kappa on
+that one audit draw: MIMIC SOFA window vs single-point 0.634 (the whole-cohort value
+the paper quotes is 0.602), eICU 0.869; ICD vs SOFA is flagged in both (0.204 and
+0.514). The run wrote over the demo `detectors/results/external1.json` in the working
+tree; the full-scale copy is saved as `rebuttal/results/full_scale_external1.json` and
+the demo file is restored to its committed content. This file has per-draw kappa and
+whole-cohort prevalences only: the whole-cohort kappa, the cohort bootstrap and the
+control dispersions still need the label arrays, which have to be regenerated
+(about 1.6 hours) and this time kept outside the scratch folder.
