@@ -1,0 +1,210 @@
+{
+ "r2r1_demo5": {
+  "text": "0.31",
+  "ledger": "T2-r2r1"
+ },
+ "r2r1_demo20": {
+  "text": "0.48",
+  "ledger": "T2-r2r1"
+ },
+ "r2r1_full5": {
+  "text": "0.55",
+  "ledger": "FS-t2-r"
+ },
+ "r2r1_full20": {
+  "text": "0.69",
+  "ledger": "FS-t2-r"
+ },
+ "t_a1a2_full": {
+  "text": "9.0 and 15.4",
+  "ledger": "FS-t2-r"
+ },
+ "t_a1a2_demo": {
+  "text": "8.2 and 7.7",
+  "ledger": "T2-r2r1"
+ },
+ "d1_cohort_demo": {
+  "text": "0.216",
+  "ledger": "FS-d1-estimand"
+ },
+ "d1_cohort_full": {
+  "text": "0.241",
+  "ledger": "FS-d1-estimand"
+ },
+ "d1_cohort_pred": {
+  "text": "0.217",
+  "ledger": "FS-d1-estimand"
+ },
+ "d1_audit_full": {
+  "text": "0.484",
+  "ledger": "FS-d1-estimand"
+ },
+ "d1_audit_pred": {
+  "text": "0.475",
+  "ledger": "T1c-mimic-full"
+ },
+ "d1_pop": {
+  "text": "0.602",
+  "ledger": "T1c-band"
+ },
+ "d1_pop_eicu": {
+  "text": "0.826",
+  "ledger": "T1c-band"
+ },
+ "d1_m_mimic": {
+  "text": "0.06",
+  "ledger": "FS-d1-controls"
+ },
+ "d1_m_eicu": {
+  "text": "5.39",
+  "ledger": "FS-d1-controls"
+ },
+ "d1_m_eicu_pos": {
+  "text": "2.59",
+  "ledger": "FS-d1-positives"
+ },
+ "null_flags": {
+  "text": "1 of 20",
+  "ledger": "A2-null20"
+ },
+ "null_ci": {
+  "text": "0.001 to 0.249",
+  "ledger": "A2-null20"
+ },
+ "null_spread": {
+  "text": "3 of 20",
+  "ledger": "A2-null20-spread"
+ },
+ "R_demo": {
+  "text": "0.02 and -0.11",
+  "ledger": "T2-R"
+ },
+ "fill_a3": {
+  "text": "0.215",
+  "ledger": "T2-fill"
+ },
+ "fill_target": {
+  "text": "0.301",
+  "ledger": "T2-fill"
+ },
+ "a5p_d5": {
+  "text": "+0.0007 [-0.0010, +0.0025] at 5%, +0.0027 [-0.0009, +0.0062] at 20% and +0.0037 [+0.00003, +0.0074] at 100%",
+  "ledger": "A2-5aprime-dAUROC"
+ },
+ "a5p_100": {
+  "text": "+0.0037 [+0.00003, +0.0074]",
+  "ledger": "A2-5aprime-dAUROC"
+ },
+ "a5p_pos": {
+  "text": "285 to 289",
+  "ledger": "A2-5aprime-n"
+ },
+ "a5p_gap": {
+  "text": "0.142 [0.029, 0.254]",
+  "ledger": "A2-5aprime-gap"
+ },
+ "fs_auroc": {
+  "text": "+0.0007 [-0.0058, 0.0071], -0.0000 [-0.0052, 0.0051] and -0.0025 [-0.0180, 0.0130]",
+  "ledger": "FS-5b-auroc"
+ },
+ "fs_gap": {
+  "text": "0.0589 [0.0522, 0.0657]",
+  "ledger": "FS-5b-auroc"
+ },
+ "base_demo": {
+  "text": "k-fold 5/5, gap 4/4 (1 undecidable), floor 4/5",
+  "ledger": "T5a-baseline-fpr"
+ },
+ "base_full": {
+  "text": "k-fold 0, 0, 0, 0; train/test gap 5, 4, 5, 4; external floor 0, 0, 0, 2",
+  "ledger": "FS-5b-base"
+ },
+ "prev_auroc_demo": {
+  "text": "0.059",
+  "ledger": "T5c-auroc"
+ },
+ "prev_auroc_full": {
+  "text": "0.125",
+  "ledger": "FS-5c"
+ },
+ "t4_narrow": {
+  "text": "4/48 (exact 95% interval 0.023 to 0.200)",
+  "ledger": "A2-4c-narrow"
+ },
+ "t4_broad": {
+  "text": "16/48 (0.204 to 0.484)",
+  "ledger": "A2-4c-broad"
+ },
+ "t4_split_narrow": {
+  "text": "1/27 against 3/21 (Fisher exact p = 0.306)",
+  "ledger": "A2-4c-narrow"
+ },
+ "t4_split_broad": {
+  "text": "11/27 against 5/21 (p = 0.355)",
+  "ledger": "A2-4c-broad"
+ },
+ "t3_sites": {
+  "text": "103",
+  "ledger": "T3a-sites"
+ },
+ "t3_sampled": {
+  "text": "53",
+  "ledger": "T3a-sampled"
+ },
+ "t3_labels": {
+  "text": "0 contaminated, 1 disclosed oracle, 1 ambiguous, 21 sound and 30 not selections",
+  "ledger": "T3b-labels"
+ },
+ "t3_cp": {
+  "text": "0 of 23 (exact 95% interval 0.000 to 0.148)",
+  "ledger": "A3-cp-detector3"
+ },
+ "t3_indet": {
+  "text": "53 of 53",
+  "ledger": "T3c-verdicts"
+ },
+ "t3_gap": {
+  "text": "126 notebooks, 8 unparseable files",
+  "ledger": "T3a-coverage-gap"
+ },
+ "d5_1200": {
+  "text": "2/5 at n = 1200",
+  "ledger": "A2-d5-1200"
+ },
+ "d5_4000": {
+  "text": "0/5 at n = 4000",
+  "ledger": "A2-d5-4000"
+ },
+ "d5_restricted": {
+  "text": "0.935",
+  "ledger": "T6-flagship-restricted"
+ },
+ "d5_control": {
+  "text": "2.905",
+  "ledger": "T6-control-restricted"
+ },
+ "d5_ext": {
+  "text": "precision 9/9, false-positive rate 0/10",
+  "ledger": "A2-ext5"
+ },
+ "pool_prec": {
+  "text": "6/6 [0.541, 1.000]",
+  "ledger": "T1a-prec-pooled"
+ },
+ "pool_rec": {
+  "text": "6/7 [0.421, 0.996]",
+  "ledger": "T1a-rec-pooled"
+ },
+ "pool_fpr": {
+  "text": "0/12 [0.000, 0.265]",
+  "ledger": "T1a-fpr-pooled"
+ },
+ "d5_pred1200": {
+  "text": "0.42",
+  "ledger": "A2-d5-1200"
+ },
+ "d5_pred4000": {
+  "text": "0.15",
+  "ledger": "A2-d5-4000"
+ }
+}

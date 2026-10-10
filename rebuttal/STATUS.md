@@ -478,3 +478,12 @@ AUROC does not move: +0.0007 [-0.0058, 0.0071], -0.0000 [-0.0052, 0.0051], -0.00
 about 2,900 target positives per seed, so the null is precise. Hospital mortality (secondary,
 exploratory) gives the same picture (all intervals include zero). The paper's "leakage moves
 downstream performance in the expected direction" is not supported at full scale at any level.
+
+## 2026-10-10: first full draft of the manuscript and response package
+
+Revised `main.tex` (9 pages in total; main text ends on page 7), `ISSUE_MATRIX.md`, `RESPONSE_GLOBAL.md`
+and five reviewer replies (built from `response_src/` by `scripts/build_response.py`, every number
+bound to a ledger row through `numbers.json`), `CHANGED_CLAIMS.md` (27 rows for approval),
+`QA_REPORT.md`, a latexdiff PDF (`manuscript/main_latexdiff.pdf`). Blocked on: the raw reviews
+(`rebuttal/reviews_raw.md` is not in the repository), the owner's 12 spot-check labels, and two
+portal facts (PDF upload, character limit). Gate results are in `QA_REPORT.md`.
