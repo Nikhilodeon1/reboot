@@ -206,5 +206,37 @@
  "d5_pred4000": {
   "text": "0.15",
   "ledger": "A2-d5-4000"
+ },
+ "t4_repos": {
+  "text": "25",
+  "ledger": "T4b-sites"
+ },
+ "t4_sites": {
+  "text": "236 candidate sites, of which 88 were sampled",
+  "ledger": "T4b-sites"
+ },
+ "gap_full": {
+  "text": "0.059",
+  "ledger": "FS-5b-auroc"
+ },
+ "gap_a5p": {
+  "text": "0.142",
+  "ledger": "A2-5aprime-gap"
+ },
+ "fs_pos": {
+  "text": "about 2900",
+  "ledger": "FS-5b-auroc"
+ },
+ "d5_900": {
+  "text": "3/5 at n = 900 and at n = 1500",
+  "ledger": "T6-flagship-full"
+ },
+ "t3_real": {
+  "text": "23",
+  "ledger": "A3-cp-detector3"
+ },
+ "t3_files": {
+  "text": "15",
+  "ledger": "A3-cp-detector3"
  }
 }

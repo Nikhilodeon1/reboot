@@ -487,3 +487,12 @@ bound to a ledger row through `numbers.json`), `CHANGED_CLAIMS.md` (27 rows for 
 `QA_REPORT.md`, a latexdiff PDF (`manuscript/main_latexdiff.pdf`). Blocked on: the raw reviews
 (`rebuttal/reviews_raw.md` is not in the repository), the owner's 12 spot-check labels, and two
 portal facts (PDF upload, character limit). Gate results are in `QA_REPORT.md`.
+
+## 2026-10-10 (evening): mode change to text-only comments
+
+OpenReview takes text only, so the manuscript rewrite is deferred. The earlier drafted replies (which cited
+paper sections as revised) are removed. New deliverables: `rebuttal/comments/COMMENT_*.txt` (global in two
+numbered parts, then one per reviewer), `rebuttal/RESPONSE_NUMBERS_CHECK.md` (number, comment, ledger id, source
+file, commit), `rebuttal/COMMENTS_QA.md`. Blocked on: the 12 spot-check labels (placeholder in the global part 1
+and the JJvk reply), the real per-comment character limit, and a refresh of the 4open.science mirror (it has no
+rebuttal directory yet).
