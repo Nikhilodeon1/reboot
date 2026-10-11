@@ -238,5 +238,13 @@
  "t3_files": {
   "text": "15",
   "ledger": "A3-cp-detector3"
+ },
+ "spot_check": {
+  "text": "8 of 12 labels agreed (exact 95% interval 0.349 to 0.901)",
+  "ledger": "SPOT-12"
+ },
+ "spot_sens": {
+  "text": "5 of 49 (0.034 to 0.222) on the narrow reading and 17 of 49 (0.217 to 0.496) on the broad one",
+  "ledger": "SPOT-12-sens"
  }
 }

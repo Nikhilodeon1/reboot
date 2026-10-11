@@ -7,10 +7,8 @@ in `rebuttal/comments/`; every number is listed with its ledger row, source file
 
 ## Flags before posting
 
-1. **Spot-check placeholder.** `COMMENT_0a_GLOBAL_part1.txt` and `COMMENT_1_JJvk.txt` contain the bracketed
-   text `[SPOT-CHECK RESULT PLACEHOLDER: ...]`. Replace it with "k of 12, exact 95% interval" once the 12 labels
-   are in. Do not post with it.
-2. **Length limit.** Assumed 5,000 characters per comment. [OWNER: fill in the real limit.] Longest: 4,312.
+1. **Spot-check.** Filled: 8 of 12 labels agree (exact 95% interval 0.349 to 0.901); see `rebuttal/results/spotcheck_agreement.json`. Owner must confirm who produced the second set of labels, because the comments say "an author who had not seen our labels".
+2. **Length limit.** Assumed 5,000 characters per comment. [OWNER: fill in the real limit.] Longest: 4,526.
    The global comment is already two numbered parts.
 3. **The mirror must be refreshed before posting.** The mirror (anonymous.4open.science/r/reboot-8568/) lists
    only `.gitignore, CONTRIBUTORS.md, README.md, TAXONOMY.md, config.py, detectors, requirements.txt, scripts, src`.
@@ -24,13 +22,13 @@ in `rebuttal/comments/`; every number is listed with its ledger row, source file
 
 | Comment | Characters |
 |---|---|
-| 0a global, part 1 (Corrections) | 4,312 |
+| 0a global, part 1 (Corrections) | 4,526 |
 | 0b global, part 2 (what we ran, planned revisions, fit) | 4,037 |
-| 1 JJvk | 3,932 |
+| 1 JJvk | 3,974 |
 | 2 hDMD | 4,061 |
 | 3 mxvm | 3,264 |
 | 4 Npus | 3,516 |
-| 5 nyqg | 3,737 |
+| 5 nyqg | 3,805 |
 
 QA grep on every comment (built into the script): `validated`, `FPR 0`, `worse with data`, `order of magnitude`,
 `expected direction`, `renders a verdict`, em dashes, `see the revised PDF`, `now says`, flattery phrases: no hit.
