@@ -8,7 +8,7 @@ in `rebuttal/comments/`; every number is listed with its ledger row, source file
 ## Flags before posting
 
 1. **Spot-check.** Filled: 8 of 12 labels agree (exact 95% interval 0.349 to 0.901); see `rebuttal/results/spotcheck_agreement.json`. Owner must confirm who produced the second set of labels, because the comments say "an author who had not seen our labels".
-2. **Length limit.** Assumed 5,000 characters per comment. [OWNER: fill in the real limit.] Longest: 4,526.
+2. **Length limit.** Limit confirmed by the owner: 5,000 characters per comment. Longest: 4,526.
    The global comment is already two numbered parts.
 3. **The mirror must be refreshed before posting.** The mirror (anonymous.4open.science/r/reboot-8568/) lists
    only `.gitignore, CONTRIBUTORS.md, README.md, TAXONOMY.md, config.py, detectors, requirements.txt, scripts, src`.
