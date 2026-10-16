@@ -38,7 +38,7 @@ class TestBootstrapCI(unittest.TestCase):
         self.assertLessEqual(point, hi)
 
     def test_smaller_n_gives_a_wider_interval(self):
-        """Smaller n gives a wider interval."""
+
         rng = np.random.default_rng(3)
         big = rng.integers(0, 2, 800)
         big_b = big.copy()
@@ -54,7 +54,7 @@ class TestBootstrapCI(unittest.TestCase):
             bootstrap_kappa_ci(np.zeros(10, int), np.zeros(9, int), iters=10)
 
     def test_degenerate_resamples_are_dropped_not_coerced(self):
-        """Undefined-kappa resamples dropped, not coerced."""
+
         a = np.zeros(40, int)
         a[0] = 1
         b = a.copy()

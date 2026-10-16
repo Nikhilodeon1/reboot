@@ -1,14 +1,14 @@
-"""Detector 5 external validation. Cases fixed in PREREGISTRATION.md.
 
-  E1  eICU halves, arm 2 HCO3 ablated   expect flag
-  E2  eICU halves, no ablation          expect silent
-  E3  MIMIC-IV vs eICU                  descriptive, not scored
-  E4  PhysioNet Site A vs itself        expect silent
 
-Both variants run on every case.
 
-    PCL_TEST_MODE=1 python detectors/external/run_external5.py --seeds 5
-"""
+
+
+
+
+
+
+
+
 import argparse
 import json
 import os
@@ -36,11 +36,11 @@ def _run(name_a, A, name_b, B, rule, verbose):
 
 
 def cases_for_seed(eicu, mimic, seed, rule, physionet_n, verbose=False):
-    """Scored cases E1, E2, E4 at one seed under one rule."""
+
     out = []
     arm1, arm2 = split_arrays(eicu, seed)
 
-    # E1
+
     for p in ABLATION_LEVELS:
         A = to_stays(arm1)
         B = to_stays(ablate(arm2, "HCO3", p=p, seed=seed))
@@ -49,13 +49,13 @@ def cases_for_seed(eicu, mimic, seed, rule, physionet_n, verbose=False):
         out.append(Case(f"E1 ablation {int(p * 100)}%", flagged, True,
                         dict(st, seed=seed, level=p)))
 
-    # E2
+
     flagged, st = _run("eICU arm1", to_stays(arm1), "eICU arm2", to_stays(arm2),
                        rule, verbose)
     out.append(Case("E2 eICU split, no ablation", flagged, False,
                     dict(st, seed=seed)))
 
-    # E4
+
     fa, _ = sample_files(seed, physionet_n)
     half = len(fa) // 2
     flagged, st = run_check(f"PhysioNet A (half 1)", fa[:half],
@@ -68,14 +68,14 @@ def cases_for_seed(eicu, mimic, seed, rule, physionet_n, verbose=False):
 
 
 def descriptive_e3(eicu, mimic, rule, verbose=False):
-    """E3 statistics only; never scored."""
+
     flagged, st = _run("MIMIC-IV demo", to_stays(mimic), "eICU demo",
                        to_stays(eicu), rule, verbose)
     return flagged, st
 
 
 def save_arrays(path, eicu, mimic):
-    """Cache loaded raw_ts arrays (npz). Per-stay; not committed."""
+
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     np.savez_compressed(
         path,

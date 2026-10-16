@@ -8,17 +8,24 @@ import math
 from config import D_MODEL, N_HEADS, N_LAYERS, FFN_DIM, N_VARS, DROPOUT, HOURS
 
 
-# ── INPUT EMBEDDING ───────────────────────────────────────────────────────────
+
 
 class ClinicalEmbedding(nn.Module):
-    """
-    Projects each (timestep, variable) pair into d_model space.
-    Adds learned variable embeddings + sinusoidal positional embeddings.
 
-    Input : x    (B, T, V) — normalized time series
-            mask (B, T, V) — True where observed
-    Output: (B, T, d_model)
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def __init__(self, n_vars: int, d_model: int, max_len: int = 48):
         super().__init__()
         self.n_vars = n_vars
@@ -56,16 +63,22 @@ class ClinicalEmbedding(nn.Module):
         return out
 
 
-# ── TRANSFORMER ENCODER ───────────────────────────────────────────────────────
+
 
 class ClinicalTransformer(nn.Module):
-    """
-    6-layer transformer encoder over hourly ICU time series.
 
-    Input : x      (B, T, V)
-            mask   (B, T, V) — observation mask
-    Output: representations (B, T, d_model)
-    """
+
+
+
+
+
+
+
+
+
+
+
+
     def __init__(
         self,
         n_vars: int = N_VARS,
@@ -92,26 +105,31 @@ class ClinicalTransformer(nn.Module):
 
     def forward(self, x, mask):
         emb = self.embedding(x, mask)
-        # Create causal mask (triangular)
+
         sz = emb.size(1)
         causal_mask = torch.triu(torch.full((sz, sz), float('-inf'), device=x.device), diagonal=1)
         reps = self.encoder(emb, mask=causal_mask, is_causal=True)
         return reps
 
     def encode(self, x, mask):
-        """Alias so ClinicalTransformer can be used standalone."""
+
         return self.forward(x, mask)
 
 
-# ── MASKED PREDICTION HEAD (pretraining) ─────────────────────────────────────
+
 
 class MaskedPredictionHead(nn.Module):
-    """
-    Predicts masked variable values from transformer representations.
 
-    Input : reps (B, T, d_model)
-    Output: preds (B, T, V)
-    """
+
+
+
+
+
+
+
+
+
+
     def __init__(self, d_model: int, n_vars: int):
         super().__init__()
         self.head = nn.Sequential(
@@ -125,17 +143,24 @@ class MaskedPredictionHead(nn.Module):
         return self.head(reps)
 
 
-# ── CLASSIFICATION HEAD (fine-tuning) ─────────────────────────────────────────
+
 
 class ClassificationHead(nn.Module):
-    """
-    Extracts the transformer representation at the LAST observed timestep
-    for classification. This ensures zero look-ahead bias.
 
-    Input : reps (B, T, d_model)
-            mask (B, T, V) — used to find the last valid timestep
-    Output: logits (B, 1)
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def __init__(self, d_model: int, dropout: float = 0.2):
         super().__init__()
         self.head = nn.Sequential(
@@ -147,38 +172,49 @@ class ClassificationHead(nn.Module):
 
     def forward(self, reps, obs_mask=None):
         if obs_mask is not None:
-            # Find index of last observed timestep for each sample in batch
-            # obs_mask is (B, T, V), t_obs is (B, T)
+
+
             t_obs = obs_mask.any(dim=-1)
-            # Flip along time axis; argmax finds first True in flipped = last True in original.
-            # sum()-1 was wrong: counts observed timesteps, not the index of the last one.
+
+
             last_idx = (t_obs.size(1) - 1 - t_obs.flip(dims=[1]).long().argmax(dim=1)).clamp(min=0)
-            
-            # Gather representations at last_idx
-            # pooled shape: (B, d_model)
+
+
+
             batch_idx = torch.arange(reps.size(0), device=reps.device)
             pooled = reps[batch_idx, last_idx]
         else:
-            # Fallback to last timestep if no mask provided
+
             pooled = reps[:, -1, :]
         return self.head(pooled)
 
 
-# ── FULL PCL MODEL ────────────────────────────────────────────────────────────
+
 
 class PCLModel(nn.Module):
-    """
-    Full model used during pretraining and fine-tuning.
-    Combines encoder + masked prediction head.
-    The PCL loss is applied externally (in PhysiologicalConstraintLoss).
 
-    API:
-        model   = PCLModel()
-        reps    = model.encode(x, mask)              # get representations
-        reps    = model.get_representations(x, mask) # alias for encode
-        preds   = model.predict(reps)                # for masked prediction loss
-        logits  = model.classify(reps, task, mask)   # for fine-tuning
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def __init__(
         self,
         n_vars: int = N_VARS,
@@ -199,28 +235,32 @@ class PCLModel(nn.Module):
         self.d_model = d_model
 
     def encode(self, x, mask):
-        """Returns (B, T, d_model) representations. Primary API method."""
+
         return self.encoder(x, mask)
 
     def get_representations(self, x, mask):
-        """Alias for encode() — kept for evaluate_utils compatibility."""
+
         return self.encode(x, mask)
 
     def predict(self, reps):
-        """Returns (B, T, V) predictions for masked variable prediction loss."""
+
         return self.pred_head(reps)
 
     def add_classification_head(self, task_name: str, dropout: float = 0.2):
-        """
-        Adds a classification head for a downstream task.
-        Queries the model's current device and moves the new head there
-        immediately so mixed-device crashes cannot occur.
-        """
+
+
+
+
+
+
+
+
+
         device = next(self.parameters()).device
         self.cls_heads[task_name] = ClassificationHead(self.d_model, dropout).to(device)
 
     def classify(self, reps, task_name: str, obs_mask=None):
-        """Returns (B, 1) logits for a given task."""
+
         if task_name not in self.cls_heads:
             raise KeyError(
                 f"No classification head for task '{task_name}'. "
@@ -234,7 +274,7 @@ class PCLModel(nn.Module):
         return total
 
 
-# ── GRADIENT REVERSAL (site adversarial) ─────────────────────────────────────
+
 
 class _GradientReversal(torch.autograd.Function):
     @staticmethod
@@ -248,7 +288,7 @@ class _GradientReversal(torch.autograd.Function):
 
 
 class SiteAdversary(nn.Module):
-    """Small MLP with gradient reversal for site-invariant pretraining."""
+
     def __init__(self, d_model, n_sites=4):
         super().__init__()
         self.clf = nn.Sequential(
@@ -266,16 +306,22 @@ class SiteAdversary(nn.Module):
         return self.clf(reversed_pooled)
 
 
-# ── MASKING UTILITY ───────────────────────────────────────────────────────────
+
 
 def apply_random_mask(x: torch.Tensor, obs_mask: torch.Tensor, mask_prob: float = 0.30):
-    """
-    Randomly masks mask_prob fraction (default 30%) of observed (variable, timestep) pairs.
 
-    Returns:
-        x_masked     : (B, T, V) — masked input (0 at masked positions)
-        pretrain_mask: (B, T, V) bool — True at positions that were masked
-    """
+
+
+
+
+
+
+
+
+
+
+
+
     rand = torch.rand_like(x)
     pretrain_mask = (rand < mask_prob) & obs_mask
     x_masked = x.clone()

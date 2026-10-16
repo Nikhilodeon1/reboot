@@ -1,10 +1,10 @@
-"""Check 5 gap ratio: alphabetical-prefix vs seeded random sampling.
 
-The retracted 0.49 came from `sorted(listdir)[:n]`. PhysioNet filenames are
-patient IDs, so a prefix is not a random sample.
 
-    python detectors/check5_sampling_sensitivity.py --seeds 5 --n 1200
-"""
+
+
+
+
+
 import argparse
 import json
 import os

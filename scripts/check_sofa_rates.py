@@ -1,18 +1,18 @@
-"""
-Cheap A1 validation: compute SOFA-based Sepsis-3 positive rates on the FULL
-MIMIC-IV / eICU data WITHOUT any model training. Run this on the pod to check
-the rate lands in a believable range before wiring the label into the pipeline.
 
-Usage (pod, with real data dirs):
-    MIMIC_DIR=/workspace/mimic-iv EICU_DIR=/workspace/eicu \
-        python scripts/check_sofa_rates.py
 
-Notes:
-  * Cohort here is age>=18 & LOS>=24h (the loaders' filter minus the
-    has-hemodynamic-window step, which needs the vitals read); the rate is a
-    close approximation of the modeled cohort's rate.
-  * Reads are chunked+filtered, so memory stays bounded even on full eICU.
-"""
+
+
+
+
+
+
+
+
+
+
+
+
+
 import os
 import sys
 import json

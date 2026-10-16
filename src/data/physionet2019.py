@@ -156,7 +156,7 @@ def load_physionet2019(data_dir, fraction=1.0, sites=None, seed=42, keep_raw=Fal
             "patient_id": patient_id,
             "mortality": mortality,
             "los_3d": los_3d,
-            "los_h": los_h,  # continuous ICU length of stay, for the LOS regression task
+            "los_h": los_h,
             "unit_type": unit_type,
         })
 

@@ -1,19 +1,19 @@
-"""Convert per-site sample pickles into detector 2's pool cache.
 
-Input: finetune_mortality.py --cache-only output. Verifies required sample keys
-first; exits on mismatch.
 
-    python detectors/external/adapt_pool_cache.py \
-        --mimic <dir>/mimic_frac1.0.pkl \
-        --eicu  <dir>/eicu_frac1.0.pkl \
-        --out   detectors/results/full_d2_pools.pkl
-"""
+
+
+
+
+
+
+
+
 import argparse
 import os
 import pickle
 import sys
 
-# keys ICUDataset reads
+
 REQUIRED = ["values", "mask", "abg_mask", "c_mask", "label", "site_id"]
 
 
@@ -22,7 +22,7 @@ def load_site(path, label):
         sys.exit(f"missing {label} cache: {path}")
     with open(path, "rb") as fh:
         obj = pickle.load(fh)
-    # accept (samples, normalizer) tuples
+
     if isinstance(obj, tuple) and len(obj) == 2 and isinstance(obj[0], list):
         obj = obj[0]
     if not isinstance(obj, list) or not obj:

@@ -1,14 +1,14 @@
-"""
-Data-efficiency ablation: OOD AUROC vs training data fraction for ERM vs PCL.
 
-Trains on 10%, 25%, 50%, and 100% of Site A (PhysioNet 2019) and evaluates
-zero-shot on Site B. Expected finding: PCL's advantage is larger in low-data
-regimes, directly answering the reviewer's attention mechanism criticism.
 
-Usage:
-    PCL_TEST_MODE=1 python scripts/data_scaling.py   # quick smoke test
-    PCL_TEST_MODE=0 python scripts/data_scaling.py   # full run
-"""
+
+
+
+
+
+
+
+
+
 import json
 import logging
 import os
@@ -49,7 +49,7 @@ def _train_eval(train_indices, site_b_indices, dataset, use_pcl: bool, seed: int
     torch.manual_seed(seed)
     np.random.seed(seed)
 
-    # Stratified train/val split of site A subset
+
     from sklearn.model_selection import StratifiedShuffleSplit
     labels = np.array([dataset.samples[i][TASK].item() for i in train_indices])
     if len(np.unique(labels)) >= 2 and len(train_indices) > 10:

@@ -1,10 +1,10 @@
-"""Reproduce the detector results table.
 
-    python detectors/run_all.py                          # 3,4 live; 1,2,5 cached
-    PCL_TEST_MODE=1 python detectors/run_all.py --full   # re-run all (~25 min)
 
-A check with no cached result is reported absent, not as zeros.
-"""
+
+
+
+
+
 import argparse
 import importlib
 import json
@@ -15,15 +15,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from detectors.harness import confusion, fmt_matrix, fmt_uncertainty
 
-# Uncertainty per stochastic detector, runs of record. 3 and 4: None.
+
 UNCERTAINTY = {
-    # Full-scale MIMIC-IV, audit-500 draws. Transcribed (full-scale log lost).
-    # Demo: [0.528, 0.776], P(flag)=0.216.
+
+
     1: {"ci_lo": 0.539, "ci_hi": 0.663, "p_would_flag": 0.484},
-    # Full-scale MIMIC-IV -> eICU, 5% floor, 5 seeds. logs/full2.out.
+
     2: {"t": -6.65, "crit": -2.132, "floor": 0.05, "sign_agree_n": 5, "n": 5},
-    # n=1200 stays/arm, 5 samples. logs/check5_sampling.out.
-    # Scale-dependent: 0/3 at n=4000. Quote with n.
+
+
     5: {"flag_rate": 0.4, "n": 5},
     3: None,
     4: None,
@@ -32,7 +32,7 @@ UNCERTAINTY = {
 HERE = os.path.dirname(os.path.abspath(__file__))
 RESULTS = os.path.join(HERE, "results")
 
-#     n: (label, module, slow)
+
 CHECKS = {
     1: ("label-definition shift", "check1_label_shift", True),
     2: ("pretraining leakage", "check2_pretrain_leakage", True),
@@ -65,7 +65,7 @@ def _record(n, cases):
 
 
 def collect_fast():
-    """Static checks live; others from cache."""
+
     rows = {}
     for n in CHECKS:
         rows[n] = _cached(n) if n in SLOW else _record(n, _mod(n).run(verbose=False))

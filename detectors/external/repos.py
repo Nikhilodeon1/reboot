@@ -1,10 +1,10 @@
-"""Third-party repositories for detector 3 generalization. Parsed, never executed.
 
-Commits pinned. Per-file ground truth in `rationale`. DomainBed is non-clinical.
-"""
+
+
+
 import os
 
-# clone root; override with PCL_SCRATCH_REPOS
+
 SCRATCH = os.environ.get(
     "PCL_SCRATCH_REPOS",
     os.path.join(os.path.expanduser("~"), ".cache", "pcl_scan_repos"))
@@ -60,7 +60,7 @@ TARGETS = [
         "commit": "d8d2dea551283bea449b8495bfc1b5a41b90d837",
         "paper": "Wang et al., MIMIC-Extract, CHIL 2020",
         "clinical": True,
-        "files": [],   # none declared
+        "files": [],
     },
     {
         "name": "HIRID-ICU-Benchmark",
@@ -68,13 +68,13 @@ TARGETS = [
         "commit": "bee770094bf8389920bc09823895b87e09a563dd",
         "paper": "Yeche et al., HiRID-ICU-Benchmark, NeurIPS Datasets & Benchmarks 2021",
         "clinical": True,
-        "files": [],   # none declared
+        "files": [],
     },
 ]
 
 
 def resolved_files():
-    """(repo, absolute path, expected_flag, rationale) per declared file."""
+
     out = []
     for t in TARGETS:
         for rel, exp, why in t["files"]:

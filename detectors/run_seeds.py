@@ -1,9 +1,9 @@
-"""Multi-seed stability for stochastic detectors 1, 2, 5.
 
-Deterministic checks 3 and 4 excluded.
 
-    PCL_TEST_MODE=1 python detectors/run_seeds.py --seeds 5
-"""
+
+
+
+
 import argparse
 import importlib
 import json
@@ -25,7 +25,7 @@ SEEDED_CHECKS = {
 
 
 def summarize(sweep):
-    """Add `unstable` (non-unanimous verdict) and `agrees_with_truth_rate`."""
+
     out = {}
     for name, d in sweep.items():
         out[name] = dict(d)
@@ -40,7 +40,7 @@ def sweep_check(num, seeds, n_stays, check2_seeds):
     if num == 5:
         return seed_sweep(lambda s: m.run(seed=s, n=n_stays), seeds)
     if num == 2:
-        # check 2 is multi-seed internally; outer seed shifts the seed block
+
         return seed_sweep(
             lambda s: m.run(seed=s, stays=900, epochs=3, seeds=check2_seeds),
             seeds)
@@ -78,7 +78,7 @@ def main():
     if os.path.exists(path):
         with open(path, encoding="utf-8") as fh:
             merged = json.load(fh)
-        merged.update(all_out)      # keep checks not rerun
+        merged.update(all_out)
         all_out = merged
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(all_out, fh, indent=2)

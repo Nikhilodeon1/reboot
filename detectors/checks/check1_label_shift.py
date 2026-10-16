@@ -1,10 +1,10 @@
-"""Check 1: label-definition shift across sites.
 
-Flags when Cohen's kappa between two labelling criteria, scored on the same
-audit subset, is below KAPPA_FLAG. Prevalence ratio reported, not used to flag.
 
-Positive: ICD vs SOFA-window. Negative: SOFA-window vs SOFA-single-point.
-"""
+
+
+
+
+
 import os
 import sys
 import logging
@@ -17,8 +17,8 @@ import pandas as pd
 
 logging.disable(logging.WARNING)
 
-KAPPA_FLAG = 0.60          # Landis-Koch "substantial" boundary
-PREV_RATIO_FLAG = 1.50     # reported only
+KAPPA_FLAG = 0.60
+PREV_RATIO_FLAG = 1.50
 
 
 def cohens_kappa(a, b):
@@ -33,7 +33,7 @@ def cohens_kappa(a, b):
 
 
 def diagnose(name, site1, site2, audit_1, audit_2, verbose=True):
-    """site1/site2: labels as shipped. audit_1/audit_2: both criteria, same patients."""
+
     p1, p2 = float(np.mean(site1)), float(np.mean(site2))
     ratio = max(p1, p2) / max(min(p1, p2), 1e-9)
     k = cohens_kappa(audit_1, audit_2)
@@ -50,12 +50,12 @@ def diagnose(name, site1, site2, audit_1, audit_2, verbose=True):
 
 
 def build_scenarios(ids, icd, sofa_single, sofa_window, s1, s2, audit):
-    """Scenario -> (site1, site2, audit_a, audit_b, expected).
 
-    Audit arrays must be computed independently; one array twice gives kappa 1.0.
-    """
+
+
+
     return {
-        # reference: window-mode SOFA (Sepsis-3); single-point is a control only
+
         "positive (ICD vs SOFA window)": (
             icd[s1], sofa_window[s2], icd[audit], sofa_window[audit], True),
         "negative (SOFA window vs single-point)": (
@@ -68,7 +68,7 @@ _LABELS = None
 
 
 def load_labels(verbose=False):
-    """(ids, icd, sofa_single, sofa_window) over eICU. Cached; seed-independent."""
+
     global _LABELS
     if _LABELS is not None:
         return _LABELS
@@ -85,12 +85,12 @@ def load_labels(verbose=False):
     pats = pats[pats["unitdischargeoffset"] / 60.0 >= 24].reset_index(drop=True)
     ids = pats["patientunitstayid"].astype(int).values
 
-    # A: ICD codes. B: SOFA Sepsis-3.
+
     icd_set = eicu_sepsis_stay_ids(EICU_DIR)
     icd = np.array([1 if i in icd_set else 0 for i in ids])
     sofa_map, _ = eicu_sofa_sepsis_labels(EICU_DIR, pats, mode="single")
     sofa = np.array([int(sofa_map.get(int(i), 0)) for i in ids])
-    # negative-control variant
+
     sofa_win_map, _ = eicu_sofa_sepsis_labels(EICU_DIR, pats, mode="window")
     sofa_window = np.array([int(sofa_win_map.get(int(i), 0)) for i in ids])
 
@@ -103,11 +103,11 @@ def load_labels(verbose=False):
 
 
 def split(ids, seed):
-    """Two disjoint site halves plus a fixed audit subset."""
+
     rng = np.random.default_rng(seed)
     perm = rng.permutation(len(ids))
     half = len(ids) // 2
-    # audit subset: fixed patients scored under both criteria
+
     audit = rng.choice(len(ids), size=min(500, len(ids)), replace=False)
     return perm[:half], perm[half:], audit
 
@@ -127,7 +127,7 @@ def run(seed=0, verbose=False):
 
 
 def split_noise(seed=0):
-    """Prevalence ratio between halves under one criterion, for each criterion."""
+
     ids, icd, sofa, _ = load_labels()
     s1, s2, _ = split(ids, seed)
     out = {}
@@ -157,7 +157,7 @@ def main():
     print("verdict:", "DETECTOR VALIDATED"
           if counts["FP"] == 0 and counts["FN"] == 0 else "NEEDS WORK")
 
-    # prevalence-only baseline
+
     pos_ratio = next(c.stats["prevalence_ratio"] for c in cases if c.expected)
     print("\nsame-criterion split noise (one criterion, disjoint halves):")
     neg_ratio = 0.0

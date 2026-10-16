@@ -10,7 +10,7 @@ from detectors.run_seeds import SEEDED_CHECKS, summarize
 
 class TestSeedSweep(unittest.TestCase):
     def test_only_stochastic_checks_are_swept(self):
-        """3 and 4 are deterministic; excluded."""
+
         self.assertEqual(sorted(SEEDED_CHECKS), [1, 2, 5])
 
     def test_summarize_reports_instability(self):
@@ -30,7 +30,7 @@ class TestSeedSweep(unittest.TestCase):
         self.assertFalse(summarize(sweep)["pos"]["unstable"])
 
     def test_agreement_rate_accounts_for_ground_truth_direction(self):
-        """Never-flagging negative agrees 100%."""
+
         sweep = {"neg": {"flags": [False] * 5, "n": 5,
                          "flag_rate": 0.0, "expected": False},
                  "pos": {"flags": [True] * 5, "n": 5,

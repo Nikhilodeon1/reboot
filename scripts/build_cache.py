@@ -1,15 +1,15 @@
-"""
-Pre-build the SOFA-labeled dataset cache on a cheap CPU box. The GPU run then
-reuses it and skips the ~45-90 min preprocessing (full-table reads + SOFA
-labeling are CPU/IO-bound, so no GPU is wanted here).
 
-Run in PROD mode with data paths and the SAME CACHE_DIR the GPU run uses:
-    source runpod_env.sh
-    CACHE_DIR=cache_a1_shared python scripts/build_cache.py
 
-Writes CACHE_DIR/processed_samples_prod.pkl (seed-independent) with the new
-SOFA Sepsis-3 labels. No CUDA required.
-"""
+
+
+
+
+
+
+
+
+
+
 import os
 import sys
 

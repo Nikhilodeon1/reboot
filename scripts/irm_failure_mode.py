@@ -1,10 +1,16 @@
-"""
-IRM failure-mode experiment:
-  - IRM-unit: many environments (care units)
-  - IRM-hospital: few environments (hospital proxy groups)
-  - PCL reference
-Evaluates on OOD care-unit split.
-"""
+
+
+
+
+
+
+
+
+
+
+
+
+
 import copy
 import json
 import logging

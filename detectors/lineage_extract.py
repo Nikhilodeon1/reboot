@@ -1,18 +1,18 @@
-"""Derive detector 4's lineage table from loader source (AST).
 
-Each derivation is reported with its guarding predicates; resolve() decides
-reachability against a dataset's columns. Guard reasoning is required:
-physionet2019.py derives HCO3 from base excess only when "HCO3" is absent,
-which never happens on PhysioNet.
-"""
+
+
+
+
+
+
 import ast
 import os
 
-# Equation signatures.
-#   constants  all required
-#   names_any  at least one required; disambiguates generic constants
-#   names_all  all required
-#   calls      confirmation only; derivations span statements
+
+
+
+
+
 EQUATION_SIGNATURES = {
     "severinghaus": {"constants": {23400.0}, "calls": {"cbrt"},
                      "names_any": set(), "names_all": set()},
@@ -57,7 +57,7 @@ def _names(node):
 
 
 def match_equation(node):
-    """Name of the equation this expression implements, or None."""
+
     consts, calls, names = _constants(node), _calls(node), _names(node)
     best, best_score = None, -1
     for eq, sig in EQUATION_SIGNATURES.items():
@@ -67,7 +67,7 @@ def match_equation(node):
             continue
         if not sig["names_all"] <= names:
             continue
-        # score: required constants, +1 if confirming call present
+
         score = len(sig["constants"]) + bool(sig["calls"] & calls)
         if score > best_score:
             best, best_score = eq, score
@@ -75,13 +75,13 @@ def match_equation(node):
 
 
 def classify_guard(test):
-    """Classify an `if` predicate.
 
-    Returns [(kind, column)]:
-      column_absent   `"X" not in df.columns`
-      column_present  `"X" in df.columns`
-      unknown         anything else; treated as reachable
-    """
+
+
+
+
+
+
     out = []
     for node in ast.walk(test):
         if not isinstance(node, ast.Compare) or len(node.ops) != 1:
@@ -93,7 +93,7 @@ def classify_guard(test):
         if not (isinstance(left, ast.Constant) and isinstance(left.value, str)):
             continue
         target = node.comparators[0]
-        # df.columns membership only
+
         if not (isinstance(target, ast.Attribute) and target.attr == "columns"):
             continue
         out.append(("column_absent" if isinstance(op, ast.NotIn)
@@ -102,7 +102,7 @@ def classify_guard(test):
 
 
 def _var_for_index(node, index_names):
-    """Assignment target -> canonical variable (index var or string subscript)."""
+
     for n in ast.walk(node):
         if isinstance(n, ast.Name) and n.id in index_names:
             return index_names[n.id]
@@ -112,14 +112,14 @@ def _var_for_index(node, index_names):
 
 
 def extract_lineage(path, variables):
-    """{variable: record} for derived variables in `path`. Absent means measured.
 
-    record: {"kind", "equation", "sources", "guards", "line"}
-    """
+
+
+
     with open(path, encoding="utf-8") as fh:
         tree = ast.parse(fh.read())
 
-    # index var -> canonical name, e.g. hco3_idx = VAR_TO_IDX["HCO3"]
+
     index_names = {}
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign) and len(node.targets) == 1 and \
@@ -132,8 +132,8 @@ def extract_lineage(path, variables):
                             isinstance(key.value, str):
                         index_names[node.targets[0].id] = key.value
 
-    # Walk statements in order with a guard stack and a taint map; derivations
-    # span intermediate locals (e.g. Severinghaus: inner -> coeff -> ts write).
+
+
     found = {}
 
     def visit(body, guards, taint):
@@ -148,14 +148,14 @@ def extract_lineage(path, variables):
                 continue
             if isinstance(stmt, (ast.FunctionDef, ast.AsyncFunctionDef,
                                  ast.ClassDef)):
-                visit(stmt.body, guards, {})     # new scope
+                visit(stmt.body, guards, {})
                 continue
             if not isinstance(stmt, ast.Assign):
                 continue
 
             eq = match_equation(stmt.value)
             if eq is None:
-                # inherit from tainted locals
+
                 for n in ast.walk(stmt.value):
                     if isinstance(n, ast.Name) and n.id in taint:
                         eq = taint[n.id]
@@ -165,7 +165,7 @@ def extract_lineage(path, variables):
 
             for tgt in stmt.targets:
                 if isinstance(tgt, ast.Name):
-                    taint[tgt.id] = eq          # propagate
+                    taint[tgt.id] = eq
                 var = _var_for_index(tgt, index_names)
                 if var in variables:
                     found[var] = {
@@ -179,10 +179,10 @@ def extract_lineage(path, variables):
 
 
 def resolve(lineage, available_columns):
-    """Mark derivations unreachable when a column guard contradicts the dataset.
 
-    Unknown guards stay reachable.
-    """
+
+
+
     out = {}
     cols = set(available_columns)
     for var, rec in lineage.items():
@@ -200,7 +200,7 @@ def resolve(lineage, available_columns):
 
 
 def to_detector4_lineage(resolved, measured_vars):
-    """Convert to check 4's LINEAGE table shape."""
+
     table = {v: "measured" for v in measured_vars}
     for var, rec in resolved.items():
         if rec["reachable"]:

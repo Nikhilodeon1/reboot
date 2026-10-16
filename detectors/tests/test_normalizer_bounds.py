@@ -1,7 +1,7 @@
-"""Normalization is fixed PLAUS bounds shared by all loaders.
 
-Detector 2 external validation depends on this.
-"""
+
+
+
 import os
 import sys
 import unittest
@@ -54,7 +54,7 @@ class TestBoundsAreThePlausibilityConstants(unittest.TestCase):
         self.assertEqual(missing, [], f"variables without PLAUS bounds: {missing}")
 
     def test_preprocess_fallback_uses_the_same_bounds(self):
-        """Inline fallback scaling matches MinMaxNormalizer."""
+
         raw = _raw(6)
         with_norm = preprocess_timeseries(raw, MinMaxNormalizer())["values"]
         without = preprocess_timeseries(raw, None)["values"]
@@ -71,7 +71,7 @@ class TestAllLoadersShareTheSameScaling(unittest.TestCase):
                           "shared-scaling assumption no longer holds")
 
     def test_no_loader_defines_its_own_bounds(self):
-        """No loader derives bounds from data."""
+
         for name in LOADERS:
             src = open(os.path.join(SRC_DATA, name), encoding="utf-8").read()
             for banned in ("np.nanmin(", "np.nanmax(", ".min(axis=0)",

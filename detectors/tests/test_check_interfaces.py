@@ -43,7 +43,7 @@ class TestEveryCheckExposesRun(unittest.TestCase):
 
 class TestCheck3FileVerdictUsesAllSweeps(unittest.TestCase):
     def test_a_clean_first_sweep_does_not_mask_a_contaminated_second(self):
-        """A clean first sweep must not mask a contaminated second."""
+
         from detectors.checks.check3_selection_audit import verdict_for_file
         res = [{"function": "a", "line": 1, "verdict": "OK", "findings": []},
                {"function": "b", "line": 9, "verdict": "CONTAMINATED",

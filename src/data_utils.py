@@ -24,7 +24,7 @@ MIN_LOS_H = 24
 MIN_AGE = 18
 
 
-# ── STAGE 1 ───────────────────────────────────────────────────────────────────
+
 
 def load_stays(data_path: str) -> pd.DataFrame:
     stays = pd.read_csv(f"{data_path}/icu/icustays.csv.gz", parse_dates=["intime","outtime"])
@@ -40,7 +40,7 @@ def load_stays(data_path: str) -> pd.DataFrame:
     return stays.reset_index(drop=True)
 
 
-# ── STAGE 2 ───────────────────────────────────────────────────────────────────
+
 
 def load_chartevents(data_path: str, stay_ids: list) -> pd.DataFrame:
     charts = pd.read_csv(f"{data_path}/icu/chartevents.csv.gz", parse_dates=["charttime"])
@@ -74,23 +74,36 @@ def load_labevents(data_path: str, hadm_ids: list) -> pd.DataFrame:
     return labs[["hadm_id","charttime","variable","valuenum"]].copy()
 
 
-# ── STAGE 3 ───────────────────────────────────────────────────────────────────
+
 
 def build_timeseries(stay_row, charts_stay, labs_stay) -> np.ndarray:
-    """
-    Builds a (HOURS, V) time series for one ICU stay.
 
-    Look-ahead bias prevention:
-      - All events are binned by floor(delta_hours) relative to ICU intime.
-      - Only events with 0 <= h < HOURS are included.
-      - Lab events are joined via hadm_id and charttime, NOT discharge time,
-        so a lab drawn at hour 10 is placed at hour 10 — never earlier.
-      - Forward-fill (MAX_FFILL=6 hours) propagates the LAST KNOWN value
-        forward in time, which is causal: at prediction time T, the model
-        only sees values from T or earlier.
-      - No backward-fill is applied — missing values before the first
-        observation remain NaN (filled to 0 after masking).
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     intime = stay_row["intime"]
     ts = np.full((HOURS, len(VARIABLES)), np.nan)
 
@@ -111,7 +124,7 @@ def build_timeseries(stay_row, charts_stay, labs_stay) -> np.ndarray:
             if np.isnan(ts[h, col]):
                 ts[h, col] = val
 
-    # Causal forward-fill only (no backward-fill — that would be look-ahead bias)
+
     for col in range(ts.shape[1]):
         last_val, hours_since = np.nan, 0
         for h in range(HOURS):
@@ -125,10 +138,10 @@ def build_timeseries(stay_row, charts_stay, labs_stay) -> np.ndarray:
     return ts
 
 
-# ── STAGE 4 ───────────────────────────────────────────────────────────────────
+
 
 def compute_constraint_mask(ts: np.ndarray) -> np.ndarray:
-    """Returns (HOURS, 5) bool array — True where constraint is computable."""
+
     idx = {v: i for i, v in enumerate(VARIABLES)}
     mask = np.zeros((HOURS, 5), dtype=bool)
     for h in range(HOURS):
@@ -140,16 +153,22 @@ def compute_constraint_mask(ts: np.ndarray) -> np.ndarray:
     return mask
 
 
-# ── DATASET ───────────────────────────────────────────────────────────────────
+
 
 class ICUDataset(Dataset):
-    """
-    Each item:
-      x       : (HOURS, n_vars) float32  — normalized, NaN → 0
-      mask    : (HOURS, n_vars) bool     — True where observed
-      c_mask  : (HOURS, 5)     bool     — constraint availability
-      stay_id : int
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
     def __init__(self, data_path: str, stays: pd.DataFrame):
         self.samples = []
         self._build(data_path, stays)
@@ -207,16 +226,25 @@ class ICUDataset(Dataset):
 
 
 def attach_ood_unit_label(dataset, stays):
-    """
-    Attaches a binary 'ood_unit' label to each sample.
-      1 = cardiac/neuro care unit (the OOD split used in training)
-      0 = general ICU care unit (in-distribution)
 
-    Used for the linear probe invariance experiment (Experiment 4).
-    The ideal result: ERM probe AUROC >> 0.5, PCL probe AUROC ≈ 0.5.
-    This would mean PCL representations don't encode which unit the patient
-    came from, while ERM representations do.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     OOD_UNITS = {
         "Cardiac Vascular Intensive Care Unit (CVICU)",
         "Coronary Care Unit (CCU)",
@@ -235,18 +263,29 @@ def attach_ood_unit_label(dataset, stays):
 
 
 def attach_labels(dataset, stays: pd.DataFrame):
-    """
-    Attaches task labels to existing dataset samples in-place.
-    Call this after building ICUDataset.
 
-    Adds to each sample:
-      'mortality' : 1 if patient died in hospital, 0 otherwise
-      'los_3d'    : 1 if ICU stay > 3 days, 0 otherwise
 
-    Look-ahead note: hospital_expire_flag is a discharge-time label.
-    It is used only as the prediction TARGET, not as an input feature,
-    so it does not introduce look-ahead bias into the model inputs.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     label_map = {}
     for _, row in stays.iterrows():
         label_map[row["stay_id"]] = {
@@ -276,10 +315,13 @@ def make_ood_loaders_by_unit(dataset, stays,
                              train_units=None,
                              ood_units=None,
                              batch_size=16):
-    """
-    Splits dataset by subject_id instead of stay_id to prevent data leakage.
-    Train/Val on general ICUs, test on cardiac/neuro ICUs (OOD).
-    """
+
+
+
+
+
+
+
     if train_units is None:
         train_units = [
             "Medical Intensive Care Unit (MICU)",
@@ -303,9 +345,9 @@ def make_ood_loaders_by_unit(dataset, stays,
     np.random.seed(42)
     np.random.shuffle(unique_train_subjects)
     n_val_subs = max(1, int(len(unique_train_subjects) * 0.2))
-    
+
     val_subjects = set(unique_train_subjects[:n_val_subs])
-    
+
     train_samples, val_samples, ood_samples = [], [], []
 
     for sample in dataset.samples:
@@ -313,7 +355,7 @@ def make_ood_loaders_by_unit(dataset, stays,
         info = stay_info.get(sid)
         if not info:
             continue
-            
+
         unit = info["first_careunit"]
         subj_id = info["subject_id"]
 
@@ -345,23 +387,33 @@ def make_ood_loaders_by_unit(dataset, stays,
     logging.info(f" - Train: {len(train_ds)} stays")
     logging.info(f" - Val:   {len(val_ds)} stays")
     logging.info(f" - OOD:   {len(ood_ds)} stays")
-    
+
     return train_loader, val_loader, ood_loader
 
 
 def make_stratified_loaders(dataset, task_name="mortality", train_frac=0.8,
                              batch_size=16, seed=42):
-    """
-    Stratified train/val split that preserves the positive-class ratio.
 
-    This is critical for small demo cohorts: a random split can produce
-    an all-negative validation set, causing AUROC to be undefined or
-    stuck at 0.5 for every epoch. Stratified splitting guarantees at
-    least one positive in each split as long as the dataset has >= 2
-    positive samples.
 
-    Falls back to random split if no labels are present.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     from sklearn.model_selection import StratifiedShuffleSplit
     from torch.utils.data import Subset
 

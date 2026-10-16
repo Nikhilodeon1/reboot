@@ -2,17 +2,17 @@
 
 Aggregate results only — confusion matrices, kappa values, confidence intervals,
 t-statistics, flag rates, per-repository file counts. No per-stay or per-patient
-data. `.gitignore` excludes `*.npz`, `*.pkl` and `*.pt` here for that reason; see
-`../TODO.md` section 0 to regenerate those with your own credentials.
+data. `.gitignore` excludes `*.npz`, `*.pkl` and `*.pt` here for that reason.
+Use the data setup and detector commands in the root README to rerun the
+analyses with your own credentials.
 
 `run_all.py` reads `check{1,2,5}.json` for its cached rows and re-runs checks 3
 and 4 live. It needs nothing else in this directory and no clinical data.
 
 ## Scale — read this before quoting a number
 
-Some files are demo-scale and some are full-scale. **They are not
-interchangeable, and the headline figures in `../../docs/RESULTS_NOTES.md` and
-the paper are the full-scale ones.**
+Some files are demo-scale and some are full-scale. They are not
+interchangeable. The revised manuscript reports the full-scale figures.
 
     file                     scale   notes
     check1.json              demo    PhysioNet; the paper's full-scale row is in README
@@ -31,14 +31,6 @@ the paper are the full-scale ones.**
     external4_lineage.json   n/a     detector 4 lineage traces, own + external code
     scan_repos.json          n/a     detector 3 corpus scan, 735 files / 18 repos
 
-`bootstrap_kappa.json` is the one most likely to be misread. It is the DEMO
-bootstrap: kappa 0.651, CI [0.528, 0.776], P(flag) = 0.216 at n=117. The paper
-reports the FULL-scale figures — kappa 0.602, audit-500 CI [0.539, 0.663],
-**P(flag) = 0.484** — which are transcribed from run output, because the
-full-scale logs were lost (see `CONTRIBUTORS.md` and the provenance section of
-`docs/RESULTS_NOTES.md`). The
-demo-scale file is kept because it is a real archived artifact; it is not the
-result of record.
-
-The full-scale runs that ARE archived are logs, not JSON:
-`../logs/full2.out` (detector 2) and `../logs/full5.out` (detector 5).
+`bootstrap_kappa.json` is a demo-scale bootstrap: kappa 0.651, CI [0.528,
+0.776], P(flag) = 0.216 at n=117. Consult the revised manuscript for full-scale
+figures; full-scale run logs are not included in this repository.

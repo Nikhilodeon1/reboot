@@ -1,4 +1,4 @@
-"""Check 5 samples must be seeded random, not an alphabetical prefix."""
+
 import os
 import sys
 import unittest

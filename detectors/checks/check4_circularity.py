@@ -1,29 +1,29 @@
-"""Check 4: circular derived constraints.
 
-Flags a (dataset, constraint) pair when a constraint input was derived via the
-constraint's own equation. Positive: Severinghaus on PhysioNet, where PaO2 is
-inverted from SaO2.
-"""
+
+
+
+
+
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__)))))
 
-# constraint -> equation and inputs
+
 CONSTRAINTS = {
     "MAP":          {"eq": "map_identity",  "inputs": ["SBP", "DBP", "MAP"]},
     "HendersonHass": {"eq": "henderson_hasselbalch", "inputs": ["pH", "HCO3", "pCO2"]},
     "Severinghaus": {"eq": "severinghaus", "inputs": ["SpO2", "PaO2"]},
 }
 
-# (dataset, variable) -> "measured" | ("derived", equation, source)
+
 LINEAGE = {
     "PhysioNet": {
         "SBP": "measured", "DBP": "measured", "MAP": "measured",
         "pH": "measured", "HCO3": "measured", "pCO2": "measured",
         "SpO2": "measured",
-        # inverted from SaO2 in physionet2019.py
+
         "PaO2": ("derived", "severinghaus", "SaO2"),
     },
     "MIMIC-IV": {
@@ -38,7 +38,7 @@ LINEAGE = {
     },
 }
 
-# ground truth
+
 EXPECTED = {
     ("PhysioNet", "Severinghaus"): True,
     ("PhysioNet", "MAP"): False,
@@ -53,7 +53,7 @@ EXPECTED = {
 
 
 def is_circular(dataset, constraint, lineage=LINEAGE, constraints=CONSTRAINTS):
-    """True when any input to the constraint was derived from the same equation."""
+
     spec = constraints[constraint]
     for var in spec["inputs"]:
         prov = lineage.get(dataset, {}).get(var, "measured")
@@ -63,19 +63,19 @@ def is_circular(dataset, constraint, lineage=LINEAGE, constraints=CONSTRAINTS):
 
 
 def verify_lineage_against_code():
-    """Confirm the PhysioNet PaO2 inversion exists in the loader."""
+
     p = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
         os.path.abspath(__file__)))), "src", "data", "physionet2019.py")
     if not os.path.exists(p):
         return None
     src = open(p, encoding="utf-8").read()
-    # Severinghaus constant + cube root
+
     inverts = "23400" in src and "cbrt" in src and "SaO2" in src
     return inverts
 
 
 def run(lineage=None, expected=None, verbose=False):
-    """One Case per (dataset, constraint) cell."""
+
     from detectors.harness import Case
     lineage = LINEAGE if lineage is None else lineage
     expected = EXPECTED if expected is None else expected

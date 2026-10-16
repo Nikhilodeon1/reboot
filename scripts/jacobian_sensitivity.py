@@ -1,7 +1,10 @@
-"""
-Jacobian sensitivity analysis (ProjOVERVIEW): ∂(risk)/∂(HR) via torch.autograd.functional.jacobian.
-Delegates to src.eval.interpretability for the core computation.
-"""
+
+
+
+
+
+
+
 import logging
 import os
 import sys

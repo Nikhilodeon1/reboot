@@ -1,11 +1,11 @@
-"""Detector 1 external validation on MIMIC-IV, with legitimate-variation controls.
 
-Positive: ICD vs SOFA-window. Controls, all valid Sepsis-3:
-  window vs single-point; window [-48,+24] vs [-24,+12]; vs [-72,+24].
-MIMIC_DIR selects demo or full; cohort size is printed.
 
-    PCL_TEST_MODE=1 python detectors/external/run_external1.py
-"""
+
+
+
+
+
+
 import argparse
 import json
 import os
@@ -23,7 +23,7 @@ from detectors.checks.check1_label_shift import diagnose
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RESULTS = os.path.join(HERE, "results")
 
-# (label, mode, pre_h, post_h)
+
 SOFA_VARIANTS = [
     ("SOFA win[-48,+24]", "window", 48.0, 24.0),
     ("SOFA single-point", "single", 48.0, 24.0),
@@ -33,7 +33,7 @@ SOFA_VARIANTS = [
 
 
 def mimic_labels(verbose=False):
-    """(ids, icd, {variant: sofa}) over MIMIC-IV. One event-table read, all variants."""
+
     import time
     from config import MIMIC_DIR
     from src.data.mimic4 import load_stays
@@ -67,7 +67,7 @@ def mimic_labels(verbose=False):
 
 
 def eicu_labels(verbose=False):
-    """(ids, icd, {variant: sofa}) over eICU. One read, all variants."""
+
     import time
     from config import EICU_DIR
     from src.data.sepsis import eicu_sepsis_stay_ids
@@ -102,7 +102,7 @@ def eicu_labels(verbose=False):
 
 
 def scenarios(db, ids, icd, sofa, seed=0, verbose=False):
-    """One positive (ICD vs SOFA) and three legitimate-variation negatives."""
+
     rng = np.random.default_rng(seed)
     perm = rng.permutation(len(ids))
     half = len(ids) // 2
@@ -127,7 +127,7 @@ def scenarios(db, ids, icd, sofa, seed=0, verbose=False):
 
 
 def save_labels(path, m, e):
-    """Cache label arrays (npz) for bootstrap_kappa.py. Per-stay; not committed."""
+
     (m_ids, m_icd, m_sofa), (e_ids, e_icd, e_sofa) = m, e
     payload = {"mimic_ids": m_ids, "mimic_icd": m_icd,
                "eicu_ids": e_ids, "eicu_icd": e_icd,
@@ -141,7 +141,7 @@ def save_labels(path, m, e):
 
 
 def load_labels(path):
-    """Inverse of save_labels. ((ids, icd, sofa), (ids, icd, sofa))."""
+
     z = np.load(path, allow_pickle=False)
     labels = [str(x) for x in z["variant_labels"]]
     m_sofa = {lab: z[f"mimic_sofa_{i}"] for i, lab in enumerate(labels)}

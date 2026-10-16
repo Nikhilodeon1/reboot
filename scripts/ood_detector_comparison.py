@@ -27,20 +27,20 @@ def _pooled_representations(model, loader, device):
     if len(loader) == 0:
         logging.warning("Loader is empty!")
         return np.array([])
-        
+
     with torch.no_grad():
         for batch in loader:
             x = batch["x"].to(device)
             m = batch["mask"].to(device)
             reps = model.encode(x, m)
-            # Last-timestep pooling (causal — no look-ahead bias)
+
             t_obs = m.any(dim=-1)
             last_idx = t_obs.sum(dim=1).long() - 1
             last_idx = torch.clamp(last_idx, min=0)
             batch_idx = torch.arange(reps.size(0), device=reps.device)
             pooled = reps[batch_idx, last_idx]
             reps_all.append(pooled.cpu().numpy())
-            
+
     if not reps_all:
         return np.array([])
     return np.concatenate(reps_all, axis=0)
@@ -100,7 +100,7 @@ def _score_mc_dropout(model, loader, device, n_passes=12):
         m = batch["mask"].to(device)
         pass_probs = []
         for _ in range(n_passes):
-            model.train()  # Force dropout active
+            model.train()
             with torch.no_grad():
                 reps = model.encode(x, m)
                 logits = model.classify(reps, "mortality", obs_mask=m).squeeze(-1)
@@ -138,31 +138,31 @@ def main():
     torch.manual_seed(SEED)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    stays = load_stays(DATA_DIR).head(500) 
+    stays = load_stays(DATA_DIR).head(500)
     dataset = ICUDataset(DATA_DIR, stays)
     attach_labels(dataset, stays)
-    
+
     tr, va, ood = make_ood_loaders_by_unit(dataset, stays, batch_size=min(BATCH_SIZE, 32))
 
     pre_path = os.path.join(CHECKPOINT_DIR, "ooddet_pcl_pre.pt")
     ft_path = os.path.join(CHECKPOINT_DIR, "ooddet_pcl_ft.pt")
-    
+
     m = fresh_model(n_vars=len(VARIABLES), seed=SEED + 31).to(device)
-    
+
     run_pretraining(
         m, PhysiologicalConstraintLoss(), tr, va,
         n_epochs=PRETRAIN_EPOCHS_DEMO, save_path=pre_path, device=device,
     )
-    
-    # Load and add head
+
+
     m.load_state_dict(load_state_dict_flexible(pre_path, device))
     m.add_classification_head("mortality")
-    
-    # Finetuning
+
+
     run_finetuning(m, tr, va, "mortality", n_epochs=FINETUNE_EPOCHS_DEMO, device=device, save_path=ft_path)
     m.load_state_dict(load_state_dict_flexible(ft_path, device), strict=False)
 
-    # OOD Evaluations
+
     train_reps = _pooled_representations(m, tr, device)
     ood_reps = _pooled_representations(m, ood, device)
     _, pred_err = _predict_and_error(m, ood, device)
@@ -172,23 +172,23 @@ def main():
         return
 
     mu, inv = _fit_mahalanobis(train_reps)
-    
+
     scores = {
         "PCL violation": _score_pcl_violation(m, ood, device),
         "Mahalanobis": _score_mahalanobis(ood_reps, mu, inv),
         "MC Dropout": _score_mc_dropout(m, ood, device),
         "Energy": _score_energy(m, ood, device),
     }
-    
+
     corrs = {k: _corr(v, pred_err) for k, v in scores.items()}
     logging.info(f"Correlations: {corrs}")
 
-    # Save results
+
     out = {"correlation_with_prediction_error": corrs}
     with open(os.path.join(RESULTS_DIR, "metrics_ood_detector_comparison.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
 
-    # Plotting
+
     labels = list(corrs.keys())
     vals = [corrs[k] for k in labels]
     plt.figure(figsize=(8, 5))

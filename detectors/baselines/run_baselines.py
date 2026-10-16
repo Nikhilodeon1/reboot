@@ -1,11 +1,11 @@
-"""Standard checks vs detector 2 on the same leakage injection.
 
-Per level: pretrain as detector 2, embed stays, fit logistic regression on
-source, report k-fold / held-out source / target AUROC. Also tests whether
-leakage improves cross-site AUROC.
 
-    PCL_TEST_MODE=1 python detectors/baselines/run_baselines.py --seeds 3
-"""
+
+
+
+
+
+
 import argparse
 import json
 import os
@@ -27,7 +27,7 @@ RESULTS = os.path.join(HERE, "results")
 
 @torch.no_grad()
 def embed(model, dataset, device, batch=64):
-    """Mean-pooled encoder output and binary label per stay."""
+
     from torch.utils.data import DataLoader
     model.eval()
     X, y = [], []
@@ -53,7 +53,7 @@ def score(sc, clf, X):
 
 
 def kfold_sd(X, y, seed=0, k=5):
-    """k-fold CV AUROC sd on the source."""
+
     from sklearn.model_selection import StratifiedKFold
     if len(np.unique(y)) < 2:
         return float("nan")
@@ -69,7 +69,7 @@ def kfold_sd(X, y, seed=0, k=5):
 
 
 def metrics_for_level(frac, seed, stays, epochs, device):
-    """Pretrain under `frac` leakage; return the AUROCs the baselines consume."""
+
     from src.baselines import fresh_model, run_erm_pretraining
     from torch.utils.data import DataLoader, Subset, ConcatDataset
     from config import BATCH_SIZE
@@ -100,7 +100,7 @@ def metrics_for_level(frac, seed, stays, epochs, device):
     Xs, ys = embed(model, src_ds, device)
     Xt, yt = embed(model, probe_ds, device)
 
-    # held-out source split
+
     rng = np.random.default_rng(seed)
     perm = rng.permutation(len(Xs))
     cut = int(0.75 * len(perm))
@@ -165,7 +165,7 @@ def main():
             undecidable += n_undec
             if not decided:
                 labels.append(f"{int(frac * 100)}%:UNDECIDABLE")
-                continue        # undecidable: excluded from the matrix
+                continue
             flagged = sum(decided) > len(decided) / 2.0
             cases.append(Case(f"leakage {int(frac * 100)}%", bool(flagged),
                               bool(frac > 0),

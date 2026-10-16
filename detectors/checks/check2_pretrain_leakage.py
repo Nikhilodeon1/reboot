@@ -1,13 +1,13 @@
-"""Check 2: pretraining leakage into a zero-shot target.
 
-Pretrain on source plus a fraction of target; measure masked-reconstruction
-loss on a target probe never pretrained on. Flags on a paired within-seed
-one-sided t test. 0% leakage is the false-positive control.
 
-Source PhysioNet Site A, target Site B. Test-mode model, CPU.
 
-    PCL_TEST_MODE=1 python detectors/checks/check2_pretrain_leakage.py --stays 1200 --seeds 3
-"""
+
+
+
+
+
+
+
 import os
 import sys
 import json
@@ -29,13 +29,13 @@ LEVELS = [0.0, 0.05, 0.20, 1.00]
 
 
 def build(stays, seed):
-    """(source, leak pool, probe). Probe never enters pretraining."""
+
     from src.data.physionet2019 import load_physionet2019
     from src.data.dataset import ICUDataset
     from config import PHYSIONET_DIR
 
-    # subsample the file list before reading; a full read is ~40k PSVs
-    frac = min(1.0, (stays * 1.35) / 20000.0)   # headroom for stays dropped by filters
+
+    frac = min(1.0, (stays * 1.35) / 20000.0)
     src, _ = load_physionet2019(PHYSIONET_DIR, fraction=frac, sites=[0], seed=seed)
     tgt, _ = load_physionet2019(PHYSIONET_DIR, fraction=frac, sites=[1], seed=seed)
     rng = np.random.default_rng(seed)
@@ -48,7 +48,7 @@ def build(stays, seed):
 
 @torch.no_grad()
 def probe_loss(model, loader, mask_prob, device, seed=0):
-    """Masked-reconstruction loss on the probe, fixed mask pattern."""
+
     from src.models.backbone import apply_random_mask
     from src.training.train_utils import masked_prediction_loss
     model.eval()
@@ -66,7 +66,7 @@ def probe_loss(model, loader, mask_prob, device, seed=0):
 
 
 def run_one(src_ds, leak_ds, probe_ds, frac, seed, epochs, device):
-    """Pretrain on source + `frac` of the leak pool; return probe loss."""
+
     from src.baselines import fresh_model, run_erm_pretraining
     from config import MASK_PROB, BATCH_SIZE
     from torch.utils.data import ConcatDataset
@@ -92,28 +92,28 @@ def run_one(src_ds, leak_ds, probe_ds, frac, seed, epochs, device):
     return probe_loss(model, pl, MASK_PROB, device), n_leak
 
 
-# one-sided t critical values, alpha=0.05, by df (no scipy)
+
 _T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,
               7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}
 
 
 def flag_from_relative(rel):
-    """(flagged, t, crit) from per-seed relative deltas.
 
-    Flags when every delta < 0 and t <= -crit(df). n < 3 never flags.
-    """
+
+
+
     rel = np.asarray(rel, float)
     n = len(rel)
     if n < 3:
         return False, 0.0, float("inf")
-    crit = _T_CRIT_05.get(n - 1, 1.645)      # large-df limit
+    crit = _T_CRIT_05.get(n - 1, 1.645)
     sd = float(rel.std(ddof=1))
     t = float(rel.mean() / (sd / np.sqrt(n))) if sd > 1e-12 else 0.0
     return bool(np.all(rel < 0) and t <= -crit), t, crit
 
 
 def measure(stays, seeds, epochs, device, base_seed=42, verbose=False):
-    """Probe loss per level per seed. Split redrawn per seed; compare within seed."""
+
     results = {frac: [] for frac in LEVELS}
     for s in range(seeds):
         seed = base_seed + s
@@ -131,7 +131,7 @@ def measure(stays, seeds, epochs, device, base_seed=42, verbose=False):
 
 
 def analyse(results):
-    """(detected, stats) from paired within-seed relative deltas."""
+
     base = np.array(results[0.0])
     detected, stats = {}, {}
     for frac in LEVELS:
@@ -148,7 +148,7 @@ def analyse(results):
 
 
 def run(seed=0, stays=900, epochs=3, seeds=5, verbose=False, device=None):
-    """One Case per leakage level; 0% is the control. `seed` shifts the seed block."""
+
     from detectors.harness import Case
     from config import TEST_MODE
     if not TEST_MODE:

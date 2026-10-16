@@ -10,12 +10,12 @@ MIN_LOS_H = 24
 
 
 def make_heartbeat(label, total=None, interval=20.0):
-    """
-    Returns a `beat(i, force=False)` callback that logs progress at most once
-    every `interval` seconds. Keeps long silent loops (chunked CSV reads, per-
-    patient assembly) emitting output so remote sessions aren't killed for
-    inactivity and progress is visible.
-    """
+
+
+
+
+
+
     state = {"t0": time.time(), "last": time.time()}
 
     def beat(i, force=False, extra=""):

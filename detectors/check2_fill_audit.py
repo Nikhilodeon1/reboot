@@ -1,10 +1,10 @@
-"""Forward-fill proportion per leakage condition for detector 2.
 
-Probe fill must be constant within a seed; the paired analysis cancels it.
-Training fill moves with leakage by design. No training.
 
-    PCL_TEST_MODE=1 python detectors/check2_fill_audit.py --stays 900 --seeds 3
-"""
+
+
+
+
+
 import argparse
 import json
 import os
@@ -21,7 +21,7 @@ RESULTS = os.path.join(HERE, "results")
 
 
 def fill_proportion(dataset):
-    """Fraction of observed cells. Mask is post-forward-fill."""
+
     tot = filled = 0
     for s in dataset.samples:
         m = np.asarray(s["mask"], dtype=bool)

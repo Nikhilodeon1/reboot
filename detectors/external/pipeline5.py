@@ -1,13 +1,13 @@
-"""Detector 5 external testbed on MIMIC-IV and eICU.
 
-Reads raw_ts (keep_raw=True). Processed values are normalized and forward-filled,
-which breaks the identities and erases missingness.
 
-Oxygen term: Severinghaus (SpO2 vs PaO2), not PhysioNet's O2Sat vs SaO2.
-Analogous component set, not identical.
 
-Ground truth from controlled ablation (PREREGISTRATION.md).
-"""
+
+
+
+
+
+
+
 import os
 import sys
 
@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(
 
 from src.data.variables import VAR_TO_IDX
 
-# term -> canonical inputs
+
 TERMS = {
     "MAP":          ["SBP", "DBP", "MAP"],
     "HH":           ["pH", "HCO3", "pCO2"],
@@ -28,7 +28,7 @@ EXTERNAL_KEYS = ["MAP", "HH", "Severinghaus"]
 
 
 def load_site(which, keep_raw=True):
-    """('mimic'|'eicu') -> list of raw_ts arrays, one per stay."""
+
     from config import MIMIC_DIR, EICU_DIR
     if which == "mimic":
         from src.data.mimic4 import load_mimic4
@@ -47,7 +47,7 @@ def load_site(which, keep_raw=True):
 
 
 def stay_components(ts):
-    """Per-stay {term: mean residual}, PhysioNet-compatible units."""
+
     out = {}
     col = {v: VAR_TO_IDX[v] for v in VAR_TO_IDX}
 
@@ -67,7 +67,7 @@ def stay_components(ts):
     spo2, pao2 = ts[:, col["SpO2"]], ts[:, col["PaO2"]]
     ok = ~np.isnan(spo2) & ~np.isnan(pao2) & (pao2 > 0)
     if ok.any():
-        # Severinghaus: SpO2 from PaO2
+
         inner = 23400.0 / (pao2[ok] ** 3 + 150.0 * pao2[ok]) + 1.0
         pred = 100.0 / inner
         out["Severinghaus"] = float(np.mean(((spo2[ok] - pred) / 50.0) ** 2))
@@ -76,7 +76,7 @@ def stay_components(ts):
 
 
 def to_stays(arrays):
-    """Per-stay component dicts; stays with nothing computable dropped."""
+
     out = []
     for ts in arrays:
         c = stay_components(ts)
@@ -86,7 +86,7 @@ def to_stays(arrays):
 
 
 def ablate(arrays, variable, p, seed):
-    """Drop fraction p of one variable's observations per stay. Values untouched."""
+
     idx = VAR_TO_IDX[variable]
     rng = np.random.default_rng(seed)
     out = []
@@ -102,7 +102,7 @@ def ablate(arrays, variable, p, seed):
 
 
 def split_arrays(arrays, seed):
-    """Two disjoint random halves."""
+
     rng = np.random.default_rng(seed)
     perm = rng.permutation(len(arrays))
     half = len(arrays) // 2

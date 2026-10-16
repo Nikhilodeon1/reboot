@@ -7,20 +7,30 @@ import numpy as np
 from config import LAMBDA_PCL, MASK_PROB, USE_AMP
 
 
-# ── PCL LOSS BALANCER ────────────────────────────────────────────────────────
+
 
 class PCLLossBalancer:
-    """Normalizes L_PCL relative to L_masked via EMA ratio tracking.
 
-    target_ratio controls how large the balanced PCL loss should be relative
-    to L_masked.  With target_ratio=1.0 and λ=1.0:
-        L_total = L_masked + 1.0 * L_masked = 2.0 * L_masked
-    giving PCL equal footing with reconstruction.  Each of the 4 active
-    constraints contributes ~25% of L_masked, enough to meaningfully shape
-    encoder representations.  target_ratio=0.5 was found too conservative —
-    constraint gradients were smaller than reconstruction gradients and the
-    encoder learned ERM-equivalent representations.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def __init__(self, momentum=0.95, target_ratio=0.5):
         self.momentum = momentum
@@ -34,15 +44,15 @@ class PCLLossBalancer:
             return L_pcl
         if pcl_val < 1e-6 or masked_val < 1e-6:
             return L_pcl
-        
-        # Scale so that balanced_pcl ≈ target_ratio * L_masked
+
+
         ratio = (self.target_ratio * masked_val) / pcl_val
-        # Cap at 20× — keeps PCL meaningful when constraint positions are sparse
-        # (30% masking × sparse lab co-occurrence). Gradient clipping (max_norm=1.0
-        # in pretrain_step) handles any per-step magnitude spikes. 5× was too
-        # conservative: PCL barely influenced encoder relative to masked prediction.
+
+
+
+
         ratio = min(ratio, 20.0)
-        
+
         if self.ratio_ema is None:
             self.ratio_ema = ratio
         else:
@@ -50,32 +60,42 @@ class PCLLossBalancer:
         return L_pcl * self.ratio_ema
 
 
-# ── MASKED PREDICTION LOSS ───────────────────────────────────────────────────
+
 
 def masked_prediction_loss(preds, x_original, pretrain_mask):
-    """
-    MSE only on the positions that were masked.
 
-    preds         : (B, T, V) — model output
-    x_original    : (B, T, V) — original (unmasked) normalized values
-    pretrain_mask : (B, T, V) bool — True at positions that were masked
-    """
+
+
+
+
+
+
+
+
+
+
+
+
     if pretrain_mask.sum() == 0:
         return torch.tensor(0.0, device=preds.device)
     diff = (preds - x_original)[pretrain_mask]
     return (diff ** 2).mean()
 
 
-# ── TRAINING STEP ─────────────────────────────────────────────────────────────
+
 
 def pretrain_step(batch, model, pcl_loss_fn, optimizer, lam=LAMBDA_PCL, mask_prob=MASK_PROB,
                    device="cpu", scaler=None, site_adversary=None, lam_site=0.5,
                    pcl_balancer=None):
-    """
-    Single pretraining step combining masked prediction + PCL + optional site adversarial.
 
-    Returns dict of scalar loss values for logging.
-    """
+
+
+
+
+
+
+
+
     from src.models.backbone import apply_random_mask
 
     model.train()
@@ -92,11 +112,11 @@ def pretrain_step(batch, model, pcl_loss_fn, optimizer, lam=LAMBDA_PCL, mask_pro
         preds = model.predict(reps)
         L_masked = masked_prediction_loss(preds, x, pretrain_mask)
 
-    # The physiological constraints denormalize to physical units — PaO2**3
-    # (up to ~700^3 ≈ 3.4e8), denormalized MAP, and Henderson-Hasselbalch log10 —
-    # whose magnitudes overflow float16 (max ~65504). Under AMP that produces
-    # inf/NaN and corrupts the model within one epoch. So L_PCL, the balancer, and
-    # the loss combination are ALWAYS computed in float32 (autocast disabled).
+
+
+
+
+
     with torch.amp.autocast("cuda", enabled=False):
         L_masked = L_masked.float()
         pcl_out = pcl_loss_fn(preds.float(), c_mask, pretrain_mask=pretrain_mask)
@@ -104,7 +124,7 @@ def pretrain_step(batch, model, pcl_loss_fn, optimizer, lam=LAMBDA_PCL, mask_pro
         L_pcl_balanced = pcl_balancer.balance(L_pcl, L_masked) if pcl_balancer is not None else L_pcl
         L_total = L_masked + lam * L_pcl_balanced
 
-        # CRITICAL: If loss is NaN, skip this step to protect model weights
+
         if torch.isnan(L_total):
             optimizer.zero_grad()
             return {k: 0.0 for k in ["L_total", "L_masked", "L_pcl", "L_site", "L_MAP", "L_PP", "L_SI", "L_HH", "L_SpO2"]}
@@ -141,10 +161,10 @@ def pretrain_step(batch, model, pcl_loss_fn, optimizer, lam=LAMBDA_PCL, mask_pro
     }
 
 
-# ── VALIDATION STEP ───────────────────────────────────────────────────────────
+
 
 def pretrain_val_step(batch, model, pcl_loss_fn, lam=LAMBDA_PCL, mask_prob=MASK_PROB, device="cpu"):
-    """Same as pretrain_step but no gradient updates."""
+
     from src.models.backbone import apply_random_mask
 
     model.eval()
@@ -158,7 +178,7 @@ def pretrain_val_step(batch, model, pcl_loss_fn, lam=LAMBDA_PCL, mask_prob=MASK_
             reps = model.encode(x_masked, mask)
             preds = model.predict(reps)
             L_masked = masked_prediction_loss(preds, x, pretrain_mask)
-        # L_PCL in float32 (see pretrain_step) — float16 overflow → NaN otherwise.
+
         with torch.amp.autocast("cuda", enabled=False):
             pcl_out = pcl_loss_fn(preds.float(), c_mask, pretrain_mask=pretrain_mask)
             L_pcl = pcl_out["L_PCL"]
@@ -171,7 +191,7 @@ def pretrain_val_step(batch, model, pcl_loss_fn, lam=LAMBDA_PCL, mask_prob=MASK_
     }
 
 
-# ── PRETRAINING LOOP ──────────────────────────────────────────────────────────
+
 
 def run_pretraining(
     model,
@@ -189,11 +209,15 @@ def run_pretraining(
     use_site_adversary = False,
     lam_site = 0.1,
 ):
-    """
-    Full pretraining loop with constraint warmup.
-    λ linearly ramps from 0 to target over first warmup_fraction of epochs.
-    Returns history dict with loss curves.
-    """
+
+
+
+
+
+
+
+
+
     model = model.to(device)
 
     site_adversary = None
@@ -214,9 +238,9 @@ def run_pretraining(
 
     pcl_balancer = PCLLossBalancer(target_ratio=1.0)
 
-    # Guarantee at least 2 warmup epochs so that short runs (TEST_MODE)
-    # still get a meaningful ramp.  With only 1 warmup epoch the full λ
-    # hits on step 1, before the model learns basic reconstruction.
+
+
+
     warmup_epochs = max(2, int(n_epochs * warmup_fraction))
 
     history = {
@@ -226,8 +250,8 @@ def run_pretraining(
         "effective_lam": [], "balance_ratio": [],
     }
 
-    # Checkpoint on L_masked only — mirrors ERM criterion and ensures we pick the best
-    # reconstructive encoder, not the one that merely minimises the PCL penalty.
+
+
     best_val_masked = float("inf")
 
     logging.info(f"Starting pretraining — {n_epochs} epochs, λ={lam} (warmup over {warmup_epochs} epochs), device={device}")
@@ -241,7 +265,7 @@ def run_pretraining(
         else:
             lam_eff = lam
 
-        # ── Train ──
+
         train_metrics = {"L_total": [], "L_masked": [], "L_pcl": [], "L_site": [],
                          "L_MAP": [], "L_PP": [], "L_SI": [], "L_HH": [], "L_SpO2": []}
         for batch in train_loader:
@@ -252,7 +276,7 @@ def run_pretraining(
             for k in train_metrics:
                 train_metrics[k].append(step[k])
 
-        # ── Validate ──
+
         val_metrics = {"L_total": [], "L_masked": [], "L_pcl": []}
         for batch in val_loader:
             step = pretrain_val_step(batch, model, pcl_loss_fn,
@@ -262,14 +286,14 @@ def run_pretraining(
 
         scheduler.step()
 
-        # -- Aggregate --
+
         t_total = np.mean(train_metrics["L_total"]) if train_metrics["L_total"] else np.nan
         t_masked = np.mean(train_metrics["L_masked"]) if train_metrics["L_masked"] else np.nan
         t_pcl = np.mean(train_metrics["L_pcl"]) if train_metrics["L_pcl"] else np.nan
         v_total = np.mean(val_metrics["L_total"]) if val_metrics["L_total"] else np.nan
         v_masked = np.mean(val_metrics["L_masked"]) if val_metrics["L_masked"] else np.nan
         v_pcl = np.mean(val_metrics["L_pcl"]) if val_metrics["L_pcl"] else np.nan
-        
+
         if np.isnan(t_total):
             logging.warning(f"Epoch {epoch}: Train loss is NaN. This usually means the DataLoader is empty (check BATCH_SIZE) or the model exploded.")
         cur_lr = optimizer.param_groups[0]["lr"]
@@ -308,7 +332,7 @@ def run_pretraining(
 
 
 
-# ── CHECKPOINT UTILS ──────────────────────────────────────────────────────────
+
 
 def save_checkpoint(model, optimizer, epoch, history, path):
     torch.save({
@@ -329,10 +353,13 @@ def load_checkpoint(model, path, optimizer=None, device="cpu"):
 
 
 def load_state_dict_flexible(path, device="cpu"):
-    """
-    Loads either a raw `state_dict` (ERM pretraining) or a training checkpoint dict
-    with key `model_state` (PCL pretraining via save_checkpoint).
-    """
+
+
+
+
+
+
+
     o = torch.load(path, map_location=device, weights_only=False)
     if isinstance(o, dict) and "model_state" in o:
         return o["model_state"]
@@ -341,7 +368,7 @@ def load_state_dict_flexible(path, device="cpu"):
 
 
 
-# ── LOSS CURVE PLOT ───────────────────────────────────────────────────────────
+
 
 def plot_loss_curves(history, save_path=None):
     import matplotlib.pyplot as plt

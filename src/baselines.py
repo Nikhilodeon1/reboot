@@ -24,9 +24,9 @@ import copy
 from config import USE_AMP
 
 
-# ════════════════════════════════════════════════════════════════════════════
-# 1. ERM BASELINE
-# ════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def run_erm_pretraining(
     model,
@@ -40,25 +40,43 @@ def run_erm_pretraining(
     input_noise = 0.0,
     weight_decay = 1e-4,
 ):
-    """
-    Standard ERM pretraining — masked prediction loss only, no PCL.
-    Identical to PCL pretraining but with lambda=0.
 
-    This is your primary baseline. Everything else is compared against this.
 
-    A3 regularization baselines (professor action item A3) reuse this loop:
-      * input_noise > 0 adds zero-mean Gaussian noise (std=input_noise, in
-        normalized [0,1] space) to the OBSERVED CONTEXT positions the encoder
-        sees — i.e. positions that were NOT masked out. The reconstruction
-        target stays the clean value, so the model must denoise. Corrupting the
-        context (not just the already-masked targets) is what makes a denoising
-        autoencoder / noise-augmentation baseline genuinely distinct from the
-        plain masked-prediction ERM/PCL objective.
-      * weight_decay is exposed so the "stronger weight decay" baseline can be
-        swept without editing this function.
-    Defaults (input_noise=0.0, weight_decay=1e-4) reproduce the original ERM
-    behavior exactly.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     from src.training.train_utils import masked_prediction_loss, save_checkpoint
     from src.models.backbone import apply_random_mask
     from config import MASK_PROB
@@ -80,7 +98,7 @@ def run_erm_pretraining(
     logging.info("─" * 40)
 
     for epoch in range(1, n_epochs + 1):
-        # ── Train ──
+
         model.train()
         train_losses = []
         for batch in train_loader:
@@ -90,9 +108,9 @@ def run_erm_pretraining(
 
             x_masked, pretrain_mask = apply_random_mask(x, mask, mask_prob)
             if input_noise > 0.0:
-                # Corrupt the observed CONTEXT (observed AND not-masked); the
-                # target `x` stays clean → denoising signal. Masked positions are
-                # already 0 and are the prediction targets, so we leave them.
+
+
+
                 context = mask & (~pretrain_mask)
                 noise = torch.randn_like(x_masked) * input_noise
                 x_masked = x_masked + noise * context.to(x_masked.dtype)
@@ -113,7 +131,7 @@ def run_erm_pretraining(
             scaler.update()
             train_losses.append(loss.item())
 
-        # ── Val ──
+
         model.eval()
         val_losses = []
         with torch.no_grad():
@@ -142,23 +160,34 @@ def run_erm_pretraining(
     return history
 
 
-# ════════════════════════════════════════════════════════════════════════════
-# 2. FEATURE ENGINEERING BASELINE
-# ════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def add_engineered_features(dataset):
-    """
-    Adds computed MAP, PP, and SI as explicit extra input columns to each sample.
-    Modifies dataset in-place. n_vars goes from V → V+3.
 
-    This is the FE baseline — gives the model the physics as features.
-    The FE Demolition Ablation will show PCL >> FE on OOD.
 
-    New columns appended:
-      index 9 : MAP_computed = DBP + (SBP - DBP) / 3
-      index 10 : PP_computed = SBP - DBP
-      index 11 : SI_computed = HR / SBP
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     from src.data_utils import VARIABLES, PLAUS
 
     idx = {v: i for i, v in enumerate(VARIABLES)}
@@ -210,19 +239,26 @@ def add_engineered_features(dataset):
 
 
 
-# ════════════════════════════════════════════════════════════════════════════
-# 3. IRM BASELINE
-# ════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def _compute_pos_weight(loader, task_name, device, cap=100.0):
-    """pos_weight = #neg/#pos over the whole training split.
 
-    run_finetuning() applies this, but the IRM/DRO fine-tuners historically did
-    not — at ~7-15% sepsis prevalence that pushes them toward the all-negative
-    solution and produces near- or below-chance AUROC, making them look broken
-    rather than merely weaker. Computed over the full dataset (not per batch) so
-    shuffling/drop_last cannot make it non-deterministic.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ds = loader.dataset
     if hasattr(ds, "indices"):
         labels = [ds.dataset.samples[i][task_name].item() for i in ds.indices]
@@ -235,19 +271,31 @@ def _compute_pos_weight(loader, task_name, device, cap=100.0):
 
 
 def irm_penalty(logits, labels):
-    """
-    Computes the IRM penalty for one environment.
-    Penalty = ||grad_{w|w=1} (loss over env)||^2
-    where w is a scalar weight on the logits.
 
-    Following Arjovsky et al. 2019 / the official IRM implementation.
 
-    FIX: The scale dummy variable must be initialised to 1.0 (not -1.0 or 0.0).
-    A sign-flip here inverts the gradient direction and causes the penalty to
-    push the model *away* from invariance, producing AUROC < 0.5 (worse than
-    random). The gradient is squared so the sign of the penalty itself is
-    always non-negative — the bug manifests in the ERM loss term direction.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     scale = torch.tensor(1.0, requires_grad=True, device=logits.device)
     loss = F.binary_cross_entropy_with_logits(logits.detach() * scale, labels.float())
     grad = torch.autograd.grad(loss, [scale], create_graph=True)[0]
@@ -257,12 +305,17 @@ def irm_penalty(logits, labels):
 
 
 class IRMFinetuner:
-    """
-    Fine-tunes a model using IRM on a binary classification task.
-    Requires environment labels (sample["env_id"]) in dataset.
 
-    IRM loss = ERM_loss + lambda_irm * sum_e(IRM_penalty_e)
-    """
+
+
+
+
+
+
+
+
+
+
     def __init__(self, model, task_name, lambda_irm=1e3, lr=1e-4, device="cpu"):
         self.model = model.to(device)
         self.task_name = task_name
@@ -273,7 +326,7 @@ class IRMFinetuner:
             model.add_classification_head(task_name)
         self.model = self.model.to(device)
 
-        self.pos_weight = None  # set on first train_epoch (needs the loader)
+        self.pos_weight = None
         self.optimizer = torch.optim.AdamW(
             model.parameters(), lr=lr, weight_decay=1e-4
         )
@@ -314,7 +367,7 @@ class IRMFinetuner:
                 penalty = penalty + irm_penalty(env_logits, env_labels)
 
             loss = erm_loss + self.lambda_irm * penalty
-            
+
             if torch.isnan(loss):
                 logging.warning(" [IRM] NaN loss detected. Skipping batch.")
                 self.optimizer.zero_grad()
@@ -371,7 +424,7 @@ class IRMFinetuner:
                 if save_path:
                     torch.save(self.model.state_dict(), save_path)
 
-        # Restore best-val epoch (see DROFinetuner.run for rationale).
+
         if best_state is not None:
             self.model.load_state_dict(best_state)
             logging.info(" [IRM] restored best-val epoch weights")
@@ -379,18 +432,24 @@ class IRMFinetuner:
         return history
 
 
-# ════════════════════════════════════════════════════════════════════════════
-# 4. DRO BASELINE
-# ════════════════════════════════════════════════════════════════════════════
+
+
+
 
 class DROFinetuner:
-    """
-    Group DRO — minimizes the worst-group loss.
-    Groups defined by env_id (same as IRM environments).
-    Requires sample["env_id"] in dataset.
 
-    DRO loss = max_g { ERM_loss_g } (soft version via exponential reweighting)
-    """
+
+
+
+
+
+
+
+
+
+
+
+
     def __init__(self, model, task_name, n_groups, eta=0.01, lr=1e-4, device="cpu"):
         self.model = model.to(device)
         self.task_name = task_name
@@ -403,7 +462,7 @@ class DROFinetuner:
         self.model = self.model.to(device)
 
         self.group_weights = torch.ones(n_groups) / n_groups
-        self.pos_weight = None  # set on first train_epoch (needs the loader)
+        self.pos_weight = None
 
         self.optimizer = torch.optim.AdamW(
             model.parameters(), lr=lr, weight_decay=1e-4
@@ -503,9 +562,9 @@ class DROFinetuner:
                 if save_path:
                     torch.save(self.model.state_dict(), save_path)
 
-        # Restore the best-val epoch. Without this the caller evaluates whatever
-        # the LAST epoch happened to be, which for a worst-group objective can be
-        # markedly worse than the best checkpoint.
+
+
+
         if best_state is not None:
             self.model.load_state_dict(best_state)
             logging.info(" [DRO] restored best-val epoch weights")
@@ -515,9 +574,9 @@ class DROFinetuner:
 
 
 
-# ════════════════════════════════════════════════════════════════════════════
-# 6. FRESH MODEL FACTORY
-# ════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def fresh_model(n_vars=None, seed=42, dropout=None):
     from src.models.backbone import PCLModel
@@ -533,30 +592,38 @@ def fresh_model(n_vars=None, seed=42, dropout=None):
     )
 
 
-# ════════════════════════════════════════════════════════════════════════════
-# 7. CLASSICAL ML BASELINES (Logistic Regression + XGBoost)
-# ════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def _aggregate_features(dataset, task_name="mortality"):
-    """
-    Aggregates each variable's time series into mean, min, max, and
-    observation rate (fraction of timesteps observed).
-    Returns (X, y) numpy arrays suitable for sklearn.
 
-    This is the standard tabular representation used in clinical ML
-    baselines — if the Transformer cannot beat this, the architecture
-    is not justified.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     from src.data_utils import VARIABLES
     X_rows, y_rows = [], []
     for sample in dataset.samples:
-        x = sample["x"].numpy()       # (T, V)
-        mask = sample["mask"].numpy()  # (T, V)
+        x = sample["x"].numpy()
+        mask = sample["mask"].numpy()
         row = []
         for v in range(x.shape[1]):
             obs = x[mask[:, v], v]
             if len(obs) == 0:
-                row.extend([0.0, 0.0, 0.0, 0.0])  # mean, min, max, obs_rate
+                row.extend([0.0, 0.0, 0.0, 0.0])
             else:
                 row.extend([obs.mean(), obs.min(), obs.max(), mask[:, v].mean()])
         X_rows.append(row)
@@ -571,16 +638,25 @@ def run_classical_baselines(
     task_name="mortality",
     seed=42,
 ):
-    """
-    Trains Logistic Regression and (optionally) XGBoost on aggregated
-    statistics (mean/min/max per variable) and evaluates on test_dataset.
 
-    Returns dict of {model_name: {"auroc": float, "auprc": float, "brier": float}}
 
-    These results should be included in the paper's results table to
-    justify the Transformer architecture. If PCL does not outperform
-    LR on AUROC, the architecture choice needs re-examination.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     from sklearn.metrics import roc_auc_score, average_precision_score, brier_score_loss
     from sklearn.linear_model import LogisticRegression
     from sklearn.preprocessing import StandardScaler
@@ -601,7 +677,7 @@ def run_classical_baselines(
 
     results = {}
 
-    # ── Logistic Regression ──
+
     lr_clf = LogisticRegression(max_iter=2000, random_state=seed, C=1.0, class_weight="balanced")
     lr_clf.fit(X_train_s, y_train)
     lr_probs = lr_clf.predict_proba(X_test_s)[:, 1]
@@ -616,7 +692,7 @@ def run_classical_baselines(
         f"Brier: {results['LR (agg features)']['brier']:.4f}"
     )
 
-    # ── XGBoost (optional — skipped gracefully if not installed) ──
+
     try:
         from xgboost import XGBClassifier
         xgb_clf = XGBClassifier(

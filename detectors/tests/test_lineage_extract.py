@@ -1,4 +1,4 @@
-"""Lineage extraction on physionet2019.py, including the guarded HCO3 branch."""
+
 import ast
 import os
 import sys
@@ -64,7 +64,7 @@ class TestAgainstTheRealLoader(unittest.TestCase):
         self.assertEqual(self.raw["PaO2"]["equation"], "severinghaus")
 
     def test_finds_the_hco3_base_excess_derivation_too(self):
-        """Absent from the hand-written table."""
+
         self.assertIn("HCO3", self.raw)
         self.assertEqual(self.raw["HCO3"]["equation"], "base_excess_to_hco3")
 
@@ -72,7 +72,7 @@ class TestAgainstTheRealLoader(unittest.TestCase):
         self.assertIn(("column_absent", "HCO3"), self.raw["HCO3"]["guards"])
 
     def test_physionet_columns_make_the_hco3_branch_unreachable(self):
-        """HCO3 column present, so the branch is unreachable."""
+
         res = resolve(self.raw, ["HCO3", "BaseExcess", "SaO2", "pH", "PaCO2"])
         self.assertFalse(res["HCO3"]["reachable"])
         self.assertIn("IS present", res["HCO3"]["reason"])
@@ -91,7 +91,7 @@ class TestAgainstTheRealLoader(unittest.TestCase):
         self.assertEqual(table["PaO2"][1], "severinghaus")
 
     def test_a_dataset_without_hco3_would_flip_the_verdict(self):
-        """Without the HCO3 column the derivation is reachable."""
+
         res = resolve(self.raw, ["BaseExcess", "SaO2"])
         self.assertTrue(res["HCO3"]["reachable"])
         table = to_detector4_lineage(res, VARS)

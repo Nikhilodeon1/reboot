@@ -1,9 +1,9 @@
-"""Detector 4 lineage extraction on own loaders and two third-party repos.
 
-External scope: MIMIC_Extract, mimic3-benchmarks.
 
-    python detectors/external/run_repos4.py
-"""
+
+
+
+
 import argparse
 import json
 import os
@@ -49,11 +49,11 @@ EXTERNAL = [
 
 
 def rel(path):
-    """Path for committed JSON: relative to repo root or clone root."""
+
     for base in (ROOT, SCRATCH):
         try:
             r = os.path.relpath(path, base)
-        except ValueError:      # different drive
+        except ValueError:
             continue
         if not r.startswith(".."):
             return r.replace("\\", "/")

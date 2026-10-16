@@ -1,4 +1,4 @@
-"""Detector 5 decision rules and thresholds frozen in PREREGISTRATION.md."""
+
 import os
 import sys
 import unittest
@@ -26,7 +26,7 @@ class TestFrozenThresholds(unittest.TestCase):
 
 class TestGapRatioIsNotAShare(unittest.TestCase):
     def test_a_ratio_above_one_is_accepted_not_clipped(self):
-        """Ratio > 1 accepted, not clipped (1.414 measured)."""
+
         self.assertTrue(variant_a(stats(5.0, 1.414)))
         self.assertTrue(variant_b(stats(5.0, 1.414)))
 
@@ -39,7 +39,7 @@ class TestVariantA(unittest.TestCase):
         self.assertFalse(variant_a(stats(1.5, 0.20)))
 
     def test_is_silent_on_the_physionet_positive_case(self):
-        """PhysioNet A/B: documented false negative under A."""
+
         self.assertFalse(variant_a(stats(36.4, 0.274)))
 
 
@@ -53,7 +53,7 @@ class TestVariantB(unittest.TestCase):
         self.assertTrue(variant_b(stats(36.4, 0.274)))
 
     def test_still_respects_the_availability_gate(self):
-        """Availability gate is strict."""
+
         self.assertFalse(variant_b(stats(2.0, 0.90)),
                          "gate is strictly greater-than")
 

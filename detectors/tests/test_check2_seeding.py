@@ -1,4 +1,4 @@
-"""Check 2 critical value depends on df; split seed is not pinned."""
+
 import os
 import sys
 import unittest
@@ -13,7 +13,7 @@ from detectors.checks.check2_pretrain_leakage import flag_from_relative
 
 class TestFlagThreshold(unittest.TestCase):
     def test_uses_df_appropriate_critical_value_not_fixed_two(self):
-        # n=3: crit 2.920; a fixed -2.0 would flag
+
         rel = np.array([-0.10, -0.09, -0.02])
         flagged, t, crit = flag_from_relative(rel)
         self.assertGreater(crit, 2.9, "df=2 critical value must exceed 2.9")
@@ -37,7 +37,7 @@ class TestFlagThreshold(unittest.TestCase):
         self.assertFalse(flagged, "n=2 is not enough evidence to flag")
 
     def test_positive_effect_never_flags(self):
-        """Positive delta never flags."""
+
         rel = np.array([0.20, 0.18, 0.22, 0.19, 0.21])
         flagged, _, _ = flag_from_relative(rel)
         self.assertFalse(flagged)
@@ -50,7 +50,7 @@ class TestFlagThreshold(unittest.TestCase):
 
 class TestSplitSeedIsNotPinned(unittest.TestCase):
     def test_main_does_not_call_build_with_a_literal_seed(self):
-        """build() must use the loop seed."""
+
         import detectors.checks.check2_pretrain_leakage as m
         src = open(m.__file__, encoding="utf-8").read()
         self.assertNotIn("build(args.stays, seed=0)", src,

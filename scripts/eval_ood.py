@@ -1,7 +1,10 @@
-"""
-OOD stress tests: Gaussian input noise (robustness) + optional mmHg measurement bias (ProjOVERVIEW Exp. 5).
-Compares ERM vs PCL after identical pretraining+fine-tuning protocols.
-"""
+
+
+
+
+
+
+
 import json
 import logging
 import os
@@ -38,14 +41,21 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 
 def inject_bp_noise(dataset, bias_mmhg: float):
-    """Apply explicit signed SBP/DBP bias to simulate a miscalibrated cuff.
-    
-    Critical: MAP is NOT updated. In real hospitals, MAP is either measured
-    independently (arterial line) or computed from a separate oscillometric
-    algorithm. A miscalibrated cuff shifts SBP/DBP but leaves MAP unchanged,
-    creating a physiological inconsistency that tests whether the model's
-    representations are robust to measurement protocol shifts.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     noisy = copy.deepcopy(dataset)
     from src.data_utils import VARIABLES
 
@@ -58,13 +68,13 @@ def inject_bp_noise(dataset, bias_mmhg: float):
         x = sample["x"]
         m = sample["mask"]
         x2 = x.clone()
-        
-        # Apply bias to SBP and DBP only — MAP is NOT updated
+
+
         mask_sbp = m[:, i_sbp]
         mask_dbp = m[:, i_dbp]
         x2[mask_sbp, i_sbp] = torch.clamp(x2[mask_sbp, i_sbp] + sbp_norm_inc, 0.0, 1.0)
         x2[mask_dbp, i_dbp] = torch.clamp(x2[mask_dbp, i_dbp] + dbp_norm_inc, 0.0, 1.0)
-            
+
         sample["x"] = x2
     return noisy
 
@@ -141,7 +151,7 @@ def main():
     labels_all = np.array([s["mortality"].item() for s in dataset.samples])
     n = len(dataset)
 
-    # 70% train, 15% val, 15% test — stratified at each step
+
     sss_tv = StratifiedShuffleSplit(n_splits=1, test_size=0.30, random_state=SEED)
     train_idx, tvt_idx = next(sss_tv.split(np.arange(n), labels_all))
 

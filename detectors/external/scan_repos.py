@@ -1,10 +1,10 @@
-"""Detector 3 recognition rate across the scan corpus.
 
-Measures whether a sweep is recognised at all, not per-file ground truth.
-Unparseable files counted separately, never as clean.
 
-    python detectors/external/scan_repos.py --root <repos dir>
-"""
+
+
+
+
+
 import argparse
 import json
 import os

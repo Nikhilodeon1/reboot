@@ -21,7 +21,7 @@ class TestRunner(unittest.TestCase):
         self.assertEqual(rows[4], {"TP": 1, "FP": 0, "FN": 0, "TN": 8})
 
     def test_missing_cached_result_is_none_not_a_fabricated_zero(self):
-        """Missing cache reads as None, not zeros."""
+
         rows = collect_fast()
         for n in SLOW:
             self.assertTrue(rows[n] is None or isinstance(rows[n], dict))

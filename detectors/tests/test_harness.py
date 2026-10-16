@@ -61,7 +61,7 @@ class TestSeedSweep(unittest.TestCase):
             seed_sweep(run_fn, [0, 1])
 
     def test_raises_when_ground_truth_changes_between_seeds(self):
-        """Ground-truth change between seeds raises."""
+
         def run_fn(seed):
             return [Case("x", True, seed == 0, {})]
 

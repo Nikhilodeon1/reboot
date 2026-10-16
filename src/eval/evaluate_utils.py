@@ -14,12 +14,12 @@ import os
 from config import USE_AMP
 
 
-# ── PER-SAMPLE PREDICTION DUMP ────────────────────────────────────────────────
-# When a directory is registered here, every evaluate_model() call also writes
-# its raw per-sample probs + labels to disk. This preserves the data needed for
-# post-hoc analysis (recomputing CIs with different settings, paired PCL-vs-ERM
-# significance / DeLong tests, calibration) which cannot be recovered after the
-# run. A monotonic counter keeps filenames collision-free across experiments.
+
+
+
+
+
+
 _PRED_DUMP = {"dir": None, "n": 0}
 
 
@@ -58,7 +58,7 @@ def bootstrap_ci(labels, probs, metric_fn, n_bootstrap=1000, ci=0.95, seed=42):
     return lo, hi
 
 
-# ── FINE-TUNING LOOP ──────────────────────────────────────────────────────────
+
 
 def run_finetuning(
     model,
@@ -73,23 +73,23 @@ def run_finetuning(
     mixup_alpha=0.0,
     weight_decay=1e-4,
 ):
-    """
-    Two-phase fine-tuning:
-      Phase 1 (epochs 1 .. freeze_epochs): encoder frozen, head trains at lr.
-      Phase 2 (remaining epochs): encoder unfrozen, discriminative LR
-                                  (encoder at lr*0.1, head at lr).
 
-    Key fixes vs previous version:
-      - lr default raised 1e-4 → 1e-3. A randomly-initialised head on a frozen
-        encoder needs a higher LR to escape the flat loss region quickly.
-      - The optimizer is rebuilt at unfreeze time and explicitly lists ALL
-        trainable param groups. The old filter(requires_grad) snapshot taken
-        before the loop silently excluded encoder params after unfreezing.
-      - pred_head is always included in the optimizer so its params are never
-        orphaned when the encoder unfreezes.
-      - best_state is seeded from initial weights so load_state_dict never
-        receives None when AUROC never improves (single-class val set).
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     model = model.to(device)
 
     if task_name not in model.cls_heads:
@@ -98,10 +98,10 @@ def run_finetuning(
     model = model.to(device)
 
     best_state = copy.deepcopy(model.state_dict())
-    last_state = best_state  # updated every epoch; fallback when AUROC never improves
+    last_state = best_state
     best_val_auroc = 0.0
 
-    # ── Phase 1: freeze encoder, train head only ──────────────────────────────
+
     freeze_epochs = max(1, n_epochs // 3)
     for param in model.encoder.parameters():
         param.requires_grad = False
@@ -123,20 +123,20 @@ def run_finetuning(
     logging.info(f"{'Epoch':<8} {'Train Loss':<14} {'Val Loss':<12} {'Val AUROC':<12} {'Val AUPRC':<12} {'Val Brier'}")
     logging.info("─" * 75)
 
-    # Calculate pos_weight from the entire dataset to avoid shuffle/drop_last non-determinism
+
     all_train_labels = []
     if hasattr(train_loader.dataset, "indices"):
-        # Subset dataset
+
         ds = train_loader.dataset.dataset
         idxs = train_loader.dataset.indices
         all_train_labels = [ds.samples[i][task_name].item() for i in idxs]
     else:
-        # Full dataset
+
         all_train_labels = [s[task_name].item() for s in train_loader.dataset.samples]
-        
+
     num_pos = float(np.sum(all_train_labels))
     num_neg = float(len(all_train_labels) - num_pos)
-    # Safety: avoid division by zero and cap extreme weights
+
     pos_weight_val = num_neg / (num_pos + 1e-6)
     pos_weight_val = min(pos_weight_val, 100.0)
     pos_weight = torch.tensor([pos_weight_val], device=device, dtype=torch.float32)
@@ -146,7 +146,7 @@ def run_finetuning(
 
     for epoch in range(1, n_epochs + 1):
 
-        # ── Phase 2 transition: unfreeze encoder ─────────────────────────────
+
         if epoch == freeze_epochs + 1 and not encoder_unfrozen:
             for param in model.encoder.parameters():
                 param.requires_grad = True
@@ -161,7 +161,7 @@ def run_finetuning(
             encoder_unfrozen = True
             logging.info(f" [Epoch {epoch}] Encoder unfrozen — discriminative LR (encoder={lr*0.1:.1e}, head={lr:.1e})")
 
-        # ── Train ─────────────────────────────────────────────────────────────
+
         model.train()
         train_losses = []
         for batch in train_loader:
@@ -170,10 +170,10 @@ def run_finetuning(
             mask   = batch["mask"].to(device, non_blocking=True)
             labels = batch[task_name].to(device, non_blocking=True)
 
-            # A3 baselines (professor action item A3), train-time only:
-            #   input_noise: Gaussian noise on observed inputs (noise-augmentation).
-            #   mixup_alpha: convex interpolation of inputs and (soft) labels.
-            # Defaults 0.0 => original ERM/PCL fine-tuning, unchanged.
+
+
+
+
             target = labels.float()
             if input_noise > 0.0:
                 x = x + torch.randn_like(x) * input_noise * mask.to(x.dtype)
@@ -189,7 +189,7 @@ def run_finetuning(
                 logits = model.classify(reps, task_name, obs_mask=mask).squeeze(-1)
                 loss   = F.binary_cross_entropy_with_logits(logits, target, pos_weight=pos_weight)
 
-            # CRITICAL: Skip step if loss is NaN to protect weights
+
             if torch.isnan(loss):
                 logging.warning(f" [Epoch {epoch}] NaN loss detected in finetuning batch. Skipping update.")
                 optimizer.zero_grad()
@@ -202,7 +202,7 @@ def run_finetuning(
             ft_scaler.update()
             train_losses.append(loss.item())
 
-        # ── Validate ──────────────────────────────────────────────────────────
+
         model.eval()
         val_losses, val_probs, val_labels_all = [], [], []
         with torch.no_grad():
@@ -231,7 +231,7 @@ def run_finetuning(
         if len(np.unique(val_labels_arr)) < 2:
             logging.info(f"{epoch:<8} {t_loss:<14.6f} {v_loss:<12.6f} N/A (single class in val — use stratified split)")
         else:
-            # Filter out any NaNs that would crash sklearn
+
             valid_mask = ~np.isnan(val_probs_arr)
             if not np.any(valid_mask):
                 logging.warning(f" [Epoch {epoch}] ALL val predictions were NaN.")
@@ -259,7 +259,7 @@ def run_finetuning(
     if best_val_auroc > 0.0:
         model.load_state_dict(best_state)
     else:
-        # AUROC was never computable (single-class val) — use last epoch, not initial weights
+
         model.load_state_dict(last_state)
         if save_path:
             torch.save(last_state, save_path)
@@ -270,12 +270,12 @@ def run_finetuning(
     return history
 
 
-# ── FULL EVALUATION ───────────────────────────────────────────────────────────
+
 
 def evaluate_model(model, loader, task_name, device="cpu", split_name="Val"):
-    """
-    Computes AUROC, AUPRC, and Brier Score on a given loader with bootstrap CIs.
-    """
+
+
+
     model.eval()
     all_probs, all_labels = [], []
 
@@ -296,8 +296,8 @@ def evaluate_model(model, loader, task_name, device="cpu", split_name="Val"):
     all_labels = np.array(all_labels)
     all_probs = np.array(all_probs)
 
-    # Persist raw per-sample predictions before any aggregation (no-op unless a
-    # dump dir was registered via set_prediction_dump).
+
+
     _dump_predictions(all_probs, all_labels, task_name, split_name)
 
     num_pos = int(np.sum(all_labels))
@@ -329,23 +329,23 @@ def evaluate_model(model, loader, task_name, device="cpu", split_name="Val"):
             "auroc_ci": auroc_ci, "auprc_ci": auprc_ci}
 
 
-# ── REGRESSION FINE-TUNING (continuous targets, e.g. LOS) ──────────────────────
-# Additive only — does not touch run_finetuning/evaluate_model above, which stay
-# binary-classification-only. Same two-phase freeze/unfreeze schedule, swapped for
-# MSE loss and MAE/RMSE/R^2 evaluation instead of BCE/AUROC.
+
+
+
+
 
 def run_finetuning_regression(
     model, train_loader, val_loader, task_name,
     n_epochs=20, lr=1e-3, device="cpu", save_path=None, weight_decay=1e-4,
     log_transform=True,
 ):
-    """
-    Trains on log1p(target) by default — LOS in hours is heavily right-skewed
-    (long-stay outliers), the standard Harutyunyan et al. convention is to
-    regress in log-space rather than raw hours. Model selection is by lowest
-    val MSE (log-space), not an accuracy metric — there's no AUROC equivalent
-    for a continuous target.
-    """
+
+
+
+
+
+
+
     model = model.to(device)
     if task_name not in model.cls_heads:
         model.add_classification_head(task_name)
@@ -449,7 +449,7 @@ def run_finetuning_regression(
         history["val_rmse_hours"].append(rmse_hours)
         logging.info(f"{epoch:<8} {t_loss:<14.6f} {v_loss:<12.6f} MAE={mae_hours:<10.2f}h RMSE={rmse_hours:.2f}h")
 
-        if v_loss == v_loss and v_loss < best_val_loss:  # v_loss == v_loss excludes NaN
+        if v_loss == v_loss and v_loss < best_val_loss:
             best_val_loss = v_loss
             best_state = copy.deepcopy(model.state_dict())
             if save_path:
@@ -469,8 +469,8 @@ def run_finetuning_regression(
 
 
 def evaluate_model_regression(model, loader, task_name, device="cpu", split_name="Val", log_transform=True):
-    """MAE/RMSE/R^2 in original hours. No bootstrap CI (unlike evaluate_model) —
-    add if needed later."""
+
+
     model.eval()
     preds, targets = [], []
     with torch.no_grad():
@@ -501,13 +501,13 @@ def evaluate_model_regression(model, loader, task_name, device="cpu", split_name
     return {"mae_hours": mae, "rmse_hours": rmse, "r2": r2, "n": len(targets)}
 
 
-# ── LINEAR PROBING ────────────────────────────────────────────────────────────
+
 
 def extract_representations(model, loader, device="cpu"):
-    """
-    Extracts mean-pooled frozen representations from the encoder.
-    Returns (N, d_model) numpy array and corresponding stay_ids.
-    """
+
+
+
+
     model.eval()
     all_reps, all_ids = [], []
 
@@ -520,7 +520,7 @@ def extract_representations(model, loader, device="cpu"):
             reps = model.encode(x, mask)
             t_obs = mask.any(dim=-1)
             last_idx = (t_obs.size(1) - 1 - t_obs.flip(dims=[1]).long().argmax(dim=1)).clamp(min=0)
-            
+
             batch_idx = torch.arange(reps.size(0), device=reps.device)
             pooled = reps[batch_idx, last_idx]
 
@@ -531,12 +531,12 @@ def extract_representations(model, loader, device="cpu"):
 
 
 def run_linear_probe(model, dataset, probe_target, device="cpu", test_frac=0.3, seed=42):
-    """
-    Trains a linear classifier on frozen representations to predict probe_target.
-    Handles both binary and multi-class targets (e.g. site_id with 4 classes).
-    Returns probe AUROC — near 0.5 (binary) or 1/K (multi-class) means
-    representations don't encode that attribute.
-    """
+
+
+
+
+
+
     full_loader = DataLoader(dataset, batch_size=32, shuffle=False)
     reps, ids = extract_representations(model, full_loader, device=device)
     labels = np.array([s[probe_target].item() for s in dataset.samples])
@@ -579,15 +579,15 @@ def run_linear_probe(model, dataset, probe_target, device="cpu", test_frac=0.3, 
 
 
 
-# ── PCL VIOLATION AS OOD DETECTOR ────────────────────────────────────────────
+
 
 def compute_ood_scores(model, pcl_loss_fn, loader, device="cpu"):
-    """
-    Computes per-sample PCL violation scores at test time (no gradient updates).
-    High score = model's physiological assumptions are violated = potential OOD.
 
-    Returns array of (N,) violation scores and corresponding stay_ids.
-    """
+
+
+
+
+
     model.eval()
     all_scores, all_ids = [], []
 
@@ -605,7 +605,7 @@ def compute_ood_scores(model, pcl_loss_fn, loader, device="cpu"):
                 sample_preds = preds[i:i+1]
                 sample_cmask = c_mask[i:i+1]
                 sample_out = pcl_loss_fn(sample_preds, sample_cmask)
-                # Normalize by number of active constraints to get a stable 0-1 score
+
                 valid_losses = [v.item() for k, v in sample_out["losses"].items() if sample_out["active"][k] > 0 and k != "SI"]
                 score = np.mean(valid_losses) if valid_losses else 0.0
                 all_scores.append(score)

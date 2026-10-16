@@ -1,4 +1,4 @@
-"""Stochastic detectors report uncertainty; deterministic ones do not."""
+
 import os
 import sys
 import unittest

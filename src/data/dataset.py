@@ -8,15 +8,15 @@ logging.basicConfig(level=logging.INFO)
 
 
 class ICUDataset(Dataset):
-    """
-    Unified dataset outputting plan.md §5.1 standardized tensor format:
-        values   : (T, V) float32
-        mask     : (T, V) bool
-        abg_mask : (T,)   bool
-        c_mask   : (T, 5) bool
-        label    : (T,)   float32  (hourly sepsis or broadcast binary)
-        site_id  : int
-    """
+
+
+
+
+
+
+
+
+
 
     def __init__(self, samples_list):
         self.samples = []
@@ -39,14 +39,14 @@ class ICUDataset(Dataset):
                 "patient_id": s.get("patient_id", ""),
                 "stay_id": s.get("stay_id", 0),
                 "mortality": _t(s.get("mortality", 0), torch.float32),
-                # Hospital-level mortality, comparable across MIMIC-IV and eICU-CRD.
-                # `mortality` above is unit-level for eICU, hospital-level for MIMIC —
-                # do NOT use it for cross-site mortality tasks. See eicu.py/mimic4.py.
+
+
+
                 "mortality_hospital": _t(s.get("mortality_hospital", 0), torch.float32),
                 "los_3d": _t(s.get("los_3d", 0), torch.float32),
-                # Continuous ICU length of stay, hours. Comparable across all three
-                # databases as-is (all measure ICU/unit stay, not hospital stay) —
-                # no field-mismatch fix needed here unlike mortality.
+
+
+
                 "los_h": _t(s.get("los_h", 0), torch.float32),
                 "env_id": _t(s["site_id"], torch.long),
                 "hospital_id": _t(s.get("hospital_id", 0), torch.long),

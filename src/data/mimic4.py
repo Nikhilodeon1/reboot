@@ -18,7 +18,7 @@ MIN_AGE = 18
 _CHART_CHUNK = 500_000
 _LAB_CHUNK   = 500_000
 
-# Flat itemid → (canonical_var, col_idx) lookups built once at import time
+
 _ITEMID_TO_VAR = {iid: var for var, iids in MIMIC_ITEM_IDS.items() for iid in iids}
 _CHART_VARS = ["SBP", "DBP", "MAP", "HR", "SpO2"] + [
     v for v in MIMIC_EXPANDED_CHART if v in MIMIC_ITEM_IDS]
@@ -47,7 +47,7 @@ def load_stays(data_path):
 
 
 def _read_filtered_chunks(path, id_col, keep_ids, keep_itemids, usecols, chunksize):
-    """Read a large CSV in chunks, filtering to keep_ids and keep_itemids immediately."""
+
     chunks = []
     scanned = kept = n_chunks = 0
     beat = make_heartbeat(f"read {os.path.basename(path)}")
@@ -70,18 +70,18 @@ def _read_filtered_chunks(path, id_col, keep_ids, keep_itemids, usecols, chunksi
 
 
 def _build_all_timeseries(events_df, stays_df, id_col, n_stays):
-    """
-    Vectorized timeseries construction.
 
-    events_df must have columns: [id_col, 'charttime', 'itemid', 'valuenum']
-    stays_df  must have columns: [id_col, 'intime', '_arr_idx']
-    Returns np.ndarray of shape (n_stays, HOURS, N_VARS), filled with NaN.
-    """
+
+
+
+
+
+
     if events_df.empty:
         return np.full((n_stays, HOURS, len(CANONICAL_VARIABLES)), np.nan)
 
     ev = events_df.merge(stays_df[[id_col, "intime", "_arr_idx"]], on=id_col, how="inner")
-    # Drop rows with null charttime — present in MIMIC-IV 3.1 labevents
+
     ev = ev[ev["charttime"].notna()]
     if ev.empty:
         return np.full((n_stays, HOURS, len(CANONICAL_VARIABLES)), np.nan)
@@ -91,19 +91,19 @@ def _build_all_timeseries(events_df, stays_df, id_col, n_stays):
     ev = ev[ev["var"].notna()]
     ev["col_idx"] = ev["var"].map(VAR_TO_IDX)
 
-    # Unit harmonization BEFORE clipping (e.g. Fahrenheit temps -> Celsius).
-    # Without this, F values would be clipped away by the Celsius bounds.
+
+
     for iid, fn in MIMIC_UNIT_CONVERT.items():
         m = ev["itemid"] == iid
         if m.any():
             ev.loc[m, "valuenum"] = fn(ev.loc[m, "valuenum"])
 
-    # Clip to plausible range per variable
+
     for var, (lo, hi) in PLAUS.items():
         mask = ev["var"] == var
         ev.loc[mask, "valuenum"] = ev.loc[mask, "valuenum"].clip(lo, hi)
 
-    # Median per (array_idx, hour, col_idx)
+
     agg = (ev.groupby(["_arr_idx", "hour", "col_idx"])["valuenum"]
              .median()
              .reset_index())
@@ -126,19 +126,19 @@ def load_mimic4(data_path, fraction=1.0, seed=42, keep_raw=False):
 
     logging.info(f"MIMIC-IV: loading {len(stays)} stays")
 
-    # SOFA-based Sepsis-3 (A1): mode="single" (single-point) -> ~31% on full
-    # MIMIC, matching the clinical Sepsis-3 label used for PhysioNet. Replaces the
-    # old ICD-code sepsis label to remove the label-definition confound.
+
+
+
     sofa_labels, _ = mimic_sofa_sepsis_labels(data_path, stays, mode="single")
 
     stay_id_set  = set(stays["stay_id"].values)
     hadm_id_set  = set(stays["hadm_id"].values)
 
-    # Sequential integer index for numpy array construction
+
     stays = stays.reset_index(drop=True)
     stays["_arr_idx"] = stays.index
 
-    # ── Chartevents (vitals) ─────────────────────────────────────────────────
+
     chart_path = os.path.join(data_path, "icu", "chartevents.csv.gz")
     logging.info("MIMIC-IV: reading chartevents (chunked)...")
     charts = _read_filtered_chunks(
@@ -147,24 +147,24 @@ def load_mimic4(data_path, fraction=1.0, seed=42, keep_raw=False):
         chunksize=_CHART_CHUNK,
     )
 
-    # ── Labevents (ABG) ──────────────────────────────────────────────────────
+
     lab_path = os.path.join(data_path, "hosp", "labevents.csv.gz")
     logging.info("MIMIC-IV: reading labevents (chunked)...")
-    # labevents uses hadm_id; rename charttime column if needed
+
     lab_cols = ["hadm_id", "itemid", "charttime", "valuenum"]
     labs = _read_filtered_chunks(
         lab_path, "hadm_id", hadm_id_set, _ALL_LAB_IDS,
         usecols=lab_cols,
         chunksize=_LAB_CHUNK,
     )
-    # Map hadm_id → stay_id for uniform downstream processing
+
     hadm_to_stay = stays.set_index("hadm_id")["stay_id"].to_dict()
     if not labs.empty:
         labs["stay_id"] = labs["hadm_id"].map(hadm_to_stay)
         labs = labs.dropna(subset=["stay_id"])
         labs["stay_id"] = labs["stay_id"].astype(int)
 
-    # ── Vectorized timeseries build ──────────────────────────────────────────
+
     stays_ref = stays[["stay_id", "intime", "_arr_idx"]]
 
     dfs_to_concat = [charts]
@@ -173,7 +173,7 @@ def load_mimic4(data_path, fraction=1.0, seed=42, keep_raw=False):
     all_events = pd.concat(dfs_to_concat, ignore_index=True)
     all_ts = _build_all_timeseries(all_events, stays_ref, "stay_id", len(stays))
 
-    # ── Filter and assemble samples ──────────────────────────────────────────
+
     all_raw_ts  = []
     all_samples = []
     skipped = {"empty": 0, "no_hemo": 0}
@@ -190,11 +190,11 @@ def load_mimic4(data_path, fraction=1.0, seed=42, keep_raw=False):
             skipped["no_hemo"] += 1
             continue
 
-        # HOSPITAL-level death (admission-level flag). eICU's equivalent field is
-        # `mortality_hospital`, NOT `mortality` (which is ICU-unit-level there) — see eicu.py.
+
+
         mortality = int(stay["hospital_expire_flag"]) if pd.notna(stay["hospital_expire_flag"]) else 0
         los_3d    = int(stay["los_h"] > 72)
-        los_h_val = float(stay["los_h"])  # continuous ICU length of stay, hours (icustays.los, not hospital LOS)
+        los_h_val = float(stay["los_h"])
         sepsis    = int(sofa_labels.get(int(stay["stay_id"]), 0))
 
         all_raw_ts.append(raw_ts)
@@ -204,10 +204,10 @@ def load_mimic4(data_path, fraction=1.0, seed=42, keep_raw=False):
             "stay_id":       stay["stay_id"],
             "subject_id":    stay["subject_id"],
             "mortality":     mortality,
-            # Alias, not a distinct value: MIMIC's `mortality` is already hospital-level,
-            # so this equals it exactly. Exists so callers can use one task_name
-            # ("mortality_hospital") across both MIMIC and eICU and get the
-            # hospital-level field from both, instead of eICU's unit-level default.
+
+
+
+
             "mortality_hospital": mortality,
             "los_3d":        los_3d,
             "los_h":         los_h_val,
@@ -230,8 +230,8 @@ def load_mimic4(data_path, fraction=1.0, seed=42, keep_raw=False):
             "mask":          result["mask"],
             "abg_mask":      result["abg_mask"],
             "c_mask":        result["c_mask"],
-            # ICD-based sepsis is admission-level (no hourly timing), so broadcast
-            # the binary flag across all hours; sepsis_binary = (label.sum() > 0).
+
+
             "label":         np.full(HOURS, float(sample["sepsis"])),
             "site_id":       sample["site_id"],
             "stay_id":       sample["stay_id"],

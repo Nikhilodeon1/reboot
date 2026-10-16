@@ -1,39 +1,74 @@
-"""
-SOFA-based Sepsis-3 re-derivation for MIMIC-IV and eICU (professor action A1).
 
-Replaces the ICD-code sepsis label (src/data/sepsis.py) with a clinical
-Sepsis-3 label matching the reference implementation, to remove the
-label-definition confound between train (clinical Sepsis-3 on PhysioNet) and
-external eval (administrative ICD codes on MIMIC/eICU).
 
-Methodology follows MIT-LCP/mimic-iv `concepts/sepsis/sepsis3.sql` (+ `sofa.sql`,
-`suspicion_of_infection.sql`), the standard reference in this space:
 
-  Sepsis-3 = suspected infection  AND  SOFA >= 2 in the infection window.
 
-  * Baseline SOFA is assumed 0 for every patient (mimic-code does the same:
-    it does not know pre-ICU organ dysfunction), so "acute rise >= 2" reduces to
-    "SOFA >= 2" -- but ONLY when SOFA is evaluated at the right time.
-  * SOFA is computed HOURLY with a 24-HOUR ROLLING LOOKBACK per organ system
-    (worst value in the preceding 24 h), for all six systems (respiration,
-    coagulation, liver, cardiovascular, CNS, renal).
-  * The hourly SOFA series is then restricted to the suspected-infection window
-    [t_suspicion - 48 h, t_suspicion + 24 h]; sepsis = max SOFA in that window
-    >= 2. This coupling (not whole-stay "SOFA ever >= 2") is what keeps the rate
-    realistic even with baseline 0 -- almost everyone hits SOFA>=2 eventually,
-    but few do so exactly during their infection workup.
-  * Suspected infection uses the ASYMMETRIC Sepsis-3 window: antibiotic first ->
-    culture within +24 h; culture first -> antibiotic within +72 h. t_suspicion
-    is the earlier event of the qualifying pair.
-  * Label granularity is PER-STAY BINARY (positive if criteria met), matching the
-    existing pipeline's "positive if ever met" harmonization.
-  * Missing SOFA components score 0 (standard SOFA-on-EHR practice). We report the
-    observed-vs-imputed fraction per component.
 
-KNOWN SIMPLIFICATION: cardiovascular uses MAP + vasopressor *presence*; full
-dose-based 3/4 stratification needs weight-normalized rates and is approximated
-as "any vasopressor infusion => score 3" (flagged via cardio_dose_approx=True).
-"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import os
 import logging
 
@@ -44,11 +79,11 @@ from .preprocessing import make_heartbeat
 
 logging.basicConfig(level=logging.INFO)
 
-SOFA_WINDOW_PRE_H = 48.0     # t_suspicion - 48h
-SOFA_WINDOW_POST_H = 24.0    # t_suspicion + 24h
-SOFA_LOOKBACK_H = 24.0       # rolling worst-value lookback per organ
+SOFA_WINDOW_PRE_H = 48.0
+SOFA_WINDOW_POST_H = 24.0
+SOFA_LOOKBACK_H = 24.0
 
-# ── MIMIC-IV item IDs ────────────────────────────────────────────────────────
+
 MIMIC_LAB_IDS = {"creatinine": [50912], "bilirubin": [50885], "platelets": [51265]}
 MIMIC_CHART_IDS = {
     "fio2":       [223835],
@@ -59,17 +94,17 @@ MIMIC_VASOPRESSOR_IDS = [221906, 221289, 221662, 221653, 222315, 221749]
 MIMIC_URINE_IDS = [226559, 226560, 226561, 226584, 226563, 226564, 226565,
                    226567, 226557, 226558, 227488, 227489]
 
-# eICU string keys (labname / drugname fragments, lower-cased)
+
 EICU_LABNAMES = {"creatinine": "creatinine", "bilirubin": "total bilirubin",
                  "platelets": "platelets x 1000", "pao2": "pao2", "fio2": "fio2"}
 VASOPRESSOR_PATTERNS = ["norepinephrine", "levophed", "epinephrine", "dopamine",
                         "dobutamine", "vasopressin", "phenylephrine", "neosynephrine"]
 
-# eICU-specific: culture data (microLab) is sparsely charted, so suspected
-# infection is corroborated by a culture draw OR an infection diagnosis
-# (strategy-reviewed adaptation of option (b); disclose in the label-shift
-# limitation). Broad infection-adjacent list; narrow to explicit sepsis codes
-# only if the eICU positive rate comes out too high.
+
+
+
+
+
 INFECTION_DX_PATTERNS = ["sepsis", "septic", "septicemia", "bacteremia",
                          "pneumonia", "urinary tract", "uti", "cellulitis",
                          "meningitis", "endocarditis", "abscess", "infection",
@@ -100,7 +135,7 @@ def is_antibiotic(name):
     return any(p in n for p in ANTIBIOTIC_PATTERNS)
 
 
-# ── SOFA component scoring (0-4 each) ────────────────────────────────────────
+
 def sofa_respiration(pf):
     if pf is None or np.isnan(pf): return 0
     if pf < 100: return 4
@@ -151,9 +186,9 @@ def sofa_renal(creat, urine_ml_24h):
     return score
 
 
-# ── hourly, window-restricted SOFA ───────────────────────────────────────────
+
 def _worst(h, v, t, agg):
-    """Worst value in the 24h lookback (t-24h, t] for a component time series."""
+
     if len(h) == 0:
         return np.nan
     m = (h > t - SOFA_LOOKBACK_H) & (h <= t)
@@ -163,10 +198,13 @@ def _worst(h, v, t, agg):
 
 
 def _sepsis_from_series(C, si_h, pre_h=SOFA_WINDOW_PRE_H, post_h=SOFA_WINDOW_POST_H):
-    """C: per-component (hours, values) arrays; si_h: suspicion time (hours since
-    intime). Evaluates hourly SOFA (24h lookback) over [si-pre_h, si+post_h] and
-    returns (is_sepsis, max_sofa_in_window). pre_h=post_h=0 -> single-point
-    (SOFA at exactly the suspicion time), the stricter mimic-code-literal variant."""
+
+
+
+
+
+
+
     lo, hi = si_h - pre_h, si_h + post_h
     best = 0
     best_cardio = 0
@@ -178,11 +216,11 @@ def _sepsis_from_series(C, si_h, pre_h=SOFA_WINDOW_PRE_H, post_h=SOFA_WINDOW_POS
         if not np.isnan(pao2) and not np.isnan(fio2) and fio2 > 0:
             f = fio2 / 100.0 if fio2 > 1.0 else fio2
             pf = pao2 / f if f > 0 else np.nan
-        # urine: rolling 24h sum == mL/24h directly
+
         hu, vu = C["urine"]
         mu = (hu > t - SOFA_LOOKBACK_H) & (hu <= t)
         urine = vu[mu].sum() if mu.any() else np.nan
-        # vaso: any infusion overlapping the lookback window
+
         vs, ve = C["vaso"]
         vaso = bool(np.any((vs <= t) & (ve > t - SOFA_LOOKBACK_H))) if len(vs) else False
         cardio = sofa_cardiovascular(_worst(*C["map"], t, "min"), vaso)
@@ -196,26 +234,33 @@ def _sepsis_from_series(C, si_h, pre_h=SOFA_WINDOW_PRE_H, post_h=SOFA_WINDOW_POS
             best = sofa
             best_cardio = cardio
         t += 1.0
-    # cardio_alone: SOFA>=2 reached, but drops below 2 without the cardiovascular
-    # component (checks the vasopressor-presence approximation isn't inflating).
+
+
     cardio_alone = int(best >= 2 and (best - best_cardio) < 2)
     return int(best >= 2), best, cardio_alone
 
 
 def _score_stays(suspicion, C_by, all_ids, mode="window",
                  pre_h=SOFA_WINDOW_PRE_H, post_h=SOFA_WINDOW_POST_H):
-    """Score every suspected-infection stay under BOTH the window and the
-    single-point variant, so one data-read pass reports both rates. `mode`
-    selects which becomes the returned label.
 
-    `pre_h`/`post_h` set the suspicion window. They default to the [-48,+24]
-    hours of the original Sepsis-3 operationalization; other widths within the
-    accepted range are equally valid, and varying them is how detector 1's
-    specificity against legitimate labeling variation is measured."""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     labels = {sid: 0 for sid in all_ids}
     n_win = n_pt = 0
-    n_cardio_alone = 0      # positive labels (chosen mode) driven by cardio alone
-    n_3plus_imputed = 0     # positive stays with >=3 of 6 organs fully unobserved
+    n_cardio_alone = 0
+    n_3plus_imputed = 0
     for sid, si_h in suspicion.items():
         w, _, _ = _sepsis_from_series(C_by[sid], si_h, pre_h, post_h)
         p, _, ca = _sepsis_from_series(C_by[sid], si_h, 0.0, 0.0)
@@ -224,17 +269,17 @@ def _score_stays(suspicion, C_by, all_ids, mode="window",
         chosen = w if mode == "window" else p
         labels[sid] = chosen
         if chosen:
-            # cardio_alone from the single-point eval (ca); for window mode this is
-            # a lower bound, adequate for the sanity check.
+
+
             n_cardio_alone += ca
             C = C_by[sid]
             organ_obs = [
-                len(C["pao2"][0]) and len(C["fio2"][0]),   # respiration
-                len(C["platelets"][0]),                    # coagulation
-                len(C["bilirubin"][0]),                    # liver
-                len(C["map"][0]) or len(C["vaso"][0]),     # cardiovascular
-                len(C["gcs"][0]),                          # CNS
-                len(C["creatinine"][0]) or len(C["urine"][0]),  # renal
+                len(C["pao2"][0]) and len(C["fio2"][0]),
+                len(C["platelets"][0]),
+                len(C["bilirubin"][0]),
+                len(C["map"][0]) or len(C["vaso"][0]),
+                len(C["gcs"][0]),
+                len(C["creatinine"][0]) or len(C["urine"][0]),
             ]
             if sum(1 for o in organ_obs if not o) >= 3:
                 n_3plus_imputed += 1
@@ -243,11 +288,13 @@ def _score_stays(suspicion, C_by, all_ids, mode="window",
     return labels, n_win, n_pt, extras
 
 
-# ── data readers ─────────────────────────────────────────────────────────────
+
 def _find(path):
-    """Resolve a table path tolerating .csv(.gz) and filename CASE differences.
-    The eICU demo ships lower-cased names (infusiondrug.csv.gz) while the full
-    eICU-CRD uses camelCase (infusionDrug.csv.gz); match either."""
+
+
+
+
+
     for cand in (path, path.replace(".csv.gz", ".csv")):
         if os.path.exists(cand):
             return cand
@@ -269,9 +316,11 @@ def _read_csv(path, **kw):
 
 
 def _read_filtered(path, usecols, id_col, keep_ids, extra=None, chunk=1_000_000):
-    """Chunk-read a large CSV, filtering to keep_ids (and an optional `extra`
-    per-chunk filter) immediately so peak memory stays bounded on full-scale
-    MIMIC/eICU (chartevents/nurseCharting/vitalPeriodic are tens of GB)."""
+
+
+
+
+
     p = _find(path)
     if p is None:
         logging.warning(f"[A1/SOFA] missing {os.path.basename(path)} — components absent")
@@ -295,15 +344,23 @@ def _hours_since(times, intime):
 
 
 def mimic_sofa_components(data_path, stays_df):
-    """Read MIMIC once and return the material every SOFA variant needs.
 
-    Split out so a study comparing several suspicion windows pays the I/O ONCE.
-    At demo scale the redundancy was free; on full MIMIC-IV the event tables are
-    hundreds of millions of rows, and scoring four variants through the public
-    labeller would re-read them four times.
 
-    Returns (suspicion, C_by_stay, stay_ids, infected, observed).
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     stays = stays_df.copy()
     stays["intime"] = pd.to_datetime(stays["intime"])
     stay_ids = set(stays["stay_id"].astype(int))
@@ -328,11 +385,15 @@ def mimic_sofa_components(data_path, stays_df):
 
 
 def score_variants(suspicion, C_by_stay, stay_ids, variants):
-    """Score several (label, mode, pre_h, post_h) settings from ONE read.
 
-    `variants` is an iterable of (label, mode, pre_h, post_h). Returns
-    {label: labels_dict}.
-    """
+
+
+
+
+
+
+
+
     out = {}
     for label, mode, pre, post in variants:
         labels, _, _, _ = _score_stays(suspicion, C_by_stay, stay_ids,
@@ -343,11 +404,15 @@ def score_variants(suspicion, C_by_stay, stay_ids, variants):
 
 def mimic_sofa_sepsis_labels(data_path, stays_df, mode="window",
                              pre_h=SOFA_WINDOW_PRE_H, post_h=SOFA_WINDOW_POST_H):
-    """Per-stay Sepsis-3 labels for MIMIC-IV.
 
-    stays_df needs: stay_id, hadm_id, subject_id, intime (datetime).
-    Returns (labels {stay_id:0/1}, diagnostics dict).
-    """
+
+
+
+
+
+
+
+
     stays = stays_df.copy()
     stays["intime"] = pd.to_datetime(stays["intime"])
     stay_ids = set(stays["stay_id"].astype(int))
@@ -355,12 +420,12 @@ def mimic_sofa_sepsis_labels(data_path, stays_df, mode="window",
     hadm_to_stay = (stays.dropna(subset=["hadm_id"]).set_index("hadm_id")["stay_id"]
                     .astype(int).to_dict())
 
-    # 1) suspected infection -> {stay_id: si_hours_since_intime}. Only these
-    #    stays can be positive, so SOFA is computed for them alone (major speedup).
+
+
     suspicion = _mimic_suspicion(data_path, stays, hadm_to_stay, intime)
     infected = set(suspicion)
 
-    # 2) timestamped SOFA components for infected stays only.
+
     C_by_stay = {sid: {k: (np.array([]), np.array([])) for k in
                        ["creatinine", "bilirubin", "platelets", "fio2", "pao2",
                         "gcs", "map", "urine"]} | {"vaso": (np.array([]), np.array([]))}
@@ -372,7 +437,7 @@ def mimic_sofa_sepsis_labels(data_path, stays_df, mode="window",
         _mimic_fill_components(data_path, stays, infected, hadm_to_stay, intime,
                                C_by_stay, observed)
 
-    # 3) score (both modes; `mode` picks the returned label)
+
     labels, n_win, n_pt, extras = _score_stays(suspicion, C_by_stay, stay_ids, mode=mode,
                                               pre_h=pre_h, post_h=post_h)
     n_pos = sum(labels.values())
@@ -387,7 +452,7 @@ def mimic_sofa_sepsis_labels(data_path, stays_df, mode="window",
         "positive_rate_window": n_win / n,
         "positive_rate_singlepoint": n_pt / n,
         "n_suspected_infection": len(infected),
-        # observed fraction among the infected stays where SOFA is evaluated
+
         "observed_fraction": {k: len(observed[k]) / ninf for k in observed},
         "cardio_dose_approx": True,
         "frac_pos_cardio_alone": extras["n_cardio_alone_pos"] / max(1, n_pos),
@@ -400,7 +465,7 @@ def mimic_sofa_sepsis_labels(data_path, stays_df, mode="window",
 
 
 def _mimic_suspicion(data_path, stays, hadm_to_stay, intime):
-    """Asymmetric Sepsis-3 window. Returns {stay_id: si_hours_since_intime}."""
+
     hadm_ids = set(stays["hadm_id"].dropna().astype(int))
 
     presc = _read_filtered(os.path.join(data_path, "hosp", "prescriptions.csv.gz"),
@@ -429,11 +494,11 @@ def _mimic_suspicion(data_path, stays, hadm_to_stay, intime):
         if not a or not c or hid not in hadm_to_stay:
             continue
         si_time = None
-        for ta in a:                       # abx first -> culture within +24h
+        for ta in a:
             for tc in c:
                 if ta <= tc <= ta + pd.Timedelta(hours=24):
                     si_time = ta if si_time is None else min(si_time, ta)
-        for tc in c:                       # culture first -> abx within +72h
+        for tc in c:
             for ta in a:
                 if tc <= ta <= tc + pd.Timedelta(hours=72):
                     si_time = tc if si_time is None else min(si_time, tc)
@@ -454,7 +519,7 @@ def _mimic_fill_components(data_path, stays, infected, hadm_to_stay, intime,
             C_by_stay[sid][key] = (hours[good], vals[good])
             observed[key].add(sid)
 
-    # labevents (creatinine, bilirubin, platelets) — hadm-keyed, needs charttime
+
     lab_map = {iid: name for name, ids in MIMIC_LAB_IDS.items() for iid in ids}
     labs = _read_filtered(
         os.path.join(data_path, "hosp", "labevents.csv.gz"),
@@ -467,7 +532,7 @@ def _mimic_fill_components(data_path, stays, infected, hadm_to_stay, intime,
             sid = int(sid)
             _store(sid, name, _hours_since(g["charttime"], intime[sid]), g["valuenum"].values)
 
-    # chartevents (pao2, fio2, gcs components, MAP)
+
     chart_ids = {iid: k for k, ids in MIMIC_CHART_IDS.items() for iid in ids}
     map_ids = {iid: "map" for iid in MIMIC_ITEM_IDS["MAP"]}
     chart_ids = {**chart_ids, **map_ids}
@@ -481,7 +546,7 @@ def _mimic_fill_components(data_path, stays, infected, hadm_to_stay, intime,
             for sid, g in ce[ce["k"] == k].groupby("stay_id"):
                 sid = int(sid)
                 _store(sid, k, _hours_since(g["charttime"], intime[sid]), g["valuenum"].values)
-        # GCS total per charttime = eye+verbal+motor
+
         gcs = ce[ce["k"].isin(["gcs_eye", "gcs_verbal", "gcs_motor"])]
         for sid, g in gcs.groupby("stay_id"):
             sid = int(sid)
@@ -490,7 +555,7 @@ def _mimic_fill_components(data_path, stays, infected, hadm_to_stay, intime,
             if len(tot):
                 _store(sid, "gcs", _hours_since(pd.Series(tot.index), intime[sid]), tot.values)
 
-    # outputevents (urine)
+
     oe = _read_filtered(
         os.path.join(data_path, "icu", "outputevents.csv.gz"),
         ["stay_id", "itemid", "charttime", "value"], "stay_id", infected,
@@ -500,7 +565,7 @@ def _mimic_fill_components(data_path, stays, infected, hadm_to_stay, intime,
             sid = int(sid)
             _store(sid, "urine", _hours_since(g["charttime"], intime[sid]), g["value"].values)
 
-    # inputevents (vasopressor intervals: start/end hours)
+
     ie = _read_filtered(
         os.path.join(data_path, "icu", "inputevents.csv.gz"),
         ["stay_id", "itemid", "starttime", "endtime"], "stay_id", infected,
@@ -517,20 +582,27 @@ def _mimic_fill_components(data_path, stays, infected, hadm_to_stay, intime,
                 observed["vaso"].add(sid)
 
 
-# ── eICU end-to-end labeler ──────────────────────────────────────────────────
+
 def _eicu_offset_hours(offset_min):
     return pd.to_numeric(offset_min, errors="coerce").values / 60.0
 
 
 def eicu_sofa_components(data_path, patients_df):
-    """Read eICU once and return what every SOFA variant needs.
 
-    Same rationale as mimic_sofa_components: on full eICU-CRD the component
-    tables are very large, and scoring four suspicion windows through the
-    public labeller would re-read them four times.
 
-    Returns (suspicion, C_by, pid_set, infected, observed).
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
     pid_set = set(patients_df["patientunitstayid"].astype(int))
     suspicion = _eicu_suspicion(data_path, pid_set)
     infected = set(suspicion)
@@ -546,12 +618,14 @@ def eicu_sofa_components(data_path, patients_df):
 
 def eicu_sofa_sepsis_labels(data_path, patients_df, mode="window",
                             pre_h=SOFA_WINDOW_PRE_H, post_h=SOFA_WINDOW_POST_H):
-    """Per-stay Sepsis-3 labels for eICU. patients_df needs patientunitstayid.
-    All eICU times are minute-offsets from unit admission (0h). Returns
-    (labels {stay_id:0/1}, diagnostics)."""
+
+
+
+
+
     pid_set = set(patients_df["patientunitstayid"].astype(int))
 
-    suspicion = _eicu_suspicion(data_path, pid_set)   # {pid: si_hours}
+    suspicion = _eicu_suspicion(data_path, pid_set)
     infected = set(suspicion)
 
     keys = ["creatinine", "bilirubin", "platelets", "fio2", "pao2", "gcs",
@@ -585,8 +659,9 @@ def eicu_sofa_sepsis_labels(data_path, patients_df, mode="window",
 
 
 def _eicu_suspicion(data_path, pid_set):
-    """Asymmetric window. Returns {pid: si_hours}. abx from medication.drugstartoffset,
-    cultures from microLab.culturetakenoffset (minutes)."""
+
+
+
     med = _read_filtered(os.path.join(data_path, "medication.csv.gz"),
                          ["patientunitstayid", "drugname", "drugstartoffset"],
                          "patientunitstayid", pid_set,
@@ -598,7 +673,7 @@ def _eicu_suspicion(data_path, pid_set):
         for pid, g in med.dropna(subset=["h"]).groupby("patientunitstayid"):
             abx[int(pid)] = sorted(g["h"].tolist())
 
-    # Corroborating infection evidence = culture draw OR infection diagnosis.
+
     cx = {}
     mic = _read_filtered(os.path.join(data_path, "microLab.csv.gz"),
                          ["patientunitstayid", "culturetakenoffset"],
@@ -629,11 +704,11 @@ def _eicu_suspicion(data_path, pid_set):
         if not a or not c:
             continue
         si = None
-        for ta in a:                         # abx first -> culture within +24h
+        for ta in a:
             for tc in c:
                 if ta <= tc <= ta + 24:
                     si = ta if si is None else min(si, ta)
-        for tc in c:                         # culture first -> abx within +72h
+        for tc in c:
             for ta in a:
                 if tc <= ta <= tc + 72:
                     si = tc if si is None else min(si, tc)
@@ -649,7 +724,7 @@ def _eicu_fill_components(data_path, infected, C_by, observed):
         if good.any():
             C_by[pid][key] = (hours[good], vals[good]); observed[key].add(pid)
 
-    # lab: creatinine/bilirubin/platelets/pao2/fio2
+
     lab = _read_filtered(os.path.join(data_path, "lab.csv.gz"),
                          ["patientunitstayid", "labname", "labresult", "labresultoffset"],
                          "patientunitstayid", infected)
@@ -662,7 +737,7 @@ def _eicu_fill_components(data_path, infected, C_by, observed):
         for (pid, key), g in lab.groupby(["patientunitstayid", "key"]):
             _store(int(pid), key, g["h"].values, pd.to_numeric(g["labresult"], errors="coerce").values)
 
-    # GCS total from nurseCharting
+
     nc = _read_filtered(os.path.join(data_path, "nurseCharting.csv.gz"),
                         ["patientunitstayid", "nursingchartoffset",
                          "nursingchartcelltypevallabel", "nursingchartvalue"],
@@ -674,7 +749,7 @@ def _eicu_fill_components(data_path, infected, C_by, observed):
         for pid, g in nc.groupby("patientunitstayid"):
             _store(int(pid), "gcs", g["h"].values, pd.to_numeric(g["nursingchartvalue"], errors="coerce").values)
 
-    # urine from intakeOutput (celllabel contains 'urine')
+
     io = _read_filtered(
         os.path.join(data_path, "intakeOutput.csv.gz"),
         ["patientunitstayid", "intakeoutputoffset", "celllabel", "cellvaluenumeric"],
@@ -686,7 +761,7 @@ def _eicu_fill_components(data_path, infected, C_by, observed):
         for pid, g in io.groupby("patientunitstayid"):
             _store(int(pid), "urine", g["h"].values, pd.to_numeric(g["cellvaluenumeric"], errors="coerce").values)
 
-    # MAP from vitalAperiodic (noninvasivemean) — smaller than vitalPeriodic
+
     va = _read_filtered(os.path.join(data_path, "vitalAperiodic.csv.gz"),
                         ["patientunitstayid", "observationoffset", "noninvasivemean"],
                         "patientunitstayid", infected,
@@ -696,7 +771,7 @@ def _eicu_fill_components(data_path, infected, C_by, observed):
         for pid, g in va.groupby("patientunitstayid"):
             _store(int(pid), "map", g["h"].values, pd.to_numeric(g["noninvasivemean"], errors="coerce").values)
 
-    # vasopressor presence from infusiondrug (point events -> start==end)
+
     inf = _read_filtered(os.path.join(data_path, "infusiondrug.csv.gz"),
                          ["patientunitstayid", "infusionoffset", "drugname"],
                          "patientunitstayid", infected,
@@ -706,5 +781,5 @@ def _eicu_fill_components(data_path, infected, C_by, observed):
         inf["h"] = _eicu_offset_hours(inf["infusionoffset"])
         for pid, g in inf.dropna(subset=["h"]).groupby("patientunitstayid"):
             hrs = g["h"].values
-            C_by[int(pid)]["vaso"] = (hrs, hrs)  # point events; overlap==presence in lookback
+            C_by[int(pid)]["vaso"] = (hrs, hrs)
             observed["vaso"].add(int(pid))

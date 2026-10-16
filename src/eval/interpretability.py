@@ -1,8 +1,12 @@
-"""
-Interpretability tools for PCL:
-  1. Jacobian sensitivity: ∂(risk)/∂(HR_t) for each timestep.
-  2. t-SNE/UMAP: side-by-side ERM vs PCL embeddings colored by site_id.
-"""
+
+
+
+
+
+
+
+
+
 
 import logging
 from typing import Optional, Tuple
@@ -21,7 +25,7 @@ def mortality_risk_scalar(
     mask: torch.Tensor,
     task_name: str = "mortality",
 ) -> torch.Tensor:
-    """Sigmoid risk for one batch item (0-dim tensor)."""
+
     reps = model.encode(x, mask)
     logits = model.classify(reps, task_name, obs_mask=mask)
     return torch.sigmoid(logits.reshape(-1))[0]
@@ -33,11 +37,15 @@ def jacobian_risk_wrt_hr(
     mask: torch.Tensor,
     task_name: str = "mortality",
 ) -> torch.Tensor:
-    """
-    Compute ∂(risk)/∂(HR_t) for each timestep t (batch size must be 1).
 
-    Returns tensor of shape (T,) with derivatives w.r.t. normalized HR channel.
-    """
+
+
+
+
+
+
+
+
     if x.shape[0] != 1:
         raise ValueError("jacobian_risk_wrt_hr expects batch size 1")
 
@@ -64,10 +72,13 @@ def jacobian_risk_wrt_hr_batch_mean(
     task_name: str = "mortality",
     max_batch: int = 8,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
-    """
-    Average |∂risk/∂HR| over up to `max_batch` examples for a heatmap-friendly vector (V,).
-    For HR we return shape (T,) mean over batch and time aggregation optional.
-    """
+
+
+
+
+
+
+
     model.eval()
     B = min(x.shape[0], max_batch)
     grads = []
@@ -87,7 +98,7 @@ def plot_risk_hr_jacobian_heatmap(
     save_path: str,
     task_name: str = "mortality",
 ) -> None:
-    """Save a 1×T heatmap of ∂risk/∂HR (single patient)."""
+
     import matplotlib.pyplot as plt
 
     jac = jacobian_risk_wrt_hr(model, x, mask, task_name).cpu().numpy()
@@ -106,14 +117,14 @@ def plot_risk_hr_jacobian_heatmap(
     logging.info("Saved Jacobian heatmap to %s", save_path)
 
 
-# ── t-SNE VISUALIZATION ───────────────────────────────────────────────────────
+
 
 SITE_NAMES = {0: "PhysioNet A", 1: "PhysioNet B", 2: "MIMIC-IV", 3: "eICU"}
 SITE_COLORS = {0: "#4c72b0", 1: "#c44e52", 2: "#55a868", 3: "#8172b3"}
 
 
 def _extract_pooled_reps(model, loader, device):
-    """Returns (N, d_model) mean-pooled representations and (N,) site_id array."""
+
     model.to(device).eval()
     reps_list, site_list = [], []
     with torch.no_grad():
@@ -121,7 +132,7 @@ def _extract_pooled_reps(model, loader, device):
             xb = batch["x"].to(device)
             mb = batch["mask"].to(device)
             r = model.encode(xb, mb)
-            # Mean-pool over time for 2-D embedding
+
             pooled = r.mean(dim=1).cpu().numpy()
             reps_list.append(pooled)
             site_list.append(batch["site_id"].numpy())
@@ -137,21 +148,35 @@ def generate_tsne_visualization(
     seed: int = 42,
     perplexity: int = 30,
 ) -> None:
-    """
-    Side-by-side t-SNE of ERM vs PCL representations, colored by site_id.
 
-    If PCL suppresses hospital identity, points from different sites will mix
-    in the PCL panel while clustering by site in the ERM panel.
 
-    Args:
-        erm_model:  trained ERM PCLModel
-        pcl_model:  trained PCL PCLModel
-        loader:     DataLoader over the full dataset (all sites)
-        save_path:  where to save the PNG
-        device:     compute device
-        seed:       reproducibility seed for t-SNE
-        perplexity: t-SNE perplexity (reduced automatically for small datasets)
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     try:
         from sklearn.manifold import TSNE
         import matplotlib

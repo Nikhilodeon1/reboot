@@ -1,12 +1,12 @@
-"""Detector 2 external validation: MIMIC-IV source -> eICU target.
 
-Uses sample["values"]. Normalization is fixed PLAUS bounds shared by all
-datasets (MinMaxNormalizer.fit() is a no-op; tests/test_normalizer_bounds.py).
 
-Leak pool capped at source size so leakage % matches the PhysioNet ratio.
 
-    PCL_TEST_MODE=1 python detectors/external/run_external2.py --seeds 5
-"""
+
+
+
+
+
+
 import argparse
 import json
 import os
@@ -27,15 +27,15 @@ RESULTS = os.path.join(HERE, "results")
 
 
 _POOLS = None
-_POOL_CACHE = None      # --pool-cache path
+_POOL_CACHE = None
 
 
 def load_pools(verbose=True):
-    """(MIMIC samples, eICU samples), loaded once.
 
-    Seed-independent at fraction=1.0. Cached in-process and, with --pool-cache,
-    on disk.
-    """
+
+
+
+
     global _POOLS
     if _POOLS is not None:
         return _POOLS
@@ -76,7 +76,7 @@ def load_pools(verbose=True):
 
 
 def build_external(seed, probe_frac=0.25):
-    """(source, leak pool, probe). Source is the whole cohort; seed varies target only."""
+
     from src.data.dataset import ICUDataset
 
     src_samples, tgt_samples = load_pools()
@@ -86,7 +86,7 @@ def build_external(seed, probe_frac=0.25):
 
     n_probe = max(50, int(round(probe_frac * len(tgt))))
     probe = tgt[:n_probe]
-    # leak pool capped at source size
+
     pool = tgt[n_probe:n_probe + len(src_samples)]
     return (ICUDataset(src_samples), ICUDataset(pool), ICUDataset(probe))
 

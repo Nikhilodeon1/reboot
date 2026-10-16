@@ -1,11 +1,11 @@
-"""
-Generate paper summary from run_paper_experiments.py output (paper_results.json).
-Uses PhysioNet Challenge 2019 as primary dataset per plan.md.
 
-Usage:
-    python scripts/generate_paper_summary.py
-    (run after: python run_paper_experiments.py)
-"""
+
+
+
+
+
+
+
 import json
 import logging
 import os
@@ -54,7 +54,7 @@ def main():
     md += "> Primary dataset: PhysioNet Computing in Cardiology Challenge 2019.  \n"
     md += "> Train on Site A, evaluate zero-shot on Site B, MIMIC-IV demo, eICU demo.\n\n"
 
-    # ── Experiment 1: Main OOD Generalization ────────────────────────────────
+
     md += "### Experiment 1: Main OOD Generalization (LOS > 3 Days)\n\n"
     md += "| Model | Val AUROC | PhysioNet-B | MIMIC-IV | eICU |\n"
     md += "|-------|-----------|-------------|----------|------|\n"
@@ -71,7 +71,7 @@ def main():
             f"| {_fmt(ood.get('eICU', {}).get('auroc'))} |\n"
         )
 
-    # ── Experiment 2: Feature Engineering Demolition ─────────────────────────
+
     if exp2:
         md += "\n### Experiment 2: Feature Engineering Demolition\n\n"
         md += "| Model | Val AUROC | PhysioNet-B | MIMIC-IV | eICU |\n"
@@ -88,7 +88,7 @@ def main():
                 f"| {_fmt(ood.get('eICU', {}).get('auroc'))} |\n"
             )
 
-    # ── Experiment 3: Constraint Randomization ───────────────────────────────
+
     if exp3:
         md += "\n### Experiment 3: Constraint Randomization Ablation\n\n"
         md += "| Condition | OOD AUROC |\n"
@@ -97,7 +97,7 @@ def main():
             marker = " **" if "real" in cond.lower() else ""
             md += f"| {cond}{marker} | {_fmt(auroc)} |\n"
 
-    # ── Experiment 4: Linear Probe ───────────────────────────────────────────
+
     if exp4:
         md += "\n### Experiment 4: Linear Probe Analysis\n\n"
         md += "| Target | ERM | PCL | Interpretation |\n"
@@ -113,7 +113,7 @@ def main():
                 interp = "Both preserve clinical signal" if (p and e and abs(p - e) < 0.1) else "Divergence"
             md += f"| {target} | {_fmt(e)} | {_fmt(p)} | {interp} |\n"
 
-    # ── Experiment 5: Noise Robustness ───────────────────────────────────────
+
     if exp5:
         md += "\n### Experiment 5: Measurement Noise Robustness\n\n"
         md += "| Noise (mmHg) |"
@@ -128,7 +128,7 @@ def main():
                 md += f" {_fmt(exp5[m].get(s))} |"
             md += "\n"
 
-    # ── Experiment 6: OOD Detector ───────────────────────────────────────────
+
     if exp6:
         md += "\n### Experiment 6: PCL Violation as OOD Detector\n\n"
         md += "| OOD Site | Mean Score | Detection AUROC |\n"
@@ -136,7 +136,7 @@ def main():
         for site, data in exp6.items():
             md += f"| {site} | {_fmt(data.get('mean_score'))} | {_fmt(data.get('detection_auroc'))} |\n"
 
-    # ── Experiment 7: IRM Failure Mode ────────────────────────────────────────
+
     if exp7:
         md += "\n### Experiment 7: IRM Failure Mode (High-k vs Low-k)\n\n"
         md += "| Method | Environments | Test AUROC |\n"
@@ -146,9 +146,9 @@ def main():
             auroc = data.get("test_auroc")
             md += f"| {method} | {n_envs} | {_fmt(auroc)} |\n"
 
-    # ── Ablation: Lambda Sensitivity ─────────────────────────────────────────
+
     if ablation_lam:
-        # Entries are {"val":…, "ood":{site:…}}; λ* is chosen on VAL (never OOD).
+
         best = ablation_lam.get("_val_selected_lambda")
         keys = [k for k in ablation_lam if k != "_val_selected_lambda"]
         sites = []
@@ -169,10 +169,10 @@ def main():
             else:
                 md += f"| {lam_val}{star} | {_fmt(e)} | " + " | ".join("—" for _ in sites) + " |\n"
 
-    # ── Ablation: Constraint Subset ──────────────────────────────────────────
+
     if ablation_sub:
-        # Entries are {"val":…, "ood":{site:…}}; read any "constraint helps"
-        # conclusion off VAL, not an OOD site.
+
+
         sites = []
         for e in ablation_sub.values():
             if isinstance(e, dict):
@@ -188,7 +188,7 @@ def main():
             else:
                 md += f"| {cond} | {_fmt(e)} | " + " | ".join("—" for _ in sites) + " |\n"
 
-    # ── Classical Baselines ──────────────────────────────────────────────────
+
     if classical:
         md += "\n### Classical ML Baselines\n\n"
         for site, tasks in classical.items():
@@ -208,7 +208,7 @@ def main():
                     )
                 md += "\n"
 
-    # ── Write ────────────────────────────────────────────────────────────────
+
     md_path = os.path.join(RESULTS_DIR, "paper_summary.md")
     with open(md_path, "w", encoding="utf-8") as f:
         f.write(md)

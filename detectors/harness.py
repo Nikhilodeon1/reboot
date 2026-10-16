@@ -1,11 +1,11 @@
-"""Shared result types and scoring for the confound detectors."""
+
 from collections import namedtuple
 
 Case = namedtuple("Case", "name flagged expected stats")
 
 
 def confusion(cases):
-    """TP/FP/FN/TN counts over Case records."""
+
     c = {"TP": 0, "FP": 0, "FN": 0, "TN": 0}
     for x in cases:
         if x.flagged and x.expected:
@@ -20,7 +20,7 @@ def confusion(cases):
 
 
 def rates(counts):
-    """Precision, recall, FPR. Undefined ratios are nan, not 0."""
+
     tp, fp, fn, tn = counts["TP"], counts["FP"], counts["FN"], counts["TN"]
     nan = float("nan")
     return {
@@ -31,10 +31,10 @@ def rates(counts):
 
 
 def seed_sweep(run_fn, seeds):
-    """Per-case flag rate across seeds.
 
-    Raises if the case set or any case's ground truth changes between seeds.
-    """
+
+
+
     acc, expected, names0 = {}, {}, None
     for s in seeds:
         cases = run_fn(s)
@@ -56,14 +56,14 @@ def seed_sweep(run_fn, seeds):
             for n, v in acc.items()}
 
 
-# Stochastic detectors report uncertainty with every verdict.
-# 3 and 4 are deterministic static analysis; no CI.
+
+
 STOCHASTIC_CHECKS = {1, 2, 5}
 DETERMINISTIC_CHECKS = {3, 4}
 
 
 def requires_uncertainty(check_number):
-    """True for stochastic detectors. Raises on unclassified checks."""
+
     if check_number in DETERMINISTIC_CHECKS:
         return False
     if check_number in STOCHASTIC_CHECKS:
@@ -73,7 +73,7 @@ def requires_uncertainty(check_number):
 
 
 def fmt_uncertainty(check_number, stats):
-    """Uncertainty cell for a results row. Renders MISSING, never blank."""
+
     if not requires_uncertainty(check_number):
         return "deterministic (no CI: static analysis)"
     if stats is None:
@@ -87,7 +87,7 @@ def fmt_uncertainty(check_number, stats):
         return f"flagged {int(round(stats['flag_rate'] * stats['n']))}/{stats['n']} seeds"
     if "mean" in stats and "sd" in stats:
         return f"{stats['mean']:.3f} +/- {stats['sd']:.3f}"
-    # paired t: within-seed spread
+
     if "t" in stats and "crit" in stats:
         s = f"paired t={stats['t']:.2f} vs crit {stats['crit']:.3f}"
         if stats.get("floor") is not None:

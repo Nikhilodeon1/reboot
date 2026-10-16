@@ -1,4 +1,4 @@
-﻿"""Standalone PCL-violation OOD detector script (Contribution #2)."""
+﻿
 import json
 import logging
 import os

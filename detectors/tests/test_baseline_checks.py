@@ -27,7 +27,7 @@ class TestAuroc(unittest.TestCase):
         self.assertTrue(np.isnan(auroc([1, 1, 1], [0.1, 0.2, 0.3])))
 
     def test_matches_a_known_value(self):
-        # 1 positive ranked above 2 of 3 negatives -> 2/3
+
         self.assertAlmostEqual(auroc([0, 0, 1, 0], [0.1, 0.2, 0.5, 0.9]),
                                2.0 / 3.0)
 
@@ -62,7 +62,7 @@ class TestBaselines(unittest.TestCase):
 
 
 class TestUndecidable(unittest.TestCase):
-    """Undefined AUROC reports decidable=False, never a silent False."""
+
 
     def test_nan_indomain_is_undecidable_not_silent(self):
         flagged, ok = train_test_gap({"indomain_auroc": float("nan"),

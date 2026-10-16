@@ -1,4 +1,4 @@
-"""Check 1 audit arrays must be independently computed (no kappa=1 by construction)."""
+
 import os
 import sys
 import unittest
@@ -18,7 +18,7 @@ class TestNegativeControlIsNotTautological(unittest.TestCase):
         self.ids = np.arange(self.n)
         self.icd = rng.integers(0, 2, self.n)
         self.sofa_single = rng.integers(0, 2, self.n)
-        # window differs from single on 10% of stays
+
         self.sofa_window = self.sofa_single.copy()
         flip = rng.choice(self.n, size=self.n // 10, replace=False)
         self.sofa_window[flip] = 1 - self.sofa_window[flip]
@@ -37,7 +37,7 @@ class TestNegativeControlIsNotTautological(unittest.TestCase):
                 "kappa is 1.0 by construction, not by measurement")
 
     def test_audit_arrays_are_the_same_patients(self):
-        """Both criteria score the same patients."""
+
         for name, (_, _, a, b, _) in self.scenarios().items():
             self.assertEqual(len(a), len(b),
                              f"scenario {name!r} scores different numbers of "

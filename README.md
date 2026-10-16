@@ -1,6 +1,6 @@
 # Auditing the Auditor
 
-Code, tests, run logs and aggregate results for *Auditing the Auditor: Four
+Code, tests and aggregate results for *Auditing the Auditor: Four
 Failure Modes of Confound Detection in Clinical Machine Learning* (under review).
 Anonymized for double-blind review.
 
@@ -25,14 +25,12 @@ Five detectors, one per confound type:
       external/     full-scale and third-party validation
       fixtures/     historical buggy sweep and its fix (detector 3 ground truth)
       results/      aggregate results (JSON); scale per file in results/README.md
-      logs/         run output
       tests/        unit and regression tests
     src/, config.py         data loaders and model used by detectors 1, 2, 5
     scripts/                training scripts from the underlying model; not used by the detectors
     TAXONOMY.md             the four diagnostic failure modes
-    docs/RESULTS_NOTES.md   detailed results record
-    detectors/PREREGISTRATION.md, PREREGISTRATION_OUTCOME.md
-    detectors/preregistration_evidence/   anonymized patches fixing the pre-registration order
+    detectors/PREREGISTRATION.md
+    rebuttal/manuscript/main_revised.pdf   revised manuscript
 
 ## Requirements
 
@@ -57,7 +55,8 @@ Detectors 3 and 4 run live (static analysis). Detectors 1, 2 and 5 load
 
     PCL_TEST_MODE=1 python -m unittest discover -s detectors/tests -t . -q
 
-116 tests. Without PhysioNet data, 7 skip with `PhysioNet data not present`.
+Tests that require restricted PhysioNet data may skip when those files are not
+available locally.
 
 ## Data
 
@@ -86,8 +85,6 @@ its target.
     python detectors/checks/check5_missingness_scale.py 1200
     PCL_TEST_MODE=1 python detectors/checks/check2_pretrain_leakage.py --stays 900 --seeds 3 --epochs 3
 
-Full-scale external runs and cache regeneration: `detectors/TODO.md`, section 0.
-
 ## Results
 
 Internal validation suite, demonstration scale:
@@ -101,19 +98,11 @@ Internal validation suite, demonstration scale:
 | 5 missingness/scale | 0/0/1/1 | false negative |
 | **Total** | **6/0/1/12** | precision 1.00, recall 0.86 |
 
-Full-scale external results, uncertainty and failure-mode findings:
-`docs/RESULTS_NOTES.md` and the paper. Archived full-scale logs: `detectors/logs/full2.out` (detector 2),
-`detectors/logs/full5.out` (detector 5). Scale of each result file:
+Full-scale external results and uncertainty findings are reported in the revised
+manuscript. Scale and contents of each committed result file:
 `detectors/results/README.md`.
 
 ## Not included
 
-- Per-stay caches derived from restricted data (`*.npz`, `*.pkl`). Regenerate
-  via `detectors/TODO.md` section 0.
-- Detector 1 full-scale logs (lost in transfer). Its full-scale figures are
-  transcribed from run output.
-- Development history. Commit metadata identifies the authors; released with the
-  de-anonymized repository. The two commits that fix the pre-registration order
-  are in `detectors/preregistration_evidence/`. See `CONTRIBUTORS.md`.
-
-Absolute paths in `detectors/logs/` are redacted to `<repo>`.
+- Per-stay caches derived from restricted data (`*.npz`, `*.pkl`).
+- Restricted clinical data.

@@ -1,7 +1,10 @@
-"""
-Mechanistic linear probing (ProjOVERVIEW): train only a linear layer on frozen representations
-to predict a held-out physiological variable (pH) — compare ERM vs PCL checkpoints.
-"""
+
+
+
+
+
+
+
 import json
 import logging
 import os
@@ -32,11 +35,11 @@ class LinearProbe(nn.Module):
         self.linear = nn.Linear(d_model, out_features)
 
     def forward(self, reps: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
-        # Find index of last observed timestep
-        t_obs = mask.any(dim=-1) 
+
+        t_obs = mask.any(dim=-1)
         last_idx = t_obs.sum(dim=1).long() - 1
         last_idx = torch.clamp(last_idx, min=0)
-        
+
         batch_idx = torch.arange(reps.size(0), device=reps.device)
         pooled = reps[batch_idx, last_idx]
         return self.linear(pooled)
@@ -67,16 +70,16 @@ def train_probe_mse(
             mask = batch["mask"].to(device)
             with torch.no_grad():
                 reps = model.encode(x, mask)
-            
-            # Target: last observed value of the target variable
-            # Find index of last observed timestep for this specific variable
+
+
+
             v_mask = mask[:, :, target_var_idx]
             last_v_idx = v_mask.sum(dim=1).long() - 1
             last_v_idx = torch.clamp(last_v_idx, min=0)
-            
+
             batch_idx = torch.arange(x.size(0), device=x.device)
             target = x[batch_idx, last_v_idx, target_var_idx].unsqueeze(-1)
-            
+
             pred = probe(reps, mask)
             loss = criterion(pred, target)
             opt.zero_grad()

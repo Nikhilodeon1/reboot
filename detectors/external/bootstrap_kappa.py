@@ -1,10 +1,10 @@
-"""Bootstrap CIs for detector 1's kappa on control and positive cases.
 
-Two intervals per case: patients resampled with replacement (cohort), and
-repeated audit-subset draws without replacement (detector operating point).
 
-    PCL_TEST_MODE=1 python detectors/external/bootstrap_kappa.py --iters 5000
-"""
+
+
+
+
+
 import argparse
 import json
 import os
@@ -22,7 +22,7 @@ RESULTS = os.path.join(HERE, "results")
 
 
 def bootstrap_kappa_ci(a, b, iters=5000, seed=0, alpha=0.05):
-    """(point, lo, hi, draws). Degenerate resamples dropped, not coerced."""
+
     a = np.asarray(a, int)
     b = np.asarray(b, int)
     if len(a) != len(b):
@@ -41,7 +41,7 @@ def bootstrap_kappa_ci(a, b, iters=5000, seed=0, alpha=0.05):
 
 
 def audit_subset_distribution(a, b, audit_n, iters=5000, seed=0, alpha=0.05):
-    """Kappa over repeated min(audit_n, n) draws without replacement."""
+
     a = np.asarray(a, int)
     b = np.asarray(b, int)
     n = len(a)

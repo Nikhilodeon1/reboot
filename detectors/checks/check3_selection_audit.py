@@ -1,8 +1,8 @@
-"""Check 3: OOD-contaminated hyperparameter selection (static AST audit).
 
-Flags a sweep whose in-loop evaluation reads OOD data and never validation
-data. Ground truth: a historical buggy sweep and its fix.
-"""
+
+
+
+
 import ast
 import os
 import sys
@@ -10,7 +10,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 FIX = os.path.join(os.path.dirname(HERE), "fixtures")
 
-# project naming conventions
+
 VAL_NAMES = {"val_loader", "valid_loader", "validation_loader"}
 OOD_NAMES = {"ood_loaders", "ood_loader", "test_loaders", "target_loader",
              "test_loader"}
@@ -18,7 +18,7 @@ EVAL_FNS = {"evaluate_model", "evaluate", "eval_on_loaders", "score_model"}
 SWEEP_HINTS = ("lambda", "sweep", "grid", "ablation", "search", "tune")
 TRAIN_FNS = {"train_model"}
 
-# Vocabulary bundle; an extended vocabulary can be diffed against the defaults.
+
 class Vocab:
     def __init__(self, val=None, ood=None, eval_fns=None, train_fns=None,
                  hints=None):
@@ -29,7 +29,7 @@ class Vocab:
         self.hints = tuple(hints or SWEEP_HINTS)
 
     def diff(self, other):
-        """Names this vocabulary adds relative to `other`."""
+
         return {"val": sorted(self.val - other.val),
                 "ood": sorted(self.ood - other.ood),
                 "eval_fns": sorted(self.eval_fns - other.eval_fns),
@@ -37,15 +37,15 @@ class Vocab:
                 "hints": sorted(set(self.hints) - set(other.hints))}
 
 
-DEFAULT_VOCAB = None   # assigned below
+DEFAULT_VOCAB = None
 
 
 def _origin(node, env, vocab=None):
-    """Resolve an expression to 'val', 'ood' or None.
 
-    Handles names, subscripts, conditional expressions (OOD if either branch
-    is OOD) and call arguments.
-    """
+
+
+
+
     vocab = vocab or DEFAULT_VOCAB
     if isinstance(node, ast.Name):
         if node.id in vocab.val:
@@ -67,11 +67,11 @@ def _origin(node, env, vocab=None):
 
 
 def audit_function(fn, vocab=None):
-    """(is_sweep, findings) for one function definition."""
+
     vocab = vocab or DEFAULT_VOCAB
     name = fn.name.lower()
     has_hint = any(h in name for h in vocab.hints)
-    # sweep: hint in name and a training call inside a loop
+
     trains_in_loop = any(
         isinstance(n, ast.Call) and getattr(n.func, "id", "") in vocab.train_fns
         for loop in ast.walk(fn) if isinstance(loop, (ast.For, ast.While))
@@ -79,7 +79,7 @@ def audit_function(fn, vocab=None):
     if not (has_hint and trains_in_loop):
         return False, []
 
-    # local aliases
+
     env = {}
     for node in ast.walk(fn):
         if isinstance(node, ast.Assign) and len(node.targets) == 1 and \
@@ -96,7 +96,7 @@ def audit_function(fn, vocab=None):
             if not (isinstance(node, ast.Call) and
                     getattr(node.func, "id", "") in vocab.eval_fns):
                 continue
-            # arg 1 is the loader
+
             loader_arg = node.args[1] if len(node.args) > 1 else None
             if loader_arg is None:
                 continue
@@ -116,7 +116,7 @@ def audit_file(path, vocab=None):
         if not is_sweep:
             continue
         origins = {f["resolved"] for f in findings}
-        # contaminated: an OOD read and no val read
+
         verdict = ("CONTAMINATED" if "ood" in origins and "val" not in origins
                    else "OK" if "val" in origins
                    else "INDETERMINATE")
@@ -129,7 +129,7 @@ DEFAULT_VOCAB = Vocab()
 
 
 def verdict_for_file(res):
-    """File verdict: any CONTAMINATED sweep wins; no sweeps is INDETERMINATE."""
+
     verdicts = {r["verdict"] for r in res}
     if not verdicts:
         return "INDETERMINATE"
@@ -139,7 +139,7 @@ def verdict_for_file(res):
 
 
 def run(paths=None, verbose=False):
-    """paths: [(path, expected_flag)]. Defaults to the two fixtures."""
+
     from detectors.harness import Case
     if paths is None:
         paths = [(os.path.join(FIX, "sweep_BUGGY.py"), True),

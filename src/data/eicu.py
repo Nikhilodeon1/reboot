@@ -14,31 +14,31 @@ from .sofa_sepsis import eicu_sofa_sepsis_labels
 
 logging.basicConfig(level=logging.INFO)
 
-# Reverse lookup: eicu column name → canonical var
+
 _PERIODIC_COLS  = {col: var for var, col in EICU_VITAL_MAPPING.items()}
 _APERIODIC_COLS = {col: var for var, col in EICU_VITAL_FALLBACK.items()}
 _LAB_NAME_MAP   = {name.lower(): var for var, name in EICU_LAB_MAPPING.items()}
 
-# vitalPeriodic in full eICU-CRD is ~146M rows (~35GB uncompressed) — MUST be
-# read in chunks or it OOMs the pod. Chunk-read every table and window to the
-# first HOURS*60 minutes inside each chunk so accumulated memory stays bounded.
+
+
+
 _EICU_CHUNK = 1_000_000
-_MAX_MIN    = HOURS * 60  # keep only readings in the first 48h
-# eICU offsets can be slightly negative (drawn just before unit admit). The
-# original loader used int(offset/60), which truncates toward zero, mapping
-# offsets in (-60, 0) to hour 0. Match that exactly so we don't silently drop
-# admission-time ABG labs: keep offset > _MIN_OFFSET (i.e. > -60).
+_MAX_MIN    = HOURS * 60
+
+
+
+
 _MIN_OFFSET = -60
 
 
 def _compact(df):
-    """Median-collapse a long-format chunk to (stay, hour, var) and downcast.
 
-    Values are hourly median-binned downstream anyway, so pre-aggregating here is
-    equivalent up to median-of-medians across chunk boundaries (a stay-hour rarely
-    straddles two chunks). Downcasting + categorical 'var' cuts per-row memory
-    several-fold versus int64/float64/object.
-    """
+
+
+
+
+
+
     if df.empty:
         return df
     out = df.groupby(["patientunitstayid", "hour", "var"], as_index=False)["valuenum"].median()
@@ -50,7 +50,7 @@ def _compact(df):
 
 
 def _resolve_path(path):
-    """Return path if it exists, else the .csv fallback, else raise."""
+
     if os.path.exists(path):
         return path
     alt = path.replace(".csv.gz", ".csv")
@@ -60,16 +60,16 @@ def _resolve_path(path):
 
 
 def _try_read(path):
-    """Read a (small) table whole. Only used for patient.csv.gz."""
+
     return pd.read_csv(_resolve_path(path), low_memory=False, encoding_errors="replace")
 
 
 def _read_vitals_chunked(path, col_map, stay_ids, offset_col="observationoffset"):
-    """
-    Chunk-read a wide vital-signs table, keep only our stays and the first 48h,
-    melt to long format (patientunitstayid, hour, var, valuenum). Only reads the
-    columns we actually need (huge speedup on the 35GB periodic table).
-    """
+
+
+
+
+
     resolved = _resolve_path(path)
     header = pd.read_csv(resolved, nrows=0, encoding_errors="replace").columns
     present = [c for c in col_map if c in header]
@@ -97,10 +97,10 @@ def _read_vitals_chunked(path, col_map, stay_ids, offset_col="observationoffset"
         )
         melted = melted[melted["valuenum"].notna()]
         melted["var"] = melted["eicu_col"].map(col_map)
-        # Collapse to one row per (stay, hour, var) inside the chunk and downcast
-        # dtypes. vitalPeriodic is ~146M rows; keeping raw matches (with an object
-        # 'var' column) is the single biggest memory consumer in the pipeline and
-        # overruns the 32GB container limit at 17 variables.
+
+
+
+
         parts.append(_compact(melted[["patientunitstayid", "hour", "var", "valuenum"]]))
 
     if not parts:
@@ -109,7 +109,7 @@ def _read_vitals_chunked(path, col_map, stay_ids, offset_col="observationoffset"
 
 
 def _read_labs_chunked(path, stay_ids):
-    """Chunk-read lab.csv.gz, keep our stays + first 48h, map labname → canonical var."""
+
     resolved = _resolve_path(path)
     usecols = ["patientunitstayid", "labresultoffset", "labresult", "labname"]
     parts = []
@@ -139,14 +139,14 @@ def _read_labs_chunked(path, stay_ids):
 
 
 def _read_nursecharting_chunked(path, stay_ids):
-    """Supplementary vitals from nurseCharting.
 
-    eICU's vitalPeriodic carries temperature for only ~6% of hours, while
-    nurseCharting holds the bulk of it (and already provides a clean
-    'Temperature (C)' column, so no unit conversion is needed). Without this the
-    Temp channel would be ~82% observed at the PhysioNet training site but ~6% at
-    eICU — an availability gap that damages zero-shot transfer.
-    """
+
+
+
+
+
+
+
     try:
         resolved = _resolve_path(path)
     except FileNotFoundError:
@@ -178,11 +178,11 @@ def _read_nursecharting_chunked(path, stay_ids):
         chunk["valuenum"] = pd.to_numeric(chunk["nursingchartvalue"], errors="coerce")
         chunk = chunk[chunk["valuenum"].notna()]
         chunk["hour"] = (chunk["nursingchartoffset"] / 60).astype(int)
-        # Collapse to one row per (stay, hour, var) INSIDE the chunk before
-        # accumulating. nurseCharting is ~150M rows; retaining raw matches blew
-        # the container memory limit. Values are median-binned per hour anyway,
-        # so pre-aggregating here is equivalent up to median-of-medians across
-        # chunk boundaries (a stay-hour rarely straddles two chunks).
+
+
+
+
+
         parts.append(_compact(chunk[["patientunitstayid", "hour", "var", "valuenum"]]))
 
     if not parts:
@@ -191,14 +191,14 @@ def _read_nursecharting_chunked(path, stay_ids):
 
 
 def _build_all_timeseries(long_df, stay_ids, pid_to_idx):
-    """
-    Build (n_stays, HOURS, N_VARS) array from long-format event table.
-    long_df columns: [patientunitstayid, hour, var, valuenum]
-    """
+
+
+
+
     n_stays = len(stay_ids)
     n_vars  = len(CANONICAL_VARIABLES)
-    # float32: at 130k eICU stays x 48h x 17 vars this halves each source array
-    # (~850MB -> ~425MB), which matters against the 32GB container limit.
+
+
     all_ts  = np.full((n_stays, HOURS, n_vars), np.nan, dtype=np.float32)
 
     if long_df.empty:
@@ -210,7 +210,7 @@ def _build_all_timeseries(long_df, stay_ids, pid_to_idx):
     ev = ev[ev["col_idx"].notna()]
     ev["col_idx"] = ev["col_idx"].astype(int)
 
-    # Clip to plausible range
+
     for var, (lo, hi) in PLAUS.items():
         mask = ev["var"] == var
         ev.loc[mask, "valuenum"] = ev.loc[mask, "valuenum"].clip(lo, hi)
@@ -219,7 +219,7 @@ def _build_all_timeseries(long_df, stay_ids, pid_to_idx):
     ev = ev[ev["_arr_idx"].notna()]
     ev["_arr_idx"] = ev["_arr_idx"].astype(int)
 
-    # Median per (arr_idx, hour, col_idx) — handles duplicate readings
+
     agg = (ev.groupby(["_arr_idx", "hour", "col_idx"])["valuenum"]
              .median()
              .reset_index())
@@ -244,16 +244,16 @@ def load_eicu(data_path, fraction=1.0, seed=42, keep_raw=False):
 
     stay_ids   = set(patients["patientunitstayid"].values)
     pid_to_idx = {pid: i for i, pid in enumerate(patients["patientunitstayid"].values)}
-    # SOFA-based Sepsis-3 (A1): mode="single" (single-point) to HARMONIZE the
-    # SOFA-eval mode with MIMIC (avoids reintroducing a per-dataset label-def
-    # shift). Full-eICU single-point ~8.8% (in the 8-20% target). The window
-    # variant (~12%) is reported as a sensitivity analysis, not the primary label.
-    # eICU suspected infection = abx + (culture OR infection dx) since microLab is
-    # sparse. Replaces ICD-code sepsis to remove the label-definition confound.
+
+
+
+
+
+
     sofa_labels, _ = eicu_sofa_sepsis_labels(data_path, patients, mode="single")
     logging.info(f"eICU: loading {len(stay_ids)} stays")
 
-    # ── Vitals (chunked — vitalPeriodic is ~146M rows) ───────────────────────
+
     logging.info("eICU: reading vitalPeriodic (chunked)...")
     long_p = _read_vitals_chunked(
         os.path.join(data_path, "vitalPeriodic.csv.gz"), _PERIODIC_COLS, stay_ids)
@@ -262,24 +262,24 @@ def load_eicu(data_path, fraction=1.0, seed=42, keep_raw=False):
     long_a = _read_vitals_chunked(
         os.path.join(data_path, "vitalAperiodic.csv.gz"), _APERIODIC_COLS, stay_ids)
 
-    # ── Labs (chunked) ───────────────────────────────────────────────────────
+
     logging.info("eICU: reading lab (chunked)...")
     long_labs = _read_labs_chunked(os.path.join(data_path, "lab.csv.gz"), stay_ids)
 
-    # ── Build arrays per source, then compose with fallback priority ─────────
-    # Priority mirrors the original loader's clinical intent:
-    #   periodic (invasive art-line) > aperiodic (non-invasive cuff) > labs.
-    # Aperiodic BP only fills cells the invasive line left empty; labs occupy
-    # disjoint (ABG) columns. Values within each source are median-binned per
-    # (patient, hour, var), per the CLAUDE.md standardization spec.
+
+
+
+
+
+
     logging.info("eICU: reading nurseCharting (chunked)...")
     long_nc = _read_nursecharting_chunked(
         os.path.join(data_path, "nurseCharting.csv.gz"), stay_ids)
 
-    # Build each source array and release its long-format frame immediately;
-    # holding all four frames plus their arrays at once is what pushes the
-    # container past its memory limit on full-scale eICU.
-    all_ts = _build_all_timeseries(long_p, stay_ids, pid_to_idx)  # HR/SBP/DBP/MAP/SpO2
+
+
+
+    all_ts = _build_all_timeseries(long_p, stay_ids, pid_to_idx)
     del long_p
     for _frame in ("long_a", "long_labs", "long_nc"):
         _src_df = locals()[_frame]
@@ -290,7 +290,7 @@ def load_eicu(data_path, fraction=1.0, seed=42, keep_raw=False):
     del long_a, long_labs, long_nc
     import gc; gc.collect()
 
-    # ── Filter and assemble samples ──────────────────────────────────────────
+
     all_raw_ts  = []
     all_samples = []
     skipped = {"empty": 0, "no_hemo": 0}
@@ -308,16 +308,16 @@ def load_eicu(data_path, fraction=1.0, seed=42, keep_raw=False):
             skipped["no_hemo"] += 1
             continue
 
-        # ICU-UNIT-level death, not hospital-level — kept as-is because the validated
-        # detector results (incl. EXP4 mortality linear probe) depend
-        # on this exact definition. Do NOT redefine this field to fix the mismatch below.
+
+
+
         mortality  = int(pat.get("unitdischargestatus", "") == "Expired")
-        # HOSPITAL-level death, comparable to MIMIC-IV's hospital_expire_flag
-        # (mimic4.py load_stays). Use this, not `mortality`, for any cross-site
-        # in-hospital-mortality task.
+
+
+
         mortality_hospital = int(pat.get("hospitaldischargestatus", "") == "Expired")
         los_3d     = int(pat["los_h"] > 72)
-        los_h_val  = float(pat["los_h"])  # continuous ICU-unit length of stay, hours
+        los_h_val  = float(pat["los_h"])
         sepsis     = int(sofa_labels.get(int(pid), 0))
         hospital_id = pat.get("hospitalid", 0)
         unit_type   = str(pat.get("unittype", "eICU_Unknown"))
@@ -351,7 +351,7 @@ def load_eicu(data_path, fraction=1.0, seed=42, keep_raw=False):
             "mask":        result["mask"],
             "abg_mask":    result["abg_mask"],
             "c_mask":      result["c_mask"],
-            # ICD-based sepsis is admission-level; broadcast the binary flag.
+
             "label":       np.full(HOURS, float(sample["sepsis"])),
             "site_id":     sample["site_id"],
             "patient_id":  sample["patient_id"],

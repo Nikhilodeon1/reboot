@@ -1,10 +1,10 @@
-"""Detector 3 on third-party repositories, before and after vocabulary extension.
 
-INDETERMINATE (no sweep recognised) is its own column: FN on positives, no
-credit on negatives, never TN.
 
-    python detectors/external/run_repos.py
-"""
+
+
+
+
+
 import argparse
 import json
 import os
@@ -17,8 +17,8 @@ from detectors.checks.check3_selection_audit import (
     DEFAULT_VOCAB, Vocab, audit_file, verdict_for_file)
 from detectors.external.repos import TARGETS, resolved_files
 
-# Vocabulary fitted to the external repos after observing failure.
-# Separates lexical failure (unknown names) from structural (no matching shape).
+
+
 EXTENDED = Vocab(
     val=set(DEFAULT_VOCAB.val) | {
         "val_loader", "valid_loader", "validation_loader", "val_reader",
@@ -43,18 +43,18 @@ RESULTS = os.path.join(HERE, "results")
 
 
 def audit(path, vocab=None):
-    """(verdict, per-sweep findings). Missing files reported, not skipped."""
+
     if not os.path.exists(path):
         return "MISSING", []
     try:
         res = audit_file(path, vocab)
-    except SyntaxError as e:          # py2 source
+    except SyntaxError as e:
         return f"UNPARSEABLE ({e.__class__.__name__})", []
     return verdict_for_file(res), res
 
 
 def score(vocab, label, verbose=True):
-    """Confusion counts under one vocabulary; INDETERMINATE kept separate."""
+
     tp = fp = tn = fn = 0
     indet_pos = indet_neg = 0
     rows = []

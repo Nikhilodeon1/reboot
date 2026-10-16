@@ -1,17 +1,17 @@
-"""
-ICD-code-based sepsis labeling for MIMIC-IV and eICU.
 
-Matches the paper's §4.1 claim that sepsis labels for these datasets are
-extracted from ICD diagnosis codes (explicit-sepsis definition), rather than
-the hourly Sepsis-3 labels shipped with PhysioNet 2019. This gives a real,
-non-zero, admission-level binary sepsis label across all three sites.
 
-Explicit-sepsis code set (ICD-9 + ICD-10):
-  ICD-9 : 038.x  (septicemia), 995.91 (sepsis), 995.92 (severe sepsis),
-          785.52 (septic shock)
-  ICD-10: A40.x  (streptococcal sepsis), A41.x (other sepsis),
-          R65.20 (severe sepsis), R65.21 (septic shock)
-"""
+
+
+
+
+
+
+
+
+
+
+
+
 import os
 import logging
 import pandas as pd
@@ -22,18 +22,18 @@ _SEPSIS_ICD9_EXACT = {"99591", "99592", "78552"}
 
 
 def _norm_icd(code):
-    """Normalize an ICD code: uppercase, strip dots/spaces (99591, A419, R6520)."""
+
     return str(code).upper().replace(".", "").replace(" ", "").strip()
 
 
 def _is_sepsis_code(n):
     if n in _SEPSIS_ICD9_EXACT:
         return True
-    if n.startswith("038"):                              # ICD-9 septicemia
+    if n.startswith("038"):
         return True
-    if n.startswith("A40") or n.startswith("A41"):       # ICD-10 sepsis
+    if n.startswith("A40") or n.startswith("A41"):
         return True
-    if n.startswith("R6520") or n.startswith("R6521"):   # severe sepsis / septic shock
+    if n.startswith("R6520") or n.startswith("R6521"):
         return True
     return False
 
@@ -46,7 +46,7 @@ def _resolve(path):
 
 
 def mimic_sepsis_hadm_ids(data_path):
-    """Set of MIMIC hadm_ids carrying an explicit-sepsis ICD code."""
+
     path = _resolve(os.path.join(data_path, "hosp", "diagnoses_icd.csv.gz"))
     if path is None:
         logging.warning(
@@ -64,11 +64,11 @@ def mimic_sepsis_hadm_ids(data_path):
 
 
 def eicu_sepsis_stay_ids(data_path):
-    """Set of eICU patientunitstayid carrying an explicit-sepsis ICD code.
 
-    eICU's `icd9code` column holds comma-separated, dotted codes mixing ICD-9
-    and ICD-10 (e.g. "995.91, A41.9"), so each is split and normalized.
-    """
+
+
+
+
     path = _resolve(os.path.join(data_path, "diagnosis.csv.gz"))
     if path is None:
         logging.warning(

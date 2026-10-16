@@ -9,26 +9,26 @@ from torch.utils.data import DataLoader
 from sklearn.metrics import roc_auc_score, average_precision_score
 
 
-# ════════════════════════════════════════════════════════════════════════════
-# 1. CONSTRAINT RANDOMIZATION ABLATION
-# ════════════════════════════════════════════════════════════════════════════
+
+
+
 
 class RandomizedConstraintLoss(nn.Module):
-    """
-    Drop-in replacement for PhysiologicalConstraintLoss that uses
-    WRONG equations instead of real physiological ones.
 
-    All modes use the same denormalization and loss functions as the real PCL
-    to ensure magnitude-fair comparison. The only difference is the formula.
 
-    Three randomization modes:
-      "wrong_eq" — incorrect formulas in physical units (same scale as real)
-      "shuffled" — correct formula structure but variables swapped
-      "noise" — random noise targets (pure regularization with no structure)
 
-    If PCL with real constraints beats all three, the content
-    of the constraints — not the penalty itself — is doing the work.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
     def __init__(self, mode="wrong_eq", eps=1e-8):
         super().__init__()
         self.mode = mode
@@ -70,14 +70,14 @@ class RandomizedConstraintLoss(nn.Module):
 
         losses, active = {}, {}
 
-        # Denormalize to physical units (same as real PCL)
+
         SBP_d = SBP * (300 - 40) + 40
         DBP_d = DBP * (200 - 20) + 20
         MAP_d = MAP * (200 - 20) + 20
         HR_d  = HR  * (300 - 20) + 20
 
         if self.mode == "wrong_eq":
-            # MAP: wrong formula MAP = SBP - DBP (instead of DBP + (SBP-DBP)/3)
+
             m0 = self._constraint_mask(c_mask[:, :, 0], pretrain_mask,
                                        [idx["SBP"], idx["DBP"], idx["MAP"]])
             wrong_map = SBP_d - DBP_d
@@ -85,7 +85,7 @@ class RandomizedConstraintLoss(nn.Module):
             losses["MAP"] = self._l1(MAP, wrong_map_norm, m0)
             active["MAP"] = m0.sum().item()
 
-            # PP: wrong formula PP = SBP + DBP (instead of SBP - DBP)
+
             m1 = self._constraint_mask(c_mask[:, :, 1], pretrain_mask,
                                        [idx["SBP"], idx["DBP"], idx["MAP"]])
             PP_wrong = SBP_d + DBP_d
@@ -93,7 +93,7 @@ class RandomizedConstraintLoss(nn.Module):
             losses["PP"] = self._mse(PP_wrong / 260.0, PP_real_via_map / 260.0, m1)
             active["PP"] = m1.sum().item()
 
-            # SI: wrong range [1.5, 5.0] (instead of [0.3, 2.0])
+
             m2 = self._constraint_mask(c_mask[:, :, 2], pretrain_mask,
                                        [idx["HR"], idx["SBP"]])
             SBP_floor = torch.clamp(SBP_d, min=40.0)
@@ -104,7 +104,7 @@ class RandomizedConstraintLoss(nn.Module):
             losses["SI"] = si_violation[m2].mean() if m2.sum() > 0 else torch.tensor(0.0, device=x.device)
             active["SI"] = m2.sum().item()
 
-            # HH: wrong formula pH = 7.0 + log10(pCO2 / HCO3) (inverted ratio)
+
             m3 = self._constraint_mask(c_mask[:, :, 3], pretrain_mask,
                                        [idx["pH"], idx["HCO3"], idx["pCO2"]])
             HCO3_raw = HCO3 * (60 - 5) + 5
@@ -115,7 +115,7 @@ class RandomizedConstraintLoss(nn.Module):
             losses["HH"] = self._mse(pH, ph_pred_norm, m3)
             active["HH"] = m3.sum().item()
 
-            # SpO2: wrong dissociation (linear instead of sigmoidal)
+
             m4 = self._constraint_mask(c_mask[:, :, 4], pretrain_mask,
                                        [idx["SpO2"], idx["PaO2"]])
             PaO2_raw = torch.clamp(PaO2 * (700 - 20) + 20, min=1.0)
@@ -125,8 +125,8 @@ class RandomizedConstraintLoss(nn.Module):
             active["SpO2"] = m4.sum().item()
 
         elif self.mode == "shuffled":
-            # Correct formula structure but variables swapped across constraints
-            # MAP formula applied to wrong variables: MAP = SpO2 + (HR - SpO2)/3
+
+
             m0 = self._constraint_mask(c_mask[:, :, 0], pretrain_mask,
                                        [idx["SBP"], idx["DBP"], idx["MAP"]])
             SpO2_as_dbp = SpO2 * (200 - 20) + 20
@@ -136,7 +136,7 @@ class RandomizedConstraintLoss(nn.Module):
             losses["MAP"] = self._l1(MAP, shuffled_map_norm, m0)
             active["MAP"] = m0.sum().item()
 
-            # PP with shuffled vars
+
             m1 = self._constraint_mask(c_mask[:, :, 1], pretrain_mask,
                                        [idx["SBP"], idx["DBP"], idx["MAP"]])
             PP_shuffled = HR_as_sbp - SpO2_as_dbp
@@ -144,7 +144,7 @@ class RandomizedConstraintLoss(nn.Module):
             losses["PP"] = self._mse(PP_shuffled / 260.0, PP_via_map / 260.0, m1)
             active["PP"] = m1.sum().item()
 
-            # SI with shuffled vars: DBP/MAP instead of HR/SBP
+
             m2 = self._constraint_mask(c_mask[:, :, 2], pretrain_mask,
                                        [idx["HR"], idx["SBP"]])
             MAP_floor = torch.clamp(MAP_d, min=40.0)
@@ -155,7 +155,7 @@ class RandomizedConstraintLoss(nn.Module):
             losses["SI"] = si_violation[m2].mean() if m2.sum() > 0 else torch.tensor(0.0, device=x.device)
             active["SI"] = m2.sum().item()
 
-            # HH with SBP instead of pCO2
+
             m3 = self._constraint_mask(c_mask[:, :, 3], pretrain_mask,
                                        [idx["pH"], idx["HCO3"], idx["pCO2"]])
             HCO3_raw = HCO3 * (60 - 5) + 5
@@ -165,7 +165,7 @@ class RandomizedConstraintLoss(nn.Module):
             losses["HH"] = self._mse(pH, ph_pred_norm, m3)
             active["HH"] = m3.sum().item()
 
-            # SpO2 predicted from HR instead of PaO2
+
             m4 = self._constraint_mask(c_mask[:, :, 4], pretrain_mask,
                                        [idx["SpO2"], idx["PaO2"]])
             from src.losses.pcl_loss import severinghaus_sao2_fraction
@@ -176,7 +176,7 @@ class RandomizedConstraintLoss(nn.Module):
             active["SpO2"] = m4.sum().item()
 
         elif self.mode == "noise":
-            # Random targets — same scale as real constraints
+
             m0 = self._constraint_mask(c_mask[:, :, 0], pretrain_mask,
                                        [idx["SBP"], idx["DBP"], idx["MAP"]])
             noise_map = torch.rand_like(MAP)
@@ -208,16 +208,16 @@ class RandomizedConstraintLoss(nn.Module):
         return {"L_PCL": L_PCL, "losses": losses, "active": active}
 
 
-# ════════════════════════════════════════════════════════════════════════════
-# 3. CONSTRAINT SUBSET ABLATION
-# ════════════════════════════════════════════════════════════════════════════
+
+
+
 
 class SubsetConstraintLoss(nn.Module):
-    """
-    PCL loss with one constraint removed.
-    Pass excluded_constraint="MAP" to remove MAP, etc.
-    Pass excluded_constraint=None to use all constraints (full PCL).
-    """
+
+
+
+
+
     def __init__(self, excluded_constraint=None, eps=1e-8):
         super().__init__()
         self.excluded = excluded_constraint
@@ -264,7 +264,7 @@ class SubsetConstraintLoss(nn.Module):
         MAP_d = MAP * (200 - 20) + 20
         HR_d  = HR  * (300 - 20) + 20
 
-        # MAP
+
         if "MAP" != self.excluded:
             m0 = self._constraint_mask(c_mask[:, :, 0], pretrain_mask,
                                        [idx["SBP"], idx["DBP"], idx["MAP"]])
@@ -276,7 +276,7 @@ class SubsetConstraintLoss(nn.Module):
             losses["MAP"] = torch.tensor(0.0, device=x.device)
             active["MAP"] = 0
 
-        # PP
+
         if "PP" != self.excluded:
             m1 = self._constraint_mask(c_mask[:, :, 1], pretrain_mask,
                                        [idx["SBP"], idx["DBP"], idx["MAP"]])
@@ -286,7 +286,7 @@ class SubsetConstraintLoss(nn.Module):
             losses["PP"] = torch.tensor(0.0, device=x.device)
             active["PP"] = 0
 
-        # SI
+
         if "SI" != self.excluded:
             m2 = self._constraint_mask(c_mask[:, :, 2], pretrain_mask,
                                        [idx["HR"], idx["SBP"]])
@@ -301,7 +301,7 @@ class SubsetConstraintLoss(nn.Module):
             losses["SI"] = torch.tensor(0.0, device=x.device)
             active["SI"] = 0
 
-        # HH
+
         if "HH" != self.excluded:
             m3 = self._constraint_mask(c_mask[:, :, 3], pretrain_mask,
                                        [idx["pH"], idx["HCO3"], idx["pCO2"]])
@@ -316,7 +316,7 @@ class SubsetConstraintLoss(nn.Module):
             losses["HH"] = torch.tensor(0.0, device=x.device)
             active["HH"] = 0
 
-        # SpO2
+
         if "SpO2" != self.excluded:
             from src.losses.pcl_loss import severinghaus_sao2_fraction
             m4 = self._constraint_mask(c_mask[:, :, 4], pretrain_mask,
@@ -331,37 +331,37 @@ class SubsetConstraintLoss(nn.Module):
             losses["SpO2"] = torch.tensor(0.0, device=x.device)
             active["SpO2"] = 0
 
-        # Match main PhysiologicalConstraintLoss defaults: PP and SI excluded.
-        # The "No PP" and "No SI" ablations are vestigial since both are already off.
+
+
         L_PCL = losses["MAP"] + losses["HH"] + losses["SpO2"]
         if "PP" != self.excluded:
-            L_PCL = L_PCL  # PP still computed above for logging but not added
+            L_PCL = L_PCL
         return {"L_PCL": L_PCL, "losses": losses, "active": active}
 
 
-# ════════════════════════════════════════════════════════════════════════════
-# 4. MEASUREMENT NOISE EXPERIMENT
-# ════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def inject_measurement_noise(dataset, sigma_mmhg=5.0, seed=42):
-    """
-    Simulates a systematic blood pressure sensor calibration offset.
 
-    A SINGLE per-stay mmHg bias is applied coherently to SBP, DBP, and MAP,
-    preserving MAP = DBP + (SBP-DBP)/3 and PP = SBP-DBP exactly.
 
-    Physical model: whole-system pressure reading offset (e.g. arm positioning
-    artefact, cuff size mismatch). All three channels shift by the same
-    absolute mmHg, so their cross-variable relationships are intact.
 
-    Why this matters for PCL: PCL representations encode MAP/PP relationships.
-    Under this noise model those relationships are unchanged, so PCL features
-    are stable. ERM, which encodes absolute BP values, is hurt by the shift.
 
-    Previous version applied independent SBP/DBP biases with MAP unchanged,
-    which violated both the MAP constraint and the PP constraint simultaneously
-    — penalising PCL more than ERM and producing the wrong direction of effect.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     try:
         from src.data.variables import CANONICAL_VARIABLES as VARIABLES
     except ImportError:
@@ -374,7 +374,7 @@ def inject_measurement_noise(dataset, sigma_mmhg=5.0, seed=42):
     idx_dbp = VARIABLES.index("DBP")
     idx_map = VARIABLES.index("MAP")
 
-    # SBP range 40-300 (260 mmHg); DBP/MAP range 20-200 (180 mmHg)
+
     sbp_range = 300 - 40
     bp_range  = 200 - 20
 
@@ -382,7 +382,7 @@ def inject_measurement_noise(dataset, sigma_mmhg=5.0, seed=42):
         x    = sample["x"]
         mask = sample["mask"]
 
-        # One bias per stay — same absolute mmHg applied to all three channels
+
         bias_mmhg = float(rng.normal(0, sigma_mmhg))
 
         x_noisy = x.clone()

@@ -1,17 +1,25 @@
-"""
-PCL Paper Experiment Runner
-Generates all results and figures for the NeurIPS 2026 submission.
-Uses PhysioNet 2019 as primary dataset with MIMIC-IV and eICU as external validation.
 
-Usage:
-    PCL_TEST_MODE=1 python run_paper_experiments.py   # test mode (15% data, small model)
-    PCL_TEST_MODE=0 python run_paper_experiments.py   # production mode (full data, ~3.2M params)
-"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import os
 import sys
-# Ensure the repo root is importable regardless of the current working directory
-# (fixes "ModuleNotFoundError: No module named 'src.data'" when launched from
-# elsewhere or when src/ lacks __init__.py files on a fresh checkout).
+
+
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import json
 import logging
@@ -38,15 +46,15 @@ from config import (
     NUM_WORKERS, PIN_MEMORY, USE_AMP, MASK_PROB,
 )
 
-# Shared random-init checkpoint (per-seed, isolated by CHECKPOINT_DIR): makes ERM
-# and PCL start from identical weights within a run. Seed-study runs use separate
-# CHECKPOINT_DIRs, so each seed gets its own base_init automatically.
+
+
+
 BASE_INIT_PATH = os.path.join(CHECKPOINT_DIR, "base_init.pt")
-# Seed study: run only EXP1 + EXP3 (main OOD + randomization) for multi-seed error bars.
+
 SEED_STUDY = os.environ.get("PCL_SEED_STUDY", "0") == "1"
-# A3 regularization baselines (denoising-AE / noise-aug / dropout+WD / Mixup).
-# Opt-in (heavy: each is hyperparameter-swept) so default/seed-study runs aren't
-# bloated. Enable with PCL_RUN_A3=1.
+
+
+
 RUN_A3 = os.environ.get("PCL_RUN_A3", "0") == "1"
 from src.data.physionet2019 import load_physionet2019
 from src.data.mimic4 import load_mimic4
@@ -76,16 +84,16 @@ torch.backends.cudnn.benchmark = False
 torch.use_deterministic_algorithms(True, warn_only=True)
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-# Primary task is sepsis onset — the paper's headline metric (§4.1).
-# Labels by site:
-#   - PhysioNet A/B: hourly Sepsis-3 labels from the challenge SepsisLabel column.
-#   - MIMIC-IV / eICU: admission-level binary sepsis extracted from ICD diagnosis
-#     codes (explicit-sepsis set; see src/data/sepsis.py), matching the paper.
-# On the FULL datasets sepsis is non-sparse across all sites (PhysioNet ~7%,
-# MIMIC ~8-9%, eICU ~14%), so the earlier los_3d fallback (used when MIMIC/eICU
-# had no sepsis labels) is no longer needed.
-# los_3d and mortality are retained as secondary comparisons (EXP4 linear probes,
-# classical baselines) but are NOT the primary reported metric.
+
+
+
+
+
+
+
+
+
+
 TASK = "sepsis"
 TASKS = ["sepsis", "los_3d"]
 
@@ -96,16 +104,20 @@ os.makedirs(CACHE_DIR, exist_ok=True)
 ALL_RESULTS = {}
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXPERIMENT 0: Constraint Violation Audit (proves constraints aren't vacuous)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def experiment_0_constraint_violation_audit():
-    """
-    Measures how often raw clinical data violates the 5 PCL constraints.
-    Proves that MAP = DBP + (SBP-DBP)/3 is NOT trivially satisfied in EHR data
-    because MAP (arterial line) and SBP/DBP (cuff) come from different sensors.
-    """
+
+
+
+
+
+
+
+
+
     logging.info("\n" + "=" * 60)
     logging.info("EXPERIMENT 0: Constraint Violation Audit")
     logging.info("=" * 60)
@@ -121,12 +133,12 @@ def experiment_0_constraint_violation_audit():
         stats = {"MAP": [], "HH": [], "SpO2": []}
         n_map = n_hh = n_spo2 = 0
 
-        # ── Computability tracking (professor action item A2) ──────────────────
-        # Report how often each constraint is *computable* (all required raw
-        # variables observed), not just how often it is violated. Tracked at the
-        # timestep level (fraction of all stay-hours) and the stay level
-        # (fraction of stays with >=1 computable hour). Acid-base constraints are
-        # expected to be sparse because ABG panels are drawn infrequently.
+
+
+
+
+
+
         n_total_ts = 0
         n_stays = 0
         comp_stays = {"MAP": 0, "HH": 0, "SpO2": 0}
@@ -167,8 +179,8 @@ def experiment_0_constraint_violation_audit():
         result = {}
         computable = {}
         for cname, violations in stats.items():
-            # Computability: fraction of all stay-hours (and of stays) where the
-            # constraint's required variables are all present.
+
+
             n_comp_ts = {"MAP": n_map, "HH": n_hh, "SpO2": n_spo2}[cname]
             ts_rate = (n_comp_ts / n_total_ts) if n_total_ts else 0.0
             stay_rate = (comp_stays[cname] / n_stays) if n_stays else 0.0
@@ -185,7 +197,7 @@ def experiment_0_constraint_violation_audit():
             if violations:
                 arr = np.array(violations)
                 n_total = len(arr)
-                # "violated" thresholds: MAP > 3mmHg, HH > 0.05 pH, SpO2 > 5%
+
                 thresholds = {"MAP": 3.0, "HH": 0.05, "SpO2": 5.0}
                 thresh = thresholds[cname]
                 n_viol = int(np.sum(arr > thresh))
@@ -217,18 +229,18 @@ def experiment_0_constraint_violation_audit():
     return audit_results
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# DATA LOADING
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def load_all_data():
     logging.info("=" * 60)
     logging.info("Loading all datasets")
     logging.info("=" * 60)
 
-    # Cache the preprocessed samples so a resumed run does NOT re-read the full
-    # CSVs (35GB eICU + chunked MIMIC + ~300k patients of preprocessing = tens of
-    # minutes). Keyed by mode so a test cache never poisons a production run.
+
+
+
     import pickle
     tag = "test" if TEST_MODE else "prod"
     cache_path = os.path.join(CACHE_DIR, f"processed_samples_{tag}.pkl")
@@ -249,9 +261,9 @@ def load_all_data():
         except Exception as e:
             logging.warning(f"[CACHE] Failed to load cache ({e}); re-reading from CSV")
 
-    # Per-dataset incremental cache. The full-scale eICU read is the memory- and
-    # time-hungry step; caching each dataset the moment it is built means a
-    # failure there never forces PhysioNet/MIMIC to be rebuilt on the retry.
+
+
+
     def _stage(name, fn, *args, **kw):
         part = os.path.join(CACHE_DIR, f"samples_{name}_{tag}.pkl")
         if os.path.exists(part):
@@ -284,7 +296,7 @@ def load_all_data():
     ds = ICUDataset(all_samples)
     ds.coverage_report()
 
-    # Persist cache for fast resumes (best-effort; never fatal)
+
     try:
         with open(cache_path, "wb") as fp:
             pickle.dump({"pn": pn_samples, "mimic": mimic_samples, "eicu": eicu_samples},
@@ -297,7 +309,7 @@ def load_all_data():
 
 
 def make_ood_loaders(ds, batch_size=BATCH_SIZE, task=None):
-    """Train on PhysioNet A, val from A (stratified), test on PhysioNet B + MIMIC + eICU."""
+
     if task is None:
         task = TASK
     site_a_idx = [i for i, s in enumerate(ds.samples) if s["site_id"].item() == 0]
@@ -305,7 +317,7 @@ def make_ood_loaders(ds, batch_size=BATCH_SIZE, task=None):
     mimic_idx = [i for i, s in enumerate(ds.samples) if s["site_id"].item() == 2]
     eicu_idx = [i for i, s in enumerate(ds.samples) if s["site_id"].item() == 3]
 
-    # Stratified split of site A into train/val
+
     labels_a = np.array([ds.samples[i][task].item() for i in site_a_idx])
     if len(np.unique(labels_a)) >= 2 and len(site_a_idx) > 10:
         from sklearn.model_selection import StratifiedShuffleSplit
@@ -348,22 +360,30 @@ def make_ood_loaders(ds, batch_size=BATCH_SIZE, task=None):
     return train_loader, val_loader, ood_loaders
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# HELPER: train a model end-to-end
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def train_model(name, train_loader, val_loader, use_pcl=True, lam=LAMBDA_PCL,
                 pcl_loss_fn=None, seed_offset=0, task=None, use_site_adversary=False,
                 pretrain_loader=None):
-    """
-    pretrain_loader: optional separate DataLoader for the pretraining phase.
-    Defaults to train_loader. Pass the full multi-site dataset here when using
-    the SiteAdversary so the encoder sees all sites during self-supervised pretraining
-    (no label leakage — masked prediction is unsupervised).
 
-    Resume-safe: if checkpoints already exist on disk, skips the corresponding
-    training phase and loads weights directly. Safe to re-run after interruption.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     if task is None:
         task = TASK
     model = fresh_model(seed=SEED + seed_offset)
@@ -376,7 +396,7 @@ def train_model(name, train_loader, val_loader, use_pcl=True, lam=LAMBDA_PCL,
     ckpt_pre = os.path.join(CHECKPOINT_DIR, f"{name}_pretrained.pt")
     ckpt_ft  = os.path.join(CHECKPOINT_DIR, f"{name}_{task}.pt")
 
-    # ── Pretraining (skip if checkpoint exists) ───────────────────────────────
+
     if os.path.exists(ckpt_pre):
         logging.info(f"[RESUME] Found {ckpt_pre} — skipping pretraining for '{name}'")
         history = []
@@ -401,7 +421,7 @@ def train_model(name, train_loader, val_loader, use_pcl=True, lam=LAMBDA_PCL,
 
     model.add_classification_head(task)
 
-    # ── Fine-tuning (skip if checkpoint exists) ───────────────────────────────
+
     if os.path.exists(ckpt_ft):
         logging.info(f"[RESUME] Found {ckpt_ft} — skipping fine-tuning for '{name}'")
         ft_history = []
@@ -428,9 +448,9 @@ def eval_on_loaders(model, loaders_dict, task=TASK):
         results[name] = r
     return results
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXPERIMENT 1: Main OOD Generalization (plan.md §6.3)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def experiment_1_ood_generalization(ds, train_loader, val_loader, ood_loaders):
     logging.info("\n" + "=" * 60)
@@ -439,20 +459,20 @@ def experiment_1_ood_generalization(ds, train_loader, val_loader, ood_loaders):
 
     results = {}
 
-    # ERM
+
     logging.info("\n--- ERM Baseline ---")
     erm_model, _, _ = train_model("erm", train_loader, val_loader, use_pcl=False)
     erm_val = evaluate_model(erm_model, val_loader, TASK, device=DEVICE, split_name="ERM Val")
     erm_ood = eval_on_loaders(erm_model, ood_loaders)
     results["ERM"] = {"val": erm_val, "ood": erm_ood}
 
-    # PCL: physiological constraints only, no site adversary.
-    # ZERO-SHOT SETUP — PCL pretrains on Site A ONLY (default train_loader), exactly
-    # like ERM/DRO and every ablation. This preserves the paper's zero-shot domain-
-    # generalization premise (Section 3.1): the model never sees OOD-site inputs,
-    # labeled or unlabeled, before test. (An earlier version pretrained PCL on all
-    # sites' unlabeled inputs — an unintended domain-adaptation confound that gave
-    # PCL an unfair OOD advantage over Site-A-only ERM. Removed.)
+
+
+
+
+
+
+
     logging.info("\n--- PCL ---")
     pcl_model, pcl_hist, _ = train_model(
         "pcl", train_loader, val_loader, use_pcl=True, seed_offset=2,
@@ -466,7 +486,7 @@ def experiment_1_ood_generalization(ds, train_loader, val_loader, ood_loaders):
         plot_loss_curves(pcl_hist, save_path=os.path.join(RESULTS_DIR, "pcl_pretrain_loss.png"))
         plot_constraint_curves(pcl_hist, save_path=os.path.join(RESULTS_DIR, "pcl_constraint_curves.png"))
 
-    # DRO (auto-detect number of groups from training data)
+
     logging.info("\n--- DRO Baseline ---")
     from src.baselines import DROFinetuner
     dro_model = fresh_model(seed=SEED + 4).to(DEVICE)
@@ -545,12 +565,12 @@ def _serialize_results(results):
     return out
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXPERIMENT 2: Feature Engineering Demolition (plan.md §6.4)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def _rebuild_loader(new_ds, orig_loader, shuffle, batch_size=BATCH_SIZE):
-    """Rebuild DataLoader from new_ds using same indices as orig_loader."""
+
     if hasattr(orig_loader.dataset, 'indices'):
         indices = list(orig_loader.dataset.indices)
     else:
@@ -574,16 +594,16 @@ def experiment_2_feature_engineering(ds, train_loader, val_loader, ood_loaders, 
     for name, loader in ood_loaders.items():
         fe_ood[name] = _rebuild_loader(fe_ds, loader, shuffle=False)
 
-    # Seed results with Exp 1 standalone baselines so the table reads
-    # ERM | ERM+FE | PCL | PCL+FE, making the "demolition" comparison explicit:
-    # PCL (9 feat, no FE) vs ERM+FE (12 feat) on the same OOD sites.
+
+
+
     results = OrderedDict()
     if exp1_results is not None:
         for key in ("ERM", "PCL"):
             if key in exp1_results:
                 results[key] = exp1_results[key]
 
-    # ERM + Feature Engineering
+
     logging.info("\n--- ERM + Feature Engineering ---")
     fe_erm = fresh_model(n_vars=N_VARS + 3, seed=SEED + 10)
     run_erm_pretraining(
@@ -607,12 +627,12 @@ def experiment_2_feature_engineering(ds, train_loader, val_loader, ood_loaders, 
         "val": evaluate_model(fe_erm, fe_val, TASK, device=DEVICE, split_name="ERM+FE Val"),
         "ood": eval_on_loaders(fe_erm, fe_ood),
     }
-    # Re-insert PCL standalone after ERM+FE so table order is ERM | ERM+FE | PCL | PCL+FE
+
     if exp1_results is not None and "PCL" in exp1_results:
         pcl_standalone = results.pop("PCL", None)
         results["PCL"] = pcl_standalone
 
-    # PCL + Feature Engineering
+
     logging.info("\n--- PCL + Feature Engineering ---")
     fe_pcl = fresh_model(n_vars=N_VARS + 3, seed=SEED + 12)
     pcl_loss = PhysiologicalConstraintLoss()
@@ -639,7 +659,7 @@ def experiment_2_feature_engineering(ds, train_loader, val_loader, ood_loaders, 
         "ood": eval_on_loaders(fe_pcl, fe_ood),
     }
 
-    # Use original ood_loaders for site names (same keys as fe_ood)
+
     _print_ood_table(results, ood_loaders)
     if exp1_results is not None:
         logging.info(
@@ -652,9 +672,9 @@ def experiment_2_feature_engineering(ds, train_loader, val_loader, ood_loaders, 
     return results
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXPERIMENT 3: Constraint Randomization Ablation (plan.md §6.5)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def experiment_3_constraint_randomization(train_loader, val_loader, ood_loaders):
     logging.info("\n" + "=" * 60)
@@ -708,16 +728,16 @@ def _plot_randomization(results, eval_label):
     plt.close()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXPERIMENT 4: Latent Space Analysis (plan.md §6.6)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def experiment_4_latent_space(erm_model, pcl_model, ds, ood_loaders):
     logging.info("\n" + "=" * 60)
     logging.info("EXPERIMENT 4: Latent Space Analysis")
     logging.info("=" * 60)
 
-    # Linear probing
+
     results = {"ERM": {}, "PCL": {}}
     for target in ["mortality", "sepsis"]:
         erm_auroc = run_linear_probe(erm_model, ds, target, device=DEVICE)
@@ -725,7 +745,7 @@ def experiment_4_latent_space(erm_model, pcl_model, ds, ood_loaders):
         results["ERM"][target] = erm_auroc
         results["PCL"][target] = pcl_auroc
 
-    # Site ID linear probe
+
     erm_site = run_linear_probe(erm_model, ds, "site_id", device=DEVICE)
     pcl_site = run_linear_probe(pcl_model, ds, "site_id", device=DEVICE)
     results["ERM"]["site_id"] = erm_site
@@ -749,7 +769,7 @@ def experiment_4_latent_space(erm_model, pcl_model, ds, ood_loaders):
             interp = "Similar"
         logging.info(f"{target:<16} {_fmt(e):<12} {_fmt(p):<12} {delta_str:<14} {interp}")
 
-    # t-SNE visualization
+
     _plot_tsne(erm_model, pcl_model, ds)
 
     ALL_RESULTS["experiment_4"] = {
@@ -771,12 +791,12 @@ def _plot_tsne(erm_model, pcl_model, ds):
     logging.info("Saved t-SNE visualization")
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXPERIMENT 5: Measurement Noise Robustness (plan.md §6.7)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def _wrap_samples_as_dataset(ds, indices):
-    """Creates a pseudo-dataset with the .samples attribute for noise injection."""
+
     class _SimpleDS:
         def __init__(self, samples):
             self.samples = samples
@@ -849,9 +869,9 @@ def _plot_noise_curves(results):
     plt.close()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXPERIMENT 6: PCL Violation as OOD Detector (plan.md §6.8)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def experiment_6_ood_detector(pcl_model, ds, val_loader, ood_loaders):
     logging.info("\n" + "=" * 60)
@@ -902,21 +922,21 @@ def _plot_ood_scores(in_scores, ood_loaders, model, pcl_fn):
     plt.close()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# ABLATION: Lambda Sensitivity (plan.md §7)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def ablation_lambda_sweep(train_loader, val_loader, ood_loaders):
     logging.info("\n" + "=" * 60)
     logging.info("ABLATION: Lambda Sensitivity Sweep")
     logging.info("=" * 60)
 
-    # CORRECTNESS FIX: model selection MUST use the Site-A held-out VALIDATION
-    # split, never an OOD site. The previous version selected on ood_loaders[0]
-    # (Site B) — that is test-peeking and invalidates any "best λ" claim. We now
-    # evaluate every λ on val (the selection metric) AND on all OOD sites (for
-    # honest reporting), pick λ* = argmax VAL, and report whatever OOD it gives.
-    # λ=0.0 is included as the ERM reference so the comparison is apples-to-apples.
+
+
+
+
+
+
     lam_values = [0.0] + list(LAMBDA_VALUES)
 
     results = {}
@@ -961,9 +981,9 @@ def _plot_lambda_sweep(results, eval_label):
     plt.close()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# ABLATION: Constraint Subset (plan.md §7)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def ablation_constraint_subset(train_loader, val_loader, ood_loaders):
     logging.info("\n" + "=" * 60)
@@ -972,9 +992,9 @@ def ablation_constraint_subset(train_loader, val_loader, ood_loaders):
 
     from src.ablations import SubsetConstraintLoss
 
-    # Report val (interpretation metric) + all OOD (honest). Any "constraint X
-    # helps" claim must be read off VAL, not an OOD site (test-peeking).
-    # Active constraints are MAP, HH, SpO2 (PP and SI excluded by default).
+
+
+
     constraints_to_remove = [None, "MAP", "HH", "SpO2"]
     results = {}
 
@@ -1021,27 +1041,35 @@ def _plot_constraint_subset(results, eval_label):
     plt.close()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# EXPERIMENT 7: IRM Failure Mode (plan.md §6.9)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def experiment_7_irm_failure(ds, erm_model=None, pcl_ood_auroc=None):
-    """
-    Within-Site-A k-sensitivity: ERM (1 env, low-k) vs IRM-unit (unit_type envs, high-k).
-    Plan.md §6.9: show IRM-unit >> ERM on PhysioNet-B, but still < PCL (no env labels needed).
 
-    Design: all three methods train on the same Site-A split.
-      - ERM:      no environment partition (k=1); reuse Exp-1 model if provided.
-      - IRM-unit: env = unit_type within Site A (high k, ~10-20 envs).
-      - PCL:      no env labels; physiological constraints alone drive invariance.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     logging.info("\n" + "=" * 60)
     logging.info("EXPERIMENT 7: IRM k-Sensitivity (within Site A)")
     logging.info("=" * 60)
 
     from src.baselines import IRMFinetuner
 
-    # Unit environments — Site A only
+
     site_a_idx = [i for i, s in enumerate(ds.samples) if s["site_id"].item() == 0]
     site_b_idx = [i for i, s in enumerate(ds.samples) if s["site_id"].item() == 1]
 
@@ -1053,7 +1081,7 @@ def experiment_7_irm_failure(ds, erm_model=None, pcl_ood_auroc=None):
         count = sum(1 for t in unit_types_a if t == u)
         logging.info(f"  {u}: {count}")
 
-    # Same Site-A train/val split used in Exp 1 (deterministic via SEED)
+
     rng = np.random.default_rng(SEED)
     perm = rng.permutation(len(site_a_idx))
     n_val = max(1, int(len(site_a_idx) * 0.2))
@@ -1069,7 +1097,7 @@ def experiment_7_irm_failure(ds, erm_model=None, pcl_ood_auroc=None):
 
     results = {}
 
-    # ── ERM baseline (low-k: single environment) ──
+
     logging.info("\n--- ERM (k=1, no env partition) ---")
     if erm_model is not None:
         erm_test = evaluate_model(erm_model, test_loader, TASK,
@@ -1094,7 +1122,7 @@ def experiment_7_irm_failure(ds, erm_model=None, pcl_ood_auroc=None):
                                   device=DEVICE, split_name="ERM Test")
     results["ERM (k=1)"] = {"test_auroc": erm_test.get("auroc"), "n_envs": 1}
 
-    # ── IRM-unit: env = unit_type within Site A (high k) ──
+
     logging.info(f"\n--- IRM-unit (k={len(unique_units)} unit envs) ---")
     for i in train_indices + val_indices:
         ds.samples[i]["env_id"] = torch.tensor(
@@ -1119,11 +1147,11 @@ def experiment_7_irm_failure(ds, erm_model=None, pcl_ood_auroc=None):
                                    device=DEVICE, split_name="IRM-unit Test")
     results["IRM-unit"] = {"test_auroc": irm_unit_test.get("auroc"), "n_envs": len(unique_units)}
 
-    # ── PCL reference ──
+
     if pcl_ood_auroc is not None:
         results["PCL (ref)"] = {"test_auroc": pcl_ood_auroc, "n_envs": 0}
 
-    # Restore env_id to site_id default
+
     for i in range(len(ds)):
         ds.samples[i]["env_id"] = ds.samples[i]["site_id"].clone()
 
@@ -1169,24 +1197,36 @@ def _plot_irm_failure(results):
     plt.close()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# ROBUSTNESS: High-k IRM (eICU-internal, hospital environments)
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def experiment_irm_highk_eicu(ds, min_stays=None, top_k=None):
-    """
-    High-k IRM k-sensitivity check, INTERNAL to eICU — a separate robustness
-    subsection, NOT part of the main single-site-train OOD table.
 
-    Environment = real eICU hospital_id. Trains ERM vs IRM across the top-k
-    hospitals (each with >= min_stays), evaluating on held-out patients from those
-    same hospitals. Purpose: validate the k-sensitivity claim — IRM should behave
-    ~reasonably at k≈30 here, in contrast to the k=3 PhysioNet case in EXP7 where
-    IRM degrades below ERM. Uses the primary TASK (sepsis) for consistency.
 
-    This is an IN-DISTRIBUTION cross-hospital comparison, not zero-shot transfer;
-    the paper text must flag the different environment source + training setup.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     logging.info("\n" + "=" * 60)
     logging.info("ROBUSTNESS: High-k IRM (eICU-internal, hospital environments)")
     logging.info("=" * 60)
@@ -1213,7 +1253,7 @@ def experiment_irm_highk_eicu(ds, min_stays=None, top_k=None):
     logging.info(f"High-k IRM: {len(hosp2env)} hospital environments, {len(sel)} eICU stays "
                  f"(min_stays={min_stays}, top_k={top_k})")
 
-    # Stratified patient-level train/val/test split (held-out patients, same hospitals)
+
     labels = np.array([ds.samples[i][TASK].item() for i in sel])
     if len(np.unique(labels)) >= 2:
         from sklearn.model_selection import StratifiedShuffleSplit
@@ -1248,7 +1288,7 @@ def experiment_irm_highk_eicu(ds, min_stays=None, top_k=None):
 
     results = {}
 
-    # ── ERM baseline (k=1) on the eICU-internal split ──
+
     logging.info("\n--- ERM (eICU-internal, k=1) ---")
     erm = _load_base(fresh_model(seed=SEED + 30).to(DEVICE))
     run_erm_pretraining(erm, train_loader, val_loader, n_epochs=PRETRAIN_EPOCHS, device=DEVICE,
@@ -1265,7 +1305,7 @@ def experiment_irm_highk_eicu(ds, min_stays=None, top_k=None):
     erm_test = evaluate_model(erm, test_loader, TASK, device=DEVICE, split_name="ERM eICU-internal Test")
     results["ERM (k=1)"] = {"test_auroc": erm_test.get("auroc"), "n_envs": 1}
 
-    # ── IRM-hospital (high k) — env_id = hospital, restored afterwards ──
+
     logging.info(f"\n--- IRM-hospital (k={len(hosp2env)}) ---")
     saved = {}
     for i in train_idx + val_idx:
@@ -1306,9 +1346,9 @@ def experiment_irm_highk_eicu(ds, min_stays=None, top_k=None):
     return results
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# CLASSICAL ML BASELINES
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def classical_baselines(ds, train_loader, ood_loaders):
     logging.info("\n" + "=" * 60)
@@ -1325,7 +1365,7 @@ def classical_baselines(ds, train_loader, ood_loaders):
         results[ood_name] = {}
         ood_indices = list(ood_loader.dataset.indices) if hasattr(ood_loader.dataset, "indices") else list(range(len(ood_loader.dataset)))
         test_ds = _wrap_samples_as_dataset(ds, ood_indices)
-        
+
         for task in TASKS:
             logging.info(f"Running classical baselines for {ood_name} task={task}")
             r = run_classical_baselines(train_ds, test_ds, task_name=task, seed=SEED)
@@ -1336,12 +1376,12 @@ def classical_baselines(ds, train_loader, ood_loaders):
     return results
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# FIGURE & TABLE GENERATION
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def _generate_main_figure(exp1_results, ood_loaders):
-    """Figure 1: Grouped bar chart — sepsis onset cross-hospital generalization."""
+
     methods = [m for m in ["ERM", "PCL", "DRO"] if m in exp1_results]
     colors = {"ERM": "#c44e52", "PCL": "#4c72b0", "DRO": "#8172b3"}
 
@@ -1384,14 +1424,14 @@ def _generate_main_figure(exp1_results, ood_loaders):
 
 
 def _generate_latex_tables():
-    """Writes manuscript-ready results to a text file for easy copy-paste."""
+
     out_path = os.path.join(RESULTS_DIR, "manuscript_numbers.txt")
     lines = []
     lines.append("=" * 70)
     lines.append("MANUSCRIPT-READY NUMBERS (copy into LaTeX)")
     lines.append("=" * 70)
 
-    # Experiment 1
+
     exp1 = ALL_RESULTS.get("experiment_1", {})
     if exp1:
         lines.append("\n--- Table 2: Main OOD Results ---")
@@ -1404,14 +1444,14 @@ def _generate_latex_tables():
                 line += f"  {site}={_fmt(auroc)}"
             lines.append(line)
 
-    # Experiment 3
+
     exp3 = ALL_RESULTS.get("experiment_3", {})
     if exp3:
         lines.append("\n--- Table 4: Constraint Randomization ---")
         for cond, auroc in exp3.items():
             lines.append(f"  {cond}: {_fmt(auroc)}")
 
-    # Experiment 4
+
     exp4 = ALL_RESULTS.get("experiment_4", {})
     if exp4:
         lines.append("\n--- Table 5: Linear Probes ---")
@@ -1421,8 +1461,8 @@ def _generate_latex_tables():
                 line += f" {target}={_fmt(auroc)}"
             lines.append(line)
 
-    # Lambda sweep. Entries are {"val":…, "ood":{site:…}} since selection moved
-    # to the Site-A val split; "_val_selected_lambda" holds the chosen λ*.
+
+
     lam = ALL_RESULTS.get("ablation_lambda", {})
     if lam:
         lines.append("\n--- Table 6: Lambda Sensitivity (selected on VAL) ---")
@@ -1439,7 +1479,7 @@ def _generate_latex_tables():
         if best is not None:
             lines.append(f"  val-selected λ* = {best}")
 
-    # Violation audit
+
     audit = ALL_RESULTS.get("experiment_0_violation_audit", {})
     if audit:
         lines.append("\n--- Table 1: Constraint Violations ---")
@@ -1454,25 +1494,32 @@ def _generate_latex_tables():
     logging.info(f"Manuscript numbers saved to {out_path}")
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# MAIN
-# ══════════════════════════════════════════════════════════════════════════════
+
+
+
 
 def experiment_8_regularization_baselines(train_loader, val_loader, ood_loaders):
-    """A3: PCL vs. generic regularizers (denoising-AE, noise-aug, dropout+WD, Mixup).
 
-    Each baseline shares PCL's exact transformer + masked-prediction pretraining +
-    two-phase fine-tuning + eval, swapping only the regularizer; each is swept and
-    selected on VALIDATION AUROC (never OOD), matching PCL's lambda grid. Results
-    land in the same {val, ood} schema as EXP1 so aggregate_seeds.py folds them
-    into the main table alongside ERM/PCL.
-    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     logging.info("\n" + "=" * 60)
     logging.info(f"EXPERIMENT 8: Regularization Baselines / A3 (task={TASK})")
     logging.info("=" * 60)
     from src.regularization_baselines import run_regularization_baselines
-    # In test mode use a reduced sweep so the dry run is fast; production sweeps
-    # the full grid (fair comparison to PCL's lambda grid).
+
+
     grids = ({"noise": [0.1], "dropout": [0.1, 0.3], "wd": [1e-4, 1e-2],
               "mixup_alpha": 0.2} if TEST_MODE else None)
     results = run_regularization_baselines(
@@ -1498,14 +1545,14 @@ def experiment_8_regularization_baselines(train_loader, val_loader, ood_loaders)
 
 
 def _save_results():
-    """Write ALL_RESULTS to disk after each experiment for incremental persistence."""
+
     results_path = os.path.join(RESULTS_DIR, "paper_results.json")
     with open(results_path, "w") as fp:
         json.dump(ALL_RESULTS, fp, indent=2, default=str)
 
 
 def _load_prior_results():
-    """Load any previously completed results so we can skip those experiments."""
+
     results_path = os.path.join(RESULTS_DIR, "paper_results.json")
     if os.path.exists(results_path):
         try:
@@ -1525,11 +1572,11 @@ def _done(key):
 def main(z, a, b, c, d, zxcxz, f, g, h):
     ensure_datasets()
 
-    # Capture raw per-sample predictions for every evaluation (post-hoc CIs,
-    # paired significance tests, calibration) → results/predictions/*.npz
+
+
     set_prediction_dump(os.path.join(RESULTS_DIR, "predictions"))
 
-    # Resume: load any previously saved results before doing anything else.
+
     _load_prior_results()
 
     if not os.path.exists(BASE_INIT_PATH):
@@ -1552,9 +1599,9 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
         logging.info(f"GPU: {torch.cuda.get_device_name(0)}")
     logging.info(f"{'#' * 60}\n")
 
-    # EXP 0 audit (+A2 computability). Seed-independent, so in a multi-seed sweep
-    # only the first seed needs it; PCL_SKIP_AUDIT=1 skips the (slow, raw-data)
-    # re-read on the other seeds while the GPU would otherwise idle.
+
+
+
     if os.environ.get("PCL_SKIP_AUDIT") == "1":
         logging.info("[SKIP] EXP 0 audit skipped (PCL_SKIP_AUDIT=1; done on base seed)")
     elif not _done("experiment_0_violation_audit"):
@@ -1563,14 +1610,14 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     else:
         logging.info("[RESUME] Skipping EXP 0 (already done)")
 
-    # Data loading (always required — not persisted, just fast enough to redo)
+
     ds, pn_samples, mimic_samples, eicu_samples = load_all_data()
     train_loader, val_loader, ood_loaders = make_ood_loaders(ds)
     erm_model, pcl_model = None, None
     exp1_results = ALL_RESULTS.get("experiment_1", {})
 
-    # If EXP1 was already done, reload the trained model weights from checkpoints
-    # so downstream experiments (4, 5, 6, 7) can still use them.
+
+
     if _done("experiment_1"):
         logging.info("[RESUME] EXP 1 already done — loading checkpoints for downstream use")
         try:
@@ -1588,7 +1635,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
             logging.warning(f"[RESUME] Could not reload EXP1 models: {e}")
             erm_model, pcl_model = None, None
 
-    # EXPERIMENT 1
+
     if z == 0 and not _done("experiment_1"):
         try:
             exp1_results, erm_model, pcl_model = experiment_1_ood_generalization(
@@ -1601,7 +1648,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("experiment_1"):
         logging.info("[RESUME] Skipping EXP 1 (already done)")
 
-    # EXPERIMENT 2
+
     if a == 0 and not _done("experiment_2"):
         try:
             experiment_2_feature_engineering(ds, train_loader, val_loader, ood_loaders,
@@ -1612,7 +1659,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("experiment_2"):
         logging.info("[RESUME] Skipping EXP 2 (already done)")
 
-    # EXPERIMENT 3
+
     if b == 0 and not _done("experiment_3"):
         try:
             experiment_3_constraint_randomization(train_loader, val_loader, ood_loaders)
@@ -1622,7 +1669,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("experiment_3"):
         logging.info("[RESUME] Skipping EXP 3 (already done)")
 
-    # EXPERIMENT 4
+
     if c == 0 and not _done("experiment_4"):
         try:
             if erm_model and pcl_model:
@@ -1633,7 +1680,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("experiment_4"):
         logging.info("[RESUME] Skipping EXP 4 (already done)")
 
-    # EXPERIMENT 5
+
     if d == 0 and not _done("experiment_5"):
         try:
             if erm_model and pcl_model:
@@ -1644,7 +1691,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("experiment_5"):
         logging.info("[RESUME] Skipping EXP 5 (already done)")
 
-    # EXPERIMENT 6
+
     if zxcxz == 0 and not _done("experiment_6"):
         try:
             if pcl_model:
@@ -1655,7 +1702,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("experiment_6"):
         logging.info("[RESUME] Skipping EXP 6 (already done)")
 
-    # EXPERIMENT 7
+
     if f == 0 and not _done("experiment_7"):
         try:
             pcl_ref_auroc = None
@@ -1670,7 +1717,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("experiment_7"):
         logging.info("[RESUME] Skipping EXP 7 (already done)")
 
-    # ROBUSTNESS: High-k IRM (eICU-internal hospital environments)
+
     if not SEED_STUDY and not _done("experiment_irm_highk_eicu"):
         try:
             experiment_irm_highk_eicu(ds)
@@ -1681,7 +1728,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("experiment_irm_highk_eicu"):
         logging.info("[RESUME] Skipping high-k IRM (already done)")
 
-    # EXPERIMENT 8: Regularization baselines (A3) — opt-in via PCL_RUN_A3=1
+
     if RUN_A3 and not _done("experiment_8_regularization"):
         try:
             experiment_8_regularization_baselines(train_loader, val_loader, ood_loaders)
@@ -1692,7 +1739,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("experiment_8_regularization"):
         logging.info("[RESUME] Skipping EXP 8 / A3 (already done)")
 
-    # ABLATION: Lambda sweep
+
     if g == 0 and not _done("ablation_lambda"):
         try:
             ablation_lambda_sweep(train_loader, val_loader, ood_loaders)
@@ -1702,7 +1749,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("ablation_lambda"):
         logging.info("[RESUME] Skipping lambda ablation (already done)")
 
-    # ABLATION: Constraint subset
+
     if h == 0 and not _done("ablation_constraint_subset"):
         try:
             ablation_constraint_subset(train_loader, val_loader, ood_loaders)
@@ -1712,7 +1759,7 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
     elif _done("ablation_constraint_subset"):
         logging.info("[RESUME] Skipping constraint subset ablation (already done)")
 
-    # Classical baselines
+
     if not SEED_STUDY and not _done("classical_baselines"):
         try:
             classical_baselines(ds, train_loader, ood_loaders)
@@ -1720,14 +1767,14 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
         except Exception as e:
             logging.error(f"CLASSICAL BASELINES FAILED: {e}")
 
-    # Figure generation (always re-run — fast and idempotent)
+
     try:
         if exp1_results:
             _generate_main_figure(exp1_results, ood_loaders)
     except Exception as e:
         logging.error(f"FIGURE GENERATION FAILED: {e}")
 
-    # Final save + manuscript outputs
+
     _save_results()
     _generate_latex_tables()
 
@@ -1753,11 +1800,11 @@ def main(z, a, b, c, d, zxcxz, f, g, h):
 
 if __name__ == "__main__":
     if SEED_STUDY:
-        # Seed study: EXP1 (main OOD) [+ EXP3 randomization]. Args:
-        # z=EXP1, a=EXP2, b=EXP3, c=EXP4, d=EXP5, zxcxz=EXP6, f=EXP7, g=lambda, h=subset
-        # EXP0 audit (+A2 computability) always runs inside main() regardless.
-        # PCL_SKIP_EXP3=1 => EXP1 only (Phase 1 gate: inspect PCL vs ERM before
-        # spending on EXP3/A3).
+
+
+
+
+
         b = 1 if os.environ.get("PCL_SKIP_EXP3", "0") == "1" else 0
         main(0, 1, b, 1, 1, 1, 1, 1, 1)
     else:

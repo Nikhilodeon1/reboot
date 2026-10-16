@@ -1,25 +1,25 @@
-"""
-Seed aggregation + camera-ready table generator (professor feedback W5).
 
-Reads the per-seed ``paper_results.json`` files produced by
-``run_paper_experiments.py`` (one per seed, e.g. PCL_SEED=42/43/44 written to
-separate RESULTS_DIRs) and produces, for the main tables:
 
-  * mean +/- std across seeds for AUROC, AUPRC, and Brier at every site;
-  * seed-level PAIRED differences vs. ERM (the "+6.4 +/- 1.6 pp" gaps);
-  * the per-run bootstrap CIs each seed already carries (auroc_ci/auprc_ci),
-    surfaced so the author can report them;
-  * LaTeX rows matching Table 2 (main OOD) and Table 4 (randomization).
 
-This script computes NOTHING new about the model -- it only aggregates numbers
-the runner already wrote. It never invents seeds: if you pass one JSON, std is
-reported as 0 and flagged.
 
-Usage:
-    python scripts/aggregate_seeds.py PATH1.json PATH2.json PATH3.json
-    python scripts/aggregate_seeds.py --glob "results_seed*/paper_results.json"
-    python scripts/aggregate_seeds.py            # defaults to results/paper_results.json
-"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import os
 import sys
 import glob as globmod
@@ -38,9 +38,9 @@ METHOD_ORDER = ["ERM", "DRO", "IRM", "ERM+FE",
                 "PCL", "PCL+FE"]
 
 
-# ── metric extraction ────────────────────────────────────────────────────────
+
 def _get_site_block(method_block, site):
-    """experiment_1[method] = {"val": {...}, "ood": {site: {...}}}."""
+
     if method_block is None:
         return None
     if site == "val":
@@ -49,7 +49,7 @@ def _get_site_block(method_block, site):
 
 
 def _collect(seed_results, exp_key="experiment_1"):
-    """Returns {method: {site: {metric: [per-seed values]}, '_ci': {...}}}."""
+
     methods = {}
     for res in seed_results:
         exp = res.get(exp_key, {})
@@ -64,7 +64,7 @@ def _collect(seed_results, exp_key="experiment_1"):
                     v = block.get(metric)
                     if v is not None:
                         s[metric].append(float(v))
-                # keep the last seen per-run bootstrap CIs for reference
+
                 s.setdefault("_ci", {})
                 for ci_key in ("auroc_ci", "auprc_ci"):
                     if block.get(ci_key) is not None:
@@ -82,8 +82,8 @@ def _mean_std(vals):
 
 
 def _paired_diff(method_vals, erm_vals):
-    """Seed-level paired difference (method - ERM), aligned by seed order.
-    Only pairs positions present in both; returns (mean, std, n, per_seed)."""
+
+
     n = min(len(method_vals), len(erm_vals))
     if n == 0:
         return None, None, 0, []
@@ -93,13 +93,13 @@ def _paired_diff(method_vals, erm_vals):
     return float(arr.mean()), std, n, diffs
 
 
-# ── formatting ───────────────────────────────────────────────────────────────
+
 def _pm(mean, std, digits=3):
-    """'$0.865{\\pm}.006$' — matches the paper's existing table style."""
+
     if mean is None:
         return "---"
     m = f"{mean:.{digits}f}"
-    s = f"{std:.{digits}f}".lstrip("0")  # ".006"
+    s = f"{std:.{digits}f}".lstrip("0")
     return f"${m}{{\\pm}}{s}$"
 
 
@@ -109,14 +109,14 @@ def _pp(mean, std):
     return f"{mean*100:+.1f}{{\\pm}}{std*100:.1f}pp"
 
 
-# ── main aggregation ─────────────────────────────────────────────────────────
+
 def aggregate(seed_results):
     out = {"n_seeds": len(seed_results), "experiment_1": {}, "paired_vs_ERM": {},
            "experiment_3": {}, "ablation_lambda": {}, "ablation_constraint_subset": {}}
 
     m1 = _collect(seed_results, "experiment_1")
-    # Fold A3 regularization baselines (experiment_8) in as extra methods; they
-    # share the {val, ood} schema and are disjoint from EXP1 method names.
+
+
     m8 = _collect(seed_results, "experiment_8_regularization")
     for method, sites in m8.items():
         m1.setdefault(method, {}).update(sites)
@@ -133,7 +133,7 @@ def aggregate(seed_results):
             block["per_run_ci"] = sites[site].get("_ci", {})
             out["experiment_1"][method][site] = block
 
-        # paired diffs vs ERM (AUROC) — the headline gaps
+
         if method != "ERM" and method in m1:
             out["paired_vs_ERM"].setdefault(method, {})
             for site in SITES:
@@ -143,7 +143,7 @@ def aggregate(seed_results):
                         out["paired_vs_ERM"][method][site] = {
                             "mean": dm, "std": ds, "n_seeds": dn, "per_seed": per}
 
-    # experiment_3 (randomization): flat {condition: value}
+
     cond_vals = {}
     for res in seed_results:
         for cond, v in res.get("experiment_3", {}).items():
@@ -153,13 +153,13 @@ def aggregate(seed_results):
         mean, std, n = _mean_std(vals)
         out["experiment_3"][cond] = {"mean": mean, "std": std, "n_seeds": n}
 
-    # ablations (flat {key: value})
+
     for abl in ("ablation_lambda", "ablation_constraint_subset"):
         acc = {}
         for res in seed_results:
             for k, v in res.get(abl, {}).items():
-                # ablation_lambda now stores {lam: {val, ood}} + a _val_selected_lambda
-                # key; only aggregate plain scalar entries here.
+
+
                 if isinstance(v, (int, float)):
                     acc.setdefault(k, []).append(float(v))
         for k, vals in acc.items():
@@ -169,7 +169,7 @@ def aggregate(seed_results):
     return out
 
 
-# ── LaTeX emission ───────────────────────────────────────────────────────────
+
 def latex_main_table(agg, metric="auroc"):
     lines = []
     label = {"auroc": "AUROC", "auprc": "AUPRC", "brier": "Brier"}[metric]

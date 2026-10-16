@@ -1,4 +1,4 @@
-"""Detector 5 external testbed mechanics on synthetic arrays."""
+
 import os
 import sys
 import unittest
@@ -14,7 +14,7 @@ from detectors.external.pipeline5 import (ablate, split_arrays, stay_components,
 
 
 def make_stay(n=48, seed=0):
-    """Stay with all three terms observable and physiologically consistent."""
+
     rng = np.random.default_rng(seed)
     ts = np.full((n, len(VAR_TO_IDX)), np.nan)
     sbp = rng.uniform(100, 140, n)
@@ -75,7 +75,7 @@ class TestAblation(unittest.TestCase):
                 arrays[0][:, VAR_TO_IDX[v]], out[0][:, VAR_TO_IDX[v]])
 
     def test_surviving_values_are_the_original_ones(self):
-        """Surviving values unchanged."""
+
         arrays = [make_stay(seed=3)]
         out = ablate(arrays, "HCO3", p=0.5, seed=0)
         idx = VAR_TO_IDX["HCO3"]
