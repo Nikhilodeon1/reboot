@@ -1,0 +1,112 @@
+{
+ "file": "Most-Recent-Cohorts-Institution.csv",
+ "institutions": 6272,
+ "missing_target": 3994,
+ "missing_share": 0.6367984693877551,
+ "label_balance_unguarded_positive_share": 0.18909438775510204,
+ "label_balance_guarded_positive_share": 0.520632133450395,
+ "n_feature_columns_present": 88,
+ "feature_columns_missing_from_file": [
+  "AccredAgency",
+  "sch_deg",
+  "main",
+  "region",
+  "locale2",
+  "UGDS_AIANOld",
+  "UGDS_HISPOld",
+  "UG_AIANOld",
+  "UG_HISPOld",
+  "loan_ever",
+  "pell_ever",
+  "age_entry",
+  "age_entry_sq",
+  "agege24",
+  "female",
+  "married",
+  "dependent",
+  "veteran",
+  "first_gen",
+  "faminc",
+  "md_faminc",
+  "pct_white",
+  "pct_black",
+  "pct_asian",
+  "pct_hispanic",
+  "pct_ba",
+  "pct_grad_prof",
+  "pct_born_us",
+  "median_hh_inc",
+  "poverty_rate",
+  "unemp_rate"
+ ],
+ "effect_random_split": {
+  "mean_points": 13.084629885379478,
+  "t95_points": [
+   12.325920506572002,
+   13.843339264186955
+  ],
+  "per_seed_points": [
+   12.574122145780697,
+   12.709491740749545,
+   12.871226144701197,
+   14.104605757274502,
+   13.163703638391445
+  ]
+ },
+ "effect_domain_split_id": {
+  "mean_points": 8.174246901012486,
+  "t95_points": [
+   6.776747932052311,
+   9.571745869972661
+  ],
+  "per_seed_points": [
+   9.7904478246995,
+   6.932456227781659,
+   7.592914627734859,
+   7.751618356491974,
+   8.803797468354436
+  ]
+ },
+ "effect_domain_split_ood": {
+  "mean_points": 36.1125548992882,
+  "t95_points": [
+   35.12803184426023,
+   37.09707795431618
+  ],
+  "per_seed_points": [
+   36.504619112524615,
+   35.22520066636376,
+   36.547629865212784,
+   35.31122217174012,
+   36.97410268059973
+  ]
+ },
+ "detail": [
+  {
+   "seed": 0,
+   "acc_unguarded_random": 0.9192348565356004,
+   "acc_observed_only_random": 0.7934936350777935
+  },
+  {
+   "seed": 1,
+   "acc_unguarded_random": 0.9160467587672688,
+   "acc_observed_only_random": 0.7889518413597734
+  },
+  {
+   "seed": 2,
+   "acc_unguarded_random": 0.9293304994686503,
+   "acc_observed_only_random": 0.8006182380216383
+  },
+  {
+   "seed": 3,
+   "acc_unguarded_random": 0.9181721572794899,
+   "acc_observed_only_random": 0.7771260997067448
+  },
+  {
+   "seed": 4,
+   "acc_unguarded_random": 0.9234856535600425,
+   "acc_observed_only_random": 0.7918486171761281
+  }
+ ],
+ "class_rule": "negligible < 0.5 points, small 0.5 to 2, material > 2 (fixed in the addendum)"
+}

@@ -140,7 +140,7 @@ def s1(data, out):
     res["feature_columns_missing_from_file"] = [f for f in allf if f not in raw.columns]
     X = raw[feats].copy()
     for c in X.columns:
-        if X[c].dtype == object:
+        if not pd.api.types.is_numeric_dtype(X[c]):
             X[c] = X[c].astype("category").cat.codes
     y_un = unguarded["C150_4"].to_numpy()
     obs = raw["C150_4"].notna().to_numpy()
