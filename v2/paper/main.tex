@@ -1,14 +1,8 @@
 % TMLR submission draft (v2). Uses tmlr.sty when it is present next to this file; otherwise a plain fallback so the draft compiles.
 \documentclass[10pt]{article}
-\IfFileExists{tmlr.sty}{%
-  \usepackage{tmlr}%
-  \def\usingtmlr{1}%
-}{%
-  \usepackage[margin=1.15in]{geometry}%
-  \usepackage[numbers,sort&compress]{natbib}%
-  \usepackage{hyperref}%
-  \def\usingtmlr{0}%
-}
+\usepackage{tmlr}
+\usepackage{hyperref}
+\usepackage{url}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -25,7 +19,6 @@
 
 \title{Auditing Confound Detectors for Clinical Machine Learning:\\
 Four Ways a Diagnostic Can Fail Quietly}
-\author{Anonymous authors\\Paper under double-blind review}
 
 \begin{document}
 \maketitle
@@ -117,7 +110,7 @@ The catalogue does not cover an invalid reference or null distribution, non-inde
 \section{The Five Detectors as Case Studies}
 \label{sec:detectors}
 
-Detector 1 computes Cohen's $\kappa$ \citep{cohen1960kappa} on a 500-patient audit subset between two operationalizations of sepsis onset, with SOFA window scoring as the reference \citep{singer2016sepsis3}, and flags $\kappa<0.60$. Detector 2 trains a masked-reconstruction probe on a source site with a controlled share of target stays leaked in and flags a fall in held-out target loss by a one-sided paired $t$-test within seed. Detector 3 is a static analysis of the Python syntax tree that asks whether a sweep function's evaluation call receives a loader derived from the held-out distribution. Detector 4 traces variable lineage through the same machinery to find a constraint imposed on a variable derived from it. Detector 5 compares per-component availability and a composition-controlled gap across sites. The detectors, thresholds and datasets \citep{johnson2023mimiciv,pollard2018eicu,reyna2020early,goldberger2000physiobank} did not change between the earlier draft and this paper.
+Detector 1 computes Cohen's $\kappa$ \citep{cohen1960kappa} on a 500-patient audit subset between two operationalizations of sepsis onset, with the Sepsis-3 criteria \citep{singer2016sepsis3} scored over a time window as the reference, and flags $\kappa<0.60$. Detector 2 trains a masked-reconstruction probe on a source site with a controlled share of target stays leaked in and flags a fall in held-out target loss by a one-sided paired $t$-test within seed. Detector 3 is a static analysis of the Python syntax tree that asks whether a sweep function's evaluation call receives a loader derived from the held-out distribution. Detector 4 traces variable lineage through the same machinery to find a constraint imposed on a variable derived from it. Detector 5 compares per-component availability and a composition-controlled gap across sites. The detectors, thresholds and datasets \citep{johnson2023mimiciv,pollard2018eicu,reyna2020early,goldberger2000physiobank} did not change between the earlier draft and this paper.
 
 Ground truth was a real historical defect in our repository where one existed: detector 3's positive is a buggy sweep and its fix from our history, detector 4's is a Severinghaus circularity in our PhysioNet loader, and detector 1's is ICD-coded sepsis against SOFA scoring. Detectors 2 and 5 use controlled injection because the quantity detected is a dose. Table~\ref{tab:depth} gives the validation depth per detector. We report per-detector counts and do not pool them, because the cases are few, heterogeneous and partly correlated.
 
@@ -171,7 +164,7 @@ When a check cannot reach a judgement, because the metric is undefined, the patt
 \end{enumerate}
 A sixth case was stale evidence: two committed logs still reported a retracted composition figure and a passing verdict for the case that this paper reports as a false negative. We regenerated them. The fix for the first five is mechanical. Every check returns a decidability flag with its verdict, and undecidable cases go in their own column of the confusion matrix.
 
-\paragraph{Beyond our code (pre-registered patterns; convention not fixed).} We read 25 public repositories for the falsy-as-clean pattern: the 18 pinned repositories of Section~\ref{sec:external}, AI Fairness 360 and six chosen by a star-ranked rule fixed before any query. Patterns for four kinds of site were frozen first (236 sites, 88 sampled), and a rubric committed before reading assigned each sampled site one of guarded, unreachable, reachable and unguarded, or not applicable. The pattern was reachable and unguarded in 4 of 48 applicable sites (exact 95\% interval 0.023 to 0.200) if NaNs that arise only from diverged training are outside supported use, and in 16 of 48 (0.204 to 0.484) if they count. We did not fix that convention in advance, so we give both readings. The four positives under the narrow reading lie in three files (Appendix~\ref{apd:positives}). A second rater, an author who had not seen our labels and who then used a language model as a second check, agreed with our label at 8 of 12 sampled sites (exact interval 0.349 to 0.901); adopting that rater's labels at the four disagreeing sites would move the counts to 5 of 49 (0.034 to 0.222) and 17 of 49 (0.217 to 0.496). Table~\ref{tab:external} splits the sites by kind.
+\paragraph{Beyond our code (pre-registered patterns; convention not fixed).} We read 25 public repositories for the falsy-as-clean pattern: the 18 pinned repositories of Section~\ref{sec:external}, AI Fairness 360 and six chosen by a star-ranked rule fixed before any query. Patterns for four kinds of site were frozen first (236 sites, 88 sampled), and a rubric committed before reading assigned each sampled site one of guarded, unreachable, reachable and unguarded, or not applicable. The pattern was reachable and unguarded in 4 of 48 applicable sites (exact 95\% interval 0.023 to 0.200) if NaNs that arise only from diverged training are outside supported use, and in 16 of 48 (0.204 to 0.484) if they count. We did not fix that convention in advance, so we give both readings. The four positives under the narrow reading lie in three files (Appendix~\ref{apd:positives}). A second rater \pending{owner to describe the second rater and any checks} agreed with our label at 8 of 12 sampled sites (exact interval 0.349 to 0.901); adopting that rater's labels at the four disagreeing sites would move the counts to 5 of 49 (0.034 to 0.222) and 17 of 49 (0.217 to 0.496). Table~\ref{tab:external} splits the sites by kind.
 
 \begin{table}[t]
 \centering\footnotesize
@@ -270,11 +263,11 @@ We did not change any detector or threshold after observing its failure.
 
 A clean confusion matrix does not tell a reader whether a diagnostic could have failed. Auditing five of our own detectors gave four failure modes with evidence of different strength: Type 1 is the best supported, Type 2 is measured on one detector with a model that predicted held-out audit sizes, and Types 3 and 4 are thin. The practical recommendation is narrow: give every diagnostic an undecidable state, report control margins and the flag probability at the audit size used, and fix the decision rule first. The open question is whether the failures we found in our own tools change conclusions in other groups' work, and we have not shown that.
 
-\paragraph{Use of language models.} A language model assisted with code review, label checking and drafting. The authors read every section, checked every number against the evidence ledger, and verified every citation against its source.
+% Use of language models: statement left blank for the owner to write.
 
 \paragraph{Broader impact.} The work uses de-identified, credentialed critical-care data under their data-use agreements. Only aggregate results are released; per-stay arrays are not.
 
-\bibliographystyle{plainnat}
+\bibliographystyle{tmlr}
 \bibliography{ref}
 
 \appendix

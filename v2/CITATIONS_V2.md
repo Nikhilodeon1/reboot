@@ -11,7 +11,7 @@ the full count is in the Notes column.
 | Key | Source opened | Status | Supports (and the passage) | Notes |
 |---|---|---|---|---|
 | damour2022underspecification | jmlr.org/papers/v23/20-1335.html | VERIFIED | A pipeline is underspecified when it "can return many distinct predictors with equivalently strong test performance" (abstract) | JMLR 23(226):1-61, 2022; 36 authors |
-| salaudeen2025misspecified | arxiv.org/abs/2504.00186 | VERIFIED | Derives conditions for a shift to reveal reliance on spurious features and audits leading OOD datasets (abstract) | Venue "Published in TMLR 08/25" taken from the arXiv comment; the TMLR page was not opened |
+| salaudeen2025misspecified | arxiv.org/abs/2504.00186 | VERIFIED | Derives conditions for a shift to reveal reliance on spurious features and audits leading OOD datasets (abstract) | Venue and year: arXiv comment "Published in TMLR 08/25" and NSF Public Access record (publisher TMLR, 2025); the TMLR page itself was not opened and the month is not given in the bib |
 | geirhos2020shortcut | nature.com/articles/s42256-020-00257-z; Crossref | VERIFIED | Shortcuts are "decision rules that perform well on standard benchmarks but fail to transfer" (abstract) | Nat Mach Intell 2(11):665-673, 10 Nov 2020; 7 authors |
 | oakdenrayner2020hidden | dl.acm.org/doi/10.1145/3368555.3384468 | VERIFIED | Hidden stratification: poor performance on unidentified subsets, effects over 20% relative (abstract) | ACM CHIL 2020, pp. 151-159, 2 Apr 2020; the ML4H 2019 extended abstract (arXiv:1909.12475) is a different version |
 | kapoor2023leakage | cell.com/patterns/fulltext/S2666-3899(23)00159-9; Crossref | VERIFIED | Leakage "affects at least 294 studies across 17 fields" (bigger picture) | Patterns 4(9):100804, Sept 2023 |
@@ -21,10 +21,10 @@ the full count is in the Notes column.
 | johnson2023mimiciv | Crossref | VERIFIED (metadata) | Dataset reference | Sci Data 10(1):1, 3 Jan 2023; 13 authors |
 | pollard2018eicu | Crossref | VERIFIED (metadata) | Dataset reference | Sci Data 5:180178, 11 Sep 2018; 6 authors |
 | reyna2020early | Crossref | VERIFIED (metadata) | Challenge dataset reference | Crit Care Med 48(2):210-217, Feb 2020; 8 authors |
-| goldberger2000physiobank | ahajournals.org/doi/10.1161/01.cir.101.23.e215; Crossref | VERIFIED (metadata) | PhysioNet reference | Circulation 101(23), 13 Jun 2000; the end page "e220" was not on any page opened, so the bib gives e215 only |
+| goldberger2000physiobank | ahajournals.org/doi/10.1161/01.cir.101.23.e215; Crossref | VERIFIED (metadata) | PhysioNet reference | Circulation 101(23), 13 Jun 2000; pages e215-e220 confirmed by the Europe PMC record (pageInfo E215-20), PMID 10851218 |
 | bellamy2019aif360 | Crossref (doi.org page not available) | VERIFIED (metadata) | The toolkit exists; its metrics and mitigation algorithms (arXiv abstract) | IBM J Res Dev 63(4/5):4:1-4:15, Jul 2019; arXiv v1 had a different subtitle |
 | gulrajani2021search | iclr.cc/virtual/2021/poster/2998; arXiv abstract | VERIFIED | DomainBed with model selection criteria; ERM competitive (abstract) | ICLR 2021 poster |
-| yang2022leakage | arxiv.org/abs/2209.03345 | VERIFIED | Static analysis to detect common forms of data leakage in notebooks (abstract); the three category names are from our own run of the tool | ASE 2022 per the round-1 ledger (programme page); arXiv v1 7 Sep 2022 |
+| yang2022leakage | arxiv.org/abs/2209.03345 | VERIFIED | Static analysis to detect common forms of data leakage in notebooks (abstract); the three category names are from our own run of the tool | Crossref (ACM, doi 10.1145/3551349.3556918): Proceedings of the 37th IEEE/ACM International Conference on Automated Software Engineering (ASE '22), pp. 1-12, 10 Oct 2022; arXiv v1 7 Sep 2022 |
 | subotic2022leakage | microsoft.com Research publication page | VERIFIED | Static data-leakage analysis intended for development time (abstract) | SOAP 2022, June 2022 |
 | kupferman2003vacuity | link.springer.com/article/10.1007/s100090100062; Crossref | VERIFIED | Suspecting an error when model checking succeeds; vacuous satisfaction; "Beer et al. described a method for the detection of vacuous satisfaction" (abstract) | STTT 4(2):224-233, Feb 2003; Kupferman and Vardi |
 | beer1997vacuity | Crossref | METADATA-ONLY | Existence; the attribution of vacuity detection comes from the Kupferman and Vardi abstract | LNCS (CAV 1997) pp. 279-290; the volume number 1254 came from search results only and is not in the bib |
@@ -43,3 +43,10 @@ the full count is in the Notes column.
 Another reader reopens every URL above, rechecks metadata and the passage, and settles disagreements against the source.
 Counts today: 19 entries; 17 VERIFIED (one of them, wynants2020prediction, with a correction to the claim),
 2 METADATA-ONLY (beer1997vacuity, cohen1960kappa); 2 removed (landis1977measurement, mahajan2021domain).
+
+## Second pass, 2026-11-04 (same reader, different routes)
+
+Rechecked by a second route: Goldberger (Europe PMC, pages); Yang et al. (ACM record via Crossref: proceedings title, pages, date);
+Salaudeen et al. (NSF Public Access record). Claims in the text were rechecked against the abstracts: the Sepsis-3 sentence
+now attributes only the criteria to Singer et al.; window scoring is described as ours. Still open: an independent second reader
+(a person other than the drafter), and the TMLR page for Salaudeen et al.
