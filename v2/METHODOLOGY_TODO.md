@@ -145,3 +145,19 @@ flexibility.
 - If E7 shows kappa below 0.6 on either rubric, the external prevalence figures are reported as rubric-dependent and
   the headline becomes the range across raters.
 - If E1 finds no vacuous pass in any checker, Type 1 stays an internal and structural finding and the paper says so.
+
+## 4. Status log
+
+- 2026-11-03: PREREG_V2 section 1 committed (829a11c). E3 run: supported in all three cases (D = 0.026, 0.010, 0.004);
+  the MIMIC-IV control's flag rate falls only from 0.492 (n = 100) to 0.411 (n = 5000); model n* = 62,500 of 74,829.
+- 2026-11-03: E4 running (seeds 5 to 24). At n = 1200: 13 of 20 flagged (exact 95% interval 0.408 to 0.846), prediction 0.417
+  inside the interval by the registered rule, but the fresh ratios have mean 0.341 and SD 0.145 against 0.283 and 0.082 from
+  the first five seeds, so five seeds do not pin the model's parameters. n = 4000 still running.
+- 2026-11-03: E7 rating sheets generated (blinded): `work_reboot/e7/rater_sheet_3b.md` (53 sites) and `rater_sheet_4c.md`
+  (88 sites), with neutral keys. Needs one human rater who has not seen our labels.
+- Needs your approval before they can start: E1 (install pinned checker packages inside a container), E2 and E12 (download
+  public datasets, name each file and size when asked), the TMLR style files, and any pod use for E5 beyond open data.
+- Repository clean-up note: the AST comparison showed no semantic code change between the round-1 commit and HEAD (71 files
+  identical after removing comments and docstrings; 21 deleted files are scripts, docs and one test, now kept under
+  `v2/evidence_r1`). `detectors/PREREGISTRATION_OUTCOME.md` and `detectors/TODO.md` were deleted from the tree and must be
+  restored for the release because the paper cites the outcome document.
