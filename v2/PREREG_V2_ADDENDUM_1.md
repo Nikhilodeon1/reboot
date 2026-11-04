@@ -107,3 +107,12 @@ domain: private for-profit institutions, `CONTROL` = 3; in domain: the rest, spl
 features are left raw for `HistGradientBoostingClassifier` (the benchmark discretizes them into 100 bins). The effect measured is the
 difference in test accuracy between scoring on the unguarded labels and on observed-target rows only, as written above. S1 therefore
 measures the effect of the line on this file with a stand-in pipeline, not a reproduction of a number published by TableShift.
+
+## Addendum 1c (declared before any E1 run): tools and versions for E1
+
+Committed with `v2/scripts/e1_checks.py` and `e1_run.py` before the run. The frozen list is `great-expectations` (the 0.18 line, whose
+pandas dataset API is stable), `pandera`, `fairlearn`, `aif360` and `scikit-learn` as the reference, with `pandas<2.2`; other packages are
+resolved by pip on the day and recorded by `pip freeze`. `deepchecks` is dropped from the list: its checks need paired train and test data,
+so a single-dataset degenerate input is not comparable. Inputs D1 to D7 and a nominal input D0 (every check must succeed on D0, or the check
+is reported as not working and excluded). The a priori undefined cells are the `undefined_on` sets in `e1_checks.py`. The cell count is
+13 checks x 8 inputs = 104 cells, of which 7 inputs x 13 = 91 are fuzz cells.
