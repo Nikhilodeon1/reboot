@@ -29,6 +29,27 @@ the full count is in the Notes column.
 | kupferman2003vacuity | link.springer.com/article/10.1007/s100090100062; Crossref | VERIFIED | Suspecting an error when model checking succeeds; vacuous satisfaction; "Beer et al. described a method for the detection of vacuous satisfaction" (abstract) | STTT 4(2):224-233, Feb 2003; Kupferman and Vardi |
 | beer1997vacuity | Crossref | METADATA-ONLY | Existence; the attribution of vacuity detection comes from the Kupferman and Vardi abstract | LNCS (CAV 1997) pp. 279-290; the volume number 1254 came from search results only and is not in the bib |
 | cohen1960kappa | Crossref | METADATA-ONLY | Existence of the kappa statistic (definition pointer) | Educ Psychol Meas 20(1):37-46, Apr 1960 |
+| breck2017mltest | research.google pub page; Crossref (10.1109/BigData.2017.8258038) | VERIFIED | "we present 28 specific tests and monitoring needs" (abstract) | IEEE Big Data 2017, pp. 1123-1132; 5 authors |
+| breck2019datavalidation | proceedings.mlsys.org abstract page and the paper PDF | VERIFIED | presents a data validation system that detects anomalies in data fed into ML pipelines, deployed in TFX at Google (abstract) | SysML 2019 (2nd SysML Conference); author order taken from the PDF title page (the proceedings page lists a different order) |
+| chorev2022deepchecks | jmlr.org/papers/v23/22-0281.html | VERIFIED | a Python library for validating ML models and data (abstract) | JMLR 23(285):1-6, 2022; 10 authors |
+| mchugh2012kappa | PMC3900052; Europe PMC record | VERIFIED | "Cohen's suggested interpretation may be too lenient for health related studies" (abstract) | Biochem Med 22(3):276-282, 2012 |
+| cfr1607 | law.cornell.edu/cfr/text/29/1607.4 (eCFR mirror) | VERIFIED | paragraph D: a selection rate below four-fifths (80%) of the highest rate is generally regarded as evidence of adverse impact; larger differences resting on small numbers may not indicate it | regulation, no pagination; the eCFR page redirected to an unblock page and was not used |
+| kearns2018gerrymandering | proceedings.mlr.press/v80/kearns18a.html | VERIFIED | classifiers fair on each pre-defined group can violate fairness on structured subgroups (abstract) | PMLR 80:2564-2572, 2018 |
+| kerr1998harking | Crossref | VERIFIED | HARKing defined as presenting a post hoc hypothesis as if a priori (Crossref abstract, via a summarizer; the metadata is exact) | PSPR 2(3):196-217, 1998 |
+| simmons2011falsepositive | Crossref | VERIFIED | flexibility in data collection and analysis raises false-positive rates (Crossref abstract, via a summarizer; the metadata is exact) | Psychol Sci 22(11):1359-1366, 2011 |
+| zech2018variable | journals.plos.org page; Europe PMC record | VERIFIED | CNNs did better on internal than on outside hospital data in 3 of 5 comparisons and identified hospital system and department (abstract, via a summarizer) | PLOS Med 15(11):e1002683, 2018; 6 authors |
+| degrave2021shortcuts | nature.com/articles/s42256-021-00338-7; Crossref | VERIFIED | systems rely on confounding factors rather than medical pathology (abstract) | Nat Mach Intell 3(7):610-619, 31 May 2021 |
+| rhee2017sepsis | PMC5710396; Europe PMC record; Crossref | VERIFIED | clinical-criteria incidence +0.6% per year (flat), claims-based +10.3% per year (read twice with different questions) | JAMA 318(13):1241-1249, 2017; 20 authors plus a group |
+| vincent1996sofa | Crossref | VERIFIED (metadata) | the SOFA score exists | Intensive Care Med 22(7):707-710, 1996; 9 authors |
+| saeb2017usecase | Europe PMC record; Crossref | VERIFIED | record-wise cross-validation often massively overestimates accuracy; subject-wise mirrors the clinical use case (abstract) | GigaScience 6(5):1-9 (gix019), 2017 |
+| dwork2015reusable | science.org/doi/10.1126/science.aaa9375 | VERIFIED | adaptive analysis risks false discoveries; a method to reuse a holdout safely (abstract) | Science 349(6248):636-638, 2015 |
+| ding2021retiring | arxiv.org/abs/2108.04884; NeurIPS poster page; the NeurIPS proceedings PDF | VERIFIED | new datasets derived from US Census surveys for fair ML (abstract) | NeurIPS 2021 (Advances in Neural Information Processing Systems 34) |
+| angwin2016machinebias | propublica.org article page | VERIFIED | article exists; byline order from the page | published 2016-05-23; accessed 2026-11-04 |
+| ucicadult | archive.ics.uci.edu/dataset/2/adult | VERIFIED (page) | dataset page: donated 4/30/1996, 48,842 instances; the file we use is adult.data (32,561 rows) | no creator names on the page excerpt, so none are given |
+| gardner2023tableshift | proceedings.neurips.cc 2023 Datasets and Benchmarks abstract page | VERIFIED | a distribution shift benchmark of 15 tabular tasks (abstract) | NeurIPS 2023 Datasets and Benchmarks Track |
+| collegescorecard | collegescorecard.ed.gov/data/ | VERIFIED (page) | the most-recent institution-level file (24 MB zip) exists | file Most-Recent-Cohorts-Institution_11022026.zip; accessed 2026-11-04 |
+| clopper1934confidence | Crossref | VERIFIED (metadata) | exact binomial confidence limits | Biometrika 26(4):404-413, 1934 |
+| efron1979bootstrap | Crossref | VERIFIED (metadata) | the bootstrap | Ann Stat 7(1):1-26, 1979 |
 
 ## Removed
 
@@ -41,7 +62,7 @@ the full count is in the Notes column.
 ## Second pass still to do
 
 Another reader reopens every URL above, rechecks metadata and the passage, and settles disagreements against the source.
-Counts today: 19 entries; 17 VERIFIED (one of them, wynants2020prediction, with a correction to the claim),
+Counts on 2026-11-04 before the sweep: 19 entries; 17 VERIFIED (one of them, wynants2020prediction, with a correction to the claim),
 2 METADATA-ONLY (beer1997vacuity, cohen1960kappa); 2 removed (landis1977measurement, mahajan2021domain).
 
 ## Second pass, 2026-11-04 (same reader, different routes)
@@ -50,3 +71,14 @@ Rechecked by a second route: Goldberger (Europe PMC, pages); Yang et al. (ACM re
 Salaudeen et al. (NSF Public Access record). Claims in the text were rechecked against the abstracts: the Sepsis-3 sentence
 now attributes only the criteria to Singer et al.; window scoring is described as ours. Still open: an independent second reader
 (a person other than the drafter), and the TMLR page for Salaudeen et al.
+
+## Sweep of 2026-11-04 (related topics and data sources)
+
+Added 21 entries: testing and validating ML systems (Breck 2017, Breck 2019, Chorev 2022), thresholds as conventions (McHugh 2012,
+29 CFR 1607.4), granularity and adaptive reuse (Saeb 2017, Kearns 2018, Dwork 2015), post hoc rules (Kerr 1998, Simmons 2011), clinical
+confounds and labels (Zech 2018, DeGrave 2021, Rhee 2017, Vincent 1996), data sources (Ding 2021, Angwin 2016, UCI Adult, Gardner 2023,
+College Scorecard) and statistics (Clopper and Pearson 1934, Efron 1979). Total 40 entries: 38 VERIFIED (of which Vincent, Clopper and
+Pearson, Efron, Johnson, Pollard, Reyna, Goldberger, Singer are metadata-level checks of a dataset or method reference), 2 METADATA-ONLY
+(beer1997vacuity, cohen1960kappa). Summarizer-read abstracts (Kerr, Simmons, Zech) have exact Crossref or Europe PMC metadata but their
+abstracts were read through a summarizer; the paper's claims about them stay at the level of the abstract. `v2/scripts/cite_check.py`
+confirms that every cited key is in the bibliography, every entry is cited, and every entry has a row here.
