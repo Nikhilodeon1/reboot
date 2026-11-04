@@ -164,7 +164,7 @@ Type & Internal instances & External instances & Quantified by\\
 When a check cannot reach a judgement, because the metric is undefined, the pattern is absent or the control is too easy, that outcome becomes ``no confound found'' and is counted as evidence of specificity. We met this five times, independently:
 \begin{enumerate}
   \item (1b) Detector 1's negative control passed the same audit array as both arguments to $\kappa$, so the result was $1.000$ by construction.
-  \item (1b) Detector 1's suspicion-window controls sit at $\kappa$ from 0.93 to 1.00, so the external $\mathrm{TN}=3$ implied three tests when one discriminated.
+  \item (1b) Detector 1's suspicion-window controls sit at $\kappa$ from 0.91 to 1.00 across the two scales, so the external $\mathrm{TN}=3$ implied three tests when one discriminated.
   \item (1a) Detector 3's \textsc{indeterminate} verdict on third-party repositories, folded into the true negatives, would have produced $\mathrm{TN}=3$ from files it never analysed.
   \item (1a) A baseline's train--test gap check: one seed's in-domain AUROC was undefined, \texttt{nan > threshold} evaluated to \texttt{False}, and the abstention was scored as a correct silence.
   \item (1b) Detector 2's 0\% control compares an arm with itself, so its relative change is exactly zero and the true negative holds by construction.
