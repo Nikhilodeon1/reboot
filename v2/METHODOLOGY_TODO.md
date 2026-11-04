@@ -161,3 +161,4 @@ flexibility.
   identical after removing comments and docstrings; 21 deleted files are scripts, docs and one test, now kept under
   `v2/evidence_r1`). `detectors/PREREGISTRATION_OUTCOME.md` and `detectors/TODO.md` were deleted from the tree and must be
   restored for the release because the paper cites the outcome document.
+- 2026-11-03: E4 complete. n = 1200: consistent (13/20, interval 0.408 to 0.846, prediction 0.417). n = 4000: not consistent (8/20, interval 0.191 to 0.640, prediction 0.148). Fresh SDs were about twice the five-seed SDs, so the five-seed model was fitted on too little data; a 25-seed refit (exploratory) gives 0.59 and 0.33. The paper reports the failure and keeps the qualitative claim (40% flagged at four thousand stays).

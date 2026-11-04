@@ -1,0 +1,26 @@
+{
+ "n": 4000,
+ "seed": 6,
+ "positive": {
+  "max_avail_ratio": 38.354046737938596,
+  "composition_gap_ratio": 0.3053525521394826,
+  "naive_gap": 0.3133220093894252,
+  "comp_gap": 0.09567367520853191,
+  "n_stays_a": 2736,
+  "n_stays_b": 3981,
+  "seed": 6,
+  "n": 4000,
+  "flagged": true
+ },
+ "negative": {
+  "max_avail_ratio": 1.0143702516825928,
+  "composition_gap_ratio": 0.04891393528429194,
+  "naive_gap": 0.10786975968445991,
+  "comp_gap": 0.005276334444337796,
+  "n_stays_a": 2736,
+  "n_stays_b": 2702,
+  "seed": 6,
+  "n": 4000,
+  "flagged": false
+ }
+}
