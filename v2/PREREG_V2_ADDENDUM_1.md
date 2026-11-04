@@ -96,3 +96,14 @@ the documented and undocumented split. Positives go to the maintainer notes. The
 any tool is wrong; a documented vacuous pass is reported as documented.
 
 **Where.** Local Docker. Scripts `v2/scripts/e1_checks.py` and `v2/scripts/e1_run.py`, `v2/docker/e1/Dockerfile`.
+
+## Addendum 1b (declared before any E12 run): deviations for S1
+
+Committed before S1, S2 and S3 run. The benchmark's own College Scorecard source is a Kaggle file that needs a login, so S1 uses the
+official most-recent institution file. Three consequences are declared now. (i) The official file has numeric `CCBASIC` codes and no
+text labels, so the benchmark's `CCBASIC` domain split cannot be reproduced. S1 uses a domain split on `CONTROL` instead (out of
+domain: private for-profit institutions, `CONTROL` = 3; in domain: the rest, split 70/30 within domain), and also the 5 random splits.
+(ii) Feature columns are the TableShift feature names that exist in the official file; the others are listed in the result. (iii) Numeric
+features are left raw for `HistGradientBoostingClassifier` (the benchmark discretizes them into 100 bins). The effect measured is the
+difference in test accuracy between scoring on the unguarded labels and on observed-target rows only, as written above. S1 therefore
+measures the effect of the line on this file with a stand-in pipeline, not a reproduction of a number published by TableShift.
