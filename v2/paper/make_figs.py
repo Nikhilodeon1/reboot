@@ -7,6 +7,7 @@ full scale). Nothing here recomputes a statistic; r2/r1 is the ratio of the arm 
 """
 import os
 import json
+import math
 
 import matplotlib
 matplotlib.use("Agg")
@@ -28,7 +29,7 @@ def fig_audit_size():
     names = [("MIMIC control", "MIMIC-IV control (kappa 0.602)", C["mimic"]),
              ("eICU positive", "eICU-CRD positive (kappa 0.451)", C["eicu_pos"]),
              ("eICU control", "eICU-CRD control (kappa 0.826)", C["eicu_ctrl"])]
-    fig, ax = plt.subplots(figsize=(4.6, 3.0))
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(7.2, 2.9), gridspec_kw={"width_ratios": [1.1, 1]})
     for key, label, col in names:
         rows = d["cases"][key]["rows"]
         n = [r["n"] for r in rows]
@@ -36,12 +37,24 @@ def fig_audit_size():
         ax.errorbar(n, [r["p_obs"] for r in rows],
                     yerr=[[r["p_obs"] - r["cp95"][0] for r in rows], [r["cp95"][1] - r["p_obs"] for r in rows]],
                     fmt="o", ms=3.5, color=col, capsize=2, lw=0.9, label=label)
+        # panel b: signed margin (tau - theta*) / sigma_n, with the model sigma fixed before the run
+        z = [(d["threshold"] - d["cases"][key]["theta_star"]) / r["sd_model"] for r in rows]
+        bx.errorbar(z, [r["p_obs"] for r in rows],
+                    yerr=[[r["p_obs"] - r["cp95"][0] for r in rows], [r["cp95"][1] - r["p_obs"] for r in rows]],
+                    fmt="o", ms=3.5, color=col, capsize=2, lw=0.9)
     ax.axhspan(0.05, 0.95, color="#000000", alpha=0.04, lw=0)
     ax.set_xscale("log")
     ax.set_xlabel("audit size n (stays per audit draw)")
     ax.set_ylabel("flag probability, kappa < 0.60")
     ax.set_ylim(-0.03, 1.03)
-    ax.legend(frameon=False, fontsize=7.5, loc="center", bbox_to_anchor=(0.62, 0.76))
+    ax.legend(frameon=False, fontsize=7, loc="center", bbox_to_anchor=(0.6, 0.74))
+    ax.set_title("(a) against audit size", fontsize=9)
+    grid = [i / 20.0 for i in range(-120, 181)]
+    bx.plot(grid, [0.5 * (1 + math.erf(g / math.sqrt(2))) for g in grid], "-", color="#000000", lw=1.0)
+    bx.set_xlim(-6, 9)
+    bx.set_xlabel("signed margin in SDs of the audit statistic")
+    bx.set_ylim(-0.03, 1.03)
+    bx.set_title("(b) against margin; line is Phi(margin)", fontsize=9)
     fig.tight_layout()
     fig.savefig(os.path.join(OUT, "fig2_audit_size.pdf"))
     plt.close(fig)
