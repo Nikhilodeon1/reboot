@@ -1,0 +1,415 @@
+{
+ "sheet": "4c",
+ "sites": 88,
+ "missing_from_rater": [],
+ "agreement_collapsed_4_class": {
+  "agree": 64,
+  "n": 88,
+  "cp95": [
+   0.6219,
+   0.8168
+  ],
+  "kappa": 0.6282344657630698
+ },
+ "sensitivity": {
+  "committed": {
+   "applicable": 48,
+   "narrow": [
+    3,
+    48,
+    [
+     0.0131,
+     0.172
+    ]
+   ],
+   "broad": [
+    16,
+    48,
+    [
+     0.204,
+     0.4841
+    ]
+   ]
+  },
+  "rater": {
+   "applicable": 61,
+   "narrow": [
+    3,
+    61,
+    [
+     0.0103,
+     0.1371
+    ]
+   ],
+   "broad": [
+    16,
+    61,
+    [
+     0.158,
+     0.3907
+    ]
+   ]
+  }
+ },
+ "agreement": {
+  "agree": 64,
+  "n": 88,
+  "cp95": [
+   0.6219,
+   0.8168
+  ],
+  "kappa": 0.6332696648723738
+ },
+ "confusion": [
+  {
+   "committed": "GUARDED",
+   "rater": "GUARDED",
+   "n": 14
+  },
+  {
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "n": 1
+  },
+  {
+   "committed": "GUARDED",
+   "rater": "UNREACHABLE",
+   "n": 2
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "n": 7
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "NOT_APPLICABLE",
+   "n": 25
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_diverged",
+   "n": 1
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "n": 7
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "NOT_APPLICABLE",
+   "n": 1
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "RU_diverged",
+   "n": 12
+  },
+  {
+   "committed": "RU_ordinary",
+   "rater": "RU_ordinary",
+   "n": 3
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "n": 5
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "UNREACHABLE",
+   "n": 10
+  }
+ ],
+ "disagreements": [
+  {
+   "site": 1,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    509,
+    509
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Lines 487-491 assert_index_equal checks every df has df0's index and columns; empty dict would IndexError; assert len(out)==N."
+  },
+  {
+   "site": 5,
+   "repo": "circEWS",
+   "file": "preprocessing/step1a_2_remove_oor_values.py",
+   "lines": [
+    108,
+    129
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Function returns early when SaO2 var absent or len(svo2)==0 (lines 93-97); empty sao2 gives empty loop."
+  },
+  {
+   "site": 6,
+   "repo": "clinical-outcome-prediction",
+   "file": "tasks/adm_dis_match_i2b2/adm_dis_match_i2b2.py",
+   "lines": [
+    132,
+    133
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "adm_/dis_mandatory_sections are non-empty literal lists defined at lines 56/64, so any() never sees an empty iterable."
+  },
+  {
+   "site": 7,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/recipe/config.py",
+   "lines": [
+    540,
+    540
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Explicit None check then range validation that reports an error; site is itself a validator."
+  },
+  {
+   "site": 9,
+   "repo": "robustdg",
+   "file": "utils/scripts/utils.py",
+   "lines": [
+    521,
+    521
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "The site is an explicit emptiness check (len>0) before indexing acc_tr[-1] for a log line."
+  },
+  {
+   "site": 11,
+   "repo": "tableshift",
+   "file": "tableshift/third_party/node/data.py",
+   "lines": [
+    166,
+    166
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "all() over a literal 3-tuple of size args; None is the intended sentinel, iterable never empty."
+  },
+  {
+   "site": 12,
+   "repo": "AIF360",
+   "file": "aif360/datasets/structured_dataset.py",
+   "lines": [
+    188,
+    189
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "self.__dict__ is populated in StructuredDataset.__init__, so all() never runs over an empty set; missing key in other raises KeyError."
+  },
+  {
+   "site": 16,
+   "repo": "clinical-outcome-prediction",
+   "file": "tasks/adm_dis_match_i2b2/adm_dis_match_i2b2.py",
+   "lines": [
+    296,
+    297
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "adm_/dis_mandatory_sections are non-empty literal lists at lines 258/263."
+  },
+  {
+   "site": 19,
+   "repo": "tableshift",
+   "file": "tableshift/core/discretization.py",
+   "lines": [
+    301,
+    301
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "fit explicitly removes NaNs from each column and handles all-NaN columns (lines 256-266) before computing bin edges."
+  },
+  {
+   "site": 23,
+   "repo": "tableshift",
+   "file": "tableshift/third_party/node/data.py",
+   "lines": [
+    216,
+    216
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "all() over a literal 3-tuple of size args; never empty."
+  },
+  {
+   "site": 27,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    35,
+    35
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Nulls explicitly filtered with pd.isnull; empty dups gives the correct no-inconsistency result, otherwise raises."
+  },
+  {
+   "site": 32,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/models/utils.py",
+   "lines": [
+    39,
+    50
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty outputs raises IndexError at outputs[0]; all step outputs come from the same step function with identical keys."
+  },
+  {
+   "site": 45,
+   "repo": "wilds",
+   "file": "wilds/common/metrics/all_metrics.py",
+   "lines": [
+    152,
+    152
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_diverged",
+   "rater_note": "NaN detection scores compare False and boxes are silently dropped as pseudolabels."
+  },
+  {
+   "site": 56,
+   "repo": "robustdg",
+   "file": "utils/scripts/ptb_utils.py",
+   "lines": [
+    130,
+    130
+   ],
+   "committed": "RU_diverged",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "self.loss is only written (lines 43, 84, 130), never read in utils/scripts; feeds no verdict."
+  },
+  {
+   "site": 58,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/models/utils.py",
+   "lines": [
+    68,
+    90
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "NaNs filtered explicitly with v == v and empty collect handled with if collect; empty outputs raises IndexError."
+  },
+  {
+   "site": 59,
+   "repo": "circEWS",
+   "file": "circews/classes/lgbm_model.py",
+   "lines": [
+    479,
+    479
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable: a NaN AUPRC would be skipped silently, but whether get_validation_scores can return NaN is not established; all-NaN crashes on remove(None)."
+  },
+  {
+   "site": 61,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_pregenerated.py",
+   "lines": [
+    255,
+    255
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "no_decay is a fixed non-empty literal list."
+  },
+  {
+   "site": 65,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_pregenerated.py",
+   "lines": [
+    253,
+    253
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "no_decay is a fixed non-empty literal list."
+  },
+  {
+   "site": 66,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    62,
+    62
+   ],
+   "committed": "GUARDED",
+   "rater": "UNREACHABLE",
+   "rater_note": "val_history non-empty after calc_metrics; sklearn roc_auc raises on NaN/single-class, so auroc is finite."
+  },
+  {
+   "site": 69,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    314,
+    314
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Nulls explicitly excluded; an all-null column gives all([])=True so not-mixed, which is the correct answer."
+  },
+  {
+   "site": 80,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    507,
+    507
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Lines 487-491 assert every df has identical columns to the first; empty dict would IndexError."
+  },
+  {
+   "site": 83,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/recipe/config.py",
+   "lines": [
+    546,
+    546
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Explicit None check then range validation that reports an error."
+  },
+  {
+   "site": 84,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    348,
+    348
+   ],
+   "committed": "GUARDED",
+   "rater": "UNREACHABLE",
+   "rater_note": "val_history non-empty after calc_metrics; AUCs from sklearn raise on NaN input."
+  },
+  {
+   "site": 88,
+   "repo": "robustdg",
+   "file": "test.py",
+   "lines": [
+    393,
+    393
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty final_metric_score raises IndexError; each run's metric dict has the same keys."
+  }
+ ]
+}
