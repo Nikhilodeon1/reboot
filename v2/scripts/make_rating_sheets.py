@@ -18,8 +18,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 V2 = os.path.dirname(HERE)
 R1 = os.path.join(V2, "evidence_r1", "rebuttal", "results")
 CORPUS = os.environ.get("SCAN_CORPUS", r"C:\Users\nikhi\Codes\RES\src\pclCodebase\scan_corpus")
-CONTEXT = 8
-MAXLINES = 70
+CONTEXT = int(os.environ.get("E7_CONTEXT", "8"))
+MAXLINES = int(os.environ.get("E7_MAXLINES", "70"))
+SUFFIX = os.environ.get("E7_SUFFIX", "")
 
 SHEETS = {
     "3b": {"sample": "task3a_sample.json", "seed": 20261110, "title": "Rater sheet A: model-selection sites (53)",
@@ -88,7 +89,7 @@ def main():
                    "Label: ______", "Selection split / reported split: ______" if key == "3b" else "Diverged-only or ordinary (if REACHABLE_UNGUARDED): ______",
                    "Note (one line): ______", ""]
             key_rows.append({"site": n, "repo": s["repo"], "sha": s["sha"], "file": s["file"], "start": s["start"], "end": s["end"]})
-        open(os.path.join(a.out, f"rater_sheet_{key}.md"), "w", encoding="utf-8").write("\n".join(md))
+        open(os.path.join(a.out, f"rater_sheet_{key}{SUFFIX}.md"), "w", encoding="utf-8").write("\n".join(md))
         json.dump(key_rows, open(os.path.join(a.out, f"rater_key_{key}.json"), "w"), indent=1)
         print(key, len(sites), "sites")
 
