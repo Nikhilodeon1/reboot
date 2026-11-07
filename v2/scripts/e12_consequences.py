@@ -70,23 +70,26 @@ def s23(verbatim, out):
     rng = np.random.default_rng(12345)
     N = 10000
     for pnull in (0.0, 0.01, 0.05):
+        base_vals = []
+        for i in range(N):  # one base table per null share; the second variant appends one failing row to the same table
+            if rng.random() < pnull:
+                base_vals.append(None)
+            else:
+                k = int(rng.integers(1, 20))
+                base_vals.append([float(x) for x in rng.uniform(0, 10, size=k)])
         for variant in ("all_non_null_pass", "one_failing_row"):
-            vals, lens = [], []
-            for i in range(N):
-                if rng.random() < pnull:
-                    vals.append(None)
-                else:
-                    k = int(rng.integers(1, 20))
-                    vals.append([float(x) for x in rng.uniform(0, 10, size=k)])
+            vals = list(base_vals)
             if variant == "one_failing_row":
                 vals.append([1.0e6])
             t = pa.table({"x": pa.array(vals, type=pa.list_(pa.float64()))})
             out_t = F.filter_list_by_range(t, "x", 0.0, 100.0)
             rows_in, nulls_in = t.num_rows, int(pc.sum(pc.is_null(t["x"]).cast(pa.int64())).as_py())
             nulls_out = int(pc.sum(pc.is_null(out_t["x"]).cast(pa.int64())).as_py()) if out_t.num_rows else 0
-            lt = pa.table({"x": pa.array([(v if v is None else v[:5]) for v in vals], type=pa.list_(pa.float64()))})
-            out_l = F.filter_list_with_min_max_length(lt, ["x"], 1, 5) if variant == "all_non_null_pass" else \
-                F.filter_list_with_min_max_length(pa.table({"x": pa.array(vals[:-1] + [[0.0] * 9], type=pa.list_(pa.float64()))}), ["x"], 1, 5)
+            short = [(v if v is None else v[:5]) for v in (vals[:-1] if variant == "one_failing_row" else vals)]
+            if variant == "one_failing_row":
+                short.append([0.0] * 9)  # one list of length 9, outside [1, 5]
+            lt = pa.table({"x": pa.array(short, type=pa.list_(pa.float64()))})
+            out_l = F.filter_list_with_min_max_length(lt, ["x"], 1, 5)
             nulls_out_l = int(pc.sum(pc.is_null(out_l["x"]).cast(pa.int64())).as_py()) if out_l.num_rows else 0
             res["S2"].append({"p_null": pnull, "variant": variant, "rows_in": rows_in, "null_rows_in": nulls_in,
                               "range_filter": {"rows_out": out_t.num_rows, "null_rows_out": nulls_out},
@@ -97,9 +100,8 @@ def s23(verbatim, out):
                           (float("nan"), float("nan"), "both NaN"), (0.5, float("inf"), "train finite, test inf")):
         stats = {"loss_tr": [tr], "loss_te": [te]}
         ns = {"np": np, "stats": stats, "diverged": False, "MAX_LOSS_VAL": eval(max_loss, {"np": np}) if max_loss != "MISSING" else 1e6}
-        code = lines.strip().splitlines()
-        src = "\n".join(l.strip() for l in code[:1]) + "\nif loss_val > MAX_LOSS_VAL: diverged = True\nif not np.isfinite(loss_val): diverged = True\n"
-        exec(src, ns)
+        import textwrap
+        exec(textwrap.dedent(lines), ns)  # the three pinned lines, verbatim
         res["S3"].append({"case": label, "loss_val": repr(ns["loss_val"]), "diverged": bool(ns["diverged"])})
     os.makedirs(out, exist_ok=True)
     json.dump(res, open(os.path.join(out, "e12_s2_s3.json"), "w"), indent=1)

@@ -1,0 +1,115 @@
+{
+ "versions": {
+  "numpy": "2.4.6",
+  "pyarrow": "26.0.1",
+  "polars": "2.1.0"
+ },
+ "S2": [
+  {
+   "p_null": 0.0,
+   "variant": "all_non_null_pass",
+   "rows_in": 10000,
+   "null_rows_in": 0,
+   "range_filter": {
+    "rows_out": 10000,
+    "null_rows_out": 0
+   },
+   "length_filter": {
+    "rows_out": 10000,
+    "null_rows_out": 0
+   }
+  },
+  {
+   "p_null": 0.0,
+   "variant": "one_failing_row",
+   "rows_in": 10001,
+   "null_rows_in": 0,
+   "range_filter": {
+    "rows_out": 10000,
+    "null_rows_out": 0
+   },
+   "length_filter": {
+    "rows_out": 10000,
+    "null_rows_out": 0
+   }
+  },
+  {
+   "p_null": 0.01,
+   "variant": "all_non_null_pass",
+   "rows_in": 10000,
+   "null_rows_in": 93,
+   "range_filter": {
+    "rows_out": 10000,
+    "null_rows_out": 93
+   },
+   "length_filter": {
+    "rows_out": 10000,
+    "null_rows_out": 93
+   }
+  },
+  {
+   "p_null": 0.01,
+   "variant": "one_failing_row",
+   "rows_in": 10001,
+   "null_rows_in": 93,
+   "range_filter": {
+    "rows_out": 9907,
+    "null_rows_out": 0
+   },
+   "length_filter": {
+    "rows_out": 9907,
+    "null_rows_out": 0
+   }
+  },
+  {
+   "p_null": 0.05,
+   "variant": "all_non_null_pass",
+   "rows_in": 10000,
+   "null_rows_in": 493,
+   "range_filter": {
+    "rows_out": 10000,
+    "null_rows_out": 493
+   },
+   "length_filter": {
+    "rows_out": 10000,
+    "null_rows_out": 493
+   }
+  },
+  {
+   "p_null": 0.05,
+   "variant": "one_failing_row",
+   "rows_in": 10001,
+   "null_rows_in": 493,
+   "range_filter": {
+    "rows_out": 9507,
+    "null_rows_out": 0
+   },
+   "length_filter": {
+    "rows_out": 9507,
+    "null_rows_out": 0
+   }
+  }
+ ],
+ "S3": [
+  {
+   "case": "train NaN, test finite",
+   "loss_val": "nan",
+   "diverged": true
+  },
+  {
+   "case": "train finite, test NaN",
+   "loss_val": "0.5",
+   "diverged": false
+  },
+  {
+   "case": "both NaN",
+   "loss_val": "nan",
+   "diverged": true
+  },
+  {
+   "case": "train finite, test inf",
+   "loss_val": "inf",
+   "diverged": true
+  }
+ ]
+}

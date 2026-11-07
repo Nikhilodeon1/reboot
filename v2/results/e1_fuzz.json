@@ -1,0 +1,1256 @@
+{
+ "versions": {
+  "great-expectations": "0.18.22",
+  "pandera": "0.35.0",
+  "fairlearn": "0.15.0",
+  "aif360": "0.6.1",
+  "scikit-learn": "1.9.1",
+  "numpy": "1.26.4",
+  "pandas": "2.1.4"
+ },
+ "python": "3.11.18",
+ "cells": [
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_mean_to_be_between",
+   "input": "D0_nominal",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "PyparsingDeprecationWarning: 'setResultsName' deprecated - use 'set_results_name'",
+    "ChangedInMarshmallow4Warning: `Number` field should not be instantiated. Use `Integer`, `Float`, or `Decimal` instead.",
+    "ChangedInMarshmallow4Warning: `Number` field should not be instantiated. Use `Integer`, `Float`, or `Decimal` instead."
+   ],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_mean_to_be_between",
+   "input": "D1_empty",
+   "outcome": "FAIL",
+   "value": false,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_mean_to_be_between",
+   "input": "D2_all_nan",
+   "outcome": "FAIL",
+   "value": false,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_mean_to_be_between",
+   "input": "D3_constant",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_mean_to_be_between",
+   "input": "D4_single_class",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_mean_to_be_between",
+   "input": "D5_one_row",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_mean_to_be_between",
+   "input": "D6_single_group",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_mean_to_be_between",
+   "input": "D7_infinities",
+   "outcome": "FAIL",
+   "value": false,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_values_to_be_between_mostly",
+   "input": "D0_nominal",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_values_to_be_between_mostly",
+   "input": "D1_empty",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": true
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_values_to_be_between_mostly",
+   "input": "D2_all_nan",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": true
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_values_to_be_between_mostly",
+   "input": "D3_constant",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_values_to_be_between_mostly",
+   "input": "D4_single_class",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_values_to_be_between_mostly",
+   "input": "D5_one_row",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_values_to_be_between_mostly",
+   "input": "D6_single_group",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_values_to_be_between_mostly",
+   "input": "D7_infinities",
+   "outcome": "FAIL",
+   "value": false,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_stdev_to_be_between",
+   "input": "D0_nominal",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_stdev_to_be_between",
+   "input": "D1_empty",
+   "outcome": "FAIL",
+   "value": false,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_stdev_to_be_between",
+   "input": "D2_all_nan",
+   "outcome": "FAIL",
+   "value": false,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_stdev_to_be_between",
+   "input": "D3_constant",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_stdev_to_be_between",
+   "input": "D4_single_class",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_stdev_to_be_between",
+   "input": "D5_one_row",
+   "outcome": "FAIL",
+   "value": false,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_stdev_to_be_between",
+   "input": "D6_single_group",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_stdev_to_be_between",
+   "input": "D7_infinities",
+   "outcome": "FAIL",
+   "value": false,
+   "error": null,
+   "warnings": [
+    "RuntimeWarning: invalid value encountered in subtract"
+   ],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_proportion_of_unique_values_to_be_between",
+   "input": "D0_nominal",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_proportion_of_unique_values_to_be_between",
+   "input": "D1_empty",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "TypeError: '>=' not supported between instances of 'NoneType' and 'float'",
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_proportion_of_unique_values_to_be_between",
+   "input": "D2_all_nan",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "TypeError: '>=' not supported between instances of 'NoneType' and 'float'",
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_proportion_of_unique_values_to_be_between",
+   "input": "D3_constant",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_proportion_of_unique_values_to_be_between",
+   "input": "D4_single_class",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_proportion_of_unique_values_to_be_between",
+   "input": "D5_one_row",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_proportion_of_unique_values_to_be_between",
+   "input": "D6_single_group",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "great_expectations",
+   "check": "expect_column_proportion_of_unique_values_to_be_between",
+   "input": "D7_infinities",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check.in_range_nonnull",
+   "input": "D0_nominal",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [
+    "FutureWarning: Importing pandas-specific classes and functions from the\ntop-level pandera module will be **removed in a future version "
+   ],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check.in_range_nonnull",
+   "input": "D1_empty",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": true
+  },
+  {
+   "tool": "pandera",
+   "check": "Check.in_range_nonnull",
+   "input": "D2_all_nan",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "SchemaError: non-nullable series 'x' contains null values:\n0    NaN\n1    NaN\n2    NaN\n3    NaN\n4    NaN\n      ..\n95   NaN\n96   NaN\n97   NaN\n98   NaN\n99   NaN\nName: x, Length",
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check.in_range_nonnull",
+   "input": "D3_constant",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check.in_range_nonnull",
+   "input": "D4_single_class",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check.in_range_nonnull",
+   "input": "D5_one_row",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check.in_range_nonnull",
+   "input": "D6_single_group",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check.in_range_nonnull",
+   "input": "D7_infinities",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "SchemaError: Column 'x' failed element-wise validator number 0: in_range(0, 10) failure cases: inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf",
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check_mean_lt_10",
+   "input": "D0_nominal",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check_mean_lt_10",
+   "input": "D1_empty",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "SchemaError: Column 'x' failed series or dataframe validator 0: <Check <lambda>>",
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check_mean_lt_10",
+   "input": "D2_all_nan",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "SchemaError: Column 'x' failed series or dataframe validator 0: <Check <lambda>>",
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check_mean_lt_10",
+   "input": "D3_constant",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check_mean_lt_10",
+   "input": "D4_single_class",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check_mean_lt_10",
+   "input": "D5_one_row",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check_mean_lt_10",
+   "input": "D6_single_group",
+   "outcome": "PASS",
+   "value": true,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "pandera",
+   "check": "Check_mean_lt_10",
+   "input": "D7_infinities",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "SchemaError: Column 'x' failed series or dataframe validator 0: <Check <lambda>>",
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "demographic_parity_ratio",
+   "input": "D0_nominal",
+   "outcome": "VALUE",
+   "value": 0.6969696969696969,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "demographic_parity_ratio",
+   "input": "D1_empty",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "ValueError: need at least one array to stack",
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "demographic_parity_ratio",
+   "input": "D2_all_nan",
+   "outcome": "VALUE",
+   "value": 0.6969696969696969,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "demographic_parity_ratio",
+   "input": "D3_constant",
+   "outcome": "VALUE",
+   "value": 0.6969696969696969,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "demographic_parity_ratio",
+   "input": "D4_single_class",
+   "outcome": "VALUE",
+   "value": 0.6969696969696969,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "demographic_parity_ratio",
+   "input": "D5_one_row",
+   "outcome": "VALUE",
+   "value": 1.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "demographic_parity_ratio",
+   "input": "D6_single_group",
+   "outcome": "VALUE",
+   "value": 1.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": true
+  },
+  {
+   "tool": "fairlearn",
+   "check": "demographic_parity_ratio",
+   "input": "D7_infinities",
+   "outcome": "VALUE",
+   "value": 0.6969696969696969,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "selection_rate",
+   "input": "D0_nominal",
+   "outcome": "VALUE",
+   "value": 0.5,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "selection_rate",
+   "input": "D1_empty",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "ValueError: Empty y_pred passed to selection_rate function.",
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "selection_rate",
+   "input": "D2_all_nan",
+   "outcome": "VALUE",
+   "value": 0.5,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "selection_rate",
+   "input": "D3_constant",
+   "outcome": "VALUE",
+   "value": 0.5,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "selection_rate",
+   "input": "D4_single_class",
+   "outcome": "VALUE",
+   "value": 0.5,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "selection_rate",
+   "input": "D5_one_row",
+   "outcome": "VALUE",
+   "value": 1.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "selection_rate",
+   "input": "D6_single_group",
+   "outcome": "VALUE",
+   "value": 0.5,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "selection_rate",
+   "input": "D7_infinities",
+   "outcome": "VALUE",
+   "value": 0.5,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "false_positive_rate",
+   "input": "D0_nominal",
+   "outcome": "VALUE",
+   "value": 0.4782608695652174,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "false_positive_rate",
+   "input": "D1_empty",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "ValueError: Must have no more than two unique y values",
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "false_positive_rate",
+   "input": "D2_all_nan",
+   "outcome": "VALUE",
+   "value": 0.4782608695652174,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "false_positive_rate",
+   "input": "D3_constant",
+   "outcome": "VALUE",
+   "value": 0.4782608695652174,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "false_positive_rate",
+   "input": "D4_single_class",
+   "outcome": "VALUE",
+   "value": 0.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": true
+  },
+  {
+   "tool": "fairlearn",
+   "check": "false_positive_rate",
+   "input": "D5_one_row",
+   "outcome": "VALUE",
+   "value": 1.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "false_positive_rate",
+   "input": "D6_single_group",
+   "outcome": "VALUE",
+   "value": 0.4782608695652174,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "fairlearn",
+   "check": "false_positive_rate",
+   "input": "D7_infinities",
+   "outcome": "VALUE",
+   "value": 0.4782608695652174,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "aif360",
+   "check": "disparate_impact",
+   "input": "D0_nominal",
+   "outcome": "VALUE",
+   "value": 1.3162393162393162,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "aif360",
+   "check": "disparate_impact",
+   "input": "D1_empty",
+   "outcome": "NAN",
+   "value": "nan",
+   "error": null,
+   "warnings": [
+    "RuntimeWarning: invalid value encountered in scalar divide",
+    "RuntimeWarning: invalid value encountered in scalar divide"
+   ],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "aif360",
+   "check": "disparate_impact",
+   "input": "D2_all_nan",
+   "outcome": "VALUE",
+   "value": 1.3162393162393162,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "aif360",
+   "check": "disparate_impact",
+   "input": "D3_constant",
+   "outcome": "VALUE",
+   "value": 1.3162393162393162,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "aif360",
+   "check": "disparate_impact",
+   "input": "D4_single_class",
+   "outcome": "VALUE",
+   "value": 1.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "aif360",
+   "check": "disparate_impact",
+   "input": "D5_one_row",
+   "outcome": "NAN",
+   "value": "nan",
+   "error": null,
+   "warnings": [
+    "RuntimeWarning: invalid value encountered in scalar divide"
+   ],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "aif360",
+   "check": "disparate_impact",
+   "input": "D6_single_group",
+   "outcome": "NAN",
+   "value": "nan",
+   "error": null,
+   "warnings": [
+    "RuntimeWarning: invalid value encountered in scalar divide"
+   ],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "aif360",
+   "check": "disparate_impact",
+   "input": "D7_infinities",
+   "outcome": "VALUE",
+   "value": 1.3162393162393162,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "roc_auc_score",
+   "input": "D0_nominal",
+   "outcome": "VALUE",
+   "value": 0.5201288244766505,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "roc_auc_score",
+   "input": "D1_empty",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "ValueError: Found array with 0 sample(s) (shape=(0,)) while a minimum of 1 is required.",
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "roc_auc_score",
+   "input": "D2_all_nan",
+   "outcome": "VALUE",
+   "value": 0.5201288244766505,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "roc_auc_score",
+   "input": "D3_constant",
+   "outcome": "VALUE",
+   "value": 0.5201288244766505,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "roc_auc_score",
+   "input": "D4_single_class",
+   "outcome": "NAN",
+   "value": "nan",
+   "error": null,
+   "warnings": [
+    "UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case."
+   ],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "roc_auc_score",
+   "input": "D5_one_row",
+   "outcome": "NAN",
+   "value": "nan",
+   "error": null,
+   "warnings": [
+    "UndefinedMetricWarning: Only one class is present in y_true. ROC AUC score is not defined in that case."
+   ],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "roc_auc_score",
+   "input": "D6_single_group",
+   "outcome": "VALUE",
+   "value": 0.5201288244766505,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "roc_auc_score",
+   "input": "D7_infinities",
+   "outcome": "VALUE",
+   "value": 0.5201288244766505,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "cohen_kappa_score",
+   "input": "D0_nominal",
+   "outcome": "VALUE",
+   "value": 0.040000000000000036,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "cohen_kappa_score",
+   "input": "D1_empty",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "ValueError: Found empty input array (e.g., `y_true` or `y_pred`) while a minimum of 1 sample is required.",
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "cohen_kappa_score",
+   "input": "D2_all_nan",
+   "outcome": "VALUE",
+   "value": 0.040000000000000036,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "cohen_kappa_score",
+   "input": "D3_constant",
+   "outcome": "VALUE",
+   "value": 0.040000000000000036,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "cohen_kappa_score",
+   "input": "D4_single_class",
+   "outcome": "VALUE",
+   "value": 0.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": true
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "cohen_kappa_score",
+   "input": "D5_one_row",
+   "outcome": "VALUE",
+   "value": 0.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "cohen_kappa_score",
+   "input": "D6_single_group",
+   "outcome": "VALUE",
+   "value": 0.040000000000000036,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "cohen_kappa_score",
+   "input": "D7_infinities",
+   "outcome": "VALUE",
+   "value": 0.040000000000000036,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "precision_score",
+   "input": "D0_nominal",
+   "outcome": "VALUE",
+   "value": 0.56,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "precision_score",
+   "input": "D1_empty",
+   "outcome": "ERROR",
+   "value": null,
+   "error": "ValueError: Found empty input array (e.g., `y_true` or `y_pred`) while a minimum of 1 sample is required.",
+   "warnings": [],
+   "undefined_a_priori": true,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "precision_score",
+   "input": "D2_all_nan",
+   "outcome": "VALUE",
+   "value": 0.56,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "precision_score",
+   "input": "D3_constant",
+   "outcome": "VALUE",
+   "value": 0.56,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "precision_score",
+   "input": "D4_single_class",
+   "outcome": "VALUE",
+   "value": 1.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "precision_score",
+   "input": "D5_one_row",
+   "outcome": "VALUE",
+   "value": 0.0,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "precision_score",
+   "input": "D6_single_group",
+   "outcome": "VALUE",
+   "value": 0.56,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  },
+  {
+   "tool": "scikit-learn",
+   "check": "precision_score",
+   "input": "D7_infinities",
+   "outcome": "VALUE",
+   "value": 0.56,
+   "error": null,
+   "warnings": [],
+   "undefined_a_priori": false,
+   "vacuous_candidate": false
+  }
+ ],
+ "summary": {
+  "aif360": {
+   "cells": 7,
+   "undefined_cells": 2,
+   "outcomes_on_undefined": {
+    "PASS": 0,
+    "FAIL": 0,
+    "VALUE": 0,
+    "NAN": 2,
+    "ERROR": 0
+   },
+   "vacuous_candidates": 0,
+   "nominal_ok": true
+  },
+  "fairlearn": {
+   "cells": 21,
+   "undefined_cells": 5,
+   "outcomes_on_undefined": {
+    "PASS": 0,
+    "FAIL": 0,
+    "VALUE": 2,
+    "NAN": 0,
+    "ERROR": 3
+   },
+   "vacuous_candidates": 2,
+   "nominal_ok": true
+  },
+  "great_expectations": {
+   "cells": 28,
+   "undefined_cells": 8,
+   "outcomes_on_undefined": {
+    "PASS": 2,
+    "FAIL": 5,
+    "VALUE": 0,
+    "NAN": 0,
+    "ERROR": 1
+   },
+   "vacuous_candidates": 2,
+   "nominal_ok": true
+  },
+  "pandera": {
+   "cells": 14,
+   "undefined_cells": 3,
+   "outcomes_on_undefined": {
+    "PASS": 1,
+    "FAIL": 0,
+    "VALUE": 0,
+    "NAN": 0,
+    "ERROR": 2
+   },
+   "vacuous_candidates": 1,
+   "nominal_ok": true
+  },
+  "scikit-learn": {
+   "cells": 21,
+   "undefined_cells": 5,
+   "outcomes_on_undefined": {
+    "PASS": 0,
+    "FAIL": 0,
+    "VALUE": 1,
+    "NAN": 1,
+    "ERROR": 3
+   },
+   "vacuous_candidates": 1,
+   "nominal_ok": true
+  }
+ }
+}
