@@ -7,3 +7,4 @@ detectors/results/*.pkl
 detectors/results/*.pt
 rebuttal/comments/*.txt
 
+v2/DISCLOSURE_DRAFTS.md
