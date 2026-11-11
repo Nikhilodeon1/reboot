@@ -95,6 +95,36 @@ def fig_volume():
     return vals
 
 
+def fig_external():
+    """Type 1 external counts under each labeller, with exact intervals (Figure 4)."""
+    import sys
+    sys.path.insert(0, os.path.join(V2, "scripts"))
+    from stats_util import clopper_pearson
+    names = [("claude_subagent", "blind rater R0"), ("claude-opus-5.5-high", "Claude Opus 5.5"),
+             ("chatgpt-luna-5.6-think", "ChatGPT luna 5.6"), ("gemini-4-argon-medium", "Gemini 4 argon")]
+    rows = {"narrow": [("our registered labels", 4, 48)], "broad": [("our registered labels", 16, 48)]}
+    for key, label in names:
+        d = json.load(open(os.path.join(V2, "results", "e7a", key, "e7a_agreement_4c.json")))["sensitivity"]["rater"]
+        rows["narrow"].append((label, d["narrow"][0], d["narrow"][1]))
+        rows["broad"].append((label, d["broad"][0], d["broad"][1]))
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.6), sharey=True)
+    for ax, (reading, title) in zip(axes, (("narrow", "narrow reading"), ("broad", "broad reading"))):
+        for i, (label, k, n) in enumerate(rows[reading]):
+            lo, hi = clopper_pearson(k, n)
+            y = len(rows[reading]) - 1 - i
+            ax.errorbar(k / n, y, xerr=[[k / n - lo], [hi - k / n]], fmt="o", ms=4, color=("#1b6ca8" if i == 0 else "#6b6b6b"), capsize=2, lw=1.0)
+            ax.text(min(hi + 0.02, 0.98), y, f"{k}/{n}", va="center", fontsize=7.5)
+        ax.set_title(title, fontsize=9)
+        ax.set_xlim(0, 1)
+        ax.set_xlabel("share of applicable sites reachable and unguarded")
+        ax.set_yticks(range(len(rows[reading])))
+        ax.set_yticklabels([r[0] for r in rows[reading]][::-1], fontsize=8)
+    fig.tight_layout()
+    fig.savefig(os.path.join(OUT, "fig4_external.pdf"))
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     fig_audit_size()
     print(fig_volume())
+    fig_external()
