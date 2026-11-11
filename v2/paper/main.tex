@@ -323,7 +323,7 @@ detector 2 (paired $t$) & n/a & $-3.7$ & $-15.3$ & $-35.1$\\
 \section{Second-rater agreement}
 \label{apd:raters}
 
-Four blind language-model raters labelled the 53 model-selection sites and the 88 reachability sites from sheets that hid our labels, under protocols registered before any output existed (addenda 2 and 2b). One rater could read the pinned repositories (R0, a Claude model run inside our session). Three saw only the matched lines with up to 30 lines of context on each side: Claude Opus 5.5, Gemini 4 argon and ChatGPT 5 luna, with the model names as the owner recorded them, run on 2026-11-11. Table~\ref{tab:raters} gives agreement with the labels we committed before the detectors ran. The median kappa across the four raters is 0.43 on the model-selection sheet and 0.50 on the reachability sheet. Both are below our registered line of 0.60, so we call the external counts rubric-dependent and report ranges across raters.
+Four blind language-model raters labelled the 53 model-selection sites and the 88 reachability sites from sheets that hid our labels, under protocols registered before any output existed (addenda 2 and 2b). One rater could read the pinned repositories (R0, a Claude model run inside our session). Three saw only the matched lines with up to 30 lines of context on each side: Claude Opus 5.5 at high effort, Gemini 4 argon at medium thinking and ChatGPT luna 5.6 in thinking mode, each in a fresh chat on 2026-11-11, with the model and setting names taken from the recorded file names. Table~\ref{tab:raters} gives agreement with the labels we committed before the detectors ran. The median kappa across the four raters is 0.43 on the model-selection sheet and 0.50 on the reachability sheet. Both are below our registered line of 0.60, so we call the external counts rubric-dependent and report ranges across raters.
 
 \begin{table}[h]
 \centering\footnotesize\setlength{\tabcolsep}{4pt}
@@ -333,9 +333,9 @@ Four blind language-model raters labelled the 53 model-selection sites and the 8
 Rater & agree [95\% CI] & $\kappa$ & agree [95\% CI] & $\kappa$\\
 \midrule
 R0 (reads repositories) & 42 [0.659, 0.892] & 0.64 & 64 [0.622, 0.817] & 0.63\\
-Claude Opus 5.5 & 39 [0.597, 0.847] & 0.59 & 60 [0.574, 0.777] & 0.56\\
-Gemini 4 argon & 25 [0.333, 0.614] & 0.28 & 45 [0.403, 0.620] & 0.38\\
-ChatGPT 5 luna & 23 [0.298, 0.577] & 0.22 & 52 [0.481, 0.695] & 0.43\\
+Claude Opus 5.5, high & 39 [0.597, 0.847] & 0.59 & 60 [0.574, 0.777] & 0.56\\
+Gemini 4 argon, medium & 25 [0.333, 0.614] & 0.28 & 45 [0.403, 0.620] & 0.38\\
+ChatGPT luna 5.6, think & 23 [0.298, 0.577] & 0.22 & 52 [0.481, 0.695] & 0.43\\
 \bottomrule
 \end{tabular}
 \caption{Agreement of four blind raters with the labels committed before the detectors ran, as the count of agreeing sites with its exact 95\% interval and Cohen's $\kappa$. The three raters that saw only excerpts give the lowest values.}
