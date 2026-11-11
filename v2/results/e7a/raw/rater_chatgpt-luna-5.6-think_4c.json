@@ -1,0 +1,530 @@
+[
+  {
+    "site": 1,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "Empty mapping fails at the earlier values()[0] access before this site."
+  },
+  {
+    "site": 2,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN test loss is ignored by max, so the subsequent finiteness check misses divergence; utils/scripts/utils.py:579 @3eee1730ae."
+  },
+  {
+    "site": 3,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "Empty history makes np.max raise before this site."
+  },
+  {
+    "site": 4,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "The preceding assertion rejects an empty file list."
+  },
+  {
+    "site": 5,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 6,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 7,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "The explicit None check encloses the positive-interval validation."
+  },
+  {
+    "site": 8,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 9,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "The nonempty acc_tr check guards the indexed accuracy access."
+  },
+  {
+    "site": 10,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "All-NaN prediction scores leave Inf/0 extrema and corrupt thresholds; evaluation/precision_recall.py:150 @dc5f5ccbc0."
+  },
+  {
+    "site": 11,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "The fixed-size tuple is explicitly checked for all-None defaults."
+  },
+  {
+    "site": 12,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 13,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 14,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN smooth loss makes the threshold comparison false; domainbed/lib/swad.py:155 @397942ec72."
+  },
+  {
+    "site": 15,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 16,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 17,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "ordinary",
+    "note": "Arrow all() skips nulls, bypassing the filter and retaining invalid rows; src/fairseq2/data/parquet/arrow_transform.py:306 @7f06d6f4f5."
+  },
+  {
+    "site": 18,
+    "label": "UNREACHABLE",
+    "diverged_only": null,
+    "note": "Cs is a fixed five-value list, with one score appended per successful fit."
+  },
+  {
+    "site": 19,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 20,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "Error-list emptiness only controls reporting; this site selects or aggregates nothing."
+  },
+  {
+    "site": 21,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty below_max collection makes min() raise."
+  },
+  {
+    "site": 22,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "ordinary",
+    "note": "convolve_hr inserts NaN; this comparison treats it as below-target; icu_benchmarks/labels/utils.py:44 @bee770094b."
+  },
+  {
+    "site": 23,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "The fixed-size tuple is explicitly checked for all-None defaults."
+  },
+  {
+    "site": 24,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "The empty no_decay list is intentional for model families requiring no exclusions."
+  },
+  {
+    "site": 25,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN member loss makes the mean NaN and every membership comparison false; evaluation/privacy_loss_attack.py:222 @3eee1730ae."
+  },
+  {
+    "site": 26,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "The empty no_decay list is intentional for model families requiring no exclusions."
+  },
+  {
+    "site": 27,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "Empty duplicate checks only skip diagnostics; they do not change a verdict or selection."
+  },
+  {
+    "site": 28,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "This line only extends prediction and label lists; it computes no verdict."
+  },
+  {
+    "site": 29,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty shard list raises IndexError at the first-element access."
+  },
+  {
+    "site": 30,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN minimum validation loss fails the threshold comparison; domainbed/lib/swad.py:134 @397942ec72."
+  },
+  {
+    "site": 31,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 32,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty outputs collection raises at outputs[0] or torch.cat()."
+  },
+  {
+    "site": 33,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "Index arithmetic only; no degenerate value feeds a verdict or aggregation."
+  },
+  {
+    "site": 34,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty AUPRC list makes np.argmax raise."
+  },
+  {
+    "site": 35,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "The empty drop list is the keep-all default; any() correctly returns false."
+  },
+  {
+    "site": 36,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN validation metric resets patience through the else branch; src/basicts/runners/callback/early_stopping.py:28 @c2bb6e31e5."
+  },
+  {
+    "site": 37,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 38,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "A zero validation length causes division by zero."
+  },
+  {
+    "site": 39,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty validation-result dictionary makes max() raise."
+  },
+  {
+    "site": 40,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "This line only extends prediction and label lists; it computes no verdict."
+  },
+  {
+    "site": 41,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "The explicit length check handles an empty step_accs list."
+  },
+  {
+    "site": 42,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty below_max collection makes min() raise."
+  },
+  {
+    "site": 43,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty history makes np.max raise before this site."
+  },
+  {
+    "site": 44,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty optimizer param_groups iterator makes next() raise."
+  },
+  {
+    "site": 45,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN confidence scores fail the mask and silently drop detections; wilds/common/metrics/all_metrics.py:152 @472677590d."
+  },
+  {
+    "site": 46,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "No modifiers means no family-history match; empty any() is semantically correct."
+  },
+  {
+    "site": 47,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty domain/gradient collection fails at first-element access or stacking."
+  },
+  {
+    "site": 48,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "Index arithmetic only; no degenerate collection feeds a verdict or aggregation."
+  },
+  {
+    "site": 49,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN validation loss fails the improvement test and advances patience; notebooks/mmd_grud_utils.py:373 @d8d2dea551."
+  },
+  {
+    "site": 50,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "Zero gradient accumulation causes division by zero."
+  },
+  {
+    "site": 51,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "ordinary",
+    "note": "Arrow all() skips nulls, bypassing the row-length filter; src/fairseq2/data/parquet/arrow_transform.py:288 @7f06d6f4f5."
+  },
+  {
+    "site": 52,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN validation metric fails the improvement test and suppresses checkpoint selection; examples/train.py:125 @472677590d."
+  },
+  {
+    "site": 53,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "Zero gradient accumulation later causes modulo by zero."
+  },
+  {
+    "site": 54,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "A scalar vote score is compared with a threshold; no degenerate collection is involved."
+  },
+  {
+    "site": 55,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty result mapping makes next(iter(...)) raise."
+  },
+  {
+    "site": 56,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN attack loss is ignored by max, understating worst loss; utils/scripts/ptb_utils.py:130 @3eee1730ae."
+  },
+  {
+    "site": 57,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "String truncation only; no verdict, selection, or aggregation is performed."
+  },
+  {
+    "site": 58,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "Explicit NaN filtering and the collect check guard the stacking operation."
+  },
+  {
+    "site": 59,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 60,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty protected-attributes list raises at index zero."
+  },
+  {
+    "site": 61,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "The fixed no_decay string list only classifies parameter names."
+  },
+  {
+    "site": 62,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "np.argmin can select a NaN end_loss as the minimum; domainbed/lib/swad.py:94 @397942ec72."
+  },
+  {
+    "site": 63,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty protected-group mapping raises at the first-key access."
+  },
+  {
+    "site": 64,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "The assertion checks a fixed test-array size, not a degenerate value."
+  },
+  {
+    "site": 65,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "The fixed no_decay string list only classifies parameter names."
+  },
+  {
+    "site": 66,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty validation history makes np.max raise before this condition."
+  },
+  {
+    "site": 67,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 68,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN scores become unfavorable labels because both boundary comparisons are false; aif360/algorithms/postprocessing/reject_option_classification.py:192 @34877916b7."
+  },
+  {
+    "site": 69,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 70,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "diverged-only",
+    "note": "NaN metric can be stored as best, then block later updates; src/basicts/runners/basicts_runner.py:1033 @c2bb6e31e5."
+  },
+  {
+    "site": 71,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty AUPRC list makes np.argmax raise."
+  },
+  {
+    "site": 72,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty domain/parameter collection fails at first-element access or stacking."
+  },
+  {
+    "site": 73,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 74,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty subgroup-accuracy list makes min() raise."
+  },
+  {
+    "site": 75,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "This line serializes visits; an empty visit list emits no verdict or selection."
+  },
+  {
+    "site": 76,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "Zero gradient accumulation later causes modulo by zero."
+  },
+  {
+    "site": 77,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 78,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "No other diagnoses yields false; the explicit No Diagnoses fallback handles it."
+  },
+  {
+    "site": 79,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 80,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "The earlier values()[0] access raises for an empty mapping."
+  },
+  {
+    "site": 81,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 82,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty batch raises at batch[0] before the aggregation."
+  },
+  {
+    "site": 83,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty validation history makes np.max raise."
+  },
+  {
+    "site": 84,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty validation history makes np.max raise."
+  },
+  {
+    "site": 85,
+    "label": "REACHABLE_UNGUARDED",
+    "diverged_only": "ordinary",
+    "note": "all([]) passes and returns an empty checkpoint schedule; src/basicts/utils/misc.py:76 @c2bb6e31e5."
+  },
+  {
+    "site": 86,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty shard list raises at the first-element access."
+  },
+  {
+    "site": 87,
+    "label": "NOT_APPLICABLE",
+    "diverged_only": null,
+    "note": "undecidable"
+  },
+  {
+    "site": 88,
+    "label": "GUARDED",
+    "diverged_only": null,
+    "note": "An empty metric list makes final_metric_score[0] raise."
+  }
+]

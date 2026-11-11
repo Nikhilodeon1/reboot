@@ -1,0 +1,262 @@
+{
+ "sheet": "3b",
+ "sites": 53,
+ "missing_from_rater": [],
+ "counts_committed": {
+  "NOT_SELECTION": 30,
+  "SOUND": 21,
+  "AMBIGUOUS": 1,
+  "DISCLOSED_ORACLE": 1
+ },
+ "counts_rater": {
+  "NOT_SELECTION": 21,
+  "SOUND": 18,
+  "AMBIGUOUS": 12,
+  "CONTAMINATED": 1,
+  "DISCLOSED_ORACLE": 1
+ },
+ "sensitivity": {
+  "committed": {
+   "contaminated": 0,
+   "real_selection_sites": 23,
+   "cp95_contaminated_of_real": [
+    0.0,
+    0.1482
+   ]
+  },
+  "rater": {
+   "contaminated": 1,
+   "real_selection_sites": 32,
+   "cp95_contaminated_of_real": [
+    0.0008,
+    0.1622
+   ]
+  }
+ },
+ "agreement": {
+  "agree": 39,
+  "n": 53,
+  "cp95": [
+   0.5967,
+   0.8474
+  ],
+  "kappa": 0.5850111856823266
+ },
+ "confusion": [
+  {
+   "committed": "AMBIGUOUS",
+   "rater": "AMBIGUOUS",
+   "n": 1
+  },
+  {
+   "committed": "DISCLOSED_ORACLE",
+   "rater": "DISCLOSED_ORACLE",
+   "n": 1
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "n": 9
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "NOT_SELECTION",
+   "n": 20
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "n": 1
+  },
+  {
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "n": 2
+  },
+  {
+   "committed": "SOUND",
+   "rater": "CONTAMINATED",
+   "n": 1
+  },
+  {
+   "committed": "SOUND",
+   "rater": "NOT_SELECTION",
+   "n": 1
+  },
+  {
+   "committed": "SOUND",
+   "rater": "SOUND",
+   "n": 17
+  }
+ ],
+ "disagreements": [
+  {
+   "site": 11,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_gnn.py",
+   "lines": [
+    114,
+    114
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "ReduceLROnPlateau on val loss, but val and test loaders are identical; split masks set elsewhere."
+  },
+  {
+   "site": 14,
+   "repo": "robustdg",
+   "file": "reproduce_scripts/slab-tune.py",
+   "lines": [
+    85,
+    88
+   ],
+   "committed": "SOUND",
+   "rater": "CONTAMINATED",
+   "rater_note": "data[-4] is train.py's 'Final Test Accuracy (Source Validation)' line, not validation as commented; assumes base_script runs train.py."
+  },
+  {
+   "site": 16,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "model/behrt_train.py",
+   "lines": [
+    215,
+    219
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Best checkpoint on valload loss; loader construction and final evaluation split not shown."
+  },
+  {
+   "site": 18,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    99,
+    130
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Hardcoded tuned transformer hparams with mode='test'; split used for tuning not in file."
+  },
+  {
+   "site": 20,
+   "repo": "MIMIC_Extract",
+   "file": "notebooks/mmd_grud_utils.py",
+   "lines": [
+    210,
+    397
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Early stopping on valid_dataloader argument; dataloaders built in notebook, not this file."
+  },
+  {
+   "site": 22,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    50,
+    75
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Hardcoded tuned LSTM hparams with mode='test'; tuning split not in file."
+  },
+  {
+   "site": 26,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    1,
+    13
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Hardcoded global best hparams; tuning split not in file."
+  },
+  {
+   "site": 27,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/args.py",
+   "lines": [
+    8,
+    21
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Loads best params from best_parameters.py; tuning split not shown, --phase defaults to test."
+  },
+  {
+   "site": 28,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_lstmgnn.py",
+   "lines": [
+    179,
+    179
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Scheduler config-dependent; val and test loaders identical, split masks set elsewhere."
+  },
+  {
+   "site": 32,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    77,
+    96
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Hardcoded channelwise LSTM hparams with mode='test'; tuning split not in file."
+  },
+  {
+   "site": 39,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/rerun.py",
+   "lines": [
+    177,
+    177
+   ],
+   "committed": "SOUND",
+   "rater": "NOT_SELECTION",
+   "rater_note": "np.max of train metrics stored in rerun summary dict; nothing chosen here."
+  },
+  {
+   "site": 43,
+   "repo": "circEWS",
+   "file": "shapelet_features/shapelets/analyse_extracted_shapelets.py",
+   "lines": [
+    139,
+    139
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Ranks variables by shapelet accuracy for feature crafting; accuracy split not established in file."
+  },
+  {
+   "site": 47,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_dynamic.py",
+   "lines": [
+    124,
+    124
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "rater_note": "ReduceLROnPlateau monitors val loss; separate validset and testset loaders (130-134)."
+  },
+  {
+   "site": 48,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    15,
+    48
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Hardcoded tuned TPC hparams with mode='test'; tuning split not in file."
+  }
+ ]
+}

@@ -1,0 +1,564 @@
+{
+ "sheet": "4c",
+ "sites": 88,
+ "missing_from_rater": [],
+ "agreement_collapsed_4_class": {
+  "agree": 52,
+  "n": 88,
+  "cp95": [
+   0.4809,
+   0.6946
+  ],
+  "kappa": 0.4199926766752106
+ },
+ "sensitivity": {
+  "committed": {
+   "applicable": 48,
+   "narrow": [
+    3,
+    48,
+    [
+     0.0131,
+     0.172
+    ]
+   ],
+   "broad": [
+    16,
+    48,
+    [
+     0.204,
+     0.4841
+    ]
+   ]
+  },
+  "rater": {
+   "applicable": 53,
+   "narrow": [
+    4,
+    53,
+    [
+     0.0209,
+     0.1821
+    ]
+   ],
+   "broad": [
+    17,
+    53,
+    [
+     0.1992,
+     0.4632
+    ]
+   ]
+  }
+ },
+ "agreement": {
+  "agree": 52,
+  "n": 88,
+  "cp95": [
+   0.4809,
+   0.6946
+  ],
+  "kappa": 0.4294975688816856
+ },
+ "confusion": [
+  {
+   "committed": "GUARDED",
+   "rater": "GUARDED",
+   "n": 11
+  },
+  {
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "n": 6
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "n": 9
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "NOT_APPLICABLE",
+   "n": 27
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_diverged",
+   "n": 2
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "n": 2
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "GUARDED",
+   "n": 1
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "NOT_APPLICABLE",
+   "n": 1
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "RU_diverged",
+   "n": 11
+  },
+  {
+   "committed": "RU_ordinary",
+   "rater": "NOT_APPLICABLE",
+   "n": 1
+  },
+  {
+   "committed": "RU_ordinary",
+   "rater": "RU_ordinary",
+   "n": 2
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "n": 14
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "UNREACHABLE",
+   "n": 1
+  }
+ ],
+ "disagreements": [
+  {
+   "site": 1,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    509,
+    509
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty mapping fails at the earlier values()[0] access before this site."
+  },
+  {
+   "site": 3,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    221,
+    221
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty history makes np.max raise before this site."
+  },
+  {
+   "site": 7,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/recipe/config.py",
+   "lines": [
+    540,
+    540
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "The explicit None check encloses the positive-interval validation."
+  },
+  {
+   "site": 8,
+   "repo": "time_aware_attention",
+   "file": "related_code/bayesian_train.py",
+   "lines": [
+    306,
+    306
+   ],
+   "committed": "RU_diverged",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable"
+  },
+  {
+   "site": 9,
+   "repo": "robustdg",
+   "file": "utils/scripts/utils.py",
+   "lines": [
+    521,
+    521
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "The nonempty acc_tr check guards the indexed accuracy access."
+  },
+  {
+   "site": 10,
+   "repo": "circEWS",
+   "file": "evaluation/precision_recall.py",
+   "lines": [
+    150,
+    150
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_diverged",
+   "rater_note": "All-NaN prediction scores leave Inf/0 extrema and corrupt thresholds; evaluation/precision_recall.py:150 @dc5f5ccbc0."
+  },
+  {
+   "site": 11,
+   "repo": "tableshift",
+   "file": "tableshift/third_party/node/data.py",
+   "lines": [
+    166,
+    166
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "The fixed-size tuple is explicitly checked for all-None defaults."
+  },
+  {
+   "site": 15,
+   "repo": "DomainBed",
+   "file": "domainbed/model_selection.py",
+   "lines": [
+    127,
+    127
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable"
+  },
+  {
+   "site": 22,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/labels/utils.py",
+   "lines": [
+    44,
+    44
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "convolve_hr inserts NaN; this comparison treats it as below-target; icu_benchmarks/labels/utils.py:44 @bee770094b."
+  },
+  {
+   "site": 23,
+   "repo": "tableshift",
+   "file": "tableshift/third_party/node/data.py",
+   "lines": [
+    216,
+    216
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "The fixed-size tuple is explicitly checked for all-None defaults."
+  },
+  {
+   "site": 29,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/models/llama/checkpoint.py",
+   "lines": [
+    104,
+    104
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty shard list raises IndexError at the first-element access."
+  },
+  {
+   "site": 31,
+   "repo": "DomainBed",
+   "file": "domainbed/model_selection.py",
+   "lines": [
+    153,
+    153
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable"
+  },
+  {
+   "site": 32,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/models/utils.py",
+   "lines": [
+    39,
+    50
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty outputs collection raises at outputs[0] or torch.cat()."
+  },
+  {
+   "site": 34,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "lines": [
+    588,
+    588
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty AUPRC list makes np.argmax raise."
+  },
+  {
+   "site": 37,
+   "repo": "NICO-plus",
+   "file": "domainbed/model_selection.py",
+   "lines": [
+    125,
+    125
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable"
+  },
+  {
+   "site": 38,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "model/behrt_train.py",
+   "lines": [
+    215,
+    215
+   ],
+   "committed": "RU_diverged",
+   "rater": "GUARDED",
+   "rater_note": "A zero validation length causes division by zero."
+  },
+  {
+   "site": 43,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    219,
+    219
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty history makes np.max raise before this site."
+  },
+  {
+   "site": 44,
+   "repo": "robustdg",
+   "file": "utils/scripts/utils.py",
+   "lines": [
+    391,
+    391
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty optimizer param_groups iterator makes next() raise."
+  },
+  {
+   "site": 45,
+   "repo": "wilds",
+   "file": "wilds/common/metrics/all_metrics.py",
+   "lines": [
+    152,
+    152
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_diverged",
+   "rater_note": "NaN confidence scores fail the mask and silently drop detections; wilds/common/metrics/all_metrics.py:152 @472677590d."
+  },
+  {
+   "site": 47,
+   "repo": "DomainBed",
+   "file": "domainbed/algorithms.py",
+   "lines": [
+    1689,
+    1689
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty domain/gradient collection fails at first-element access or stacking."
+  },
+  {
+   "site": 50,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/recipe/internal/trainer.py",
+   "lines": [
+    212,
+    212
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Zero gradient accumulation causes division by zero."
+  },
+  {
+   "site": 53,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_pregenerated.py",
+   "lines": [
+    305,
+    305
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Zero gradient accumulation later causes modulo by zero."
+  },
+  {
+   "site": 58,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/models/utils.py",
+   "lines": [
+    68,
+    90
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Explicit NaN filtering and the collect check guard the stacking operation."
+  },
+  {
+   "site": 59,
+   "repo": "circEWS",
+   "file": "circews/classes/lgbm_model.py",
+   "lines": [
+    479,
+    479
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable"
+  },
+  {
+   "site": 67,
+   "repo": "DomainBed",
+   "file": "domainbed/model_selection.py",
+   "lines": [
+    100,
+    100
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable"
+  },
+  {
+   "site": 71,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "lines": [
+    596,
+    596
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty AUPRC list makes np.argmax raise."
+  },
+  {
+   "site": 72,
+   "repo": "NICO-plus",
+   "file": "domainbed/algorithms.py",
+   "lines": [
+    1416,
+    1416
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty domain/parameter collection fails at first-element access or stacking."
+  },
+  {
+   "site": 76,
+   "repo": "HurtfulWords",
+   "file": "scripts/adversarial_finetune_on_pregen.py",
+   "lines": [
+    472,
+    472
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Zero gradient accumulation later causes modulo by zero."
+  },
+  {
+   "site": 79,
+   "repo": "tableshift",
+   "file": "tableshift/datasets/college_scorecard.py",
+   "lines": [
+    170,
+    170
+   ],
+   "committed": "RU_ordinary",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable"
+  },
+  {
+   "site": 80,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    507,
+    507
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "The earlier values()[0] access raises for an empty mapping."
+  },
+  {
+   "site": 82,
+   "repo": "omop-learn",
+   "file": "src/omop_learn/torch/data.py",
+   "lines": [
+    129,
+    130
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty batch raises at batch[0] before the aggregation."
+  },
+  {
+   "site": 83,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/recipe/config.py",
+   "lines": [
+    546,
+    546
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty validation history makes np.max raise."
+  },
+  {
+   "site": 85,
+   "repo": "BasicTS",
+   "file": "src/basicts/utils/misc.py",
+   "lines": [
+    76,
+    76
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "all([]) passes and returns an empty checkpoint schedule; src/basicts/utils/misc.py:76 @c2bb6e31e5."
+  },
+  {
+   "site": 86,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/model_checkpoint/native.py",
+   "lines": [
+    128,
+    128
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty shard list raises at the first-element access."
+  },
+  {
+   "site": 87,
+   "repo": "Benchmarking_DL_MIMICIII",
+   "file": "Codes/SuperLearnerPyVer/python/pgbart/src/bart_utils.py",
+   "lines": [
+    692,
+    692
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable"
+  },
+  {
+   "site": 88,
+   "repo": "robustdg",
+   "file": "test.py",
+   "lines": [
+    393,
+    393
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "An empty metric list makes final_metric_score[0] raise."
+  }
+ ]
+}

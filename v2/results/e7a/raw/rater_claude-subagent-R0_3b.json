@@ -1,0 +1,373 @@
+[
+ {
+  "site": 1,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "select_dtype picks DataFrame columns by dtype; data-processing helper, nothing chosen."
+ },
+ {
+  "site": 2,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "hparams_registry defines default/random hparam distributions; selection itself happens in model_selection.py, not here."
+ },
+ {
+  "site": 3,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Spark min aggregate for synthetic-data stats; no model choice."
+ },
+ {
+  "site": 4,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "EarlyStopping driven by ExtendedTrainer's dev-set evaluator (ExtendedTrainer.py:93-101); final numbers from data_silo 'test' loader."
+ },
+ {
+  "site": 5,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "rerun.py decides which training runs to continue from parsed train/val log metrics (val_max_pos); test reported separately."
+ },
+ {
+  "site": 6,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Greedy feature selection keeps variable with best get_validation_scores AUPRC on full_X_val; test via predict elsewhere."
+ },
+ {
+  "site": 7,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "max timestamp over time series in preprocessing."
+ },
+ {
+  "site": 8,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "_hparam helper samples random hparam values; defines search space, no choice made."
+ },
+ {
+  "site": 9,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "min(loss,1) scaling inside training loss; not a selection."
+ },
+ {
+  "site": 10,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Spark max aggregate for synthetic-data stats."
+ },
+ {
+  "site": 11,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "ReduceLROnPlateau on val_loss computed over dataset.data.val_mask; test_step uses eval_mask=test_mask for eval_split default in train_ns_gnn.py:43."
+ },
+ {
+  "site": 12,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "best C chosen by val AUC (windowed_dataset.val), final AUC on windowed_dataset.test."
+ },
+ {
+  "site": 13,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Early-stopping rule on val_history AUROC; test evaluated in separate test mode."
+ },
+ {
+  "site": 14,
+  "label": "CONTAMINATED",
+  "selection_split": "OOD target",
+  "reported_split": "OOD target",
+  "note": "data[-4] is the 'Final Test Accuracy (Source Validation)' line of train.py output, i.e. test-domain (1.0) accuracy; hparam chosen by max of it and printed as Best Accuracy; comment mislabels it as source validation."
+ },
+ {
+  "site": 15,
+  "label": "SOUND",
+  "selection_split": "train",
+  "reported_split": "test",
+  "note": "Checkpoint kept on lowest training running_loss (trainloader 'TRAIN', all_train=False); evaluation done in test.py."
+ },
+ {
+  "site": 16,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "BEHRT checkpoint saved on val_loss over val slice; testload slice evaluated after training."
+ },
+ {
+  "site": 17,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "max() computing imputation window lengths."
+ },
+ {
+  "site": 18,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Hardcoded best transformer hparams; searched in hyperparameter_scripts with mode='train' (validate on val datareader), final runs mode='test'."
+ },
+ {
+  "site": 19,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "grid of classifiers/c selected by val AUPRC (val_generator); test predictions computed after with test_generator."
+ },
+ {
+  "site": 20,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Train_Model early-stops on early_stop split carved from train; notebook picks hparams on dev AUC and reports test AUC."
+ },
+ {
+  "site": 21,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "max timestamp over time series in preprocessing."
+ },
+ {
+  "site": 22,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Hardcoded best LSTM hparams from val-based search (mode='train'); final runs mode='test'."
+ },
+ {
+  "site": 23,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Feature filtering of preprocessing tables to precomputed feature lists; no model selection."
+ },
+ {
+  "site": 24,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "LightGBM early stopping on eval_set=(val_rep,val_label); test() method uses separate dataset."
+ },
+ {
+  "site": 25,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Numeric init value for gamma-parameter solver."
+ },
+ {
+  "site": 26,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "best_global hardcoded hparams from val-based search (experiment_template validate in mode='train'); reported in mode='test'."
+ },
+ {
+  "site": 27,
+  "label": "AMBIGUOUS",
+  "selection_split": "source validation",
+  "reported_split": "unknown",
+  "note": "Best params from ray-tune on val_loss; reported split depends on --model: test for gnn/dynamic, but lstmgnn 'test' evaluates val_mask (train_ns_lstmgnn.py:52)."
+ },
+ {
+  "site": 28,
+  "label": "CONTAMINATED",
+  "selection_split": "source validation",
+  "reported_split": "source validation",
+  "note": "ReduceLROnPlateau on val_loss (val_mask); in train_ns_lstmgnn.py:52 eval_split='test' sets eval_mask=val_mask, so reported 'test' metrics are on the same val nodes."
+ },
+ {
+  "site": 29,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "max code index for vocabulary recoding."
+ },
+ {
+  "site": 30,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "EarlyStopping via ExtendedTrainer dev evaluator; final evaluation on 'test' loader."
+ },
+ {
+  "site": 31,
+  "label": "AMBIGUOUS",
+  "selection_split": "test",
+  "reported_split": "test",
+  "note": "pgd_adv_fit_model keeps best_model by adversarial error on te_dl and logs acc_te on same loader, but no caller in repo fixes what te_dl is."
+ },
+ {
+  "site": 32,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Hardcoded channel-wise LSTM hparams from val-based search; final mode='test'."
+ },
+ {
+  "site": 33,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "min/max prediction score to build threshold grid for PR curve."
+ },
+ {
+  "site": 34,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Early-stopping rule on val_history kappa; test evaluated separately."
+ },
+ {
+  "site": 35,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Index bound in label construction."
+ },
+ {
+  "site": 36,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "PGD attack keeps max loss perturbation per sample; not model selection."
+ },
+ {
+  "site": 37,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Query-library selector helper (key accessor), no selection."
+ },
+ {
+  "site": 38,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "EarlyStopping class init; called with val_loss from val_generator in finetune_on_target.py, test evaluated later."
+ },
+ {
+  "site": 39,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Records train_max in returned dict; train max is logged, not used to choose."
+ },
+ {
+  "site": 40,
+  "label": "DISCLOSED_ORACLE",
+  "selection_split": "OOD target",
+  "reported_split": "OOD target",
+  "note": "max over epochs of final_acc (get_test_accuracy('test')) printed as 'Final Test Accuracy (Target Validation)', i.e. labelled target-validation oracle."
+ },
+ {
+  "site": 41,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "EarlyStopping checkpoint on val_loss from val_generator; test evaluated afterwards."
+ },
+ {
+  "site": 42,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "OOD target",
+  "note": "Epoch chosen by argmax val_acc (get_test_accuracy('val')), reported test-domain accuracy at that epoch as 'Source Validation'."
+ },
+ {
+  "site": 43,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Summary max of shapelet accuracies for printing/ranking in analysis script; no model chosen."
+ },
+ {
+  "site": 44,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Early-stopping rule on val_history ave_auc_macro; test evaluated separately."
+ },
+ {
+  "site": 45,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "EarlyStopping(patience) instantiated; driven by val_loss on val_generator."
+ },
+ {
+  "site": 46,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Prints min accuracy of shapelets; statistics only."
+ },
+ {
+  "site": 47,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "ReduceLROnPlateau on val_loss from validset loader; test_dataloader uses testset."
+ },
+ {
+  "site": 48,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Hardcoded TPC hparams from val-based search (mode='train'); final mode='test'."
+ },
+ {
+  "site": 49,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "argmax over environment losses inside training objective (worst domain); not selection."
+ },
+ {
+  "site": 50,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "Feature filtering of preprocessing tables to precomputed feature lists."
+ },
+ {
+  "site": 51,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "EarlyStopping saves checkpoint on best val_loss; test evaluated afterwards."
+ },
+ {
+  "site": 52,
+  "label": "SOUND",
+  "selection_split": "source validation",
+  "reported_split": "test",
+  "note": "Early stopping/checkpoint on val_loader loss; test() separate."
+ },
+ {
+  "site": 53,
+  "label": "NOT_SELECTION",
+  "selection_split": "unknown",
+  "reported_split": "unknown",
+  "note": "argparse definitions for tuning settings; no choice made here."
+ }
+]

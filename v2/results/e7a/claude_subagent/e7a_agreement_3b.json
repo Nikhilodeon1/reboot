@@ -1,0 +1,226 @@
+{
+ "sheet": "3b",
+ "sites": 53,
+ "missing_from_rater": [],
+ "counts_committed": {
+  "NOT_SELECTION": 30,
+  "SOUND": 21,
+  "AMBIGUOUS": 1,
+  "DISCLOSED_ORACLE": 1
+ },
+ "counts_rater": {
+  "NOT_SELECTION": 22,
+  "SOUND": 26,
+  "CONTAMINATED": 2,
+  "AMBIGUOUS": 2,
+  "DISCLOSED_ORACLE": 1
+ },
+ "sensitivity": {
+  "committed": {
+   "contaminated": 0,
+   "real_selection_sites": 23,
+   "cp95_contaminated_of_real": [
+    0.0,
+    0.1482
+   ]
+  },
+  "rater": {
+   "contaminated": 2,
+   "real_selection_sites": 31,
+   "cp95_contaminated_of_real": [
+    0.0079,
+    0.2142
+   ]
+  }
+ },
+ "agreement": {
+  "agree": 42,
+  "n": 53,
+  "cp95": [
+   0.6589,
+   0.8916
+  ],
+  "kappa": 0.6356250000000001
+ },
+ "confusion": [
+  {
+   "committed": "AMBIGUOUS",
+   "rater": "AMBIGUOUS",
+   "n": 1
+  },
+  {
+   "committed": "DISCLOSED_ORACLE",
+   "rater": "DISCLOSED_ORACLE",
+   "n": 1
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "n": 1
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "CONTAMINATED",
+   "n": 1
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "NOT_SELECTION",
+   "n": 21
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "n": 7
+  },
+  {
+   "committed": "SOUND",
+   "rater": "CONTAMINATED",
+   "n": 1
+  },
+  {
+   "committed": "SOUND",
+   "rater": "NOT_SELECTION",
+   "n": 1
+  },
+  {
+   "committed": "SOUND",
+   "rater": "SOUND",
+   "n": 19
+  }
+ ],
+ "disagreements": [
+  {
+   "site": 11,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_gnn.py",
+   "lines": [
+    114,
+    114
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "rater_note": "ReduceLROnPlateau on val_loss computed over dataset.data.val_mask; test_step uses eval_mask=test_mask for eval_split default in train_ns_gnn.py:43."
+  },
+  {
+   "site": 14,
+   "repo": "robustdg",
+   "file": "reproduce_scripts/slab-tune.py",
+   "lines": [
+    85,
+    88
+   ],
+   "committed": "SOUND",
+   "rater": "CONTAMINATED",
+   "rater_note": "data[-4] is the 'Final Test Accuracy (Source Validation)' line of train.py output, i.e. test-domain (1.0) accuracy; hparam chosen by max of it and printed as Best Accuracy; comment mislabels it as source validation."
+  },
+  {
+   "site": 18,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    99,
+    130
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "rater_note": "Hardcoded best transformer hparams; searched in hyperparameter_scripts with mode='train' (validate on val datareader), final runs mode='test'."
+  },
+  {
+   "site": 22,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    50,
+    75
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "rater_note": "Hardcoded best LSTM hparams from val-based search (mode='train'); final runs mode='test'."
+  },
+  {
+   "site": 26,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    1,
+    13
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "rater_note": "best_global hardcoded hparams from val-based search (experiment_template validate in mode='train'); reported in mode='test'."
+  },
+  {
+   "site": 27,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/args.py",
+   "lines": [
+    8,
+    21
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Best params from ray-tune on val_loss; reported split depends on --model: test for gnn/dynamic, but lstmgnn 'test' evaluates val_mask (train_ns_lstmgnn.py:52)."
+  },
+  {
+   "site": 28,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_lstmgnn.py",
+   "lines": [
+    179,
+    179
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "CONTAMINATED",
+   "rater_note": "ReduceLROnPlateau on val_loss (val_mask); in train_ns_lstmgnn.py:52 eval_split='test' sets eval_mask=val_mask, so reported 'test' metrics are on the same val nodes."
+  },
+  {
+   "site": 32,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    77,
+    96
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "rater_note": "Hardcoded channel-wise LSTM hparams from val-based search; final mode='test'."
+  },
+  {
+   "site": 39,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/rerun.py",
+   "lines": [
+    177,
+    177
+   ],
+   "committed": "SOUND",
+   "rater": "NOT_SELECTION",
+   "rater_note": "Records train_max in returned dict; train max is logged, not used to choose."
+  },
+  {
+   "site": 47,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_dynamic.py",
+   "lines": [
+    124,
+    124
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "rater_note": "ReduceLROnPlateau on val_loss from validset loader; test_dataloader uses testset."
+  },
+  {
+   "site": 48,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    15,
+    48
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "rater_note": "Hardcoded TPC hparams from val-based search (mode='train'); final mode='test'."
+  }
+ ]
+}

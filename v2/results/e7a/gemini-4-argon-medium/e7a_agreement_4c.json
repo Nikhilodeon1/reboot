@@ -1,0 +1,668 @@
+{
+ "sheet": "4c",
+ "sites": 88,
+ "missing_from_rater": [],
+ "agreement_collapsed_4_class": {
+  "agree": 47,
+  "n": 88,
+  "cp95": [
+   0.4246,
+   0.6412
+  ],
+  "kappa": 0.3735023441569717
+ },
+ "sensitivity": {
+  "committed": {
+   "applicable": 48,
+   "narrow": [
+    3,
+    48,
+    [
+     0.0131,
+     0.172
+    ]
+   ],
+   "broad": [
+    16,
+    48,
+    [
+     0.204,
+     0.4841
+    ]
+   ]
+  },
+  "rater": {
+   "applicable": 64,
+   "narrow": [
+    21,
+    64,
+    [
+     0.2159,
+     0.4569
+    ]
+   ],
+   "broad": [
+    33,
+    64,
+    [
+     0.3873,
+     0.6425
+    ]
+   ]
+  }
+ },
+ "agreement": {
+  "agree": 45,
+  "n": 88,
+  "cp95": [
+   0.4025,
+   0.6195
+  ],
+  "kappa": 0.37640079103493734
+ },
+ "confusion": [
+  {
+   "committed": "GUARDED",
+   "rater": "GUARDED",
+   "n": 7
+  },
+  {
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "n": 2
+  },
+  {
+   "committed": "GUARDED",
+   "rater": "RU_ordinary",
+   "n": 8
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "n": 3
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "NOT_APPLICABLE",
+   "n": 20
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_diverged",
+   "n": 1
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "n": 6
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "n": 10
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "GUARDED",
+   "n": 1
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "RU_diverged",
+   "n": 10
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "RU_ordinary",
+   "n": 2
+  },
+  {
+   "committed": "RU_ordinary",
+   "rater": "RU_ordinary",
+   "n": 3
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "n": 5
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "NOT_APPLICABLE",
+   "n": 2
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "RU_diverged",
+   "n": 1
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "RU_ordinary",
+   "n": 2
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "UNREACHABLE",
+   "n": 5
+  }
+ ],
+ "disagreements": [
+  {
+   "site": 1,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    509,
+    509
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "dtypes is assigned on line 509 and never used afterward; empty D_timeseries would also crash on line 488."
+  },
+  {
+   "site": 2,
+   "repo": "robustdg",
+   "file": "utils/scripts/utils.py",
+   "lines": [
+    579,
+    579
+   ],
+   "committed": "RU_diverged",
+   "rater": "GUARDED",
+   "rater_note": "If loss_tr[-1] is NaN, Python max returns NaN, which line 581 explicitly catches via not np.isfinite(loss_val)."
+  },
+  {
+   "site": 3,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    221,
+    221
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "np.max propagates NaN if kappa is NaN (e.g. single-class predictions), making max_train_kappa > 0.47 silently False."
+  },
+  {
+   "site": 5,
+   "repo": "circEWS",
+   "file": "preprocessing/step1a_2_remove_oor_values.py",
+   "lines": [
+    108,
+    129
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "NaN in sao2_value or svo2_value makes (sao2_value - svo2_value) / 8.454 < 0.1 False, silently skipping venous conversion."
+  },
+  {
+   "site": 7,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/recipe/config.py",
+   "lines": [
+    540,
+    540
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Explicitly guarded by is not None on line 539; config validation checks integer step count."
+  },
+  {
+   "site": 10,
+   "repo": "circEWS",
+   "file": "evaluation/precision_recall.py",
+   "lines": [
+    150,
+    150
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "max_pred_score initialized to 0; if all PredScore values are negative (e.g. logits), max_pred_score silently stays 0."
+  },
+  {
+   "site": 12,
+   "repo": "AIF360",
+   "file": "aif360/datasets/structured_dataset.py",
+   "lines": [
+    188,
+    189
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "StructuredDataset instances always populate standard attributes beyond ignore_fields, so the comprehension is non-empty."
+  },
+  {
+   "site": 15,
+   "repo": "DomainBed",
+   "file": "domainbed/model_selection.py",
+   "lines": [
+    127,
+    127
+   ],
+   "committed": "GUARDED",
+   "rater": "RU_ordinary",
+   "rater_note": "If val_env_keys is empty for a single-env run, np.mean([]) is NaN and argmax('val_acc') silently corrupts selection."
+  },
+  {
+   "site": 18,
+   "repo": "omop-learn",
+   "file": "examples/eol/model_lr.py",
+   "lines": [
+    49,
+    49
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Cs is a non-empty constant list and sklearn roc_auc_score raises ValueError on NaN predictions."
+  },
+  {
+   "site": 22,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/labels/utils.py",
+   "lines": [
+    44,
+    44
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "If score_arr[jdx] is NaN, score_arr[jdx] >= target is False; instead of setting out_arr[jdx] = np.nan, it labels 0 or 1."
+  },
+  {
+   "site": 24,
+   "repo": "wilds",
+   "file": "examples/optimizer.py",
+   "lines": [
+    20,
+    20
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "When no_decay is empty for non-BERT/GPT models, not any([]) is True so all parameters get weight_decay as intended."
+  },
+  {
+   "site": 25,
+   "repo": "robustdg",
+   "file": "evaluation/privacy_loss_attack.py",
+   "lines": [
+    222,
+    222
+   ],
+   "committed": "RU_diverged",
+   "rater": "RU_ordinary",
+   "rater_note": "If a class has no train members, torch.mean(metric) is NaN and line 225 crashes, or NaN loss makes metric < threshold False."
+  },
+  {
+   "site": 26,
+   "repo": "wilds",
+   "file": "examples/optimizer.py",
+   "lines": [
+    21,
+    21
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "When no_decay is empty for non-BERT/GPT models, any([]) is False so the 0.0 weight_decay group is intentionally empty."
+  },
+  {
+   "site": 27,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    35,
+    35
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Explicitly filters out nulls with if not pd.isnull(v) and raises Exception when inconsistent numeric duplicates exist."
+  },
+  {
+   "site": 32,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/models/utils.py",
+   "lines": [
+    39,
+    50
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty outputs raises IndexError on outputs[0], and missing keys in later dicts raise KeyError on v[loss_type]."
+  },
+  {
+   "site": 34,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "lines": [
+    588,
+    588
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "average_precision_score raises ValueError on NaN inputs, and np.argmax([]) raises ValueError if c_grid is empty."
+  },
+  {
+   "site": 35,
+   "repo": "circEWS",
+   "file": "shapelet_features/utils/data.py",
+   "lines": [
+    139,
+    139
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "When drop_variables is empty, *matches returning False via any([]) keeps all variables as documented in **init**."
+  },
+  {
+   "site": 39,
+   "repo": "circEWS",
+   "file": "finetuning/interpolated_mimic_hirid.py",
+   "lines": [
+    149,
+    149
+   ],
+   "committed": "GUARDED",
+   "rater": "RU_ordinary",
+   "rater_note": "If any TSV has auprc as NaN (especially the first file), max(val_dict, key=val_dict.get) silently corrupts ip_coeff selection."
+  },
+  {
+   "site": 41,
+   "repo": "NICO-plus",
+   "file": "domainbed/model_selection.py",
+   "lines": [
+    139,
+    139
+   ],
+   "committed": "GUARDED",
+   "rater": "RU_ordinary",
+   "rater_note": "If any val_acc is NaN, step_accs.argmax('val_acc') comparisons with NaN silently corrupt step selection."
+  },
+  {
+   "site": 43,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    219,
+    219
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "np.max propagates NaN if any validation kappa is NaN, making max_kappa > 0.38 False and silently disabling early stopping."
+  },
+  {
+   "site": 45,
+   "repo": "wilds",
+   "file": "wilds/common/metrics/all_metrics.py",
+   "lines": [
+    152,
+    152
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_diverged",
+   "rater_note": "If pred['scores'] contains NaN, mask is False, and if total_boxes is 0, 0.0 / 0.0 silently returns NaN for pseudolabels_kept_frac."
+  },
+  {
+   "site": 46,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "preprocessing/notes_preproc.py",
+   "lines": [
+    180,
+    180
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "If ent.*.modifiers is empty, any(...) returning False accurately means the entity has no family history modifier."
+  },
+  {
+   "site": 58,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/models/utils.py",
+   "lines": [
+    68,
+    90
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "RU_diverged",
+   "rater_note": "Explicitly filters NaNs via v == v, and if all values are NaN sets log_dict[loss_type] to float('nan')."
+  },
+  {
+   "site": 59,
+   "repo": "circEWS",
+   "file": "circews/classes/lgbm_model.py",
+   "lines": [
+    479,
+    479
+   ],
+   "committed": "GUARDED",
+   "rater": "RU_ordinary",
+   "rater_note": "If current_auprc is NaN for all candidate features, best_vid_round stays None and search_vars.remove(None) crashes or corrupts selection."
+  },
+  {
+   "site": 60,
+   "repo": "AIF360",
+   "file": "aif360/algorithms/intersectional_fairness.py",
+   "lines": [
+    479,
+    479
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable: structure of self.group_protected_attrs and protected_attributes is outside the excerpt."
+  },
+  {
+   "site": 61,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_pregenerated.py",
+   "lines": [
+    255,
+    255
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "no_decay is a fixed non-empty constant list ['bias', 'LayerNorm.bias', 'LayerNorm.weight'] on line 251."
+  },
+  {
+   "site": 63,
+   "repo": "AIF360",
+   "file": "aif360/algorithms/preprocessing/lfr.py",
+   "lines": [
+    53,
+    53
+   ],
+   "committed": "GUARDED",
+   "rater": "RU_ordinary",
+   "rater_note": "Takes only list(self.unprivileged_groups[0].keys())[0], silently ignoring additional keys in a multi-attribute group dict."
+  },
+  {
+   "site": 65,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_pregenerated.py",
+   "lines": [
+    253,
+    253
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "no_decay is a fixed non-empty constant list ['bias', 'LayerNorm.bias', 'LayerNorm.weight'] on line 251."
+  },
+  {
+   "site": 66,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    62,
+    62
+   ],
+   "committed": "GUARDED",
+   "rater": "RU_ordinary",
+   "rater_note": "If any validation auroc is NaN, np.max returns NaN and line 62 evaluates to False, silently disabling early stopping."
+  },
+  {
+   "site": 67,
+   "repo": "DomainBed",
+   "file": "domainbed/model_selection.py",
+   "lines": [
+    100,
+    100
+   ],
+   "committed": "GUARDED",
+   "rater": "RU_ordinary",
+   "rater_note": "If val_env_keys is empty or contains NaN, np.mean is NaN and argmax('val_acc') silently corrupts model selection."
+  },
+  {
+   "site": 68,
+   "repo": "AIF360",
+   "file": "aif360/algorithms/postprocessing/reject_option_classification.py",
+   "lines": [
+    192,
+    192
+   ],
+   "committed": "RU_diverged",
+   "rater": "RU_ordinary",
+   "rater_note": "NaN in dataset.scores makes fav_pred_inds and crit_region_inds False, silently assigning unfavorable_label to NaN-scored instances."
+  },
+  {
+   "site": 69,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    314,
+    314
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "If col_is_numeric is empty (all-null column), not all([]) and any([]) is False, appropriately skipping mixed-type splitting."
+  },
+  {
+   "site": 71,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "lines": [
+    596,
+    596
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "average_precision_score raises ValueError on NaN inputs, and np.argmax(grid_auprcs) raises ValueError if grid_auprcs is empty."
+  },
+  {
+   "site": 73,
+   "repo": "AIF360",
+   "file": "aif360/detectors/mdss/ScoringFunctions/Poisson.py",
+   "lines": [
+    59,
+    59
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "If self.score(...) returns NaN, > 0 evaluates to False, silently falling into the else branch (exist = 0)."
+  },
+  {
+   "site": 75,
+   "repo": "omop-learn",
+   "file": "src/omop_learn/backends/postgres.py",
+   "lines": [
+    281,
+    282
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "Iterating over an empty visit list result[0] writes zero lines, matching the non-visit branch behavior on line 286."
+  },
+  {
+   "site": 77,
+   "repo": "AIF360",
+   "file": "aif360/sklearn/detectors/facts/predicate.py",
+   "lines": [
+    140,
+    140
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "If feature values in d1 or d2 are float NaN, d1[feat] == val evaluates to False, so contains() silently returns False."
+  },
+  {
+   "site": 78,
+   "repo": "eICU-GNN-LSTM",
+   "file": "graph_construction/get_diagnosis_strings.py",
+   "lines": [
+    28,
+    28
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "If diagnosis_strings has one element, diagnosis_strings.drop(diag) is empty and not any([]) is True, keeping the sole diagnosis."
+  },
+  {
+   "site": 81,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "model/ml_models.py",
+   "lines": [
+    205,
+    225
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "All-NaN dynamic columns aggregate to NaN in dyn_temp.aggregate('mean'/'max'), silently propagating NaNs into X_df."
+  },
+  {
+   "site": 82,
+   "repo": "omop-learn",
+   "file": "src/omop_learn/torch/data.py",
+   "lines": [
+    129,
+    130
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "All examples come from **getitem** with identical keys; if batch is empty, batch[0] raises IndexError loudly."
+  },
+  {
+   "site": 83,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/recipe/config.py",
+   "lines": [
+    546,
+    546
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Explicitly guarded by is not None on line 545; config validation checks integer epoch count."
+  },
+  {
+   "site": 84,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    348,
+    348
+   ],
+   "committed": "GUARDED",
+   "rater": "RU_ordinary",
+   "rater_note": "If any validation AUROC is NaN, np.max returns NaN and line 348 is False, silently preventing early stopping."
+  },
+  {
+   "site": 87,
+   "repo": "Benchmarking_DL_MIMICIII",
+   "file": "Codes/SuperLearnerPyVer/python/pgbart/src/bart_utils.py",
+   "lines": [
+    692,
+    692
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "Filters valid feature dimensions where score_feat > 0 and explicitly sets split_not_supported when feat_id_valid is empty."
+  },
+  {
+   "site": 88,
+   "repo": "robustdg",
+   "file": "test.py",
+   "lines": [
+    393,
+    393
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable: structure of test_method.metric_score across runs is defined outside the excerpt."
+  }
+ ]
+}

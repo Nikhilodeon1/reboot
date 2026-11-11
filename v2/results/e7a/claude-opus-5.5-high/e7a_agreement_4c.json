@@ -1,0 +1,473 @@
+{
+ "sheet": "4c",
+ "sites": 88,
+ "missing_from_rater": [],
+ "agreement_collapsed_4_class": {
+  "agree": 60,
+  "n": 88,
+  "cp95": [
+   0.5739,
+   0.7771
+  ],
+  "kappa": 0.5561160151324085
+ },
+ "sensitivity": {
+  "committed": {
+   "applicable": 48,
+   "narrow": [
+    3,
+    48,
+    [
+     0.0131,
+     0.172
+    ]
+   ],
+   "broad": [
+    16,
+    48,
+    [
+     0.204,
+     0.4841
+    ]
+   ]
+  },
+  "rater": {
+   "applicable": 56,
+   "narrow": [
+    3,
+    56,
+    [
+     0.0112,
+     0.1487
+    ]
+   ],
+   "broad": [
+    13,
+    56,
+    [
+     0.1298,
+     0.3642
+    ]
+   ]
+  }
+ },
+ "agreement": {
+  "agree": 60,
+  "n": 88,
+  "cp95": [
+   0.5739,
+   0.7771
+  ],
+  "kappa": 0.5615658362989324
+ },
+ "confusion": [
+  {
+   "committed": "GUARDED",
+   "rater": "GUARDED",
+   "n": 14
+  },
+  {
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "n": 1
+  },
+  {
+   "committed": "GUARDED",
+   "rater": "UNREACHABLE",
+   "n": 2
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "n": 6
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "NOT_APPLICABLE",
+   "n": 28
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "n": 1
+  },
+  {
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "n": 5
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "GUARDED",
+   "n": 1
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "NOT_APPLICABLE",
+   "n": 2
+  },
+  {
+   "committed": "RU_diverged",
+   "rater": "RU_diverged",
+   "n": 10
+  },
+  {
+   "committed": "RU_ordinary",
+   "rater": "NOT_APPLICABLE",
+   "n": 1
+  },
+  {
+   "committed": "RU_ordinary",
+   "rater": "RU_ordinary",
+   "n": 2
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "n": 9
+  },
+  {
+   "committed": "UNREACHABLE",
+   "rater": "UNREACHABLE",
+   "n": 6
+  }
+ ],
+ "disagreements": [
+  {
+   "site": 1,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    509,
+    509
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty dict raises IndexError at line 488; column equality across examples asserted at 490-492."
+  },
+  {
+   "site": 7,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/recipe/config.py",
+   "lines": [
+    540,
+    540
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Explicit 'is not None' check, and values below 1 are reported as errors."
+  },
+  {
+   "site": 11,
+   "repo": "tableshift",
+   "file": "tableshift/third_party/node/data.py",
+   "lines": [
+    166,
+    166
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "all() over a fixed three-element tuple; None handling is the intended test."
+  },
+  {
+   "site": 12,
+   "repo": "AIF360",
+   "file": "aif360/datasets/structured_dataset.py",
+   "lines": [
+    188,
+    189
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "__dict__ is always populated by construction, so all() is never over an empty set."
+  },
+  {
+   "site": 23,
+   "repo": "tableshift",
+   "file": "tableshift/third_party/node/data.py",
+   "lines": [
+    216,
+    216
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "all() over a fixed three-element tuple."
+  },
+  {
+   "site": 25,
+   "repo": "robustdg",
+   "file": "evaluation/privacy_loss_attack.py",
+   "lines": [
+    222,
+    222
+   ],
+   "committed": "RU_diverged",
+   "rater": "GUARDED",
+   "rater_note": "Empty member class makes mem_predict[0] raise IndexError at line 225."
+  },
+  {
+   "site": 27,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    35,
+    35
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "pd.isnull filter excludes NaN; empty dups correctly means no inconsistency."
+  },
+  {
+   "site": 29,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/models/llama/checkpoint.py",
+   "lines": [
+    104,
+    104
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty tp_shards raises IndexError; TP shards share keys by design per comment."
+  },
+  {
+   "site": 32,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/models/utils.py",
+   "lines": [
+    39,
+    50
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty outputs raises IndexError; NaN losses pass through visibly, not hidden."
+  },
+  {
+   "site": 34,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "lines": [
+    588,
+    588
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "argmax raises on empty; average_precision_score raises on NaN predictions."
+  },
+  {
+   "site": 35,
+   "repo": "circEWS",
+   "file": "shapelet_features/utils/data.py",
+   "lines": [
+    139,
+    139
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "__init__ explicitly maps no variables to drop=[], so any([]) False keeps all as documented."
+  },
+  {
+   "site": 45,
+   "repo": "wilds",
+   "file": "wilds/common/metrics/all_metrics.py",
+   "lines": [
+    152,
+    152
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "RU_ordinary",
+   "rater_note": "Batch with no predicted boxes gives tensor(0)/0.0 = NaN kept fraction, no error."
+  },
+  {
+   "site": 56,
+   "repo": "robustdg",
+   "file": "utils/scripts/ptb_utils.py",
+   "lines": [
+    130,
+    130
+   ],
+   "committed": "RU_diverged",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable: python max drops NaN loss, but consumer of self.loss not shown."
+  },
+  {
+   "site": 58,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/models/utils.py",
+   "lines": [
+    68,
+    90
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Explicit NaN filter (v == v) and 'if collect' emptiness check."
+  },
+  {
+   "site": 59,
+   "repo": "circEWS",
+   "file": "circews/classes/lgbm_model.py",
+   "lines": [
+    479,
+    479
+   ],
+   "committed": "GUARDED",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable: NaN AUPRC would be skipped; all-NaN raises at remove(None); occurrence not shown."
+  },
+  {
+   "site": 61,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_pregenerated.py",
+   "lines": [
+    255,
+    255
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "no_decay is a literal non-empty list."
+  },
+  {
+   "site": 65,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_pregenerated.py",
+   "lines": [
+    253,
+    253
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "UNREACHABLE",
+   "rater_note": "no_decay is a literal non-empty list."
+  },
+  {
+   "site": 66,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    62,
+    62
+   ],
+   "committed": "GUARDED",
+   "rater": "UNREACHABLE",
+   "rater_note": "val_history non-empty by construction; sklearn roc_auc raises on NaN or single class."
+  },
+  {
+   "site": 68,
+   "repo": "AIF360",
+   "file": "aif360/algorithms/postprocessing/reject_option_classification.py",
+   "lines": [
+    192,
+    192
+   ],
+   "committed": "RU_diverged",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable: NaN scores would silently become unfavorable; whether NaN scores are supported not shown."
+  },
+  {
+   "site": 69,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    314,
+    314
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "pd.isnull filter; all-null column gives all([]) and any([]) that correctly skip the split."
+  },
+  {
+   "site": 71,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "lines": [
+    596,
+    596
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "argmax raises on empty grid_auprcs; AUPRC computation raises on NaN predictions."
+  },
+  {
+   "site": 73,
+   "repo": "AIF360",
+   "file": "aif360/detectors/mdss/ScoringFunctions/Poisson.py",
+   "lines": [
+    59,
+    59
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "score() asserts q > 0, so degenerate q_mle fails loudly."
+  },
+  {
+   "site": 79,
+   "repo": "tableshift",
+   "file": "tableshift/datasets/college_scorecard.py",
+   "lines": [
+    170,
+    170
+   ],
+   "committed": "RU_ordinary",
+   "rater": "NOT_APPLICABLE",
+   "rater_note": "undecidable: NaN target would silently become 0, but target na_values not shown."
+  },
+  {
+   "site": 80,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/steps.py",
+   "lines": [
+    507,
+    507
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty dict raises IndexError at line 488; column equality asserted at 490-492."
+  },
+  {
+   "site": 83,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/recipe/config.py",
+   "lines": [
+    546,
+    546
+   ],
+   "committed": "NOT_APPLICABLE",
+   "rater": "GUARDED",
+   "rater_note": "Explicit 'is not None' check, and values below 1 are reported as errors."
+  },
+  {
+   "site": 84,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    348,
+    348
+   ],
+   "committed": "GUARDED",
+   "rater": "UNREACHABLE",
+   "rater_note": "val_history appended before np.max; NaN AUROC raises in sklearn."
+  },
+  {
+   "site": 86,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/model_checkpoint/native.py",
+   "lines": [
+    128,
+    128
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty shards raise IndexError; first DP shard holds all keys per design comment."
+  },
+  {
+   "site": 88,
+   "repo": "robustdg",
+   "file": "test.py",
+   "lines": [
+    393,
+    393
+   ],
+   "committed": "UNREACHABLE",
+   "rater": "GUARDED",
+   "rater_note": "Empty final_metric_score raises IndexError; all dicts come from the same metric method."
+  }
+ ]
+}

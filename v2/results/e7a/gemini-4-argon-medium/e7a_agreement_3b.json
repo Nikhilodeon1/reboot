@@ -1,0 +1,419 @@
+{
+ "sheet": "3b",
+ "sites": 53,
+ "missing_from_rater": [],
+ "counts_committed": {
+  "NOT_SELECTION": 30,
+  "SOUND": 21,
+  "AMBIGUOUS": 1,
+  "DISCLOSED_ORACLE": 1
+ },
+ "counts_rater": {
+  "NOT_SELECTION": 20,
+  "AMBIGUOUS": 25,
+  "SOUND": 6,
+  "CONTAMINATED": 2
+ },
+ "sensitivity": {
+  "committed": {
+   "contaminated": 0,
+   "real_selection_sites": 23,
+   "cp95_contaminated_of_real": [
+    0.0,
+    0.1482
+   ]
+  },
+  "rater": {
+   "contaminated": 2,
+   "real_selection_sites": 33,
+   "cp95_contaminated_of_real": [
+    0.0074,
+    0.2023
+   ]
+  }
+ },
+ "agreement": {
+  "agree": 25,
+  "n": 53,
+  "cp95": [
+   0.333,
+   0.6136
+  ],
+  "kappa": 0.2789115646258503
+ },
+ "confusion": [
+  {
+   "committed": "AMBIGUOUS",
+   "rater": "CONTAMINATED",
+   "n": 1
+  },
+  {
+   "committed": "DISCLOSED_ORACLE",
+   "rater": "CONTAMINATED",
+   "n": 1
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "n": 11
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "NOT_SELECTION",
+   "n": 19
+  },
+  {
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "n": 14
+  },
+  {
+   "committed": "SOUND",
+   "rater": "NOT_SELECTION",
+   "n": 1
+  },
+  {
+   "committed": "SOUND",
+   "rater": "SOUND",
+   "n": 6
+  }
+ ],
+ "disagreements": [
+  {
+   "site": 4,
+   "repo": "clinical-outcome-prediction",
+   "file": "experiments/doc_classification.py",
+   "lines": [
+    161,
+    167
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Instantiates EarlyStopping (lines 161-167), but excerpt ends at line 197 before showing which split is evaluated or reported."
+  },
+  {
+   "site": 5,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/rerun.py",
+   "lines": [
+    95,
+    95
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Checks validation metric history to decide whether to rerun unfinished training (rerun.py:95); reported split not shown in excerpt."
+  },
+  {
+   "site": 6,
+   "repo": "circEWS",
+   "file": "circews/classes/lgbm_model.py",
+   "lines": [
+    479,
+    481
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Forward feature selection uses validation AUPRC (lines 476-481) then exits at line 489; reported test evaluation not in excerpt."
+  },
+  {
+   "site": 11,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_gnn.py",
+   "lines": [
+    114,
+    114
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Defines ReduceLROnPlateau scheduler (train_ns_gnn.py:114); monitored metric and checkpoint selection split are not shown in excerpt."
+  },
+  {
+   "site": 13,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    60,
+    60
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Early stopping checks val_history AUROC (keras_utils.py:60-63), but reported evaluation split is outside this utility excerpt."
+  },
+  {
+   "site": 15,
+   "repo": "time_aware_attention",
+   "file": "related_code/bayesian_train.py",
+   "lines": [
+    306,
+    314
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Saves final_model.pt and stops early using training running_loss (bayesian_train.py:306-314); evaluation split not shown in excerpt."
+  },
+  {
+   "site": 16,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "model/behrt_train.py",
+   "lines": [
+    215,
+    219
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Saves checkpoint when val_loss < best_val (behrt_train.py:215-219); how valload is constructed and final reporting split are not shown."
+  },
+  {
+   "site": 18,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    99,
+    130
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Returns hardcoded transformer hyperparameters for test mode (best_hyperparameters.py:99-130); split used to tune them is not shown."
+  },
+  {
+   "site": 20,
+   "repo": "MIMIC_Extract",
+   "file": "notebooks/mmd_grud_utils.py",
+   "lines": [
+    210,
+    397
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Training loop sets up validation and early stopping variables (mmd_grud_utils.py:210-309), but excerpt truncates before selection and reporting."
+  },
+  {
+   "site": 22,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    50,
+    75
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Returns hardcoded LSTM hyperparameters for test mode (best_hyperparameters.py:50-75); split used to select them cannot be established from excerpt."
+  },
+  {
+   "site": 23,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "preprocessing/hosp_module_preproc/feature_selection_icu.py",
+   "lines": [
+    169,
+    223
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Filters ICU tables by summary feature lists computed across full preproc files (feature_selection_icu.py:169-223); train/test split timing not shown."
+  },
+  {
+   "site": 26,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    1,
+    13
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Returns hardcoded global hyperparameters (best_hyperparameters.py:1-13); the data split used to tune them is not established in excerpt."
+  },
+  {
+   "site": 27,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/args.py",
+   "lines": [
+    8,
+    21
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Loads pre-defined best hyperparameters from dictionary into config (src/args.py:8-21); selection and reporting splits not shown."
+  },
+  {
+   "site": 28,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_lstmgnn.py",
+   "lines": [
+    179,
+    179
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Configures ReduceLROnPlateau scheduler (train_ns_lstmgnn.py:179); monitored metric and checkpoint selection split are not shown in excerpt."
+  },
+  {
+   "site": 30,
+   "repo": "clinical-outcome-prediction",
+   "file": "experiments/outcome_pretraining.py",
+   "lines": [
+    141,
+    147
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Instantiates EarlyStopping for pretraining (outcome_pretraining.py:141-147); excerpt ends at line 177 before showing evaluation split."
+  },
+  {
+   "site": 31,
+   "repo": "robustdg",
+   "file": "utils/scripts/utils.py",
+   "lines": [
+    362,
+    364
+   ],
+   "committed": "AMBIGUOUS",
+   "rater": "CONTAMINATED",
+   "rater_note": "Selects best_model when adversarial error on te_dl improves (utils.py:358-364), using the test loader for model selection."
+  },
+  {
+   "site": 32,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    77,
+    96
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Hardcodes channelwise LSTM hyperparameters for test mode (best_hyperparameters.py:77-96); split used to tune them is not shown."
+  },
+  {
+   "site": 34,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    219,
+    219
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Early stopping checks validation and train kappa history (keras_utils.py:219-223); final reported evaluation split is outside excerpt."
+  },
+  {
+   "site": 38,
+   "repo": "HurtfulWords",
+   "file": "scripts/utils.py",
+   "lines": [
+    130,
+    139
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "EarlyStopping.**init** definition (scripts/utils.py:130-139); caller splits for validation and reporting are in other files."
+  },
+  {
+   "site": 39,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/rerun.py",
+   "lines": [
+    177,
+    177
+   ],
+   "committed": "SOUND",
+   "rater": "NOT_SELECTION",
+   "rater_note": "Records max training metric in summary dict when parsing log files (rerun.py:177, ea0314c7cb)."
+  },
+  {
+   "site": 40,
+   "repo": "robustdg",
+   "file": "train.py",
+   "lines": [
+    303,
+    303
+   ],
+   "committed": "DISCLOSED_ORACLE",
+   "rater": "CONTAMINATED",
+   "rater_note": "Selects maximum test accuracy across epochs via np.max(train_method.final_acc) and reports it as Target Validation (train.py:303-315)."
+  },
+  {
+   "site": 41,
+   "repo": "HurtfulWords",
+   "file": "scripts/utils.py",
+   "lines": [
+    148,
+    156
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "EarlyStopping.**call** saves checkpoint on validation loss improvement (scripts/utils.py:148-156); reported split is outside this utility file."
+  },
+  {
+   "site": 44,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    156,
+    156
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Stops training based on validation macro AUC history (keras_utils.py:156-159); reported split is not shown in excerpt."
+  },
+  {
+   "site": 45,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "lines": [
+    433,
+    433
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Instantiates EarlyStopping inside hyperparameter grid loop (finetune_on_target.py:433); validation and test calls occur outside lines 403-463."
+  },
+  {
+   "site": 47,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_dynamic.py",
+   "lines": [
+    124,
+    124
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Instantiates ReduceLROnPlateau scheduler (train_dynamic.py:124); monitored metric and checkpoint selection split are not shown in excerpt."
+  },
+  {
+   "site": 48,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    15,
+    48
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Returns hardcoded TPC hyperparameters for test mode (best_hyperparameters.py:15-48); split used to select them is not shown."
+  },
+  {
+   "site": 50,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "preprocessing/hosp_module_preproc/feature_selection_hosp.py",
+   "lines": [
+    188,
+    236
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Filters hospital tables using summary feature files (feature_selection_hosp.py:188-236); whether summaries use held-out data is not shown."
+  },
+  {
+   "site": 51,
+   "repo": "HurtfulWords",
+   "file": "scripts/utils.py",
+   "lines": [
+    145,
+    156
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "EarlyStopping checkpointing logic on val_loss (scripts/utils.py:145-156); standalone utility does not fix the callers' splits."
+  }
+ ]
+}

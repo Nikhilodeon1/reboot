@@ -1,0 +1,448 @@
+{
+ "sheet": "3b",
+ "sites": 53,
+ "missing_from_rater": [],
+ "counts_committed": {
+  "NOT_SELECTION": 30,
+  "SOUND": 21,
+  "AMBIGUOUS": 1,
+  "DISCLOSED_ORACLE": 1
+ },
+ "counts_rater": {
+  "NOT_SELECTION": 23,
+  "AMBIGUOUS": 25,
+  "SOUND": 3,
+  "CONTAMINATED": 2
+ },
+ "sensitivity": {
+  "committed": {
+   "contaminated": 0,
+   "real_selection_sites": 23,
+   "cp95_contaminated_of_real": [
+    0.0,
+    0.1482
+   ]
+  },
+  "rater": {
+   "contaminated": 2,
+   "real_selection_sites": 30,
+   "cp95_contaminated_of_real": [
+    0.0082,
+    0.2207
+   ]
+  }
+ },
+ "agreement": {
+  "agree": 23,
+  "n": 53,
+  "cp95": [
+   0.2984,
+   0.5772
+  ],
+  "kappa": 0.21713441654357463
+ },
+ "confusion": [
+  {
+   "committed": "AMBIGUOUS",
+   "rater": "CONTAMINATED",
+   "n": 1
+  },
+  {
+   "committed": "DISCLOSED_ORACLE",
+   "rater": "CONTAMINATED",
+   "n": 1
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "n": 8
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "NOT_SELECTION",
+   "n": 21
+  },
+  {
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "n": 1
+  },
+  {
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "n": 17
+  },
+  {
+   "committed": "SOUND",
+   "rater": "NOT_SELECTION",
+   "n": 2
+  },
+  {
+   "committed": "SOUND",
+   "rater": "SOUND",
+   "n": 2
+  }
+ ],
+ "disagreements": [
+  {
+   "site": 4,
+   "repo": "clinical-outcome-prediction",
+   "file": "experiments/doc_classification.py",
+   "lines": [
+    161,
+    167
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "EarlyStopping metric is config-dependent; neither its split nor the reported evaluation split is fixed here."
+  },
+  {
+   "site": 5,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/rerun.py",
+   "lines": [
+    95,
+    95
+   ],
+   "committed": "SOUND",
+   "rater": "NOT_SELECTION",
+   "rater_note": "argmax locates a validation peak to decide whether to rerun; it does not choose a model or checkpoint."
+  },
+  {
+   "site": 6,
+   "repo": "circEWS",
+   "file": "circews/classes/lgbm_model.py",
+   "lines": [
+    479,
+    481
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Forward feature search maximizes validation AUPRC; the final reporting split is absent from the excerpt."
+  },
+  {
+   "site": 11,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_gnn.py",
+   "lines": [
+    114,
+    114
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "ReduceLROnPlateau adjusts learning rate; validation and test loaders share a dataset and the evaluated mask is unresolved."
+  },
+  {
+   "site": 13,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    60,
+    60
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Early-stop condition reads val_history; this excerpt does not establish a separate reported evaluation split."
+  },
+  {
+   "site": 14,
+   "repo": "robustdg",
+   "file": "reproduce_scripts/slab-tune.py",
+   "lines": [
+    85,
+    88
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Penalty tuning uses source-validation accuracy; the excerpt does not identify the final reported split."
+  },
+  {
+   "site": 15,
+   "repo": "time_aware_attention",
+   "file": "related_code/bayesian_train.py",
+   "lines": [
+    306,
+    314
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Best checkpoint is saved on lower running training loss; the reported evaluation split is not shown."
+  },
+  {
+   "site": 16,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "model/behrt_train.py",
+   "lines": [
+    215,
+    219
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Checkpoint minimizes val_loss from valload; no distinct reported evaluation split is established here."
+  },
+  {
+   "site": 18,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    99,
+    130
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Hard-coded best transformer settings run in test mode; the split used to tune them is not encoded."
+  },
+  {
+   "site": 19,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "lines": [
+    596,
+    596
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Target validation drives grid and checkpoint selection; test_generator is separate, but target-val selection has no SOUND rule."
+  },
+  {
+   "site": 20,
+   "repo": "MIMIC_Extract",
+   "file": "notebooks/mmd_grud_utils.py",
+   "lines": [
+    210,
+    397
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Training uses valid_dataloader for early stopping; the excerpt ends before the checkpoint rule and reported split."
+  },
+  {
+   "site": 22,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    50,
+    75
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "best_lstm assigns fixed settings and test mode; the original hyperparameter-selection split is absent."
+  },
+  {
+   "site": 24,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/models/wrappers.py",
+   "lines": [
+    299,
+    350
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "LightGBM branch early-stops on val_dataset; sklearn branch does not; test() uses a separate dataset."
+  },
+  {
+   "site": 26,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    1,
+    13
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "best_global hard-codes shared settings; selection provenance is absent although downstream best configs set test mode."
+  },
+  {
+   "site": 27,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/args.py",
+   "lines": [
+    8,
+    21
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Applies imported best-parameter maps; the selection split is in an unseen module and phase is configurable."
+  },
+  {
+   "site": 28,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_lstmgnn.py",
+   "lines": [
+    179,
+    179
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "ReduceLROnPlateau adjusts learning rate; validation and test loaders share a dataset, so the selection mask is unresolved."
+  },
+  {
+   "site": 30,
+   "repo": "clinical-outcome-prediction",
+   "file": "experiments/outcome_pretraining.py",
+   "lines": [
+    141,
+    147
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "EarlyStopping metric is variable; the excerpt does not identify its split or the reported-results split."
+  },
+  {
+   "site": 31,
+   "repo": "robustdg",
+   "file": "utils/scripts/utils.py",
+   "lines": [
+    362,
+    364
+   ],
+   "committed": "AMBIGUOUS",
+   "rater": "CONTAMINATED",
+   "rater_note": "best_model follows minimum adv_err on te_dl; acc_te and acc_te_std are reported from that same loader."
+  },
+  {
+   "site": 32,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    77,
+    96
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "best_cw_lstm hard-codes settings in test mode; the split used to choose them is not shown."
+  },
+  {
+   "site": 34,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    219,
+    219
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Early stopping uses val_history kappa; no separate reported test split is established in this excerpt."
+  },
+  {
+   "site": 38,
+   "repo": "HurtfulWords",
+   "file": "scripts/utils.py",
+   "lines": [
+    130,
+    139
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "EarlyStopping checkpoints on target val_loss in finetune_on_target; test_generator is distinct, outside the SOUND rule."
+  },
+  {
+   "site": 39,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/rerun.py",
+   "lines": [
+    177,
+    177
+   ],
+   "committed": "SOUND",
+   "rater": "NOT_SELECTION",
+   "rater_note": "Returns training and validation maxima as rerun metadata; no model or hyperparameter is selected."
+  },
+  {
+   "site": 40,
+   "repo": "robustdg",
+   "file": "train.py",
+   "lines": [
+    303,
+    303
+   ],
+   "committed": "DISCLOSED_ORACLE",
+   "rater": "CONTAMINATED",
+   "rater_note": "np.max(final_acc) chooses and reports best target-validation accuracy, reusing the OOD target split."
+  },
+  {
+   "site": 41,
+   "repo": "HurtfulWords",
+   "file": "scripts/utils.py",
+   "lines": [
+    148,
+    156
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "EarlyStopping checkpoints on target val_loss in finetune_on_target; test_generator is distinct, outside the SOUND rule."
+  },
+  {
+   "site": 44,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "lines": [
+    156,
+    156
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Early-stop rule uses val_history macro-AUC; the excerpt does not establish a separate reported split."
+  },
+  {
+   "site": 45,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "lines": [
+    433,
+    433
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "EarlyStopping is used with target-validation loss; the same finetuning script evaluates a separate test_generator."
+  },
+  {
+   "site": 47,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_dynamic.py",
+   "lines": [
+    124,
+    124
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "SOUND",
+   "rater_note": "ReduceLROnPlateau adapts learning rate on validset; validset and testset are explicitly separate."
+  },
+  {
+   "site": 48,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "lines": [
+    15,
+    48
+   ],
+   "committed": "NOT_SELECTION",
+   "rater": "AMBIGUOUS",
+   "rater_note": "best_tpc assigns fixed settings in test mode; the original hyperparameter-selection split is absent."
+  },
+  {
+   "site": 51,
+   "repo": "HurtfulWords",
+   "file": "scripts/utils.py",
+   "lines": [
+    145,
+    156
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "EarlyStopping checkpoints on target val_loss in finetune_on_target; test_generator is distinct, outside the SOUND rule."
+  },
+  {
+   "site": 52,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/models/wrappers.py",
+   "lines": [
+    180,
+    189
+   ],
+   "committed": "SOUND",
+   "rater": "AMBIGUOUS",
+   "rater_note": "Weights and best_metrics are selected from val_loss; this excerpt does not establish the reported split."
+  }
+ ]
+}

@@ -1,0 +1,94 @@
+{
+ "sheet": "3b",
+ "raters": {
+  "claude_subagent": {
+   "n": 53,
+   "agree": 42,
+   "cp95": [
+    0.6589,
+    0.8916
+   ],
+   "kappa": 0.6356250000000001
+  },
+  "claude-opus-5.5-high": {
+   "n": 53,
+   "agree": 39,
+   "cp95": [
+    0.5967,
+    0.8474
+   ],
+   "kappa": 0.5850111856823266
+  },
+  "gemini-4-argon-medium": {
+   "n": 53,
+   "agree": 25,
+   "cp95": [
+    0.333,
+    0.6136
+   ],
+   "kappa": 0.2789115646258503
+  },
+  "chatgpt-luna-5.6-think": {
+   "n": 53,
+   "agree": 23,
+   "cp95": [
+    0.2984,
+    0.5772
+   ],
+   "kappa": 0.21713441654357463
+  }
+ },
+ "pairwise_kappa": {
+  "claude_subagent vs claude-opus-5.5-high": 0.7138228941684666,
+  "claude_subagent vs gemini-4-argon-medium": 0.3371931449745253,
+  "claude_subagent vs chatgpt-luna-5.6-think": 0.3408567480423768,
+  "claude-opus-5.5-high vs gemini-4-argon-medium": 0.4911571500757958,
+  "claude-opus-5.5-high vs chatgpt-luna-5.6-think": 0.48883248730964457,
+  "gemini-4-argon-medium vs chatgpt-luna-5.6-think": 0.7508813160987073
+ },
+ "median_kappa_all_raters": 0.43196137515408844,
+ "majority_of_external_raters": {
+  "raters": [
+   "claude-opus-5.5-high",
+   "gemini-4-argon-medium",
+   "chatgpt-luna-5.6-think"
+  ],
+  "agree": 26,
+  "n": 53,
+  "cp95": [
+   0.3506,
+   0.6316
+  ],
+  "kappa": 0.28450000000000003,
+  "disagree_sites": [
+   4,
+   5,
+   6,
+   11,
+   13,
+   14,
+   15,
+   16,
+   18,
+   20,
+   22,
+   26,
+   27,
+   28,
+   30,
+   31,
+   32,
+   34,
+   38,
+   39,
+   40,
+   41,
+   44,
+   45,
+   47,
+   48,
+   51
+  ]
+ },
+ "reading": "rubric-dependent: report the range across raters"
+}
