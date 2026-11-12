@@ -1,0 +1,37 @@
+{
+ "by_category": {
+  "decision constant (threshold, critical value, dose level)": 48,
+  "defaults, entry points, paths, harness": 38,
+  "data splitting, aggregation or training plumbing": 58,
+  "verdict, test or statistic definition": 40,
+  "output formatting": 72
+ },
+ "kill_rate_by_category": {
+  "decision constant": {
+   "mutants": 51,
+   "killed": 3,
+   "survived": 48
+  },
+  "defaults, entry points, harness": {
+   "mutants": 47,
+   "killed": 9,
+   "survived": 38
+  },
+  "plumbing": {
+   "mutants": 58,
+   "killed": 0,
+   "survived": 58
+  },
+  "verdict, test or statistic definition": {
+   "mutants": 57,
+   "killed": 17,
+   "survived": 40
+  },
+  "output formatting": {
+   "mutants": 72,
+   "killed": 0,
+   "survived": 72
+  }
+ },
+ "total": 256
+}
