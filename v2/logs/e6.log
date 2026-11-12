@@ -1,0 +1,57 @@
+285 mutants
+done 20 of 285
+done 40 of 285
+done 58 of 285
+done 80 of 285
+done 100 of 285
+done 120 of 285
+done 140 of 285
+done 160 of 285
+done 179 of 285
+done 200 of 285
+done 220 of 285
+done 240 of 285
+done 260 of 285
+done 280 of 285
+{
+ "mutants": 285,
+ "killed": 29,
+ "survived": 256,
+ "cp95_killed_share": [
+  0.0692,
+  0.1429
+ ],
+ "by_file": {
+  "detectors/checks/check1_label_shift.py": {
+   "mutants": 73,
+   "killed": 16,
+   "cp95_killed_share": [
+    0.1308,
+    0.3314
+   ]
+  },
+  "detectors/checks/check2_pretrain_leakage.py": {
+   "mutants": 212,
+   "killed": 13,
+   "cp95_killed_share": [
+    0.0331,
+    0.1026
+   ]
+  }
+ },
+ "by_kind": {
+  "arith:killed": 10,
+  "arith:survived": 34,
+  "boolop:killed": 1,
+  "boolop:survived": 6,
+  "cmp_eq_flip:survived": 16,
+  "cmp_swap:killed": 5,
+  "cmp_swap:survived": 11,
+  "const_plus1:killed": 5,
+  "const_plus1:survived": 113,
+  "const_zero:killed": 8,
+  "const_zero:survived": 73,
+  "not_removed:survived": 3
+ }
+}
+256 survivors

@@ -1,0 +1,16 @@
+== argmax: max(records, key=selector), five records, NaN position varies
+  NaN record at position 0: selected id = NaN
+  NaN record at position 2: selected id = 1
+  NaN record at position 4: selected id = 1
+  empty list: raises ValueError: max() iterable argument is empty
+
+== guard: any([v==-1 ...]) then np.sum(val_accs)/(n_envs-1)
+  all valid [0.6, 0.7]         -> np.float64(0.6499999999999999)
+  missing sentinel [0.6, -1]   -> None
+  NaN value [0.6, nan]         -> np.float64(nan)
+  empty list []                -> np.float64(nan)
+  zero accuracy [0.0, 0.0]     -> np.float64(0.0)
+
+== composed: a NaN val_acc that passed the guard, then fed to the argmax fragment
+  selected id = env-with-NaN (NaN listed first)
+  selected id = env-b (NaN listed second)

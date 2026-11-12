@@ -1,0 +1,588 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(main.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-12-24>
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo))
+(tmlr.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/eso-pic\eso-pic.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/natbib\natbib.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
+keys.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
+ty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
+.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
+ty)))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
+lestring.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+)))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.s
+ty) (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+) (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+) (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
+.sty)))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
+echeck.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
+ounter.sty)))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+ (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amscls\amsthm.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
+fg)))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/frontendlayer\tikz.
+sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.st
+y
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-common.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-latex.def)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.
+code.tex
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex)
+))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.
+sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.
+sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s.code.tex
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+libraryfiltered.code.tex))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.c
+fg)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-pdftex.def
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-common-pdf.def)))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+ssoftpath.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+sprotocol.code.tex))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+e.code.tex
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathutil.
+code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparse
+r.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.basic.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.trigonometric.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.random.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.comparison.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.base.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.round.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.misc.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.integerarithmetics.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathcalc.
+code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat
+.code.tex))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.
+tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epoints.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathconstruct.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathusage.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+escopes.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+egraphicstate.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransformations.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+equick.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eobjects.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathprocessing.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+earrows.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eshade.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eimage.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eexternal.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+elayers.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransparency.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epatterns.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+erdf.code.tex)))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+shapes.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+plot.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-0-65.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-1-18.sty))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgffor.st
+y
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfkeys.s
+ty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/pgf/math\pgfmath.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgffor.
+code.tex))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z\tikz.code.tex
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryplothandlers.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+matrix.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarytopaths.code.tex)))
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryarrows.meta.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarypositioning.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryfit.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarycalc.code.tex)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
+tex.def)
+No file main.aux.
+
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
+ii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
+ase.sty
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.c
+fg)) (main.out) (main.out)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmss.fd)
+
+Package natbib Warning: Citation `wynants2020prediction' on page 1 undefined on
+ input line 33.
+
+
+Package natbib Warning: Citation `roberts2021common' on page 1 undefined on inp
+ut line 33.
+
+
+Package natbib Warning: Citation `kapoor2023leakage' on page 1 undefined on inp
+ut line 33.
+
+[1{C:/Users/nikhi/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/ni
+khi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}]
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd)
+
+LaTeX Warning: Reference `sec:setup' on page 2 undefined on input line 41.
+
+
+LaTeX Warning: Reference `sec:results' on page 2 undefined on input line 42.
+
+
+LaTeX Warning: Reference `sec:external' on page 2 undefined on input line 42.
+
+
+LaTeX Warning: Reference `tab:evidence' on page 2 undefined on input line 42.
+
+
+LaTeX Warning: Reference `sec:standard' on page 2 undefined on input line 43.
+
+
+LaTeX Warning: Reference `sec:limits' on page 2 undefined on input line 45.
+
+
+Package natbib Warning: Citation `beer1997vacuity' on page 2 undefined on input
+ line 50.
+
+
+Package natbib Warning: Citation `kupferman2003vacuity' on page 2 undefined on 
+input line 50.
+
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
+
+Package natbib Warning: Citation `damour2022underspecification' on page 2 undef
+ined on input line 52.
+
+
+Package natbib Warning: Citation `gulrajani2021search' on page 2 undefined on i
+nput line 52.
+
+
+Package natbib Warning: Citation `salaudeen2025misspecified' on page 2 undefine
+d on input line 52.
+
+
+Package natbib Warning: Citation `wynants2020prediction' on page 2 undefined on
+ input line 54.
+
+
+Package natbib Warning: Citation `roberts2021common' on page 2 undefined on inp
+ut line 54.
+
+
+Package natbib Warning: Citation `kapoor2023leakage' on page 2 undefined on inp
+ut line 54.
+
+
+Package natbib Warning: Citation `geirhos2020shortcut' on page 2 undefined on i
+nput line 54.
+
+
+Package natbib Warning: Citation `oakdenrayner2020hidden' on page 2 undefined o
+n input line 54.
+
+
+Package natbib Warning: Citation `zech2018variable' on page 2 undefined on inpu
+t line 54.
+
+
+Package natbib Warning: Citation `degrave2021shortcuts' on page 2 undefined on 
+input line 54.
+
+
+Package natbib Warning: Citation `rhee2017sepsis' on page 2 undefined on input 
+line 54.
+
+
+Package natbib Warning: Citation `yang2022leakage' on page 2 undefined on input
+ line 56.
+
+
+Package natbib Warning: Citation `subotic2022leakage' on page 2 undefined on in
+put line 56.
+
+
+LaTeX Warning: Reference `sec:external' on page 2 undefined on input line 56.
+
+
+Package natbib Warning: Citation `bellamy2019aif360' on page 2 undefined on inp
+ut line 56.
+
+
+Package natbib Warning: Citation `gulrajani2021search' on page 2 undefined on i
+nput line 56.
+
+
+Package natbib Warning: Citation `breck2017mltest' on page 2 undefined on input
+ line 58.
+
+
+Package natbib Warning: Citation `breck2019datavalidation' on page 2 undefined 
+on input line 58.
+
+
+Package natbib Warning: Citation `chorev2022deepchecks' on page 2 undefined on 
+input line 58.
+
+
+Package natbib Warning: Citation `mchugh2012kappa' on page 2 undefined on input
+ line 60.
+
+
+Package natbib Warning: Citation `cfr1607' on page 2 undefined on input line 60
+.
+
+
+Underfull \vbox (badness 1189) has occurred while \output is active [2{C:/Users
+/nikhi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}{C:/Users/ni
+khi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}]
+
+Package natbib Warning: Citation `saeb2017usecase' on page 3 undefined on input
+ line 62.
+
+
+Package natbib Warning: Citation `kearns2018gerrymandering' on page 3 undefined
+ on input line 62.
+
+
+Package natbib Warning: Citation `dwork2015reusable' on page 3 undefined on inp
+ut line 62.
+
+
+Package natbib Warning: Citation `simmons2011falsepositive' on page 3 undefined
+ on input line 62.
+
+
+Package natbib Warning: Citation `kerr1998harking' on page 3 undefined on input
+ line 62.
+
+
+LaTeX Warning: Reference `fig:stages' on page 3 undefined on input line 71.
+
+(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd) [3{C:/Use
+rs/nikhi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Use
+rs/nikhi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}]
+
+Package natbib Warning: Citation `efron1979bootstrap' on page 4 undefined on in
+put line 112.
+
+
+LaTeX Warning: Reference `apd:prereg' on page 4 undefined on input line 114.
+
+
+Package natbib Warning: Citation `clopper1934confidence' on page 4 undefined on
+ input line 114.
+
+
+Package natbib Warning: Citation `cohen1960kappa' on page 4 undefined on input 
+line 119.
+
+
+Package natbib Warning: Citation `singer2016sepsis3' on page 4 undefined on inp
+ut line 119.
+
+
+Package natbib Warning: Citation `vincent1996sofa' on page 4 undefined on input
+ line 119.
+
+
+Package natbib Warning: Citation `johnson2023mimiciv' on page 4 undefined on in
+put line 119.
+
+
+Package natbib Warning: Citation `pollard2018eicu' on page 4 undefined on input
+ line 119.
+
+
+Package natbib Warning: Citation `reyna2020early' on page 4 undefined on input 
+line 119.
+
+
+Package natbib Warning: Citation `goldberger2000physiobank' on page 4 undefined
+ on input line 119.
+
+
+LaTeX Warning: Reference `tab:depth' on page 4 undefined on input line 121.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 129--130
+[]\T1/lmr/m/n/8 full MIMIC-IV,
+
+Underfull \hbox (badness 10000) in paragraph at lines 130--131
+[]\T1/lmr/m/n/8 full-scale MIMIC-
+
+Underfull \hbox (badness 1466) in paragraph at lines 133--134
+[]\T1/lmr/m/n/8 ablation on eICU-
+
+LaTeX Warning: Reference `tab:evidence' on page 4 undefined on input line 143.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 151--151
+[]\T1/lmr/m/n/8 structural: 4/48 to
+
+Underfull \hbox (badness 5331) in paragraph at lines 151--151
+\T1/lmr/m/n/8 16/48 ap-pli-ca-ble sites
+
+Underfull \hbox (badness 4366) in paragraph at lines 151--151
+\T1/lmr/m/n/8 un-de-fined cells in an
+
+Underfull \hbox (badness 10000) in paragraph at lines 152--152
+[]\T1/lmr/m/n/8 detector 1 (mea-sured;
+
+Underfull \hbox (badness 2318) in paragraph at lines 152--152
+[]\T1/lmr/m/n/8 four-fifths rule in 133
+
+LaTeX Warning: Reference `fig:audit' on page 4 undefined on input line 152.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 152--153
+[]\T1/lmr/m/n/8 cohort boot-strap;
+
+Underfull \hbox (badness 2285) in paragraph at lines 152--153
+\T1/lmr/m/n/8 au-dit draws; Fig-
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--155
+[]\T1/lmr/m/n/8 pre-registration
+[4]
+
+LaTeX Warning: Reference `sec:external' on page 5 undefined on input line 175.
+
+
+LaTeX Warning: Reference `apd:positives' on page 5 undefined on input line 175.
+
+
+
+LaTeX Warning: Reference `tab:external' on page 5 undefined on input line 175.
+
+
+LaTeX Warning: Reference `fig:external' on page 5 undefined on input line 175.
+
+
+LaTeX Warning: Reference `apd:raters' on page 5 undefined on input line 175.
+
+[5]
+
+Package natbib Warning: Citation `gulrajani2021search' on page 6 undefined on i
+nput line 198.
+
+[6 <./figs/fig4_external.pdf>]
+
+LaTeX Warning: Reference `fig:audit' on page 7 undefined on input line 207.
+
+
+Package natbib Warning: Citation `mchugh2012kappa' on page 7 undefined on input
+ line 216.
+
+
+Underfull \vbox (badness 2653) has occurred while \output is active [7 <./figs/
+fig2_audit_size.pdf>]
+
+LaTeX Warning: Reference `fig:volume' on page 8 undefined on input line 231.
+
+[8]
+
+LaTeX Warning: Reference `tab:base' on page 9 undefined on input line 244.
+
+[9 <./figs/fig3_volume_control.pdf>]
+
+Package natbib Warning: Citation `cfr1607' on page 10 undefined on input line 2
+51.
+
+
+Package natbib Warning: Citation `ding2021retiring' on page 10 undefined on inp
+ut line 251.
+
+
+Package natbib Warning: Citation `ucicadult' on page 10 undefined on input line
+ 251.
+
+
+Package natbib Warning: Citation `angwin2016machinebias' on page 10 undefined o
+n input line 251.
+
+
+Package natbib Warning: Citation `gardner2023tableshift' on page 10 undefined o
+n input line 255.
+
+
+Package natbib Warning: Citation `collegescorecard' on page 10 undefined on inp
+ut line 255.
+
+
+Underfull \vbox (badness 4940) has occurred while \output is active [10]
+
+LaTeX Warning: Reference `apd:raters' on page 11 undefined on input line 263.
+
+
+Package natbib Warning: Citation `yang2022leakage' on page 11 undefined on inpu
+t line 265.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active [11]
+
+LaTeX Warning: Reference `fig:audit' on page 12 undefined on input line 276.
+
+
+LaTeX Warning: Reference `sec:detector2' on page 12 undefined on input line 277
+.
+
+
+LaTeX Warning: Reference `tab:depth' on page 12 undefined on input line 287.
+
+[12]
+No file main.bbl.
+
+LaTeX Warning: Reference `tab:raters' on page 13 undefined on input line 340.
+
+[13]
+
+LaTeX Warning: Reference `sec:external' on page 14 undefined on input line 363.
+
+
+
+Package natbib Warning: There were undefined citations.
+
+[14] (main.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ )
+(see the transcript file for additional information)<C:/Users/nikhi/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/nikhi/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/nikhi/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/nikhi/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/nikhi/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/lm/lmmi7.pfb><C:/Users/nikhi/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/nikhi/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/nikhi/AppData/Local/
+Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/nikhi/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/nikhi/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/nikhi/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/lm/lmri8.pfb><C:/Users/nikhi/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/nikhi/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/nikhi/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/nikhi/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/nikhi/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
+Output written on main.pdf (14 pages, 423524 bytes).
+Transcript written on main.log.

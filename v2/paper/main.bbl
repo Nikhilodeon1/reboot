@@ -1,0 +1,338 @@
+\begin{thebibliography}{43}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Angwin et~al.(2016)Angwin, Larson, Mattu, and
+  Kirchner]{angwin2016machinebias}
+Julia Angwin, Jeff Larson, Surya Mattu, and Lauren Kirchner.
+\newblock Machine bias.
+\newblock ProPublica,
+  \url{https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing},
+  2016.
+\newblock Published 2016-05-23; accessed 2026-11-04.
+
+\bibitem[Barr et~al.(2015)Barr, Harman, McMinn, Shahbaz, and
+  Yoo]{barr2015oracle}
+Earl~T. Barr, Mark Harman, Phil McMinn, Muzammil Shahbaz, and Shin Yoo.
+\newblock The oracle problem in software testing: A survey.
+\newblock \emph{IEEE Transactions on Software Engineering}, 41\penalty0
+  (5):\penalty0 507--525, 2015.
+
+\bibitem[Beer et~al.(1997)Beer, Ben-David, Eisner, and Rodeh]{beer1997vacuity}
+Ilan Beer, Shoham Ben-David, Cindy Eisner, and Yoav Rodeh.
+\newblock Efficient detection of vacuity in {ACTL} formulas.
+\newblock In \emph{Computer Aided Verification}, Lecture Notes in Computer
+  Science, pp.\  279--290. Springer, 1997.
+
+\bibitem[Bellamy et~al.(2019)Bellamy, Dey, Hind, Hoffman, Houde, Kannan, Lohia,
+  Martino, Mehta, Mojsilovi{\'c}, et~al.]{bellamy2019aif360}
+Rachel K.~E. Bellamy, Kuntal Dey, Michael Hind, Samuel~C. Hoffman, Stephanie
+  Houde, Kalapriya Kannan, Pranay Lohia, Jacquelyn Martino, Sameep Mehta,
+  Aleksandra Mojsilovi{\'c}, et~al.
+\newblock {AI Fairness 360}: An extensible toolkit for detecting and mitigating
+  algorithmic bias.
+\newblock \emph{IBM Journal of Research and Development}, 63\penalty0
+  (4/5):\penalty0 4:1--4:15, 2019.
+
+\bibitem[Breck et~al.(2017)Breck, Cai, Nielsen, Salib, and
+  Sculley]{breck2017mltest}
+Eric Breck, Shanqing Cai, Eric Nielsen, Michael Salib, and D.~Sculley.
+\newblock The {ML} test score: A rubric for {ML} production readiness and
+  technical debt reduction.
+\newblock In \emph{2017 IEEE International Conference on Big Data}, pp.\
+  1123--1132, 2017.
+
+\bibitem[Breck et~al.(2019)Breck, Polyzotis, Roy, Whang, and
+  Zinkevich]{breck2019datavalidation}
+Eric Breck, Neoklis Polyzotis, Sudip Roy, Steven~Euijong Whang, and Martin
+  Zinkevich.
+\newblock Data validation for machine learning.
+\newblock In \emph{Proceedings of the 2nd SysML Conference}, 2019.
+
+\bibitem[Chorev et~al.(2022)Chorev, Tannor, Ben~Israel, Bressler, Gabbay,
+  Hutnik, Liberman, Perlmutter, Romanyshyn, and Rokach]{chorev2022deepchecks}
+Shir Chorev, Philip Tannor, Dan Ben~Israel, Noam Bressler, Itay Gabbay, Nir
+  Hutnik, Jonatan Liberman, Matan Perlmutter, Yurii Romanyshyn, and Lior
+  Rokach.
+\newblock Deepchecks: A library for testing and validating machine learning
+  models and data.
+\newblock \emph{Journal of Machine Learning Research}, 23\penalty0
+  (285):\penalty0 1--6, 2022.
+
+\bibitem[Clopper \& Pearson(1934)Clopper and Pearson]{clopper1934confidence}
+C.~J. Clopper and E.~S. Pearson.
+\newblock The use of confidence or fiducial limits illustrated in the case of
+  the binomial.
+\newblock \emph{Biometrika}, 26\penalty0 (4):\penalty0 404--413, 1934.
+
+\bibitem[{Code of Federal Regulations}(2026)]{cfr1607}
+{Code of Federal Regulations}.
+\newblock 29 {CFR} {\S} 1607.4: Information on impact.
+\newblock Electronic Code of Federal Regulations,
+  \url{https://www.law.cornell.edu/cfr/text/29/1607.4}, 2026.
+\newblock Accessed 2026-11-04.
+
+\bibitem[Cohen(1960)]{cohen1960kappa}
+Jacob Cohen.
+\newblock A coefficient of agreement for nominal scales.
+\newblock \emph{Educational and Psychological Measurement}, 20\penalty0
+  (1):\penalty0 37--46, 1960.
+
+\bibitem[D'Amour et~al.(2022)D'Amour, Heller, Moldovan, Adlam, Alipanahi,
+  Beutel, Chen, Deaton, Eisenstein, Hoffman,
+  et~al.]{damour2022underspecification}
+Alexander D'Amour, Katherine Heller, Dan Moldovan, Ben Adlam, Babak Alipanahi,
+  Alex Beutel, Christina Chen, Jonathan Deaton, Jacob Eisenstein, Matthew~D.
+  Hoffman, et~al.
+\newblock Underspecification presents challenges for credibility in modern
+  machine learning.
+\newblock \emph{Journal of Machine Learning Research}, 23\penalty0
+  (226):\penalty0 1--61, 2022.
+
+\bibitem[DeGrave et~al.(2021)DeGrave, Janizek, and Lee]{degrave2021shortcuts}
+Alex~J. DeGrave, Joseph~D. Janizek, and Su-In Lee.
+\newblock {AI} for radiographic {COVID-19} detection selects shortcuts over
+  signal.
+\newblock \emph{Nature Machine Intelligence}, 3\penalty0 (7):\penalty0
+  610--619, 2021.
+
+\bibitem[Ding et~al.(2021)Ding, Hardt, Miller, and Schmidt]{ding2021retiring}
+Frances Ding, Moritz Hardt, John Miller, and Ludwig Schmidt.
+\newblock Retiring adult: New datasets for fair machine learning.
+\newblock In \emph{Advances in Neural Information Processing Systems 34}, 2021.
+
+\bibitem[Dwork et~al.(2015)Dwork, Feldman, Hardt, Pitassi, Reingold, and
+  Roth]{dwork2015reusable}
+Cynthia Dwork, Vitaly Feldman, Moritz Hardt, Toniann Pitassi, Omer Reingold,
+  and Aaron Roth.
+\newblock The reusable holdout: Preserving validity in adaptive data analysis.
+\newblock \emph{Science}, 349\penalty0 (6248):\penalty0 636--638, 2015.
+
+\bibitem[Efron(1979)]{efron1979bootstrap}
+B.~Efron.
+\newblock Bootstrap methods: Another look at the jackknife.
+\newblock \emph{The Annals of Statistics}, 7\penalty0 (1):\penalty0 1--26,
+  1979.
+
+\bibitem[Gardner et~al.(2023)Gardner, Popovi{\'c}, and
+  Schmidt]{gardner2023tableshift}
+Josh Gardner, Zoran Popovi{\'c}, and Ludwig Schmidt.
+\newblock Benchmarking distribution shift in tabular data with {TableShift}.
+\newblock In \emph{Advances in Neural Information Processing Systems, Datasets
+  and Benchmarks Track}, 2023.
+
+\bibitem[Geirhos et~al.(2020)Geirhos, Jacobsen, Michaelis, Zemel, Brendel,
+  Bethge, and Wichmann]{geirhos2020shortcut}
+Robert Geirhos, J{\"o}rn-Henrik Jacobsen, Claudio Michaelis, Richard Zemel,
+  Wieland Brendel, Matthias Bethge, and Felix~A. Wichmann.
+\newblock Shortcut learning in deep neural networks.
+\newblock \emph{Nature Machine Intelligence}, 2\penalty0 (11):\penalty0
+  665--673, 2020.
+
+\bibitem[Goldberger et~al.(2000)Goldberger, Amaral, Glass, Hausdorff, Ivanov,
+  Mark, Mietus, Moody, Peng, and Stanley]{goldberger2000physiobank}
+Ary~L. Goldberger, Luis A.~N. Amaral, Leon Glass, Jeffrey~M. Hausdorff,
+  Plamen~Ch. Ivanov, Roger~G. Mark, Joseph~E. Mietus, George~B. Moody,
+  Chung-Kang Peng, and H.~Eugene Stanley.
+\newblock {PhysioBank}, {PhysioToolkit}, and {PhysioNet}: Components of a new
+  research resource for complex physiologic signals.
+\newblock \emph{Circulation}, 101\penalty0 (23):\penalty0 e215--e220, 2000.
+
+\bibitem[Gulrajani \& Lopez-Paz(2021)Gulrajani and
+  Lopez-Paz]{gulrajani2021search}
+Ishaan Gulrajani and David Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Jia \& Harman(2011)Jia and Harman]{jia2011mutation}
+Yue Jia and Mark Harman.
+\newblock An analysis and survey of the development of mutation testing.
+\newblock \emph{IEEE Transactions on Software Engineering}, 37\penalty0
+  (5):\penalty0 649--678, 2011.
+
+\bibitem[Johnson et~al.(2023)Johnson, Bulgarelli, Shen, Gayles, Shammout,
+  Horng, Pollard, Hao, Moody, Gow, Lehman, Celi, and Mark]{johnson2023mimiciv}
+Alistair E.~W. Johnson, Lucas Bulgarelli, Lu~Shen, Alvin Gayles, Ayad Shammout,
+  Steven Horng, Tom~J. Pollard, Sicheng Hao, Benjamin Moody, Brian Gow,
+  Li-wei~H. Lehman, Leo~A. Celi, and Roger~G. Mark.
+\newblock {MIMIC-IV}, a freely accessible electronic health record dataset.
+\newblock \emph{Scientific Data}, 10\penalty0 (1):\penalty0 1, 2023.
+
+\bibitem[Kapoor \& Narayanan(2023)Kapoor and Narayanan]{kapoor2023leakage}
+Sayash Kapoor and Arvind Narayanan.
+\newblock Leakage and the reproducibility crisis in machine-learning-based
+  science.
+\newblock \emph{Patterns}, 4\penalty0 (9):\penalty0 100804, 2023.
+
+\bibitem[Kearns et~al.(2018)Kearns, Neel, Roth, and
+  Wu]{kearns2018gerrymandering}
+Michael Kearns, Seth Neel, Aaron Roth, and Zhiwei~Steven Wu.
+\newblock Preventing fairness gerrymandering: Auditing and learning for
+  subgroup fairness.
+\newblock In \emph{Proceedings of the 35th International Conference on Machine
+  Learning}, volume~80 of \emph{Proceedings of Machine Learning Research}, pp.\
+   2564--2572, 2018.
+
+\bibitem[Kerr(1998)]{kerr1998harking}
+Norbert~L. Kerr.
+\newblock {HARKing}: Hypothesizing after the results are known.
+\newblock \emph{Personality and Social Psychology Review}, 2\penalty0
+  (3):\penalty0 196--217, 1998.
+
+\bibitem[Kupferman \& Vardi(2003)Kupferman and Vardi]{kupferman2003vacuity}
+Orna Kupferman and Moshe~Y. Vardi.
+\newblock Vacuity detection in temporal model checking.
+\newblock \emph{International Journal on Software Tools for Technology
+  Transfer}, 4\penalty0 (2):\penalty0 224--233, 2003.
+
+\bibitem[McHugh(2012)]{mchugh2012kappa}
+Mary~L. McHugh.
+\newblock Interrater reliability: The kappa statistic.
+\newblock \emph{Biochemia Medica}, 22\penalty0 (3):\penalty0 276--282, 2012.
+
+\bibitem[Oakden-Rayner et~al.(2020)Oakden-Rayner, Dunnmon, Carneiro, and
+  R{\'e}]{oakdenrayner2020hidden}
+Luke Oakden-Rayner, Jared Dunnmon, Gustavo Carneiro, and Christopher R{\'e}.
+\newblock Hidden stratification causes clinically meaningful failures in
+  machine learning for medical imaging.
+\newblock In \emph{Proceedings of the ACM Conference on Health, Inference, and
+  Learning}, pp.\  151--159, 2020.
+
+\bibitem[Pollard et~al.(2018)Pollard, Johnson, Raffa, Celi, Mark, and
+  Badawi]{pollard2018eicu}
+Tom~J. Pollard, Alistair E.~W. Johnson, Jesse~D. Raffa, Leo~A. Celi, Roger~G.
+  Mark, and Omar Badawi.
+\newblock The {eICU} collaborative research database, a freely available
+  multi-center database for critical care research.
+\newblock \emph{Scientific Data}, 5:\penalty0 180178, 2018.
+
+\bibitem[Rabanser et~al.(2019)Rabanser, G{\"u}nnemann, and
+  Lipton]{rabanser2019failing}
+Stephan Rabanser, Stephan G{\"u}nnemann, and Zachary~C. Lipton.
+\newblock Failing loudly: An empirical study of methods for detecting dataset
+  shift.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~32, 2019.
+\newblock arXiv:1810.11953.
+
+\bibitem[Reyna et~al.(2020)Reyna, Josef, Jeter, Shashikumar, Westover, Nemati,
+  Clifford, and Sharma]{reyna2020early}
+Matthew~A. Reyna, Christopher~S. Josef, Russell Jeter, Supreeth~P. Shashikumar,
+  M.~Brandon Westover, Shamim Nemati, Gari~D. Clifford, and Ashish Sharma.
+\newblock Early prediction of sepsis from clinical data: The
+  {PhysioNet/Computing} in cardiology challenge 2019.
+\newblock \emph{Critical Care Medicine}, 48\penalty0 (2):\penalty0 210--217,
+  2020.
+
+\bibitem[Rhee et~al.(2017)Rhee, Dantes, Epstein, Murphy, Seymour, Iwashyna,
+  Kadri, Angus, Danner, Fiore, et~al.]{rhee2017sepsis}
+Chanu Rhee, Raymund Dantes, Lauren Epstein, David~J. Murphy, Christopher~W.
+  Seymour, Theodore~J. Iwashyna, Sameer~S. Kadri, Derek~C. Angus, Robert~L.
+  Danner, Anthony~E. Fiore, et~al.
+\newblock Incidence and trends of sepsis in {US} hospitals using clinical vs
+  claims data, 2009--2014.
+\newblock \emph{JAMA}, 318\penalty0 (13):\penalty0 1241--1249, 2017.
+
+\bibitem[Roberts et~al.(2021)Roberts, Driggs, Thorpe, Gilbey, Yeung, Ursprung,
+  Aviles-Rivero, Etmann, McCague, Beer, et~al.]{roberts2021common}
+Michael Roberts, Derek Driggs, Matthew Thorpe, Julian Gilbey, Michael Yeung,
+  Stephan Ursprung, Angelica~I. Aviles-Rivero, Christian Etmann, Cathal
+  McCague, Lucian Beer, et~al.
+\newblock Common pitfalls and recommendations for using machine learning to
+  detect and prognosticate for {COVID-19} using chest radiographs and {CT}
+  scans.
+\newblock \emph{Nature Machine Intelligence}, 3\penalty0 (3):\penalty0
+  199--217, 2021.
+
+\bibitem[Saeb et~al.(2017)Saeb, Lonini, Jayaraman, Mohr, and
+  Kording]{saeb2017usecase}
+Sohrab Saeb, Luca Lonini, Arun Jayaraman, David~C. Mohr, and Konrad~P. Kording.
+\newblock The need to approximate the use-case in clinical machine learning.
+\newblock \emph{GigaScience}, 6\penalty0 (5):\penalty0 1--9, 2017.
+
+\bibitem[Salaudeen et~al.(2025)Salaudeen, Chiou, Weng, and
+  Koyejo]{salaudeen2025misspecified}
+Olawale Salaudeen, Nicole Chiou, Shiny Weng, and Sanmi Koyejo.
+\newblock Are domain generalization benchmarks with accuracy on the line
+  misspecified?
+\newblock \emph{Transactions on Machine Learning Research}, 2025.
+\newblock arXiv:2504.00186.
+
+\bibitem[Simmons et~al.(2011)Simmons, Nelson, and
+  Simonsohn]{simmons2011falsepositive}
+Joseph~P. Simmons, Leif~D. Nelson, and Uri Simonsohn.
+\newblock False-positive psychology: Undisclosed flexibility in data collection
+  and analysis allows presenting anything as significant.
+\newblock \emph{Psychological Science}, 22\penalty0 (11):\penalty0 1359--1366,
+  2011.
+
+\bibitem[Singer et~al.(2016)Singer, Deutschman, Seymour, Shankar-Hari, Annane,
+  Bauer, Bellomo, Bernard, Chiche, Coopersmith, Hotchkiss, Levy, Marshall,
+  Martin, Opal, Rubenfeld, van~der Poll, Vincent, and Angus]{singer2016sepsis3}
+Mervyn Singer, Clifford~S. Deutschman, Christopher~Warren Seymour, Manu
+  Shankar-Hari, Djillali Annane, Michael Bauer, Rinaldo Bellomo, Gordon~R.
+  Bernard, Jean-Daniel Chiche, Craig~M. Coopersmith, Richard~S. Hotchkiss,
+  Mitchell~M. Levy, John~C. Marshall, Greg~S. Martin, Steven~M. Opal, Gordon~D.
+  Rubenfeld, Tom van~der Poll, Jean-Louis Vincent, and Derek~C. Angus.
+\newblock The third international consensus definitions for sepsis and septic
+  shock ({Sepsis-3}).
+\newblock \emph{JAMA}, 315\penalty0 (8):\penalty0 801--810, 2016.
+
+\bibitem[Suboti{\'c} et~al.(2022)Suboti{\'c}, Bojani{\'c}, and
+  Stoji{\'c}]{subotic2022leakage}
+Pavle Suboti{\'c}, Uro{\v s} Bojani{\'c}, and Milan Stoji{\'c}.
+\newblock Statically detecting data leakages in data science code.
+\newblock In \emph{International Workshop on the State Of the Art in Program
+  Analysis}, 2022.
+
+\bibitem[{UCI Machine Learning Repository}(1996)]{ucicadult}
+{UCI Machine Learning Repository}.
+\newblock Adult.
+\newblock \url{https://archive.ics.uci.edu/dataset/2/adult}, 1996.
+\newblock Donated 1996-04-30; accessed 2026-11-04.
+
+\bibitem[{U.S. Department of Education}(2026)]{collegescorecard}
+{U.S. Department of Education}.
+\newblock College scorecard: Most recent institution-level data.
+\newblock \url{https://collegescorecard.ed.gov/data/}, 2026.
+\newblock File Most-Recent-Cohorts-Institution\_11022026.zip; accessed
+  2026-11-04.
+
+\bibitem[Vincent et~al.(1996)Vincent, Moreno, Takala, Willatts,
+  De~Mendon{\c{c}}a, Bruining, Reinhart, Suter, and Thijs]{vincent1996sofa}
+J.-L. Vincent, R.~Moreno, J.~Takala, S.~Willatts, A.~De~Mendon{\c{c}}a,
+  H.~Bruining, C.~K. Reinhart, P.~M. Suter, and L.~G. Thijs.
+\newblock The {SOFA} (sepsis-related organ failure assessment) score to
+  describe organ dysfunction/failure.
+\newblock \emph{Intensive Care Medicine}, 22\penalty0 (7):\penalty0 707--710,
+  1996.
+
+\bibitem[Wynants et~al.(2020)Wynants, Van~Calster, Collins, Riley, Heinze,
+  Schuit, et~al.]{wynants2020prediction}
+Laure Wynants, Ben Van~Calster, Gary~S. Collins, Richard~D. Riley, Georg
+  Heinze, Ewoud Schuit, et~al.
+\newblock Prediction models for diagnosis and prognosis of {COVID-19}:
+  Systematic review and critical appraisal.
+\newblock \emph{BMJ}, 369:\penalty0 m1328, 2020.
+
+\bibitem[Yang et~al.(2022)Yang, Brower-Sinning, Lewis, and
+  K{\"a}stner]{yang2022leakage}
+Chenyang Yang, Rachel~A. Brower-Sinning, Grace~A. Lewis, and Christian
+  K{\"a}stner.
+\newblock Data leakage in notebooks: Static detection and better processes.
+\newblock In \emph{Proceedings of the 37th IEEE/ACM International Conference on
+  Automated Software Engineering}, pp.\  1--12, 2022.
+\newblock arXiv:2209.03345.
+
+\bibitem[Zech et~al.(2018)Zech, Badgeley, Liu, Costa, Titano, and
+  Oermann]{zech2018variable}
+John~R. Zech, Marcus~A. Badgeley, Manway Liu, Anthony~B. Costa, Joseph~J.
+  Titano, and E.~K. Oermann.
+\newblock Variable generalization performance of a deep learning model to
+  detect pneumonia in chest radiographs: A cross-sectional study.
+\newblock \emph{PLOS Medicine}, 15\penalty0 (11):\penalty0 e1002683, 2018.
+
+\end{thebibliography}

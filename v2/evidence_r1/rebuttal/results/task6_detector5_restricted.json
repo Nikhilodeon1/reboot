@@ -1,0 +1,315 @@
+{
+ "gates": {
+  "availability": 2.0,
+  "composition_gap_ratio": 0.3
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "physionet": {
+  "900": {
+   "full": {
+    "flagship": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.2771861889897929,
+     "gap_ratio_sd": 0.10141195803371013,
+     "gap_ratio_min": 0.1675518127360639,
+     "gap_ratio_max": 0.39897276204854437,
+     "avail_mean_finite": 35.109513108373676,
+     "gap_ratio_over_gate": 3,
+     "avail_over_gate": 5,
+     "flags_A_conjunction": "3/5",
+     "flags_B_availability_only": "5/5"
+    },
+    "control": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.23423975437269914,
+     "gap_ratio_sd": 0.3612058807021318,
+     "gap_ratio_min": 0.011923293995218784,
+     "gap_ratio_max": 0.8725719078511653,
+     "avail_mean_finite": 1.048841650624607,
+     "gap_ratio_over_gate": 1,
+     "avail_over_gate": 0,
+     "flags_A_conjunction": "0/5",
+     "flags_B_availability_only": "0/5"
+    }
+   },
+   "restricted": {
+    "flagship": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.9352755785425959,
+     "gap_ratio_sd": 0.06271153109671772,
+     "gap_ratio_min": 0.8514138958445826,
+     "gap_ratio_max": 1.0251444138081058,
+     "avail_mean_finite": 35.109513108373676,
+     "gap_ratio_over_gate": 5,
+     "avail_over_gate": 5,
+     "flags_A_conjunction": "5/5",
+     "flags_B_availability_only": "5/5"
+    },
+    "control": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 2.9045361677279944,
+     "gap_ratio_sd": 5.545788442271507,
+     "gap_ratio_min": 0.1589852533590057,
+     "gap_ratio_max": 12.818738061460826,
+     "avail_mean_finite": 1.0430885103510297,
+     "gap_ratio_over_gate": 4,
+     "avail_over_gate": 0,
+     "flags_A_conjunction": "0/5",
+     "flags_B_availability_only": "0/5"
+    }
+   }
+  },
+  "1500": {
+   "full": {
+    "flagship": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.28744478729330264,
+     "gap_ratio_sd": 0.07648365773913746,
+     "gap_ratio_min": 0.16680670240107184,
+     "gap_ratio_max": 0.3533511565192504,
+     "avail_mean_finite": 34.65922963830974,
+     "gap_ratio_over_gate": 3,
+     "avail_over_gate": 5,
+     "flags_A_conjunction": "3/5",
+     "flags_B_availability_only": "5/5"
+    },
+    "control": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 2.335897627711091,
+     "gap_ratio_sd": 3.2984892763120253,
+     "gap_ratio_min": 0.055454600444901504,
+     "gap_ratio_max": 7.390865147928021,
+     "avail_mean_finite": 1.0388883710431926,
+     "gap_ratio_over_gate": 2,
+     "avail_over_gate": 0,
+     "flags_A_conjunction": "0/5",
+     "flags_B_availability_only": "0/5"
+    }
+   },
+   "restricted": {
+    "flagship": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.9420182677680942,
+     "gap_ratio_sd": 0.04814498618081286,
+     "gap_ratio_min": 0.8987280710822902,
+     "gap_ratio_max": 1.0179073031466233,
+     "avail_mean_finite": 34.65922963830974,
+     "gap_ratio_over_gate": 5,
+     "avail_over_gate": 5,
+     "flags_A_conjunction": "5/5",
+     "flags_B_availability_only": "5/5"
+    },
+    "control": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.3356623503128945,
+     "gap_ratio_sd": 0.20732522736984565,
+     "gap_ratio_min": 0.1569855947662941,
+     "gap_ratio_max": 0.5922613966183572,
+     "avail_mean_finite": 1.0239035441528705,
+     "gap_ratio_over_gate": 2,
+     "avail_over_gate": 0,
+     "flags_A_conjunction": "0/5",
+     "flags_B_availability_only": "0/5"
+    }
+   }
+  }
+ },
+ "external": {
+  "n_eicu": 1563,
+  "n_mimic": 117,
+  "cases": {
+   "full": {
+    "E1 ablation 50%": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.5977772633763714,
+     "gap_ratio_sd": 0.6374702452739339,
+     "gap_ratio_min": 0.03703087040810035,
+     "gap_ratio_max": 1.6808103258701235,
+     "avail_mean_finite": 1.7171541652358802,
+     "gap_ratio_over_gate": 3,
+     "avail_over_gate": 1,
+     "flags_A_conjunction": "1/5",
+     "flags_B_availability_only": "1/5"
+    },
+    "E1 ablation 80%": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.7170536984581115,
+     "gap_ratio_sd": 0.49521121903803256,
+     "gap_ratio_min": 0.2059943444970355,
+     "gap_ratio_max": 1.4202482751265184,
+     "avail_mean_finite": 3.4800766994216255,
+     "gap_ratio_over_gate": 4,
+     "avail_over_gate": 5,
+     "flags_A_conjunction": "4/5",
+     "flags_B_availability_only": "5/5"
+    },
+    "E1 ablation 95%": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 4,
+     "gap_ratio_mean": 0.9355590789426087,
+     "gap_ratio_sd": 0.7071052338921605,
+     "gap_ratio_min": 0.288483460938127,
+     "gap_ratio_max": 1.9590934110309,
+     "avail_mean_finite": 114.145966709347,
+     "gap_ratio_over_gate": 4,
+     "avail_over_gate": 5,
+     "flags_A_conjunction": "4/5",
+     "flags_B_availability_only": "5/5"
+    },
+    "E2 eICU split, no ablation": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.2843078214320828,
+     "gap_ratio_sd": 0.2839587849850128,
+     "gap_ratio_min": 0.048615948217967234,
+     "gap_ratio_max": 0.7481500877972209,
+     "avail_mean_finite": 1.104123758901583,
+     "gap_ratio_over_gate": 2,
+     "avail_over_gate": 0,
+     "flags_A_conjunction": "0/5",
+     "flags_B_availability_only": "0/5"
+    },
+    "E4 PhysioNet A vs itself": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 1.4138676886682553,
+     "gap_ratio_sd": 2.722518418754144,
+     "gap_ratio_min": 0.08444790867123647,
+     "gap_ratio_max": 6.282526380680742,
+     "avail_mean_finite": 1.0644518955078703,
+     "gap_ratio_over_gate": 1,
+     "avail_over_gate": 0,
+     "flags_A_conjunction": "0/5",
+     "flags_B_availability_only": "0/5"
+    }
+   },
+   "restricted": {
+    "E1 ablation 50%": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 3.3401720089266718,
+     "gap_ratio_sd": 5.084230963335055,
+     "gap_ratio_min": 0.4583112408759034,
+     "gap_ratio_max": 12.35403104301927,
+     "avail_mean_finite": 1.7171541652358802,
+     "gap_ratio_over_gate": 5,
+     "avail_over_gate": 1,
+     "flags_A_conjunction": "1/5",
+     "flags_B_availability_only": "1/5"
+    },
+    "E1 ablation 80%": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 1.9529437318290725,
+     "gap_ratio_sd": 1.6417050570602454,
+     "gap_ratio_min": 0.6979994804371369,
+     "gap_ratio_max": 4.481583690014799,
+     "avail_mean_finite": 3.4800766994216255,
+     "gap_ratio_over_gate": 5,
+     "avail_over_gate": 5,
+     "flags_A_conjunction": "5/5",
+     "flags_B_availability_only": "5/5"
+    },
+    "E1 ablation 95%": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 4,
+     "gap_ratio_mean": 1.3750901269999507,
+     "gap_ratio_sd": 0.6903348969074902,
+     "gap_ratio_min": 0.7743779010326055,
+     "gap_ratio_max": 2.371855996914462,
+     "avail_mean_finite": 114.145966709347,
+     "gap_ratio_over_gate": 5,
+     "avail_over_gate": 5,
+     "flags_A_conjunction": "5/5",
+     "flags_B_availability_only": "5/5"
+    },
+    "E2 eICU split, no ablation": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.31031120597504197,
+     "gap_ratio_sd": 0.17159309784855564,
+     "gap_ratio_min": 0.09383653807449009,
+     "gap_ratio_max": 0.5601499962022448,
+     "avail_mean_finite": 1.100742776062732,
+     "gap_ratio_over_gate": 3,
+     "avail_over_gate": 0,
+     "flags_A_conjunction": "0/5",
+     "flags_B_availability_only": "0/5"
+    },
+    "E4 PhysioNet A vs itself": {
+     "n_seeds": 5,
+     "undecidable": 0,
+     "component_absent_one_side": 0,
+     "gap_ratio_mean": 0.584103007579653,
+     "gap_ratio_sd": 0.4931235633820293,
+     "gap_ratio_min": 0.17918084607669618,
+     "gap_ratio_max": 1.43981702314166,
+     "avail_mean_finite": 1.0513172479637785,
+     "gap_ratio_over_gate": 4,
+     "avail_over_gate": 0,
+     "flags_A_conjunction": "0/5",
+     "flags_B_availability_only": "0/5"
+    }
+   }
+  },
+  "E3_descriptive": {
+   "full": {
+    "A_conjunction": true,
+    "B_availability_only": true,
+    "avail": 3.1496768813841984,
+    "gap_ratio": 0.5844791971112343,
+    "naive_gap": 0.23387912651251253,
+    "comp_gap": 0.13669748408511012,
+    "n_a": 117,
+    "n_b": 1563,
+    "undecidable": false,
+    "component_absent_one_side": false
+   },
+   "restricted": {
+    "A_conjunction": true,
+    "B_availability_only": true,
+    "avail": 3.1496768813841984,
+    "gap_ratio": 0.9229502855348326,
+    "naive_gap": 0.18928794302448188,
+    "comp_gap": 0.17470336106274667,
+    "n_a": 117,
+    "n_b": 1563,
+    "undecidable": false,
+    "component_absent_one_side": false
+   }
+  }
+ }
+}

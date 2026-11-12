@@ -1,0 +1,47 @@
+{
+ "seed": 45,
+ "stays": 900,
+ "epochs": 3,
+ "device": "cpu",
+ "levels": {
+  "0.0": {
+   "probe_loss": 0.00705647561699152,
+   "indomain_auroc": 0.678125,
+   "target_auroc_probe": 0.5625570776255707,
+   "target_auroc_full": 0.6213375241442578,
+   "n_eval": 13882,
+   "n_eval_pos": 285
+  },
+  "0.05": {
+   "probe_loss": 0.006695748439856938,
+   "indomain_auroc": 0.678125,
+   "target_auroc_probe": 0.5616438356164384,
+   "target_auroc_full": 0.6218458922182267,
+   "n_eval": 13882,
+   "n_eval_pos": 285
+  },
+  "0.2": {
+   "probe_loss": 0.006265465336452637,
+   "indomain_auroc": 0.678125,
+   "target_auroc_probe": 0.5863013698630137,
+   "target_auroc_full": 0.622649991161621,
+   "n_eval": 13882,
+   "n_eval_pos": 285
+  },
+  "1.0": {
+   "probe_loss": 0.00574189519310104,
+   "indomain_auroc": 0.678125,
+   "target_auroc_probe": 0.5863013698630137,
+   "target_auroc_full": 0.6243448954813304,
+   "n_eval": 13882,
+   "n_eval_pos": 285
+  }
+ },
+ "n_site_b": 14779,
+ "n_heldout": 13882,
+ "env": {
+  "torch": "2.13.0+cpu",
+  "numpy": "2.4.3"
+ },
+ "seconds": 401.2
+}

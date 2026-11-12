@@ -1,0 +1,460 @@
+{
+ "rows": [
+  {
+   "idx": 0,
+   "repo": "omop-learn",
+   "file": "examples/eol/model_lr.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 1,
+   "repo": "time_aware_attention",
+   "file": "related_code/bayesian_train.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 2,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "model/behrt_train.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 3,
+   "repo": "DomainBed",
+   "file": "domainbed/hparams_registry.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 4,
+   "repo": "MIMIC_Extract",
+   "file": "notebooks/mmd_grud_utils.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 5,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 6,
+   "repo": "Benchmarking_DL_MIMICIII",
+   "file": "preprocessing/steps/get_17_features_raw.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 7,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/args.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 8,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 9,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/synthetic_data/collect_stats.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 10,
+   "repo": "circEWS",
+   "file": "circews/classes/lgbm_model.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 11,
+   "repo": "HurtfulWords",
+   "file": "scripts/utils.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 12,
+   "repo": "clinical-outcome-prediction",
+   "file": "experiments/outcome_pretraining.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 13,
+   "repo": "FIDDLE",
+   "file": "FIDDLE/helpers.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 14,
+   "repo": "robustdg",
+   "file": "train.py",
+   "label": "DISCLOSED_ORACLE",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 15,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "preprocessing/hosp_module_preproc/feature_selection_icu.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 16,
+   "repo": "DomainBed",
+   "file": "domainbed/hparams_registry.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 17,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 18,
+   "repo": "Benchmarking_DL_MIMICIII",
+   "file": "Codes/SuperLearnerPyVer/python/pgbart/src/bart_utils.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 19,
+   "repo": "eICU-GNN-LSTM",
+   "file": "src/args.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 20,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 21,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/models/wrappers.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 22,
+   "repo": "circEWS",
+   "file": "evaluation/precision_recall.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 23,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 24,
+   "repo": "clinical-outcome-prediction",
+   "file": "experiments/doc_classification.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 25,
+   "repo": "robustdg",
+   "file": "utils/scripts/ptb_utils.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 26,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "preprocess_outcomes.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 27,
+   "repo": "DomainBed",
+   "file": "domainbed/algorithms.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 28,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 29,
+   "repo": "Benchmarking_DL_MIMICIII",
+   "file": "preprocessing/steps/get_99plus_features_raw.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 30,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_dynamic.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 31,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/keras_utils.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 32,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/synthetic_data/collect_stats.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 33,
+   "repo": "circEWS",
+   "file": "circews/classes/imputer_ffill.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 34,
+   "repo": "HurtfulWords",
+   "file": "scripts/utils.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 35,
+   "repo": "robustdg",
+   "file": "train.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 36,
+   "repo": "MIMIC-IV-Data-Pipeline",
+   "file": "preprocessing/hosp_module_preproc/feature_selection_hosp.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 37,
+   "repo": "DomainBed",
+   "file": "domainbed/lib/query.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 38,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 39,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_gnn.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 40,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/rerun.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 41,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/models/wrappers.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 42,
+   "repo": "circEWS",
+   "file": "shapelet_features/shapelets/analyse_extracted_shapelets.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 43,
+   "repo": "HurtfulWords",
+   "file": "scripts/utils.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 44,
+   "repo": "robustdg",
+   "file": "utils/scripts/utils.py",
+   "label": "AMBIGUOUS",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 45,
+   "repo": "DomainBed",
+   "file": "domainbed/algorithms.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 46,
+   "repo": "TPC-LoS-prediction",
+   "file": "models/final_experiment_scripts/best_hyperparameters.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 47,
+   "repo": "eICU-GNN-LSTM",
+   "file": "train_ns_lstmgnn.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 48,
+   "repo": "mimic3-benchmarks",
+   "file": "mimic3models/rerun.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 49,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/labels/utils.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 50,
+   "repo": "circEWS",
+   "file": "shapelet_features/shapelets/analyse_extracted_shapelets.py",
+   "label": "NOT_SELECTION",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 51,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_target.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  },
+  {
+   "idx": 52,
+   "repo": "robustdg",
+   "file": "reproduce_scripts/slab-tune.py",
+   "label": "SOUND",
+   "shipped": "INDETERMINATE",
+   "extended": "INDETERMINATE"
+  }
+ ],
+ "table": {
+  "shipped": {
+   "SOUND": {
+    "INDETERMINATE": 21
+   },
+   "NOT_SELECTION": {
+    "INDETERMINATE": 30
+   },
+   "DISCLOSED_ORACLE": {
+    "INDETERMINATE": 1
+   },
+   "AMBIGUOUS": {
+    "INDETERMINATE": 1
+   }
+  },
+  "extended": {
+   "SOUND": {
+    "INDETERMINATE": 21
+   },
+   "NOT_SELECTION": {
+    "INDETERMINATE": 30
+   },
+   "DISCLOSED_ORACLE": {
+    "INDETERMINATE": 1
+   },
+   "AMBIGUOUS": {
+    "INDETERMINATE": 1
+   }
+  }
+ },
+ "distinct_files": 36,
+ "note": "file-level verdicts joined to site-level labels"
+}

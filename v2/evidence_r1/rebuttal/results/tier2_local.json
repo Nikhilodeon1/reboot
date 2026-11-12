@@ -1,0 +1,444 @@
+{
+ "seeds": [
+  42,
+  43,
+  44,
+  45,
+  46
+ ],
+ "n_source": 59686,
+ "n_holdout": 14921,
+ "n_pool": [
+  59686,
+  59686,
+  59686,
+  59686,
+  59686
+ ],
+ "A0_mean_loss": 0.0053486875447494985,
+ "env": {
+  "torch": "2.13.0+cpu",
+  "numpy": "2.4.3"
+ },
+ "task2": {
+  "5": {
+   "decidable": true,
+   "arms": {
+    "A1": {
+     "mean": 0.02526915786092604,
+     "sd": 0.015144872577969332,
+     "t_vs_A0": 3.730870261226058,
+     "per_seed": [
+      0.016989469112760808,
+      0.020409000673692362,
+      0.03221085120355089,
+      0.008901613575970527,
+      0.04783485473865562
+     ]
+    },
+    "A2": {
+     "mean": 0.013866231491411926,
+     "sd": 0.01573491593366509,
+     "t_vs_A0": 1.9705117165709103,
+     "per_seed": [
+      0.00802043730622172,
+      0.005470135450256616,
+      0.018341007092599775,
+      -0.0014734737745183272,
+      0.038973051382499846
+     ]
+    }
+   },
+   "t_A1_minus_A2": 9.0111238780064,
+   "r2_over_r1": 0.5487413378683832,
+   "corpus_size_confounded": true,
+   "R": null,
+   "verdict": "undetermined (A3 not built)"
+  },
+  "20": {
+   "decidable": true,
+   "arms": {
+    "A1": {
+     "mean": 0.07621976055727009,
+     "sd": 0.011159619481011991,
+     "t_vs_A0": 15.272256023137967,
+     "per_seed": [
+      0.08101754594441449,
+      0.06937074990329811,
+      0.07658681921585217,
+      0.06245588967065941,
+      0.09166779805212627
+     ]
+    },
+    "A2": {
+     "mean": 0.052268089682424246,
+     "sd": 0.014236045746300274,
+     "t_vs_A0": 8.209793903923778,
+     "per_seed": [
+      0.06012339692665248,
+      0.045707672684017125,
+      0.051001647945157456,
+      0.03348806153468048,
+      0.07101966932161367
+     ]
+    }
+   },
+   "t_A1_minus_A2": 15.432586359015009,
+   "r2_over_r1": 0.6857551020925996,
+   "corpus_size_confounded": true,
+   "R": null,
+   "verdict": "undetermined (A3 not built)"
+  }
+ },
+ "task5b": {
+  "sepsis": {
+   "gap0": [
+    0.05894438457226574,
+    0.05222627236944067,
+    0.0656624967750908,
+    5
+   ],
+   "levels": {
+    "0": {
+     "baselines": {
+      "kfold_cv_instability": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      },
+      "train_test_gap": {
+       "flags": 5,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.4781762498950183,
+        1.0
+       ]
+      },
+      "external_floor": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      }
+     },
+     "target_auroc_mean": 0.7084637749169398
+    },
+    "5": {
+     "baselines": {
+      "kfold_cv_instability": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      },
+      "train_test_gap": {
+       "flags": 4,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.28358206388191054,
+        0.9949492366205319
+       ]
+      },
+      "external_floor": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      }
+     },
+     "detector2": {
+      "rel_delta_mean": -0.02526915786092604,
+      "t": -3.730870261226058,
+      "flagged": true
+     },
+     "delta_target_auroc": [
+      0.0006627300899962219,
+      -0.0057774326234609616,
+      0.007102892803453405,
+      5
+     ],
+     "snr_ratio_of_means": 0.011243311721809831,
+     "target_auroc_mean": 0.7091265050069359
+    },
+    "20": {
+     "baselines": {
+      "kfold_cv_instability": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      },
+      "train_test_gap": {
+       "flags": 5,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.4781762498950183,
+        1.0
+       ]
+      },
+      "external_floor": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      }
+     },
+     "detector2": {
+      "rel_delta_mean": -0.07621976055727009,
+      "t": -15.272256023137967,
+      "flagged": true
+     },
+     "delta_target_auroc": [
+      -8.063803409141812e-06,
+      -0.00515904545074916,
+      0.005142917843930876,
+      5
+     ],
+     "snr_ratio_of_means": -0.00013680358981873157,
+     "target_auroc_mean": 0.7084557111135306
+    },
+    "100": {
+     "baselines": {
+      "kfold_cv_instability": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      },
+      "train_test_gap": {
+       "flags": 4,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.28358206388191054,
+        0.9949492366205319
+       ]
+      },
+      "external_floor": {
+       "flags": 2,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.05274495052631695,
+        0.853367200365327
+       ]
+      }
+     },
+     "detector2": {
+      "rel_delta_mean": -0.20850775393544682,
+      "t": -35.11150207687791,
+      "flagged": true
+     },
+     "delta_target_auroc": [
+      -0.002488606678557548,
+      -0.01800980662326991,
+      0.013032593266154814,
+      5
+     ],
+     "snr_ratio_of_means": -0.042219571832267065,
+     "target_auroc_mean": 0.7059751682383822
+    }
+   }
+  },
+  "mortality": {
+   "gap0": [
+    0.09156715327092257,
+    0.0764001089765557,
+    0.10673419756528944,
+    5
+   ],
+   "levels": {
+    "0": {
+     "baselines": {
+      "kfold_cv_instability": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      },
+      "train_test_gap": {
+       "flags": 5,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.4781762498950183,
+        1.0
+       ]
+      },
+      "external_floor": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      }
+     },
+     "target_auroc_mean": 0.7385014672480323
+    },
+    "5": {
+     "baselines": {
+      "kfold_cv_instability": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      },
+      "train_test_gap": {
+       "flags": 5,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.4781762498950183,
+        1.0
+       ]
+      },
+      "external_floor": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      }
+     },
+     "detector2": {
+      "rel_delta_mean": -0.02526915786092604,
+      "t": -3.730870261226058,
+      "flagged": true
+     },
+     "delta_target_auroc": [
+      0.001067735691920424,
+      -0.003628459253518861,
+      0.005763930637359709,
+      5
+     ],
+     "snr_ratio_of_means": 0.011660684577157064,
+     "target_auroc_mean": 0.7395692029399529
+    },
+    "20": {
+     "baselines": {
+      "kfold_cv_instability": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      },
+      "train_test_gap": {
+       "flags": 5,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.4781762498950183,
+        1.0
+       ]
+      },
+      "external_floor": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      }
+     },
+     "detector2": {
+      "rel_delta_mean": -0.07621976055727009,
+      "t": -15.272256023137967,
+      "flagged": true
+     },
+     "delta_target_auroc": [
+      -0.005635994372733899,
+      -0.019558594311843154,
+      0.008286605566375354,
+      5
+     ],
+     "snr_ratio_of_means": -0.06155039412504731,
+     "target_auroc_mean": 0.7328654728752985
+    },
+    "100": {
+     "baselines": {
+      "kfold_cv_instability": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      },
+      "train_test_gap": {
+       "flags": 5,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.4781762498950183,
+        1.0
+       ]
+      },
+      "external_floor": {
+       "flags": 0,
+       "decided": 5,
+       "undecidable": 0,
+       "cp95": [
+        0.0,
+        0.5218237501049814
+       ]
+      }
+     },
+     "detector2": {
+      "rel_delta_mean": -0.20850775393544682,
+      "t": -35.11150207687791,
+      "flagged": true
+     },
+     "delta_target_auroc": [
+      0.01296552430452691,
+      -0.00290902435095379,
+      0.02884007296000761,
+      5
+     ],
+     "snr_ratio_of_means": 0.14159579981879977,
+     "target_auroc_mean": 0.7514669915525594
+    }
+   }
+  }
+ },
+ "note": "A3 and A4 were not built (caches lack the pre-forward-fill series); R is undetermined"
+}

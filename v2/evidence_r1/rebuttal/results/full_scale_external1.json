@@ -1,0 +1,82 @@
+{
+  "MIMIC POSITIVE ICD vs SOFA win[-48,+24]": {
+    "flagged": true,
+    "expected": true,
+    "kappa": 0.20413521496553977,
+    "prevalence_ratio": 2.5717473481507227,
+    "n_audit": 500,
+    "n_cohort": 74829,
+    "prev_a": 0.1960469871306579,
+    "prev_b": 0.5096954389341031
+  },
+  "MIMIC negative SOFA win[-48,+24] vs SOFA single-point": {
+    "flagged": false,
+    "expected": false,
+    "kappa": 0.6341463414634145,
+    "prevalence_ratio": 1.6573204795083372,
+    "n_audit": 500,
+    "n_cohort": 74829,
+    "prev_a": 0.5096954389341031,
+    "prev_b": 0.3091849416670008
+  },
+  "MIMIC negative SOFA win[-48,+24] vs SOFA win[-24,+12]": {
+    "flagged": false,
+    "expected": false,
+    "kappa": 0.9276759884281581,
+    "prevalence_ratio": 1.1053897745746672,
+    "n_audit": 500,
+    "n_cohort": 74829,
+    "prev_a": 0.5096954389341031,
+    "prev_b": 0.46646353686405
+  },
+  "MIMIC negative SOFA win[-48,+24] vs SOFA win[-72,+24]": {
+    "flagged": false,
+    "expected": false,
+    "kappa": 0.9839794937520026,
+    "prevalence_ratio": 1.0049524517328903,
+    "n_audit": 500,
+    "n_cohort": 74829,
+    "prev_a": 0.5096954389341031,
+    "prev_b": 0.5128626601985861
+  },
+  "eICU POSITIVE ICD vs SOFA win[-48,+24]": {
+    "flagged": true,
+    "expected": true,
+    "kappa": 0.5137182637182637,
+    "prevalence_ratio": 1.2820609251598347,
+    "n_audit": 500,
+    "n_cohort": 132900,
+    "prev_a": 0.15237772761474794,
+    "prev_b": 0.1199699021820918
+  },
+  "eICU negative SOFA win[-48,+24] vs SOFA single-point": {
+    "flagged": false,
+    "expected": false,
+    "kappa": 0.8691955526487899,
+    "prevalence_ratio": 1.3625791003933643,
+    "n_audit": 500,
+    "n_cohort": 132900,
+    "prev_a": 0.1199699021820918,
+    "prev_b": 0.08752445447705041
+  },
+  "eICU negative SOFA win[-48,+24] vs SOFA win[-24,+12]": {
+    "flagged": false,
+    "expected": false,
+    "kappa": 0.9900231463005826,
+    "prevalence_ratio": 1.0257499678125401,
+    "n_audit": 500,
+    "n_cohort": 132900,
+    "prev_a": 0.1199699021820918,
+    "prev_b": 0.11702031602708804
+  },
+  "eICU negative SOFA win[-48,+24] vs SOFA win[-72,+24]": {
+    "flagged": false,
+    "expected": false,
+    "kappa": 1.0,
+    "prevalence_ratio": 1.001757248650684,
+    "n_audit": 500,
+    "n_cohort": 132900,
+    "prev_a": 0.1199699021820918,
+    "prev_b": 0.11999247554552295
+  }
+}

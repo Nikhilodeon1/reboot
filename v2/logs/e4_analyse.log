@@ -1,0 +1,42 @@
+{
+ "1200": {
+  "predicted_p": 0.417,
+  "flags": 13,
+  "of": 20,
+  "cp95": [
+   0.4078,
+   0.8461
+  ],
+  "reading": "consistent",
+  "fresh_ratio_mean": 0.34147788512777255,
+  "fresh_ratio_sd": 0.14513149532226588,
+  "round1_mean": 0.283,
+  "round1_sd": 0.082,
+  "negative_flags": 0,
+  "negative_cp95": [
+   0.0,
+   0.1684
+  ],
+  "max_avail_ratio_min": 25.12472785128119
+ },
+ "4000": {
+  "predicted_p": 0.148,
+  "flags": 8,
+  "of": 20,
+  "cp95": [
+   0.1912,
+   0.6395
+  ],
+  "reading": "not consistent",
+  "fresh_ratio_mean": 0.28015110226243517,
+  "fresh_ratio_sd": 0.054951891651337036,
+  "round1_mean": 0.272,
+  "round1_sd": 0.027,
+  "negative_flags": 0,
+  "negative_cp95": [
+   0.0,
+   0.1684
+  ],
+  "max_avail_ratio_min": 29.06565877454897
+ }
+}

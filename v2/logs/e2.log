@@ -1,0 +1,3 @@
+250 evaluated 133 m<=3 [114, 133, (0.7859, 0.9117)] coin-flip zone [102, 133, (0.6858, 0.8358)] undecidable draws 7078 / 266000
+500 evaluated 133 m<=3 [104, 133, (0.7021, 0.8488)] coin-flip zone [93, 133, (0.6137, 0.7757)] undecidable draws 1133 / 266000
+1000 evaluated 125 m<=3 [79, 125, (0.5411, 0.7165)] coin-flip zone [69, 125, (0.4605, 0.641)] undecidable draws 51 / 250000

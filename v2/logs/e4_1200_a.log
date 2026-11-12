@@ -1,0 +1,5 @@
+n=1200 seed=5 ratio=0.102 flagged=False neg_flagged=False
+n=1200 seed=6 ratio=0.450 flagged=True neg_flagged=False
+n=1200 seed=7 ratio=0.211 flagged=False neg_flagged=False
+n=1200 seed=8 ratio=0.202 flagged=False neg_flagged=False
+n=1200 seed=9 ratio=0.327 flagged=True neg_flagged=False

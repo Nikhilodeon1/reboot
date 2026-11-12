@@ -1,0 +1,186 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{wynants2020prediction}
+\citation{roberts2021common}
+\citation{kapoor2023leakage}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{beer1997vacuity}
+\citation{kupferman2003vacuity}
+\citation{damour2022underspecification}
+\citation{gulrajani2021search}
+\citation{salaudeen2025misspecified}
+\citation{wynants2020prediction,roberts2021common,kapoor2023leakage}
+\citation{geirhos2020shortcut,oakdenrayner2020hidden}
+\citation{zech2018variable}
+\citation{degrave2021shortcuts}
+\citation{rhee2017sepsis}
+\citation{yang2022leakage}
+\citation{subotic2022leakage}
+\citation{bellamy2019aif360}
+\citation{gulrajani2021search}
+\citation{breck2017mltest}
+\citation{breck2019datavalidation}
+\citation{chorev2022deepchecks}
+\citation{jia2011mutation}
+\citation{barr2015oracle}
+\citation{rabanser2019failing}
+\citation{mchugh2012kappa}
+\citation{cfr1607}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Vacuous success in verification.}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Validity of evaluation instruments.}{2}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Catalogues of confounds and leakage.}{2}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Static leakage tools and verdict-emitting toolkits.}{2}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Testing and validating ML systems.}{2}{section*.5}\protected@file@percent }
+\citation{saeb2017usecase}
+\citation{kearns2018gerrymandering}
+\citation{dwork2015reusable}
+\citation{simmons2011falsepositive}
+\citation{kerr1998harking}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Stage model of a diagnostic and where each failure mode enters. Type 1a enters at the decision rule and Type 1b at the controls; both give the same symptom, an undecided check scored as clean.}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:stages}{{1}{3}{Stage model of a diagnostic and where each failure mode enters. Type 1a enters at the decision rule and Type 1b at the controls; both give the same symptom, an undecided check scored as clean}{figure.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Thresholds as conventions.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Granularity, adaptive reuse and post hoc rules.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Setup: Diagnostics, Stages and Failure Modes}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Setup: Diagnostics, Stages and Failure Modes}{section.3}{}}
+\citation{efron1979bootstrap}
+\citation{clopper1934confidence}
+\citation{cohen1960kappa}
+\citation{singer2016sepsis3}
+\citation{vincent1996sofa}
+\citation{johnson2023mimiciv,pollard2018eicu,reyna2020early,goldberger2000physiobank}
+\@writefile{toc}{\contentsline {paragraph}{Margins and controls.}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Estimands and scale.}{4}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Pre-registration and intervals.}{4}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}The Five Detectors as Case Studies}{4}{section.4}\protected@file@percent }
+\newlabel{sec:detectors}{{4}{4}{The Five Detectors as Case Studies}{section.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}The Failure Modes, Measured}{4}{section.5}\protected@file@percent }
+\newlabel{sec:results}{{5}{4}{The Failure Modes, Measured}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Type 1: five vacuous passes in our own code}{4}{subsection.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Evidence strength per failure mode. Types 3 and 4 have no external instance, and the external Type 2 cases show the statistical mechanism and not the interchangeable-implementations clause.}}{5}{table.1}\protected@file@percent }
+\newlabel{tab:evidence}{{1}{5}{Evidence strength per failure mode. Types 3 and 4 have no external instance, and the external Type 2 cases show the statistical mechanism and not the interchangeable-implementations clause}{table.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{The test suite as a control (pre-registered mutation test).}{5}{section*.11}\protected@file@percent }
+\citation{gulrajani2021search}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Reachable and unguarded sites among applicable sampled sites in 25 repositories, with exact 95\% intervals. Fisher exact tests of verdict or selection against other code give $p=0.31$ (narrow) and $p=0.35$ (broad). The direction reverses with the convention, so we found no evidence that the pattern concentrates in code that renders verdicts.}}{6}{table.2}\protected@file@percent }
+\newlabel{tab:external}{{2}{6}{Reachable and unguarded sites among applicable sampled sites in 25 repositories, with exact 95\% intervals. Fisher exact tests of verdict or selection against other code give $p=0.31$ (narrow) and $p=0.35$ (broad). The direction reverses with the convention, so we found no evidence that the pattern concentrates in code that renders verdicts}{table.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Beyond our code (pre-registered patterns; convention not fixed).}{6}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Consequence in a public codebase (structural, not an exploit).}{6}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Type 2: a threshold on the value it must separate}{6}{subsection.5.2}\protected@file@percent }
+\newlabel{sec:type2}{{5.2}{6}{Type 2: a threshold on the value it must separate}{subsection.5.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Share of applicable sampled sites that are reachable and unguarded for the falsy-as-clean pattern, under our registered labels and under four blind raters, with exact 95\% intervals. The counts and the pool of applicable sites both depend on the labeller; the narrow reading excludes sites whose degenerate value arises only in diverged training.}}{7}{figure.2}\protected@file@percent }
+\newlabel{fig:external}{{2}{7}{Share of applicable sampled sites that are reachable and unguarded for the falsy-as-clean pattern, under our registered labels and under four blind raters, with exact 95\% intervals. The counts and the pool of applicable sites both depend on the labeller; the narrow reading excludes sites whose degenerate value arises only in diverged training}{figure.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{How special is the coincidence? (pre-registered, E8).}{7}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Does the model predict other audit sizes? (pre-registered, E3).}{7}{section*.15}\protected@file@percent }
+\citation{mchugh2012kappa}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Flag probability of detector 1 on full-scale labels. Points are observed rates over 2,000 audit draws with exact 95\% intervals; lines are the Type 2 model fixed before the run. (a) Against audit size: the MIMIC-IV control stays between 0.41 and 0.49 for every size from 100 to 5,000 stays, and the shaded band marks flag probabilities between 0.05 and 0.95. (b) The same 18 points against the signed margin of the threshold from the population value, in standard deviations of the audit statistic: the model curve is the normal distribution function, and the points follow it.}}{8}{figure.3}\protected@file@percent }
+\newlabel{fig:audit}{{3}{8}{Flag probability of detector 1 on full-scale labels. Points are observed rates over 2,000 audit draws with exact 95\% intervals; lines are the Type 2 model fixed before the run. (a) Against audit size: the MIMIC-IV control stays between 0.41 and 0.49 for every size from 100 to 5,000 stays, and the shaded band marks flag probabilities between 0.05 and 0.95. (b) The same 18 points against the signed margin of the threshold from the population value, in standard deviations of the audit statistic: the model curve is the normal distribution function, and the points follow it}{figure.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{A second instance (exploratory).}{8}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Type 3: granularity and pairing}{9}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Type 4: changes after a failure}{9}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Detector 2: a control that holds corpus size fixed}{9}{subsection.5.5}\protected@file@percent }
+\newlabel{sec:detector2}{{5.5}{9}{Detector 2: a control that holds corpus size fixed}{subsection.5.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Effect of the corpus-size control (A2) as a fraction of the effect of detector 2 (arm A1), by leakage level and scale, five seeds. Both full-scale bars exceed the pre-registered line of 0.5, but only the 20\% bar has an interval (0.55 to 0.78, exploratory) that excludes it.}}{10}{figure.4}\protected@file@percent }
+\newlabel{fig:volume}{{4}{10}{Effect of the corpus-size control (A2) as a fraction of the effect of detector 2 (arm A1), by leakage level and scale, five seeds. Both full-scale bars exceed the pre-registered line of 0.5, but only the 20\% bar has an interval (0.55 to 0.78, exploratory) that excludes it}{figure.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{A volume-matched statistic across doses (pre-registered).}{10}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The same sweep at full scale (pre-registered, E5-full).}{10}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Baselines.}{10}{section*.19}\protected@file@percent }
+\citation{cfr1607}
+\citation{ding2021retiring}
+\citation{ucicadult}
+\citation{angwin2016machinebias}
+\citation{gardner2023tableshift}
+\citation{collegescorecard}
+\@writefile{toc}{\contentsline {paragraph}{Downstream change.}{11}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Beyond Our Detectors}{11}{section.6}\protected@file@percent }
+\newlabel{sec:external}{{6}{11}{Beyond Our Detectors}{section.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Near-threshold verdicts in public data (pre-registered, descriptive).}{11}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Consequence in a public benchmark loader (pre-registered; stand-in pipeline).}{11}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Two more positives on their intended inputs (pre-registered; verbatim code).}{12}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{An executed fuzz of public checkers (pre-registered).}{12}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Detector 3 outside its home idiom.}{12}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Rater dependence of the model-selection labels.}{12}{section*.26}\protected@file@percent }
+\citation{yang2022leakage}
+\@writefile{toc}{\contentsline {paragraph}{A published static tool on our fixtures.}{13}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Baselines for the other detectors.}{13}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}A Reporting Standard for Diagnostics}{13}{section.7}\protected@file@percent }
+\newlabel{sec:standard}{{7}{13}{A Reporting Standard for Diagnostics}{section.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{13}{section.8}\protected@file@percent }
+\newlabel{sec:limits}{{8}{13}{Limitations}{section.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{Circularity.}{13}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Uneven evidence.}{13}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Limited demonstrated consequence outside our tools.}{13}{section*.31}\protected@file@percent }
+\bibstyle{tmlr}
+\bibdata{ref}
+\bibcite{angwin2016machinebias}{{1}{2016}{{Angwin et~al.}}{{Angwin, Larson, Mattu, and Kirchner}}}
+\bibcite{barr2015oracle}{{2}{2015}{{Barr et~al.}}{{Barr, Harman, McMinn, Shahbaz, and Yoo}}}
+\bibcite{beer1997vacuity}{{3}{1997}{{Beer et~al.}}{{Beer, Ben-David, Eisner, and Rodeh}}}
+\bibcite{bellamy2019aif360}{{4}{2019}{{Bellamy et~al.}}{{Bellamy, Dey, Hind, Hoffman, Houde, Kannan, Lohia, Martino, Mehta, Mojsilovi{\'c}, et~al.}}}
+\bibcite{breck2017mltest}{{5}{2017}{{Breck et~al.}}{{Breck, Cai, Nielsen, Salib, and Sculley}}}
+\bibcite{breck2019datavalidation}{{6}{2019}{{Breck et~al.}}{{Breck, Polyzotis, Roy, Whang, and Zinkevich}}}
+\bibcite{chorev2022deepchecks}{{7}{2022}{{Chorev et~al.}}{{Chorev, Tannor, Ben~Israel, Bressler, Gabbay, Hutnik, Liberman, Perlmutter, Romanyshyn, and Rokach}}}
+\bibcite{clopper1934confidence}{{8}{1934}{{Clopper \& Pearson}}{{Clopper and Pearson}}}
+\@writefile{toc}{\contentsline {paragraph}{Small internal suite.}{14}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Detector limits.}{14}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Small seed counts and definitions.}{14}{section*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{14}{section.9}\protected@file@percent }
+\newlabel{sec:conclusion}{{9}{14}{Conclusion}{section.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{Broader impact.}{14}{section*.35}\protected@file@percent }
+\bibcite{cfr1607}{{9}{2026}{{Code of Federal Regulations}}{{}}}
+\bibcite{cohen1960kappa}{{10}{1960}{{Cohen}}{{}}}
+\bibcite{damour2022underspecification}{{11}{2022}{{D'Amour et~al.}}{{D'Amour, Heller, Moldovan, Adlam, Alipanahi, Beutel, Chen, Deaton, Eisenstein, Hoffman, et~al.}}}
+\bibcite{degrave2021shortcuts}{{12}{2021}{{DeGrave et~al.}}{{DeGrave, Janizek, and Lee}}}
+\bibcite{ding2021retiring}{{13}{2021}{{Ding et~al.}}{{Ding, Hardt, Miller, and Schmidt}}}
+\bibcite{dwork2015reusable}{{14}{2015}{{Dwork et~al.}}{{Dwork, Feldman, Hardt, Pitassi, Reingold, and Roth}}}
+\bibcite{efron1979bootstrap}{{15}{1979}{{Efron}}{{}}}
+\bibcite{gardner2023tableshift}{{16}{2023}{{Gardner et~al.}}{{Gardner, Popovi{\'c}, and Schmidt}}}
+\bibcite{geirhos2020shortcut}{{17}{2020}{{Geirhos et~al.}}{{Geirhos, Jacobsen, Michaelis, Zemel, Brendel, Bethge, and Wichmann}}}
+\bibcite{goldberger2000physiobank}{{18}{2000}{{Goldberger et~al.}}{{Goldberger, Amaral, Glass, Hausdorff, Ivanov, Mark, Mietus, Moody, Peng, and Stanley}}}
+\bibcite{gulrajani2021search}{{19}{2021}{{Gulrajani \& Lopez-Paz}}{{Gulrajani and Lopez-Paz}}}
+\bibcite{jia2011mutation}{{20}{2011}{{Jia \& Harman}}{{Jia and Harman}}}
+\bibcite{johnson2023mimiciv}{{21}{2023}{{Johnson et~al.}}{{Johnson, Bulgarelli, Shen, Gayles, Shammout, Horng, Pollard, Hao, Moody, Gow, Lehman, Celi, and Mark}}}
+\bibcite{kapoor2023leakage}{{22}{2023}{{Kapoor \& Narayanan}}{{Kapoor and Narayanan}}}
+\bibcite{kearns2018gerrymandering}{{23}{2018}{{Kearns et~al.}}{{Kearns, Neel, Roth, and Wu}}}
+\bibcite{kerr1998harking}{{24}{1998}{{Kerr}}{{}}}
+\bibcite{kupferman2003vacuity}{{25}{2003}{{Kupferman \& Vardi}}{{Kupferman and Vardi}}}
+\bibcite{mchugh2012kappa}{{26}{2012}{{McHugh}}{{}}}
+\bibcite{oakdenrayner2020hidden}{{27}{2020}{{Oakden-Rayner et~al.}}{{Oakden-Rayner, Dunnmon, Carneiro, and R{\'e}}}}
+\bibcite{pollard2018eicu}{{28}{2018}{{Pollard et~al.}}{{Pollard, Johnson, Raffa, Celi, Mark, and Badawi}}}
+\bibcite{rabanser2019failing}{{29}{2019}{{Rabanser et~al.}}{{Rabanser, G{\"u}nnemann, and Lipton}}}
+\bibcite{reyna2020early}{{30}{2020}{{Reyna et~al.}}{{Reyna, Josef, Jeter, Shashikumar, Westover, Nemati, Clifford, and Sharma}}}
+\bibcite{rhee2017sepsis}{{31}{2017}{{Rhee et~al.}}{{Rhee, Dantes, Epstein, Murphy, Seymour, Iwashyna, Kadri, Angus, Danner, Fiore, et~al.}}}
+\bibcite{roberts2021common}{{32}{2021}{{Roberts et~al.}}{{Roberts, Driggs, Thorpe, Gilbey, Yeung, Ursprung, Aviles-Rivero, Etmann, McCague, Beer, et~al.}}}
+\bibcite{saeb2017usecase}{{33}{2017}{{Saeb et~al.}}{{Saeb, Lonini, Jayaraman, Mohr, and Kording}}}
+\bibcite{salaudeen2025misspecified}{{34}{2025}{{Salaudeen et~al.}}{{Salaudeen, Chiou, Weng, and Koyejo}}}
+\bibcite{simmons2011falsepositive}{{35}{2011}{{Simmons et~al.}}{{Simmons, Nelson, and Simonsohn}}}
+\bibcite{singer2016sepsis3}{{36}{2016}{{Singer et~al.}}{{Singer, Deutschman, Seymour, Shankar-Hari, Annane, Bauer, Bellomo, Bernard, Chiche, Coopersmith, Hotchkiss, Levy, Marshall, Martin, Opal, Rubenfeld, van~der Poll, Vincent, and Angus}}}
+\bibcite{subotic2022leakage}{{37}{2022}{{Suboti{\'c} et~al.}}{{Suboti{\'c}, Bojani{\'c}, and Stoji{\'c}}}}
+\bibcite{ucicadult}{{38}{1996}{{UCI Machine Learning Repository}}{{}}}
+\bibcite{collegescorecard}{{39}{2026}{{U.S. Department of Education}}{{}}}
+\bibcite{vincent1996sofa}{{40}{1996}{{Vincent et~al.}}{{Vincent, Moreno, Takala, Willatts, De~Mendon{\c {c}}a, Bruining, Reinhart, Suter, and Thijs}}}
+\bibcite{wynants2020prediction}{{41}{2020}{{Wynants et~al.}}{{Wynants, Van~Calster, Collins, Riley, Heinze, Schuit, et~al.}}}
+\bibcite{yang2022leakage}{{42}{2022}{{Yang et~al.}}{{Yang, Brower-Sinning, Lewis, and K{\"a}stner}}}
+\bibcite{zech2018variable}{{43}{2018}{{Zech et~al.}}{{Zech, Badgeley, Liu, Costa, Titano, and Oermann}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Reproduction}{17}{appendix.A}\protected@file@percent }
+\newlabel{apd:repro}{{A}{17}{Reproduction}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Pre-registration record (by commit order)}{17}{appendix.B}\protected@file@percent }
+\newlabel{apd:prereg}{{B}{17}{Pre-registration record (by commit order)}{appendix.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Baselines at the two scales}{17}{appendix.C}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Standard checks on the same trained models as detector 2. At demonstration scale the checks flag at 0\% leakage; at full scale only the gap fires there.}}{17}{table.3}\protected@file@percent }
+\newlabel{tab:base}{{3}{17}{Standard checks on the same trained models as detector 2. At demonstration scale the checks flag at 0\% leakage; at full scale only the gap fires there}{table.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Internal checks per detector at demonstration scale, with exact intervals; the control column counts the full-scale detector 1 controls by the margin rule. One-case denominators give intervals that span almost the whole unit interval, so none of these rows is a performance estimate. Detector 5 is a false negative.}}{18}{table.4}\protected@file@percent }
+\newlabel{tab:depth}{{4}{18}{Internal checks per detector at demonstration scale, with exact intervals; the control column counts the full-scale detector 1 controls by the margin rule. One-case denominators give intervals that span almost the whole unit interval, so none of these rows is a performance estimate. Detector 5 is a false negative}{table.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Internal checks per detector}{18}{appendix.D}\protected@file@percent }
+\newlabel{apd:depth}{{D}{18}{Internal checks per detector}{appendix.D}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}Second-rater agreement}{18}{appendix.E}\protected@file@percent }
+\newlabel{apd:raters}{{E}{18}{Second-rater agreement}{appendix.E}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Agreement of four blind raters with the labels committed before the detectors ran, as the count of agreeing sites with its exact 95\% interval and Cohen's $\kappa $. The three raters that saw only excerpts give the lowest values.}}{18}{table.5}\protected@file@percent }
+\newlabel{tab:raters}{{5}{18}{Agreement of four blind raters with the labels committed before the detectors ran, as the count of agreeing sites with its exact 95\% interval and Cohen's $\kappa $. The three raters that saw only excerpts give the lowest values}{table.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Counts under each rater.}{18}{section*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Adjudication (registered rule).}{18}{section*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {F}Type 1 positives}{19}{appendix.F}\protected@file@percent }
+\newlabel{apd:positives}{{F}{19}{Type 1 positives}{appendix.F}{}}
+\gdef \@abspage@last{19}

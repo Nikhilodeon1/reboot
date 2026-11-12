@@ -1,0 +1,101 @@
+{
+ "seed": 43,
+ "epochs": 3,
+ "device": "cpu",
+ "n_source": 59686,
+ "n_holdout": 14921,
+ "n_pool": 59686,
+ "n_probe": 32612,
+ "loss": {
+  "A0": 0.005396734706685769,
+  "A1@5": 0.00528659274442128,
+  "A2@5": 0.005367213836851097,
+  "A1@20": 0.005022359173053822,
+  "A2@20": 0.005150062523150101,
+  "A1@100": 0.004243394403268229
+ },
+ "readoff": {
+  "A0": {
+   "sepsis": {
+    "kfold_sd": 0.0041004793796703696,
+    "indomain_auroc": 0.7649918850500071,
+    "target_auroc": 0.7019939916825312,
+    "target_prevalence": 0.08736047893762589,
+    "source_prevalence": 0.30895018577575684
+   },
+   "mortality": {
+    "kfold_sd": 0.00508178984593961,
+    "indomain_auroc": 0.8325600265946171,
+    "target_auroc": 0.7303333086366777,
+    "target_prevalence": 0.08880166709423065,
+    "source_prevalence": 0.11872130632400513
+   }
+  },
+  "A1@5": {
+   "sepsis": {
+    "kfold_sd": 0.004256971192140108,
+    "indomain_auroc": 0.765046513585418,
+    "target_auroc": 0.7080820192401687,
+    "target_prevalence": 0.08736047893762589,
+    "source_prevalence": 0.30895018577575684
+   },
+   "mortality": {
+    "kfold_sd": 0.005019542498507775,
+    "indomain_auroc": 0.8327576077804076,
+    "target_auroc": 0.7345790146722304,
+    "target_prevalence": 0.08880166709423065,
+    "source_prevalence": 0.11872130632400513
+   }
+  },
+  "A1@20": {
+   "sepsis": {
+    "kfold_sd": 0.004578149203568081,
+    "indomain_auroc": 0.7632376548802344,
+    "target_auroc": 0.7077920014115963,
+    "target_prevalence": 0.08736047893762589,
+    "source_prevalence": 0.30895018577575684
+   },
+   "mortality": {
+    "kfold_sd": 0.005579967510732246,
+    "indomain_auroc": 0.8305179091447087,
+    "target_auroc": 0.7389446985793319,
+    "target_prevalence": 0.08880166709423065,
+    "source_prevalence": 0.11872130632400513
+   }
+  },
+  "A1@100": {
+   "sepsis": {
+    "kfold_sd": 0.005550402892704169,
+    "indomain_auroc": 0.761064981173864,
+    "target_auroc": 0.6841676363901946,
+    "target_prevalence": 0.08736047893762589,
+    "source_prevalence": 0.30895018577575684
+   },
+   "mortality": {
+    "kfold_sd": 0.004676225458815703,
+    "indomain_auroc": 0.8370060341104573,
+    "target_auroc": 0.7462541223583254,
+    "target_prevalence": 0.08880166709423065,
+    "source_prevalence": 0.11872130632400513
+   }
+  }
+ },
+ "n_extra": {
+  "5": 2984,
+  "20": 11937
+ },
+ "shortfall": [],
+ "steps_per_s": {
+  "A0": 20.1,
+  "A1@5": 21.9,
+  "A2@5": 21.9,
+  "A1@20": 22.4,
+  "A2@20": 21.4,
+  "A1@100": 20.2
+ },
+ "env": {
+  "torch": "2.13.0+cpu",
+  "numpy": "2.4.3"
+ },
+ "seconds": 4344.2
+}

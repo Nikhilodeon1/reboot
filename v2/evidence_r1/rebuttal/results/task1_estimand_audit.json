@@ -1,0 +1,18 @@
+{
+  "paper_sentence": "P(flag) 0.216 at n=117 -> 0.484 at full scale",
+  "demo_cohort_bootstrap_P_flag": 0.216,
+  "demo_audit_draw_P_flag": 0.0,
+  "demo_audit_n": 117,
+  "demo_cohort_n": 117,
+  "demo_audit_is_degenerate": true,
+  "full_audit_draw_P_flag": 0.484,
+  "full_cohort_bootstrap_P_flag_predicted": 0.217,
+  "demo_kappa": 0.6506469500924214,
+  "demo_kappa_ci": [
+    0.5265801590623691,
+    0.7739951744524002
+  ],
+  "full_kappa": 0.602,
+  "full_kappa_inside_demo_ci": true,
+  "finding": "0.216 is the COHORT bootstrap P(kappa<=0.60) at n=117; 0.484 is the AUDIT-DRAW P(flag) at n=74,829. Different estimands. At demo scale the audit subset IS the whole cohort (min(500,117)=117 drawn without replacement), so the audit-draw estimand has zero variance and gives P=0.000. Like-for-like on the cohort bootstrap, full scale is ~0.22, essentially demo's 0.216. The demo kappa CI also contains the full-cohort value, so the two estimates are not distinguishable."
+}

@@ -1,0 +1,19 @@
+MIMIC control n=100: obs 984/2000 = 0.492 predicted 0.489
+MIMIC control n=200: obs 959/2000 = 0.479 predicted 0.485
+MIMIC control n=500: obs 974/2000 = 0.487 predicted 0.476
+MIMIC control n=1000: obs 921/2000 = 0.461 predicted 0.466
+MIMIC control n=2000: obs 852/2000 = 0.426 predicted 0.452
+MIMIC control n=5000: obs 822/2000 = 0.411 predicted 0.422
+eICU positive n=100: obs 1793/2000 = 0.896 predicted 0.876
+eICU positive n=200: obs 1917/2000 = 0.959 predicted 0.949
+eICU positive n=500: obs 1995/2000 = 0.998 predicted 0.995
+eICU positive n=1000: obs 2000/2000 = 1.000 predicted 1.000
+eICU positive n=2000: obs 2000/2000 = 1.000 predicted 1.000
+eICU positive n=5000: obs 2000/2000 = 1.000 predicted 1.000
+eICU control n=100: obs 74/2000 = 0.037 predicted 0.008
+eICU control n=200: obs 9/2000 = 0.004 predicted 0.000
+eICU control n=500: obs 0/2000 = 0.000 predicted 0.000
+eICU control n=1000: obs 0/2000 = 0.000 predicted 0.000
+eICU control n=2000: obs 0/2000 = 0.000 predicted 0.000
+eICU control n=5000: obs 0/2000 = 0.000 predicted 0.000
+wrote e3_d1_audit_size.json; readings: {'MIMIC control': 'supported', 'eICU positive': 'supported', 'eICU control': 'supported'} n*: 62500
