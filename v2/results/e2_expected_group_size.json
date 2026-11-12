@@ -1,0 +1,78 @@
+{
+ "expected_smaller_group_at_least_25": {
+  "cases": 63,
+  "coin_flip_zone": [
+   27,
+   63,
+   [
+    0.305,
+    0.559
+   ]
+  ],
+  "m_le_3": [
+   37,
+   63,
+   [
+    0.456,
+    0.71
+   ]
+  ]
+ },
+ "expected_smaller_group_at_least_50": {
+  "cases": 49,
+  "coin_flip_zone": [
+   19,
+   49,
+   [
+    0.252,
+    0.538
+   ]
+  ],
+  "m_le_3": [
+   25,
+   49,
+   [
+    0.363,
+    0.656
+   ]
+  ]
+ },
+ "expected_smaller_group_at_least_100": {
+  "cases": 39,
+  "coin_flip_zone": [
+   13,
+   39,
+   [
+    0.191,
+    0.502
+   ]
+  ],
+  "m_le_3": [
+   18,
+   39,
+   [
+    0.301,
+    0.628
+   ]
+  ]
+ },
+ "expected_smaller_group_at_least_200": {
+  "cases": 33,
+  "coin_flip_zone": [
+   11,
+   33,
+   [
+    0.18,
+    0.518
+   ]
+  ],
+  "m_le_3": [
+   16,
+   33,
+   [
+    0.308,
+    0.665
+   ]
+  ]
+ }
+}

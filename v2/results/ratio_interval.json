@@ -1,0 +1,38 @@
+{
+ "demonstration_5pct": {
+  "ratio": 0.3072512683662542,
+  "fieller95": [
+   -1.3162668674198135,
+   0.6401691775201366
+  ],
+  "prereg_line": 0.5,
+  "interval_includes_line": true
+ },
+ "demonstration_20pct": {
+  "ratio": 0.48329297669567495,
+  "fieller95": [
+   0.37823189827409875,
+   0.6058156463094752
+  ],
+  "prereg_line": 0.5,
+  "interval_includes_line": true
+ },
+ "full_5pct": {
+  "ratio": 0.5487413378683832,
+  "fieller95": [
+   -0.8553434747978875,
+   0.7773699657754282
+  ],
+  "prereg_line": 0.5,
+  "interval_includes_line": true
+ },
+ "full_20pct": {
+  "ratio": 0.6857551020925996,
+  "fieller95": [
+   0.5529299730691308,
+   0.7789616462669378
+  ],
+  "prereg_line": 0.5,
+  "interval_includes_line": false
+ }
+}

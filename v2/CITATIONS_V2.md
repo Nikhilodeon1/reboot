@@ -50,6 +50,9 @@ the full count is in the Notes column.
 | collegescorecard | collegescorecard.ed.gov/data/ | VERIFIED (page) | the most-recent institution-level file (24 MB zip) exists | file Most-Recent-Cohorts-Institution_11022026.zip; accessed 2026-11-04 |
 | clopper1934confidence | Crossref | VERIFIED (metadata) | exact binomial confidence limits | Biometrika 26(4):404-413, 1934 |
 | efron1979bootstrap | Crossref | VERIFIED (metadata) | the bootstrap | Ann Stat 7(1):1-26, 1979 |
+| jia2011mutation | Crossref doi 10.1109/TSE.2010.62 (checked 2026-11-11) | VERIFIED | A survey of the development of mutation testing (title); cited only as the source of the idea of seeded faults | IEEE TSE 37(5):649-678, 2011; Jia, Harman |
+| barr2015oracle | Crossref doi 10.1109/TSE.2014.2372785 (checked 2026-11-11) | VERIFIED | A survey of the oracle problem in software testing (title); cited only for the problem of deciding that an output is correct | IEEE TSE 41(5):507-525, 2015; Barr, Harman, McMinn, Shahbaz, Yoo |
+| rabanser2019failing | arxiv.org/abs/1810.11953 v4 (checked 2026-11-11) | VERIFIED | ML systems "tend to fail silently" on unexpected inputs; the paper studies methods for detecting dataset shift (abstract) | arXiv comment: NeurIPS 2019; Rabanser, Guennemann, Lipton; NeurIPS volume 32. Abstract level only; the paper's claim stays at that level |
 
 ## Removed
 
@@ -77,7 +80,7 @@ now attributes only the criteria to Singer et al.; window scoring is described a
 Added 21 entries: testing and validating ML systems (Breck 2017, Breck 2019, Chorev 2022), thresholds as conventions (McHugh 2012,
 29 CFR 1607.4), granularity and adaptive reuse (Saeb 2017, Kearns 2018, Dwork 2015), post hoc rules (Kerr 1998, Simmons 2011), clinical
 confounds and labels (Zech 2018, DeGrave 2021, Rhee 2017, Vincent 1996), data sources (Ding 2021, Angwin 2016, UCI Adult, Gardner 2023,
-College Scorecard) and statistics (Clopper and Pearson 1934, Efron 1979). Total 40 entries: 38 VERIFIED (of which Vincent, Clopper and
+College Scorecard) and statistics (Clopper and Pearson 1934, Efron 1979). Total 43 entries: 41 VERIFIED (of which Vincent, Clopper and
 Pearson, Efron, Johnson, Pollard, Reyna, Goldberger, Singer are metadata-level checks of a dataset or method reference), 2 METADATA-ONLY
 (beer1997vacuity, cohen1960kappa). Summarizer-read abstracts (Kerr, Simmons, Zech) have exact Crossref or Europe PMC metadata but their
 abstracts were read through a summarizer; the paper's claims about them stay at the level of the abstract. `v2/scripts/cite_check.py`

@@ -1,0 +1,191 @@
+{
+ "note": "exploratory; each entry is [mean, lower, upper] of a t-interval over five random 70/30 splits (df 4)",
+ "aggregate": {
+  "unguarded_test": {
+   "pos_share": [
+    0.18862911795961743,
+    0.17776813542363276,
+    0.1994901004956021
+   ],
+   "accuracy": [
+    0.9212539851222104,
+    0.9147160559134705,
+    0.9277919143309502
+   ],
+   "majority_accuracy": [
+    0.8113708820403825,
+    0.8005098995043979,
+    0.8222318645763672
+   ],
+   "balanced_accuracy": [
+    0.8561032991833137,
+    0.8453060905983044,
+    0.8669005077683231
+   ],
+   "auroc": [
+    0.9680461596370072,
+    0.9635929304555676,
+    0.9724993888184469
+   ]
+  },
+  "observed_rows_test": {
+   "pos_share": [
+    0.5175660236773918,
+    0.5028640982579893,
+    0.5322679490967943
+   ],
+   "accuracy": [
+    0.7904076862684155,
+    0.7797558526315681,
+    0.8010595199052629
+   ],
+   "majority_accuracy": [
+    0.5175660236773918,
+    0.5028640982579893,
+    0.5322679490967943
+   ],
+   "balanced_accuracy": [
+    0.7921121149956205,
+    0.7810795301078456,
+    0.8031446998833954
+   ],
+   "auroc": [
+    0.8763373388394304,
+    0.8634004756681849,
+    0.889274202010676
+   ]
+  },
+  "accuracy_above_majority_unguarded": [
+   0.10988310308182785,
+   0.10281722436139205,
+   0.11694898180226364
+  ],
+  "accuracy_above_majority_observed": [
+   0.2728416625910239,
+   0.253030546520291,
+   0.29265277866175676
+  ],
+  "accuracy_on_missing_rows": [
+   0.9962996405299354,
+   0.9928907417762188,
+   0.9997085392836519
+  ]
+ },
+ "per_split": [
+  {
+   "seed": 0,
+   "unguarded_test": {
+    "n": 1882,
+    "pos_share": 0.1891604675876727,
+    "accuracy": 0.9192348565356004,
+    "majority_accuracy": 0.8108395324123273,
+    "balanced_accuracy": 0.8672798827808621,
+    "auroc": 0.9645323751601456
+   },
+   "observed_rows_test": {
+    "n": 707,
+    "pos_share": 0.5035360678925035,
+    "accuracy": 0.7934936350777935,
+    "majority_accuracy": 0.5035360678925035,
+    "balanced_accuracy": 0.7935633342936714,
+    "auroc": 0.8727071929319121
+   },
+   "missing_rows_test": {
+    "n": 1175,
+    "accuracy": 0.9948936170212765
+   }
+  },
+  {
+   "seed": 1,
+   "unguarded_test": {
+    "n": 1882,
+    "pos_share": 0.19872476089266738,
+    "accuracy": 0.9160467587672688,
+    "majority_accuracy": 0.8012752391073326,
+    "balanced_accuracy": 0.8591433921048526,
+    "auroc": 0.9684605455396531
+   },
+   "observed_rows_test": {
+    "n": 706,
+    "pos_share": 0.5297450424929179,
+    "accuracy": 0.7889518413597734,
+    "majority_accuracy": 0.5297450424929179,
+    "balanced_accuracy": 0.7904854712969525,
+    "auroc": 0.8794133754268412
+   },
+   "missing_rows_test": {
+    "n": 1176,
+    "accuracy": 0.9923469387755102
+   }
+  },
+  {
+   "seed": 2,
+   "unguarded_test": {
+    "n": 1882,
+    "pos_share": 0.17534537725823593,
+    "accuracy": 0.9293304994686503,
+    "majority_accuracy": 0.824654622741764,
+    "balanced_accuracy": 0.8581341768197439,
+    "auroc": 0.9730338175570135
+   },
+   "observed_rows_test": {
+    "n": 647,
+    "pos_share": 0.5100463678516228,
+    "accuracy": 0.8006182380216383,
+    "majority_accuracy": 0.5100463678516228,
+    "balanced_accuracy": 0.8016872191951057,
+    "auroc": 0.8902781760825924
+   },
+   "missing_rows_test": {
+    "n": 1235,
+    "accuracy": 0.9967611336032388
+   }
+  },
+  {
+   "seed": 3,
+   "unguarded_test": {
+    "n": 1882,
+    "pos_share": 0.18650371944739638,
+    "accuracy": 0.9181721572794899,
+    "majority_accuracy": 0.8134962805526036,
+    "balanced_accuracy": 0.851991417634788,
+    "auroc": 0.9646247262184557
+   },
+   "observed_rows_test": {
+    "n": 682,
+    "pos_share": 0.5146627565982405,
+    "accuracy": 0.7771260997067448,
+    "majority_accuracy": 0.5146627565982405,
+    "balanced_accuracy": 0.7780532100773793,
+    "auroc": 0.8616555202657922
+   },
+   "missing_rows_test": {
+    "n": 1200,
+    "accuracy": 0.9983333333333333
+   }
+  },
+  {
+   "seed": 4,
+   "unguarded_test": {
+    "n": 1882,
+    "pos_share": 0.19341126461211477,
+    "accuracy": 0.9234856535600425,
+    "majority_accuracy": 0.8065887353878852,
+    "balanced_accuracy": 0.8439676265763223,
+    "auroc": 0.9695793337097686
+   },
+   "observed_rows_test": {
+    "n": 687,
+    "pos_share": 0.529839883551674,
+    "accuracy": 0.7918486171761281,
+    "majority_accuracy": 0.529839883551674,
+    "balanced_accuracy": 0.7967713401149934,
+    "auroc": 0.8776324294900146
+   },
+   "missing_rows_test": {
+    "n": 1195,
+    "accuracy": 0.999163179916318
+   }
+  }
+ ]
+}
