@@ -27,7 +27,7 @@ the full count is in the Notes column.
 | yang2022leakage | arxiv.org/abs/2209.03345 | VERIFIED | Static analysis to detect common forms of data leakage in notebooks (abstract); the three category names are from our own run of the tool | Crossref (ACM, doi 10.1145/3551349.3556918): Proceedings of the 37th IEEE/ACM International Conference on Automated Software Engineering (ASE '22), pp. 1-12, 10 Oct 2022; arXiv v1 7 Sep 2022 |
 | subotic2022leakage | microsoft.com Research publication page | VERIFIED | Static data-leakage analysis intended for development time (abstract) | SOAP 2022, June 2022 |
 | kupferman2003vacuity | link.springer.com/article/10.1007/s100090100062; Crossref | VERIFIED | Suspecting an error when model checking succeeds; vacuous satisfaction; "Beer et al. described a method for the detection of vacuous satisfaction" (abstract) | STTT 4(2):224-233, Feb 2003; Kupferman and Vardi |
-| beer1997vacuity | Crossref | METADATA-ONLY | Existence; the attribution of vacuity detection comes from the Kupferman and Vardi abstract | LNCS (CAV 1997) pp. 279-290; the volume number 1254 came from search results only and is not in the bib |
+| beer1997vacuity | Springer chapter page, doi.org/10.1007/3-540-63166-6_28 (opened 2026-11-13); DBLP conf/cav/BeerBER97 | VERIFIED (abstract) | Defines a vacuous pass and extends vacuity to other trivial passes in temporal logic; shows how to detect it for w-ACTL (abstract: "We call this a vacuous pass") | LNCS 1254 (CAV 1997) pp. 279-290; four authors confirmed; full text not opened |
 | cohen1960kappa | Crossref | METADATA-ONLY | Existence of the kappa statistic (definition pointer) | Educ Psychol Meas 20(1):37-46, Apr 1960 |
 | breck2017mltest | research.google pub page; Crossref (10.1109/BigData.2017.8258038) | VERIFIED | "we present 28 specific tests and monitoring needs" (abstract) | IEEE Big Data 2017, pp. 1123-1132; 5 authors |
 | breck2019datavalidation | proceedings.mlsys.org abstract page and the paper PDF | VERIFIED | presents a data validation system that detects anomalies in data fed into ML pipelines, deployed in TFX at Google (abstract) | SysML 2019 (2nd SysML Conference); author order taken from the PDF title page (the proceedings page lists a different order) |
@@ -66,7 +66,7 @@ the full count is in the Notes column.
 
 Another reader reopens every URL above, rechecks metadata and the passage, and settles disagreements against the source.
 Counts on 2026-11-04 before the sweep: 19 entries; 17 VERIFIED (one of them, wynants2020prediction, with a correction to the claim),
-2 METADATA-ONLY (beer1997vacuity, cohen1960kappa); 2 removed (landis1977measurement, mahajan2021domain).
+2 METADATA-ONLY (beer1997vacuity, cohen1960kappa; beer1997vacuity upgraded on 2026-11-13); 2 removed (landis1977measurement, mahajan2021domain).
 
 ## Second pass, 2026-11-04 (same reader, different routes)
 
@@ -80,8 +80,8 @@ now attributes only the criteria to Singer et al.; window scoring is described a
 Added 21 entries: testing and validating ML systems (Breck 2017, Breck 2019, Chorev 2022), thresholds as conventions (McHugh 2012,
 29 CFR 1607.4), granularity and adaptive reuse (Saeb 2017, Kearns 2018, Dwork 2015), post hoc rules (Kerr 1998, Simmons 2011), clinical
 confounds and labels (Zech 2018, DeGrave 2021, Rhee 2017, Vincent 1996), data sources (Ding 2021, Angwin 2016, UCI Adult, Gardner 2023,
-College Scorecard) and statistics (Clopper and Pearson 1934, Efron 1979). Total 43 entries: 41 VERIFIED (of which Vincent, Clopper and
-Pearson, Efron, Johnson, Pollard, Reyna, Goldberger, Singer are metadata-level checks of a dataset or method reference), 2 METADATA-ONLY
-(beer1997vacuity, cohen1960kappa). Summarizer-read abstracts (Kerr, Simmons, Zech) have exact Crossref or Europe PMC metadata but their
+College Scorecard) and statistics (Clopper and Pearson 1934, Efron 1979). Total 43 entries: 42 VERIFIED (of which Vincent, Clopper and
+Pearson, Efron, Johnson, Pollard, Reyna, Goldberger, Singer are metadata-level checks of a dataset or method reference), 1 METADATA-ONLY
+(cohen1960kappa). Summarizer-read abstracts (Kerr, Simmons, Zech) have exact Crossref or Europe PMC metadata but their
 abstracts were read through a summarizer; the paper's claims about them stay at the level of the abstract. `v2/scripts/cite_check.py`
 confirms that every cited key is in the bibliography, every entry is cited, and every entry has a row here.
