@@ -54,7 +54,7 @@ def fig_audit_size():
     bx.set_xlim(-6, 9)
     bx.set_xlabel("signed margin in SDs of the audit statistic")
     bx.set_ylim(-0.03, 1.03)
-    bx.set_title("(b) against margin; line is Phi(margin)", fontsize=9)
+    bx.set_title("(b) against margin; line is Φ(margin)", fontsize=9)
     fig.tight_layout()
     fig.savefig(os.path.join(OUT, "fig2_audit_size.pdf"))
     plt.close(fig)
@@ -72,6 +72,9 @@ def ratio(path, key, level):
 def fig_volume():
     demo = os.path.join(R1, "task2_demo.json")
     full = os.path.join(R1, "tier2_local.json")
+    _ri = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results", "ratio_interval.json")))
+    FIELLER = {("Demonstration", 5): _ri["demonstration_5pct"]["fieller95"], ("Demonstration", 20): _ri["demonstration_20pct"]["fieller95"],
+               ("Full", 5): _ri["full_5pct"]["fieller95"], ("Full", 20): _ri["full_20pct"]["fieller95"]}
     vals = {("Demonstration", 5): ratio(demo, "demo", 5), ("Demonstration", 20): ratio(demo, "demo", 20),
             ("Full", 5): ratio(full, "full", 5), ("Full", 20): ratio(full, "full", 20)}
     fig, ax = plt.subplots(figsize=(3.6, 2.8))
@@ -79,7 +82,11 @@ def fig_volume():
     cols = {"Demonstration": "#7f9fbf", "Full": "#1b6ca8"}
     for k, v in vals.items():
         ax.bar(xs[k], v, width=0.8, color=cols[k[0]])
-        ax.text(xs[k], v + 0.02, f"{v:.2f}", ha="center", fontsize=8)
+        lo, hi = FIELLER[k]
+        ax.errorbar(xs[k], v, yerr=[[v - max(lo, 0.0)], [hi - v]], fmt="none", ecolor="black", capsize=3, lw=1.0)
+        if lo < 0:
+            ax.plot(xs[k], 0.012, marker="v", color="black", ms=4)
+        ax.text(xs[k], hi + 0.015, f"{v:.2f}", ha="center", va="bottom", fontsize=8)
     ax.axhline(0.5, color="#b5472a", lw=1.0, ls="--")
     ax.text(4.0, 0.5, "pre-registered\nline 0.5", color="#b5472a", fontsize=7, ha="left", va="center")
     ax.set_xlim(-0.6, 5.0)
@@ -88,7 +95,7 @@ def fig_volume():
     ax.text(0.5, -0.2, "demonstration scale", ha="center", transform=ax.get_xaxis_transform(), fontsize=8)
     ax.text(2.9, -0.2, "full scale", ha="center", transform=ax.get_xaxis_transform(), fontsize=8)
     ax.set_ylabel("corpus-size control effect\nas a fraction of detector 2 effect")
-    ax.set_ylim(0, 0.85)
+    ax.set_ylim(0, 0.92)
     fig.tight_layout()
     fig.savefig(os.path.join(OUT, "fig3_volume_control.pdf"))
     plt.close(fig)
@@ -116,7 +123,7 @@ def fig_external():
             ax.text(min(hi + 0.02, 0.98), y, f"{k}/{n}", va="center", fontsize=7.5)
         ax.set_title(title, fontsize=9)
         ax.set_xlim(0, 1)
-        ax.set_xlabel("share of applicable sites reachable and unguarded")
+        ax.set_xlabel("share of sites reachable, unguarded")
         ax.set_yticks(range(len(rows[reading])))
         ax.set_yticklabels([r[0] for r in rows[reading]][::-1], fontsize=8)
     fig.tight_layout()
