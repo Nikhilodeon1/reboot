@@ -1,0 +1,23 @@
+{
+ "n_decision_survivors": 88,
+ "sample": 25,
+ "equivalent": 2,
+ "undecided": 0,
+ "non_equivalent_incl_undecided": 23,
+ "cp95_non_equivalent_share": [
+  0.7396941578947858,
+  0.9901604099812025
+ ],
+ "implied_non_equivalent_survivors_of_88": [
+  65.1,
+  81.0,
+  87.1
+ ],
+ "decision_line_mutants": 108,
+ "killed": 20,
+ "kill_rate_excluding_estimated_equivalents": [
+  0.18668189678602712,
+  0.1980982567353407,
+  0.23503672231066688
+ ]
+}

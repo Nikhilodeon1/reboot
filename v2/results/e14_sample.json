@@ -1,0 +1,505 @@
+{
+ "n_decision_survivors": 88,
+ "sample": [
+  {
+   "file": "detectors/checks/check1_label_shift.py",
+   "line": 20,
+   "kind": "const_zero",
+   "change": "0.6 -> 0",
+   "category": "decision constant",
+   "text": "KAPPA_FLAG = 0.60",
+   "context": [
+    "import numpy as np",
+    "import pandas as pd",
+    "",
+    "logging.disable(logging.WARNING)",
+    "",
+    "KAPPA_FLAG = 0.60",
+    "PREV_RATIO_FLAG = 1.50",
+    "",
+    ""
+   ],
+   "id": 0
+  },
+  {
+   "file": "detectors/checks/check1_label_shift.py",
+   "line": 20,
+   "kind": "const_plus1",
+   "change": "0.6 -> 1.6",
+   "category": "decision constant",
+   "text": "KAPPA_FLAG = 0.60",
+   "context": [
+    "import numpy as np",
+    "import pandas as pd",
+    "",
+    "logging.disable(logging.WARNING)",
+    "",
+    "KAPPA_FLAG = 0.60",
+    "PREV_RATIO_FLAG = 1.50",
+    "",
+    ""
+   ],
+   "id": 1
+  },
+  {
+   "file": "detectors/checks/check1_label_shift.py",
+   "line": 21,
+   "kind": "const_zero",
+   "change": "1.5 -> 0",
+   "category": "decision constant",
+   "text": "PREV_RATIO_FLAG = 1.50",
+   "context": [
+    "import pandas as pd",
+    "",
+    "logging.disable(logging.WARNING)",
+    "",
+    "KAPPA_FLAG = 0.60",
+    "PREV_RATIO_FLAG = 1.50",
+    "",
+    "",
+    "def cohens_kappa(a, b):"
+   ],
+   "id": 2
+  },
+  {
+   "file": "detectors/checks/check1_label_shift.py",
+   "line": 32,
+   "kind": "const_zero",
+   "change": "1.0 -> 0",
+   "category": "verdict, test or statistic definition",
+   "text": "return 1.0 if pe >= 1.0 else float((po - pe) / (1 - pe))",
+   "context": [
+    "    if n == 0:",
+    "        return float(\"nan\")",
+    "    po = float((a == b).mean())",
+    "    pa1, pb1 = a.mean(), b.mean()",
+    "    pe = pa1 * pb1 + (1 - pa1) * (1 - pb1)",
+    "    return 1.0 if pe >= 1.0 else float((po - pe) / (1 - pe))",
+    "",
+    "",
+    "def diagnose(name, site1, site2, audit_1, audit_2, verbose=True):"
+   ],
+   "id": 3
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 28,
+   "kind": "const_zero",
+   "change": "0.05 -> 0",
+   "category": "decision constant",
+   "text": "LEVELS = [0.0, 0.05, 0.20, 1.00]",
+   "context": [
+    "from torch.utils.data import DataLoader, Subset",
+    "",
+    "logging.disable(logging.INFO)",
+    "",
+    "HERE = os.path.dirname(os.path.abspath(__file__))",
+    "LEVELS = [0.0, 0.05, 0.20, 1.00]",
+    "",
+    "",
+    "def build(stays, seed):"
+   ],
+   "id": 4
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 96,
+   "kind": "const_zero",
+   "change": "1 -> 0",
+   "category": "decision constant",
+   "text": "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+   "context": [
+    "        os.remove(ckpt)",
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    ""
+   ],
+   "id": 5
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 96,
+   "kind": "const_zero",
+   "change": "1.943 -> 0",
+   "category": "decision constant",
+   "text": "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+   "context": [
+    "        os.remove(ckpt)",
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    ""
+   ],
+   "id": 6
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 96,
+   "kind": "const_plus1",
+   "change": "2.015 -> 3.015",
+   "category": "decision constant",
+   "text": "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+   "context": [
+    "        os.remove(ckpt)",
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    ""
+   ],
+   "id": 7
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 96,
+   "kind": "const_zero",
+   "change": "5 -> 0",
+   "category": "decision constant",
+   "text": "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+   "context": [
+    "        os.remove(ckpt)",
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    ""
+   ],
+   "id": 8
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 96,
+   "kind": "const_plus1",
+   "change": "5 -> 6",
+   "category": "decision constant",
+   "text": "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+   "context": [
+    "        os.remove(ckpt)",
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    ""
+   ],
+   "id": 9
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 96,
+   "kind": "const_plus1",
+   "change": "6.314 -> 7.314",
+   "category": "decision constant",
+   "text": "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+   "context": [
+    "        os.remove(ckpt)",
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    ""
+   ],
+   "id": 10
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 97,
+   "kind": "const_zero",
+   "change": "1.833 -> 0",
+   "category": "decision constant",
+   "text": "7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+   "context": [
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    "",
+    "def flag_from_relative(rel):"
+   ],
+   "id": 11
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 97,
+   "kind": "const_plus1",
+   "change": "1.86 -> 2.8600000000000003",
+   "category": "decision constant",
+   "text": "7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+   "context": [
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    "",
+    "def flag_from_relative(rel):"
+   ],
+   "id": 12
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 97,
+   "kind": "const_zero",
+   "change": "1.895 -> 0",
+   "category": "decision constant",
+   "text": "7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+   "context": [
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    "",
+    "def flag_from_relative(rel):"
+   ],
+   "id": 13
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 97,
+   "kind": "const_plus1",
+   "change": "1.895 -> 2.895",
+   "category": "decision constant",
+   "text": "7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+   "context": [
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    "",
+    "def flag_from_relative(rel):"
+   ],
+   "id": 14
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 97,
+   "kind": "const_plus1",
+   "change": "10 -> 11",
+   "category": "decision constant",
+   "text": "7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+   "context": [
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    "",
+    "def flag_from_relative(rel):"
+   ],
+   "id": 15
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 97,
+   "kind": "const_plus1",
+   "change": "7 -> 8",
+   "category": "decision constant",
+   "text": "7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+   "context": [
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    "",
+    "def flag_from_relative(rel):"
+   ],
+   "id": 16
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 97,
+   "kind": "const_plus1",
+   "change": "9 -> 10",
+   "category": "decision constant",
+   "text": "7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+   "context": [
+    "    return probe_loss(model, pl, MASK_PROB, device), n_leak",
+    "",
+    "",
+    "",
+    "_T_CRIT_05 = {1: 6.314, 2: 2.920, 3: 2.353, 4: 2.132, 5: 2.015, 6: 1.943,",
+    "              7: 1.895, 8: 1.860, 9: 1.833, 10: 1.812}",
+    "",
+    "",
+    "def flag_from_relative(rel):"
+   ],
+   "id": 17
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 108,
+   "kind": "const_plus1",
+   "change": "0.0 -> 1.0",
+   "category": "verdict, test or statistic definition",
+   "text": "return False, 0.0, float(\"inf\")",
+   "context": [
+    "",
+    "",
+    "    rel = np.asarray(rel, float)",
+    "    n = len(rel)",
+    "    if n < 3:",
+    "        return False, 0.0, float(\"inf\")",
+    "    crit = _T_CRIT_05.get(n - 1, 1.645)",
+    "    sd = float(rel.std(ddof=1))",
+    "    t = float(rel.mean() / (sd / np.sqrt(n))) if sd > 1e-12 else 0.0"
+   ],
+   "id": 18
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 109,
+   "kind": "const_zero",
+   "change": "1.645 -> 0",
+   "category": "verdict, test or statistic definition",
+   "text": "crit = _T_CRIT_05.get(n - 1, 1.645)",
+   "context": [
+    "",
+    "    rel = np.asarray(rel, float)",
+    "    n = len(rel)",
+    "    if n < 3:",
+    "        return False, 0.0, float(\"inf\")",
+    "    crit = _T_CRIT_05.get(n - 1, 1.645)",
+    "    sd = float(rel.std(ddof=1))",
+    "    t = float(rel.mean() / (sd / np.sqrt(n))) if sd > 1e-12 else 0.0",
+    "    return bool(np.all(rel < 0) and t <= -crit), t, crit"
+   ],
+   "id": 19
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 112,
+   "kind": "cmp_eq_flip",
+   "change": "Lt -> LtE",
+   "category": "verdict, test or statistic definition",
+   "text": "return bool(np.all(rel < 0) and t <= -crit), t, crit",
+   "context": [
+    "    if n < 3:",
+    "        return False, 0.0, float(\"inf\")",
+    "    crit = _T_CRIT_05.get(n - 1, 1.645)",
+    "    sd = float(rel.std(ddof=1))",
+    "    t = float(rel.mean() / (sd / np.sqrt(n))) if sd > 1e-12 else 0.0",
+    "    return bool(np.all(rel < 0) and t <= -crit), t, crit",
+    "",
+    "",
+    "def measure(stays, seeds, epochs, device, base_seed=42, verbose=False):"
+   ],
+   "id": 20
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 112,
+   "kind": "cmp_eq_flip",
+   "change": "LtE -> Lt",
+   "category": "verdict, test or statistic definition",
+   "text": "return bool(np.all(rel < 0) and t <= -crit), t, crit",
+   "context": [
+    "    if n < 3:",
+    "        return False, 0.0, float(\"inf\")",
+    "    crit = _T_CRIT_05.get(n - 1, 1.645)",
+    "    sd = float(rel.std(ddof=1))",
+    "    t = float(rel.mean() / (sd / np.sqrt(n))) if sd > 1e-12 else 0.0",
+    "    return bool(np.all(rel < 0) and t <= -crit), t, crit",
+    "",
+    "",
+    "def measure(stays, seeds, epochs, device, base_seed=42, verbose=False):"
+   ],
+   "id": 21
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 141,
+   "kind": "boolop",
+   "change": "And -> Or",
+   "category": "verdict, test or statistic definition",
+   "text": "detected[frac] = bool(frac > 0 and sig)",
+   "context": [
+    "    detected, stats = {}, {}",
+    "    for frac in LEVELS:",
+    "        cur = np.array(results[frac])",
+    "        rel = (cur - base) / np.maximum(base, 1e-12)",
+    "        sig, t, crit = flag_from_relative(rel)",
+    "        detected[frac] = bool(frac > 0 and sig)",
+    "        stats[frac] = {\"mean_loss\": float(cur.mean()),",
+    "                       \"rel_delta\": float(rel.mean()),",
+    "                       \"t\": t, \"crit\": crit,"
+   ],
+   "id": 22
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 141,
+   "kind": "cmp_swap",
+   "change": "Gt -> Lt",
+   "category": "verdict, test or statistic definition",
+   "text": "detected[frac] = bool(frac > 0 and sig)",
+   "context": [
+    "    detected, stats = {}, {}",
+    "    for frac in LEVELS:",
+    "        cur = np.array(results[frac])",
+    "        rel = (cur - base) / np.maximum(base, 1e-12)",
+    "        sig, t, crit = flag_from_relative(rel)",
+    "        detected[frac] = bool(frac > 0 and sig)",
+    "        stats[frac] = {\"mean_loss\": float(cur.mean()),",
+    "                       \"rel_delta\": float(rel.mean()),",
+    "                       \"t\": t, \"crit\": crit,"
+   ],
+   "id": 23
+  },
+  {
+   "file": "detectors/checks/check2_pretrain_leakage.py",
+   "line": 220,
+   "kind": "const_plus1",
+   "change": "0.0 -> 1.0",
+   "category": "verdict, test or statistic definition",
+   "text": "ok = (not detected[0.0]) and (floor is not None)",
+   "context": [
+    "    cases = [Case(f\"leakage {int(f * 100)}%\", detected[f], bool(f > 0), stats[f])",
+    "             for f in LEVELS]",
+    "    print(\"\\n\" + fmt_matrix(\"check2\", confusion(cases)))",
+    "    json.dump({str(k): v for k, v in results.items()},",
+    "              open(os.path.join(HERE, \"..\", \"results\", \"check2_results.json\"), \"w\"), indent=2)",
+    "    ok = (not detected[0.0]) and (floor is not None)",
+    "    print(\"verdict:\", \"DETECTOR VALIDATED\" if ok else",
+    "          \"INCONCLUSIVE \u2014 leak not separable from seed noise at this scale\")",
+    ""
+   ],
+   "id": 24
+  }
+ ]
+}

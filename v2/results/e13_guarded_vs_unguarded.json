@@ -1,0 +1,192 @@
+{
+ "note": "each entry is [mean, lower, upper], a t-interval over five random 70/30 splits (df 4). reported_gap = unguarded pipeline's own test metric minus guarded pipeline's own test metric; true_label_gap = unguarded-trained minus guarded-trained model, both scored on observed-target test rows with their true labels",
+ "aggregate": {
+  "reported_gap_accuracy": [
+   0.1225129220421964,
+   0.11472911331465087,
+   0.13029673076974194
+  ],
+  "true_label_gap_accuracy": [
+   -0.00833337681159838,
+   -0.018116654906287735,
+   0.0014499012830909725
+  ],
+  "reported_unguarded_accuracy": [
+   0.9212539851222104,
+   0.9147160559134705,
+   0.9277919143309502
+  ],
+  "reported_guarded_accuracy": [
+   0.798741063080014,
+   0.7849638380856928,
+   0.8125182880743352
+  ],
+  "reported_gap_balanced_accuracy": [
+   0.05663950929844763,
+   0.03510925598119391,
+   0.07816976261570135
+  ],
+  "true_label_gap_balanced_accuracy": [
+   -0.007351674889245707,
+   -0.017048946759010912,
+   0.0023455969805194973
+  ],
+  "reported_unguarded_balanced_accuracy": [
+   0.8561032991833137,
+   0.8453060905983044,
+   0.8669005077683231
+  ],
+  "reported_guarded_balanced_accuracy": [
+   0.7994637898848661,
+   0.7849068360372804,
+   0.8140207437324518
+  ],
+  "reported_gap_auroc": [
+   0.07634861237962706,
+   0.06801451902893049,
+   0.08468270573032363
+  ],
+  "true_label_gap_auroc": [
+   -0.015360208417949717,
+   -0.0224738226168377,
+   -0.008246594219061733
+  ],
+  "reported_unguarded_auroc": [
+   0.9680461596370072,
+   0.9635929304555676,
+   0.9724993888184469
+  ],
+  "reported_guarded_auroc": [
+   0.8916975472573803,
+   0.8791209397239942,
+   0.9042741547907663
+  ]
+ },
+ "per_split": [
+  {
+   "seed": 0,
+   "n_train_unguarded": 4390,
+   "n_train_guarded": 1571,
+   "reported_unguarded": {
+    "accuracy": 0.9192348565356004,
+    "balanced_accuracy": 0.8672798827808621,
+    "auroc": 0.9645323751601456
+   },
+   "reported_guarded": {
+    "accuracy": 0.7906647807637907,
+    "balanced_accuracy": 0.7906142962322737,
+    "auroc": 0.8794055507538654
+   },
+   "unguarded_model_on_observed_rows": {
+    "accuracy": 0.7934936350777935,
+    "balanced_accuracy": 0.7935633342936714,
+    "auroc": 0.8727071929319121
+   },
+   "guarded_model_on_observed_rows": {
+    "accuracy": 0.7906647807637907,
+    "balanced_accuracy": 0.7906142962322737,
+    "auroc": 0.8794055507538654
+   }
+  },
+  {
+   "seed": 1,
+   "n_train_unguarded": 4390,
+   "n_train_guarded": 1572,
+   "reported_unguarded": {
+    "accuracy": 0.9160467587672688,
+    "balanced_accuracy": 0.8591433921048526,
+    "auroc": 0.9684605455396531
+   },
+   "reported_guarded": {
+    "accuracy": 0.7917847025495751,
+    "balanced_accuracy": 0.7912988853810965,
+    "auroc": 0.8963017846788223
+   },
+   "unguarded_model_on_observed_rows": {
+    "accuracy": 0.7889518413597734,
+    "balanced_accuracy": 0.7904854712969525,
+    "auroc": 0.8794133754268412
+   },
+   "guarded_model_on_observed_rows": {
+    "accuracy": 0.7917847025495751,
+    "balanced_accuracy": 0.7912988853810965,
+    "auroc": 0.8963017846788223
+   }
+  },
+  {
+   "seed": 2,
+   "n_train_unguarded": 4390,
+   "n_train_guarded": 1631,
+   "reported_unguarded": {
+    "accuracy": 0.9293304994686503,
+    "balanced_accuracy": 0.8581341768197439,
+    "auroc": 0.9730338175570135
+   },
+   "reported_guarded": {
+    "accuracy": 0.8145285935085008,
+    "balanced_accuracy": 0.815075040627091,
+    "auroc": 0.903173692763598
+   },
+   "unguarded_model_on_observed_rows": {
+    "accuracy": 0.8006182380216383,
+    "balanced_accuracy": 0.8016872191951057,
+    "auroc": 0.8902781760825924
+   },
+   "guarded_model_on_observed_rows": {
+    "accuracy": 0.8145285935085008,
+    "balanced_accuracy": 0.815075040627091,
+    "auroc": 0.903173692763598
+   }
+  },
+  {
+   "seed": 3,
+   "n_train_unguarded": 4390,
+   "n_train_guarded": 1596,
+   "reported_unguarded": {
+    "accuracy": 0.9181721572794899,
+    "balanced_accuracy": 0.851991417634788,
+    "auroc": 0.9646247262184557
+   },
+   "reported_guarded": {
+    "accuracy": 0.7903225806451613,
+    "balanced_accuracy": 0.7912180132723939,
+    "auroc": 0.8827605202227558
+   },
+   "unguarded_model_on_observed_rows": {
+    "accuracy": 0.7771260997067448,
+    "balanced_accuracy": 0.7780532100773793,
+    "auroc": 0.8616555202657922
+   },
+   "guarded_model_on_observed_rows": {
+    "accuracy": 0.7903225806451613,
+    "balanced_accuracy": 0.7912180132723939,
+    "auroc": 0.8827605202227558
+   }
+  },
+  {
+   "seed": 4,
+   "n_train_unguarded": 4390,
+   "n_train_guarded": 1591,
+   "reported_unguarded": {
+    "accuracy": 0.9234856535600425,
+    "balanced_accuracy": 0.8439676265763223,
+    "auroc": 0.9695793337097686
+   },
+   "reported_guarded": {
+    "accuracy": 0.8064046579330422,
+    "balanced_accuracy": 0.8091127139114755,
+    "auroc": 0.8968461878678596
+   },
+   "unguarded_model_on_observed_rows": {
+    "accuracy": 0.7918486171761281,
+    "balanced_accuracy": 0.7967713401149934,
+    "auroc": 0.8776324294900146
+   },
+   "guarded_model_on_observed_rows": {
+    "accuracy": 0.8064046579330422,
+    "balanced_accuracy": 0.8091127139114755,
+    "auroc": 0.8968461878678596
+   }
+  }
+ ]
+}

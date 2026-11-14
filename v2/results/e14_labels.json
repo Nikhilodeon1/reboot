@@ -1,0 +1,105 @@
+{
+ "note": "labels assigned by the authors by reading each mutated line and its function; strict definition of addendum 5 (any input that changes the verdict, statistic or a printed number)",
+ "labels": {
+  "0": {
+   "label": "non-equivalent",
+   "note": "threshold 0: the check never flags"
+  },
+  "1": {
+   "label": "non-equivalent",
+   "note": "threshold 1.6: the check flags far more often"
+  },
+  "2": {
+   "label": "non-equivalent",
+   "note": "changes the printed 'separable' verdict string of the prevalence-ratio baseline; not used by detector 1's kappa verdict"
+  },
+  "3": {
+   "label": "non-equivalent",
+   "note": "changes the kappa returned when both raters are constant, or makes it 1.0 always"
+  },
+  "4": {
+   "label": "non-equivalent",
+   "note": "changes the leakage level that is run (duplicates 0%)"
+  },
+  "5": {
+   "label": "equivalent",
+   "note": "dict key for 1 degree of freedom; n<3 returns before the table is read, so the entry is dead"
+  },
+  "6": {
+   "label": "non-equivalent",
+   "note": "critical value 0 for 6 df (n=7 seeds)"
+  },
+  "7": {
+   "label": "non-equivalent",
+   "note": "critical value 3.015 for 5 df (n=6 seeds)"
+  },
+  "8": {
+   "label": "non-equivalent",
+   "note": "key 5 becomes 0; n=6 falls back to 1.645"
+  },
+  "9": {
+   "label": "non-equivalent",
+   "note": "key 5 becomes a duplicate 6; n=6 falls back to 1.645"
+  },
+  "10": {
+   "label": "equivalent",
+   "note": "value for 1 degree of freedom; dead entry as in id 5"
+  },
+  "11": {
+   "label": "non-equivalent",
+   "note": "critical value 0 for 9 df (n=10 seeds)"
+  },
+  "12": {
+   "label": "non-equivalent",
+   "note": "critical value 2.86 for 8 df (n=9 seeds)"
+  },
+  "13": {
+   "label": "non-equivalent",
+   "note": "critical value 0 for 7 df (n=8 seeds)"
+  },
+  "14": {
+   "label": "non-equivalent",
+   "note": "critical value 2.895 for 7 df (n=8 seeds)"
+  },
+  "15": {
+   "label": "non-equivalent",
+   "note": "key 10 becomes 11; n=11 falls back to 1.645"
+  },
+  "16": {
+   "label": "non-equivalent",
+   "note": "key 7 becomes a duplicate 8; n=8 falls back to 1.645"
+  },
+  "17": {
+   "label": "non-equivalent",
+   "note": "key 9 becomes a duplicate 10; n=10 falls back to 1.645"
+  },
+  "18": {
+   "label": "non-equivalent",
+   "note": "returned statistic for n<3 changes from 0.0 to 1.0; verdict unchanged"
+  },
+  "19": {
+   "label": "non-equivalent",
+   "note": "default critical value 0 for n of 12 or more or n<2"
+  },
+  "20": {
+   "label": "non-equivalent",
+   "note": "rel<=0 instead of rel<0; differs only when a relative change is exactly 0"
+  },
+  "21": {
+   "label": "non-equivalent",
+   "note": "t<-crit instead of t<=-crit; differs only when t equals -crit exactly"
+  },
+  "22": {
+   "label": "non-equivalent",
+   "note": "flag also fires at 0% leakage when the test is significant"
+  },
+  "23": {
+   "label": "non-equivalent",
+   "note": "frac<0 instead of frac>0; no level ever flags"
+  },
+  "24": {
+   "label": "non-equivalent",
+   "note": "control now reads the 100% level instead of the 0% level"
+  }
+ }
+}
