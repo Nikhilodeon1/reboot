@@ -74,7 +74,12 @@ def sample():
     strata = {"positive": [], "other_applicable": [], "not_applicable": []}
     for i in range(len(sites)):
         l = lab[i]["label"]
-        strata["positive" if l == "REACHABLE_UNGUARDED" else "other_applicable" if l in ("GUARDED", "UNREACHABLE") else "not_applicable"].append(i)
+        if l == "REACHABLE_UNGUARDED" or lab[i].get("divergence_only"):      # the 16 sites counted under the broad reading
+            strata["positive"].append(i)
+        elif l in ("GUARDED", "UNREACHABLE"):
+            strata["other_applicable"].append(i)
+        else:
+            strata["not_applicable"].append(i)
     rng = np.random.default_rng(SEED)
     chosen = {"positive": sorted(strata["positive"]),
               "other_applicable": sorted(rng.choice(strata["other_applicable"], 12, replace=False).tolist()),
@@ -140,13 +145,21 @@ def score(a):
         r = resp[k["site"]]
         lab = r["label"].strip().upper()
         assert lab in LABELS, (k["site"], lab)
-        ours.append(k["our_label"]); theirs.append(lab); st.append(k["stratum"]); w.append(sizes[k["stratum"]][0] / sizes[k["stratum"]][1])
+        ours.append("RU_diverged" if k["our_divergence_only"] else "RU_ordinary" if k["our_label"] == "REACHABLE_UNGUARDED" else k["our_label"])
+        div = str(r["diverged_only_or_ordinary"]).strip().lower()
+        theirs.append(("RU_diverged" if div.startswith("diverged") else "RU_ordinary") if lab == "REACHABLE_UNGUARDED" else lab); st.append(k["stratum"]); w.append(sizes[k["stratum"]][0] / sizes[k["stratum"]][1])
     out = {"n": len(key), "per_stratum_agreement": {}, "disagreements": []}
     for s_ in sizes:
         idx = [i for i, x in enumerate(st) if x == s_]
         ag = sum(ours[i] == theirs[i] for i in idx)
         out["per_stratum_agreement"][s_] = {"agree": ag, "n": len(idx), "cp95": cp(ag, len(idx))}
-    out["weighted_kappa_four_labels"] = kappa_w(ours, theirs, w)
+    col = lambda x: "REACHABLE_UNGUARDED" if x.startswith("RU_") else x
+    out["weighted_kappa_five_classes"] = kappa_w(ours, theirs, w)
+    out["weighted_kappa_four_labels"] = kappa_w([col(x) for x in ours], [col(x) for x in theirs], w)
+    ours_raw = ours
+    ours = [col(x) for x in ours]
+    theirs_raw = theirs
+    theirs = [col(x) for x in theirs]
     rng = np.random.default_rng(0)
     bs = []
     for _ in range(2000):
@@ -164,12 +177,11 @@ def score(a):
     # counts scaled to the 88 by stratum weights; applicable = not NOT_APPLICABLE
     ru = sum(w[i] for i in range(len(key)) if theirs[i] == "REACHABLE_UNGUARDED")
     app = sum(w[i] for i in range(len(key)) if theirs[i] != "NOT_APPLICABLE")
-    div = {k["site"]: str(resp[k["site"]]["diverged_only_or_ordinary"]).strip().lower() for k in key}
-    ru_ord = sum(w[i] for i, k in enumerate(key) if theirs[i] == "REACHABLE_UNGUARDED" and div[k["site"]].startswith("ordinary"))
+    ru_ord = sum(w[i] for i in range(len(key)) if theirs_raw[i] == "RU_ordinary")
     out["scaled_to_88"] = {"reachable_unguarded_broad": ru, "reachable_unguarded_narrow_ordinary_only": ru_ord, "applicable": app}
     for i, k in enumerate(key):
         if ours[i] != theirs[i]:
-            out["disagreements"].append({"site": k["site"], "repo": k["repo"], "file": k["file"], "start": k["start"], "ours": ours[i], "coder": theirs[i],
+            out["disagreements"].append({"site": k["site"], "repo": k["repo"], "file": k["file"], "start": k["start"], "ours": ours_raw[i], "coder": theirs_raw[i],
                                          "coder_note": resp[k["site"]]["note"]})
     json.dump(out, open(a.results, "w"), indent=1)
     print(json.dumps({k: v for k, v in out.items() if k != "disagreements"}, indent=1), "disagreements", len(out["disagreements"]))
