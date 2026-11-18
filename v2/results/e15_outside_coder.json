@@ -1,0 +1,161 @@
+{
+ "n": 40,
+ "per_stratum_agreement": {
+  "positive": {
+   "agree": 15,
+   "n": 16,
+   "cp95": [
+    0.697679261565468,
+    0.9984188882772341
+   ]
+  },
+  "other_applicable": {
+   "agree": 8,
+   "n": 12,
+   "cp95": [
+    0.3488755064188155,
+    0.9007539088504167
+   ]
+  },
+  "not_applicable": {
+   "agree": 4,
+   "n": 12,
+   "cp95": [
+    0.09924609114958328,
+    0.6511244935811844
+   ]
+  }
+ },
+ "disagreements": [
+  {
+   "site": 12,
+   "repo": "robustdg",
+   "file": "utils/scripts/utils.py",
+   "start": 391,
+   "ours": "NOT_APPLICABLE",
+   "coder": "UNREACHABLE",
+   "coder_note": "PyTorch's Optimizer constructor forbids empty parameter lists so opt.param_groups always has at least one group containing 'lr' (and next(iter([])) would raise StopIteration loudly)."
+  },
+  {
+   "site": 20,
+   "repo": "AIF360",
+   "file": "aif360/datasets/structured_dataset.py",
+   "start": 188,
+   "ours": "NOT_APPLICABLE",
+   "coder": "UNREACHABLE",
+   "coder_note": "StructuredDataset.__init__ always sets non-ignored data attributes so the filtered __dict__ key iterable is non-empty, and explicitly rejects NA values in df with ValueError."
+  },
+  {
+   "site": 21,
+   "repo": "HurtfulWords",
+   "file": "scripts/finetune_on_pregenerated.py",
+   "start": 253,
+   "ours": "NOT_APPLICABLE",
+   "coder": "UNREACHABLE",
+   "coder_note": "no_decay is a hardcoded non-empty constant list ['bias', 'LayerNorm.bias', 'LayerNorm.weight'] on line 251 and BertForPreTraining always has parameters."
+  },
+  {
+   "site": 24,
+   "repo": "AIF360",
+   "file": "aif360/algorithms/postprocessing/reject_option_classification.py",
+   "start": 192,
+   "ours": "RU_diverged",
+   "coder": "UNREACHABLE",
+   "coder_note": "StructuredDataset.__init__ rejects NA values in df with ValueError, fit() sets classification_threshold and ROC_margin from np.linspace, and calling predict() before fit() raises TypeError on None."
+  },
+  {
+   "site": 26,
+   "repo": "circEWS",
+   "file": "evaluation/precision_recall.py",
+   "start": 150,
+   "ours": "NOT_APPLICABLE",
+   "coder": "UNREACHABLE",
+   "coder_note": "LightGbmModel.predict skips patients with 0 valid rows and LSTM eval_prob calls roc_auc_score (raising ValueError on NaN) before writing HDF5, so PredScore always contains finite values in [0, 1]."
+  },
+  {
+   "site": 27,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/models/llama/checkpoint.py",
+   "start": 104,
+   "ours": "UNREACHABLE",
+   "coder": "RU_ordinary",
+   "coder_note": "keys is taken solely from tp_shards[0].keys(), so if shard 0 is empty or missing keys present in tp_shards[1..] (e.g., uneven sharding or partial state dict), those keys are silently omitted."
+  },
+  {
+   "site": 30,
+   "repo": "tableshift",
+   "file": "tableshift/core/discretization.py",
+   "start": 301,
+   "ours": "NOT_APPLICABLE",
+   "coder": "GUARDED",
+   "coder_note": "Lines 258-275 explicitly guard against all-NaN columns (continue), strip all NaNs (column[~np.isnan(column)]), and guard constant columns (col_min == col_max) before computing bin_edges[jj]."
+  },
+  {
+   "site": 33,
+   "repo": "circEWS",
+   "file": "preprocessing/step1a_2_remove_oor_values.py",
+   "start": 108,
+   "ours": "NOT_APPLICABLE",
+   "coder": "UNREACHABLE",
+   "coder_note": "Upstream step1a_1_fix_datetimes drops all Value.isnull() rows, lines 93 and 96 guard missing sao2/svo2, and lines 124 and 128 guard empty selections (.iloc[0] raises IndexError if empty)."
+  },
+  {
+   "site": 35,
+   "repo": "NICO-plus",
+   "file": "domainbed/model_selection.py",
+   "start": 125,
+   "ours": "GUARDED",
+   "coder": "RU_ordinary",
+   "coder_note": "When n_envs == 1 (test_env == 0) or n_envs == 0 (when env0_out_acc is absent from records), val_accs is [], so any([v==-1 for v in val_accs]) is False and the check passes silently instead of returning None, yielding NaN or -0.0."
+  },
+  {
+   "site": 36,
+   "repo": "HIRID-ICU-Benchmark",
+   "file": "icu_benchmarks/labels/utils.py",
+   "start": 44,
+   "ours": "NOT_APPLICABLE",
+   "coder": "RU_ordinary",
+   "coder_note": "Unlike transition_to_failure below it (which checks np.isnan), transition_to_abs initializes out_arr to 0.0 and checks score_arr[jdx] >= target, so NaN evaluates to False and silently produces 0.0 or 1.0 instead of np.nan."
+  },
+  {
+   "site": 37,
+   "repo": "fairseq2",
+   "file": "src/fairseq2/model_checkpoint/native.py",
+   "start": 128,
+   "ours": "UNREACHABLE",
+   "coder": "RU_ordinary",
+   "coder_note": "keys is taken solely from tp_shards[0][0].keys(), so under uneven data-parallel sharding (noted on line 140) or if shard (0, 0) is empty/missing a key, keys in other shards are silently dropped."
+  },
+  {
+   "site": 38,
+   "repo": "circEWS",
+   "file": "circews/classes/lgbm_model.py",
+   "start": 479,
+   "ours": "GUARDED",
+   "coder": "UNREACHABLE",
+   "coder_note": "get_validation_scores calls roc_auc_score before average_precision_score, which raises ValueError on NaN predictions or single-class labels, so current_auprc is guaranteed finite whenever line 479 is reached."
+  },
+  {
+   "site": 39,
+   "repo": "Benchmarking_DL_MIMICIII",
+   "file": "Codes/SuperLearnerPyVer/python/pgbart/src/bart_utils.py",
+   "start": 887,
+   "ours": "NOT_APPLICABLE",
+   "coder": "UNREACHABLE",
+   "coder_note": "Self-contained unit test using finite np.random.rand/randn and np.ones arrays of length 100 (NaN is excluded by construction, and assert would raise AssertionError anyway)."
+  }
+ ],
+ "weighted_kappa_five_classes": 0.44453592403534764,
+ "weighted_kappa_four_labels": 0.4234275296262533,
+ "weighted_kappa_bootstrap_95": [
+  0.22821463282254986,
+  0.6369703547911248
+ ],
+ "weighted_kappa_binary_reachable_unguarded": 0.623496762257169,
+ "of_our_16_positives_coder_labels_reachable_unguarded": 15,
+ "scaled_to_88": {
+  "reachable_unguarded_broad": 26.333333333333332,
+  "reachable_unguarded_narrow_ordinary_only": 14.333333333333332,
+  "applicable": 74.66666666666667
+ }
+}
