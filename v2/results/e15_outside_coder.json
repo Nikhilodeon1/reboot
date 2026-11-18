@@ -157,5 +157,19 @@
   "reachable_unguarded_broad": 26.333333333333332,
   "reachable_unguarded_narrow_ordinary_only": 14.333333333333332,
   "applicable": 74.66666666666667
+ },
+ "scaled_to_88_bootstrap_95": {
+  "broad": [
+   17.666666666666668,
+   37.666666666666664
+  ],
+  "narrow": [
+   5.666666666666666,
+   25.666666666666668
+  ],
+  "census_stratum_counts": {
+   "broad": 15,
+   "narrow": 3
+  }
  }
 }

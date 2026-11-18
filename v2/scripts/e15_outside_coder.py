@@ -179,6 +179,24 @@ def score(a):
     app = sum(w[i] for i in range(len(key)) if theirs[i] != "NOT_APPLICABLE")
     ru_ord = sum(w[i] for i in range(len(key)) if theirs_raw[i] == "RU_ordinary")
     out["scaled_to_88"] = {"reachable_unguarded_broad": ru, "reachable_unguarded_narrow_ordinary_only": ru_ord, "applicable": app}
+    # bootstrap for the scaled counts: the 16-site stratum is a census, the other two strata are resampled within stratum
+    rng2 = np.random.default_rng(1)
+    strata_idx = {s_: [i for i, x in enumerate(st) if x == s_] for s_ in sizes}
+    is_b = np.array([t == "REACHABLE_UNGUARDED" for t in theirs])
+    is_n = np.array([t == "RU_ordinary" for t in theirs_raw])
+    cen_b = int(sum(is_b[i] for i in strata_idx["positive"]))
+    cen_n = int(sum(is_n[i] for i in strata_idx["positive"]))
+    bb, bn = [], []
+    for _ in range(4000):
+        tb, tn = float(cen_b), float(cen_n)
+        for s_ in ("other_applicable", "not_applicable"):
+            ix = rng2.choice(strata_idx[s_], len(strata_idx[s_]))
+            wt = sizes[s_][0] / sizes[s_][1]
+            tb += wt * is_b[ix].sum(); tn += wt * is_n[ix].sum()
+        bb.append(tb); bn.append(tn)
+    out["scaled_to_88_bootstrap_95"] = {"broad": [float(np.percentile(bb, 2.5)), float(np.percentile(bb, 97.5))],
+                                        "narrow": [float(np.percentile(bn, 2.5)), float(np.percentile(bn, 97.5))],
+                                        "census_stratum_counts": {"broad": cen_b, "narrow": cen_n}}
     for i, k in enumerate(key):
         if ours[i] != theirs[i]:
             out["disagreements"].append({"site": k["site"], "repo": k["repo"], "file": k["file"], "start": k["start"], "ours": ours_raw[i], "coder": theirs_raw[i],

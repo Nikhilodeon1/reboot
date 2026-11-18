@@ -1,0 +1,41 @@
+{
+ "note": "Our own second reading of the five sites on which the coder and we differ on reachable-and-unguarded. Not independent of our first labels, so it is a reading and not an adjudication. Made after the coder's labels were in.",
+ "sites": {
+  "24": {
+   "repo": "AIF360",
+   "first": "RU_diverged",
+   "coder": "UNREACHABLE",
+   "second": "RU_diverged",
+   "reason": "scores come from a model's predictions and are not covered by the dataframe NA check; a NaN score compares False and drops out of the critical region without an error"
+  },
+  "27": {
+   "repo": "fairseq2",
+   "first": "UNREACHABLE",
+   "coder": "RU_ordinary",
+   "second": "NOT_APPLICABLE (undecidable)",
+   "reason": "a comment states the first-shard assumption but nothing asserts it; whether a shard can lack keys under supported use is not established"
+  },
+  "37": {
+   "repo": "fairseq2",
+   "first": "UNREACHABLE",
+   "coder": "RU_ordinary",
+   "second": "NOT_APPLICABLE (undecidable)",
+   "reason": "as site 27"
+  },
+  "35": {
+   "repo": "NICO-plus",
+   "first": "GUARDED",
+   "coder": "RU_ordinary",
+   "second": "UNREACHABLE",
+   "reason": "an empty list passes the any() check, which is the structural case reported for DomainBed, but the shipped datasets have at least three environments, so the input is excluded by configuration"
+  },
+  "36": {
+   "repo": "HIRID-ICU-Benchmark",
+   "first": "NOT_APPLICABLE (undecidable)",
+   "coder": "RU_ordinary",
+   "second": "UNREACHABLE",
+   "reason": "transition_to_abs has no caller outside its unit test in the shipped pipeline; its sibling transition_to_failure is the one the labelling code calls"
+  }
+ },
+ "summary": "None of the four sites the coder called reachable and unguarded becomes a positive on our second reading; site 24 stays a positive."
+}
