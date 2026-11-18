@@ -18,11 +18,11 @@ the full count is in the Notes column.
 | wynants2020prediction | bmj.com/content/369/bmj.m1328; Crossref abstract | VERIFIED with a correction | Final update: 545 of 606 prognostic models at high risk of bias; "Most published prediction model studies were poorly reported and at high risk of bias" | BMJ 369:m1328. The submitted text said "essentially none fit for clinical use"; the source does not say that, so the claim was rewritten. Living review, update 4 |
 | roberts2021common | nature.com/articles/s42256-021-00307-0; Crossref | VERIFIED | "none of the models identified are of potential clinical use due to methodological flaws and/or underlying biases" (abstract; chest radiograph and CT models only) | Nat Mach Intell 3(3):199-217, 15 Mar 2021; 54 authors listed incl. a group author |
 | singer2016sepsis3 | jamanetwork.com/journals/jama/fullarticle/2492881; Crossref | VERIFIED | The updated definitions and criteria; citation line "JAMA. 2016;315(8):801-810" | 19 authors |
-| johnson2023mimiciv | Crossref | VERIFIED (metadata) | Dataset reference | Sci Data 10(1):1, 3 Jan 2023; 13 authors |
-| pollard2018eicu | Crossref | VERIFIED (metadata) | Dataset reference | Sci Data 5:180178, 11 Sep 2018; 6 authors |
-| reyna2020early | Crossref | VERIFIED (metadata) | Challenge dataset reference | Crit Care Med 48(2):210-217, Feb 2020; 8 authors |
-| goldberger2000physiobank | ahajournals.org/doi/10.1161/01.cir.101.23.e215; Crossref | VERIFIED (metadata) | PhysioNet reference | Circulation 101(23), 13 Jun 2000; pages e215-e220 confirmed by the Europe PMC record (pageInfo E215-20), PMID 10851218 |
-| bellamy2019aif360 | Crossref (doi.org page not available) | VERIFIED (metadata) | The toolkit exists; its metrics and mitigation algorithms (arXiv abstract) | IBM J Res Dev 63(4/5):4:1-4:15, Jul 2019; arXiv v1 had a different subtitle |
+| johnson2023mimiciv | Crossref | METADATA-ONLY | Dataset reference | Sci Data 10(1):1, 3 Jan 2023; 13 authors |
+| pollard2018eicu | Crossref | METADATA-ONLY | Dataset reference | Sci Data 5:180178, 11 Sep 2018; 6 authors |
+| reyna2020early | Crossref | METADATA-ONLY | Challenge dataset reference | Crit Care Med 48(2):210-217, Feb 2020; 8 authors |
+| goldberger2000physiobank | ahajournals.org/doi/10.1161/01.cir.101.23.e215; Crossref | METADATA-ONLY | PhysioNet reference | Circulation 101(23), 13 Jun 2000; pages e215-e220 confirmed by the Europe PMC record (pageInfo E215-20), PMID 10851218 |
+| bellamy2019aif360 | Crossref (doi.org page not available) | METADATA-ONLY | The toolkit exists; its metrics and mitigation algorithms (arXiv abstract) | IBM J Res Dev 63(4/5):4:1-4:15, Jul 2019; arXiv v1 had a different subtitle |
 | gulrajani2021search | iclr.cc/virtual/2021/poster/2998; arXiv abstract | VERIFIED | DomainBed with model selection criteria; ERM competitive (abstract) | ICLR 2021 poster |
 | yang2022leakage | arxiv.org/abs/2209.03345 | VERIFIED | Static analysis to detect common forms of data leakage in notebooks (abstract); the three category names are from our own run of the tool | Crossref (ACM, doi 10.1145/3551349.3556918): Proceedings of the 37th IEEE/ACM International Conference on Automated Software Engineering (ASE '22), pp. 1-12, 10 Oct 2022; arXiv v1 7 Sep 2022 |
 | subotic2022leakage | microsoft.com Research publication page | VERIFIED | Static data-leakage analysis intended for development time (abstract) | SOAP 2022, June 2022 |
@@ -35,12 +35,12 @@ the full count is in the Notes column.
 | mchugh2012kappa | PMC3900052; Europe PMC record | VERIFIED | "Cohen's suggested interpretation may be too lenient for health related studies" (abstract) | Biochem Med 22(3):276-282, 2012 |
 | cfr1607 | law.cornell.edu/cfr/text/29/1607.4 (eCFR mirror) | VERIFIED | paragraph D: a selection rate below four-fifths (80%) of the highest rate is generally regarded as evidence of adverse impact; larger differences resting on small numbers may not indicate it | regulation, no pagination; the eCFR page redirected to an unblock page and was not used |
 | kearns2018gerrymandering | proceedings.mlr.press/v80/kearns18a.html | VERIFIED | classifiers fair on each pre-defined group can violate fairness on structured subgroups (abstract) | PMLR 80:2564-2572, 2018 |
-| kerr1998harking | Crossref | VERIFIED | HARKing defined as presenting a post hoc hypothesis as if a priori (Crossref abstract, via a summarizer; the metadata is exact) | PSPR 2(3):196-217, 1998 |
-| simmons2011falsepositive | Crossref | VERIFIED | flexibility in data collection and analysis raises false-positive rates (Crossref abstract, via a summarizer; the metadata is exact) | Psychol Sci 22(11):1359-1366, 2011 |
-| zech2018variable | journals.plos.org page; Europe PMC record | VERIFIED | CNNs did better on internal than on outside hospital data in 3 of 5 comparisons and identified hospital system and department (abstract, via a summarizer) | PLOS Med 15(11):e1002683, 2018; 6 authors |
+| kerr1998harking | Europe PMC record (opened 2026-11-17) | VERIFIED | HARKing defined as presenting a post hoc hypothesis as if a priori (abstract on the Europe PMC record; read directly, full text not opened) | PSPR 2(3):196-217, 1998 |
+| simmons2011falsepositive | Europe PMC record (opened 2026-11-17) | VERIFIED | flexibility in data collection and analysis raises false-positive rates (abstract on the Europe PMC record; read directly, full text not opened) | Psychol Sci 22(11):1359-1366, 2011 |
+| zech2018variable | journals.plos.org page; Europe PMC record; PLOS Med primary page | VERIFIED | CNNs did better on internal than on outside hospital data in 3 of 5 comparisons and identified hospital system and department (abstract, primary PLOS page, opened 2026-11-17: "3 out of 5 natural comparisons"; "CNNs robustly identified hospital system and department") | PLOS Med 15(11):e1002683, 2018; 6 authors |
 | degrave2021shortcuts | nature.com/articles/s42256-021-00338-7; Crossref | VERIFIED | systems rely on confounding factors rather than medical pathology (abstract) | Nat Mach Intell 3(7):610-619, 31 May 2021 |
 | rhee2017sepsis | PMC5710396; Europe PMC record; Crossref | VERIFIED | clinical-criteria incidence +0.6% per year (flat), claims-based +10.3% per year (read twice with different questions) | JAMA 318(13):1241-1249, 2017; 20 authors plus a group |
-| vincent1996sofa | Crossref | VERIFIED (metadata) | the SOFA score exists | Intensive Care Med 22(7):707-710, 1996; 9 authors |
+| vincent1996sofa | Crossref | METADATA-ONLY | the SOFA score exists | Intensive Care Med 22(7):707-710, 1996; 9 authors |
 | saeb2017usecase | Europe PMC record; Crossref | VERIFIED | record-wise cross-validation often massively overestimates accuracy; subject-wise mirrors the clinical use case (abstract) | GigaScience 6(5):1-9 (gix019), 2017 |
 | dwork2015reusable | science.org/doi/10.1126/science.aaa9375 | VERIFIED | adaptive analysis risks false discoveries; a method to reuse a holdout safely (abstract) | Science 349(6248):636-638, 2015 |
 | ding2021retiring | arxiv.org/abs/2108.04884; NeurIPS poster page; the NeurIPS proceedings PDF | VERIFIED | new datasets derived from US Census surveys for fair ML (abstract) | NeurIPS 2021 (Advances in Neural Information Processing Systems 34) |
@@ -48,8 +48,8 @@ the full count is in the Notes column.
 | ucicadult | archive.ics.uci.edu/dataset/2/adult | VERIFIED (page) | dataset page: donated 4/30/1996, 48,842 instances; the file we use is adult.data (32,561 rows) | no creator names on the page excerpt, so none are given |
 | gardner2023tableshift | proceedings.neurips.cc 2023 Datasets and Benchmarks abstract page | VERIFIED | a distribution shift benchmark of 15 tabular tasks (abstract) | NeurIPS 2023 Datasets and Benchmarks Track |
 | collegescorecard | collegescorecard.ed.gov/data/ | VERIFIED (page) | the most-recent institution-level file (24 MB zip) exists | file Most-Recent-Cohorts-Institution_11022026.zip; accessed 2026-11-04 |
-| clopper1934confidence | Crossref | VERIFIED (metadata) | exact binomial confidence limits | Biometrika 26(4):404-413, 1934 |
-| efron1979bootstrap | Crossref | VERIFIED (metadata) | the bootstrap | Ann Stat 7(1):1-26, 1979 |
+| clopper1934confidence | Crossref | METADATA-ONLY | exact binomial confidence limits | Biometrika 26(4):404-413, 1934 |
+| efron1979bootstrap | Crossref | METADATA-ONLY | the bootstrap | Ann Stat 7(1):1-26, 1979 |
 | jia2011mutation | Crossref doi 10.1109/TSE.2010.62 (checked 2026-11-11) | VERIFIED | A survey of the development of mutation testing (title); cited only as the source of the idea of seeded faults | IEEE TSE 37(5):649-678, 2011; Jia, Harman |
 | barr2015oracle | Crossref doi 10.1109/TSE.2014.2372785 (checked 2026-11-11) | VERIFIED | A survey of the oracle problem in software testing (title); cited only for the problem of deciding that an output is correct | IEEE TSE 41(5):507-525, 2015; Barr, Harman, McMinn, Shahbaz, Yoo |
 | rabanser2019failing | arxiv.org/abs/1810.11953 v4 (checked 2026-11-11) | VERIFIED | ML systems "tend to fail silently" on unexpected inputs; the paper studies methods for detecting dataset shift (abstract) | arXiv comment: NeurIPS 2019; Rabanser, Guennemann, Lipton; NeurIPS volume 32. Abstract level only; the paper's claim stays at that level |
@@ -67,6 +67,10 @@ the full count is in the Notes column.
 Another reader reopens every URL above, rechecks metadata and the passage, and settles disagreements against the source.
 Counts on 2026-11-04 before the sweep: 19 entries; 17 VERIFIED (one of them, wynants2020prediction, with a correction to the claim),
 2 METADATA-ONLY (beer1997vacuity, cohen1960kappa; beer1997vacuity upgraded on 2026-11-13); 2 removed (landis1977measurement, mahajan2021domain).
+
+## Pass of 2026-11-17
+
+Zech, Kerr and Simmons were re-read on the primary or Europe PMC record instead of a summarizer, and their entries now say so. Entries that were checked only at the level of record metadata and are cited as dataset or method pointers are relabelled METADATA-ONLY (Johnson, Pollard, Reyna, Goldberger, Vincent, Clopper and Pearson, Efron, Bellamy; Cohen was already). Counts: 43 entries, 34 VERIFIED, 9 METADATA-ONLY (all existence or dataset pointers), 0 unverified.
 
 ## Second pass, 2026-11-04 (same reader, different routes)
 

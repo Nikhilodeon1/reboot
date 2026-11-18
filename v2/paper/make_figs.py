@@ -107,25 +107,31 @@ def fig_external():
     import sys
     sys.path.insert(0, os.path.join(V2, "scripts"))
     from stats_util import clopper_pearson
-    names = [("claude_subagent", "blind rater R0"), ("claude-opus-5.5-high", "Claude Opus 5.5"),
+    names = [("claude_subagent", "R0 (reads repos)"), ("claude-opus-5.5-high", "Claude Opus 5.5"),
              ("chatgpt-luna-5.6-think", "ChatGPT luna 5.6"), ("gemini-4-argon-medium", "Gemini 4 argon")]
-    rows = {"narrow": [("our registered labels", 4, 48)], "broad": [("our registered labels", 16, 48)]}
+    rows = {"narrow": [("our labels", 4, 88)], "broad": [("our labels", 16, 88)]}
     for key, label in names:
         d = json.load(open(os.path.join(V2, "results", "e7a", key, "e7a_agreement_4c.json")))["sensitivity"]["rater"]
-        rows["narrow"].append((label, d["narrow"][0], d["narrow"][1]))
-        rows["broad"].append((label, d["broad"][0], d["broad"][1]))
+        rows["narrow"].append((label, d["narrow"][0], 88))
+        rows["broad"].append((label, d["broad"][0], 88))
+    oc = json.load(open(os.path.join(V2, "results", "e15_outside_coder.json")))
+    coder = {"narrow": (oc["scaled_to_88"]["reachable_unguarded_narrow_ordinary_only"], oc["scaled_to_88_bootstrap_95"]["narrow"]),
+             "broad": (oc["scaled_to_88"]["reachable_unguarded_broad"], oc["scaled_to_88_bootstrap_95"]["broad"])}
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.6), sharey=True)
     for ax, (reading, title) in zip(axes, (("narrow", "narrow reading"), ("broad", "broad reading"))):
         for i, (label, k, n) in enumerate(rows[reading]):
             lo, hi = clopper_pearson(k, n)
-            y = len(rows[reading]) - 1 - i
+            y = len(rows[reading]) - i
             ax.errorbar(k / n, y, xerr=[[k / n - lo], [hi - k / n]], fmt="o", ms=4, color=("#1b6ca8" if i == 0 else "#6b6b6b"), capsize=2, lw=1.0)
             ax.text(min(hi + 0.02, 0.98), y, f"{k}/{n}", va="center", fontsize=7.5)
+        est, (clo, chi) = coder[reading]
+        ax.errorbar(est / 88, 0, xerr=[[est / 88 - clo / 88], [chi / 88 - est / 88]], fmt="s", ms=4, color="#b5472a", capsize=2, lw=1.0)
+        ax.text(min(chi / 88 + 0.02, 0.98), 0, f"about {est:.0f}/88", va="center", fontsize=7.5)
         ax.set_title(title, fontsize=9)
         ax.set_xlim(0, 1)
-        ax.set_xlabel("share of sites reachable, unguarded")
-        ax.set_yticks(range(len(rows[reading])))
-        ax.set_yticklabels([r[0] for r in rows[reading]][::-1], fontsize=8)
+        ax.set_xlabel("share of the 88 sampled sites")
+        ax.set_yticks(range(len(rows[reading]) + 1))
+        ax.set_yticklabels(["outside coder (scaled)"] + [r[0] for r in rows[reading]][::-1], fontsize=8)
     fig.tight_layout()
     fig.savefig(os.path.join(OUT, "fig4_external.pdf"))
     plt.close(fig)
