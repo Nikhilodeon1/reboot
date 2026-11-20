@@ -53,6 +53,9 @@ the full count is in the Notes column.
 | jia2011mutation | Crossref doi 10.1109/TSE.2010.62 (checked 2026-11-11) | VERIFIED | A survey of the development of mutation testing (title); cited only as the source of the idea of seeded faults | IEEE TSE 37(5):649-678, 2011; Jia, Harman |
 | barr2015oracle | Crossref doi 10.1109/TSE.2014.2372785 (checked 2026-11-11) | VERIFIED | A survey of the oracle problem in software testing (title); cited only for the problem of deciding that an output is correct | IEEE TSE 41(5):507-525, 2015; Barr, Harman, McMinn, Shahbaz, Yoo |
 | rabanser2019failing | arxiv.org/abs/1810.11953 v4 (checked 2026-11-11) | VERIFIED | ML systems "tend to fail silently" on unexpected inputs; the paper studies methods for detecting dataset shift (abstract) | arXiv comment: NeurIPS 2019; Rabanser, Guennemann, Lipton; NeurIPS volume 32. Abstract level only; the paper's claim stays at that level |
+| wolff2019probast | Europe PMC index record for DOI 10.7326/M18-1376 (opened 2026-11-19; the publisher page returned 403) | METADATA-ONLY | A tool to assess risk of bias and applicability of prediction model studies (title; abstract: "a tool for assessing the risk of bias (ROB) and applicability") | Ann Intern Med 170(1):51-58, Jan 2019; 9 authors plus a group author; cited as an existence pointer |
+| collins2024tripodai | Europe PMC index record for DOI 10.1136/bmj-2023-078378 (2026-11-19; publisher 403) | METADATA-ONLY | Updated guidance for reporting clinical prediction models (title); no abstract on the record | BMJ 385:e078378, Apr 2024; 34 authors; existence pointer |
+| mongan2020claim | Europe PMC index record for DOI 10.1148/ryai.2020200029 (2026-11-19; publisher 403) | METADATA-ONLY | A checklist and guide for authors and reviewers on AI in medical imaging (title); the index lists it as an editorial; no abstract | Radiol Artif Intell 2(2):e200029, Mar 2020; existence pointer |
 
 ## Removed
 
@@ -70,7 +73,7 @@ Counts on 2026-11-04 before the sweep: 19 entries; 17 VERIFIED (one of them, wyn
 
 ## Pass of 2026-11-17
 
-Zech, Kerr and Simmons were re-read on the primary or Europe PMC record instead of a summarizer, and their entries now say so. Entries that were checked only at the level of record metadata and are cited as dataset or method pointers are relabelled METADATA-ONLY (Johnson, Pollard, Reyna, Goldberger, Vincent, Clopper and Pearson, Efron, Bellamy; Cohen was already). Counts: 43 entries, 34 VERIFIED, 9 METADATA-ONLY (all existence or dataset pointers), 0 unverified.
+Zech, Kerr and Simmons were re-read on the primary or Europe PMC record instead of a summarizer, and their entries now say so. Entries that were checked only at the level of record metadata and are cited as dataset or method pointers are relabelled METADATA-ONLY (Johnson, Pollard, Reyna, Goldberger, Vincent, Clopper and Pearson, Efron, Bellamy; Cohen was already). Counts: 46 entries, 34 VERIFIED, 12 METADATA-ONLY (all existence or dataset pointers), 0 unverified.
 
 ## Second pass, 2026-11-04 (same reader, different routes)
 
