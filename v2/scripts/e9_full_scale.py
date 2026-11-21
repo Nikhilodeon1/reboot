@@ -158,6 +158,9 @@ def run(a):
     if "arms" in a.tasks:
         for d in LEVELS_ARMS:
             tasks += [(f"A3@{int(round(d * 100))}", d, "A3"), (f"A4@{int(round(d * 100))}", d, "A4")]
+    if "base" in a.tasks:
+        # more seeds (addendum 7): the no-leak arm and the 5% and 20% arms that round 1 stored only for seeds 42 to 46
+        tasks += [("A0", 0.0, "A0"), ("A1@5", 0.05, "A1"), ("A2@5", 0.05, "A2"), ("A1@20", 0.20, "A1"), ("A2@20", 0.20, "A2")]
     if a.only:
         tasks = [t for t in tasks if t[0] in a.only.split(",")]
     cache = {}
@@ -171,7 +174,9 @@ def run(a):
         if n > len(hold_idx):
             raise SystemExit(f"shortfall: need {n} extra stays, hold-out has {len(hold_idx)}")
         diag = None
-        if arm == "A1":
+        if arm == "A0":
+            m, pl = train_model(src_ds, pool_ds, probe_ds, 0.0, seed, EPOCHS, device, tmp)
+        elif arm == "A1":
             m, pl = train_model(src_ds, pool_ds, probe_ds, frac, seed, EPOCHS, device, tmp)
         elif arm == "A2":
             extra = np.random.default_rng(seed * 1000 + 17).permutation(hold_idx)[:n]
@@ -220,22 +225,27 @@ def tstat(d):
 
 
 def analyse(a):
-    r1 = {s: json.load(open(os.path.join(a.round1, f"tier2local_seed{s}.json"))) for s in SEEDS}
+    from scipy import stats as _st
+    SEEDS_ = [int(x) for x in a.seeds.split(",")] if a.seeds else SEEDS
+    crit = float(_st.t.ppf(0.95, len(SEEDS_) - 1))
+    r1 = {s: json.load(open(os.path.join(a.round1, f"tier2local_seed{s}.json"))) for s in SEEDS_
+          if os.path.exists(os.path.join(a.round1, f"tier2local_seed{s}.json"))}
     cfg = {(r["epochs"], r["device"], r["env"]["torch"], r["env"]["numpy"], r["n_source"], r["n_holdout"], r["n_pool"] if False else 0) for r in r1.values()}
     if len(cfg) != 1:
         raise SystemExit(f"round-1 seed files disagree: {sorted(cfg)}")
-    base = np.array([r1[s]["loss"]["A0"] for s in SEEDS])
-
     def get(s, name):
-        if name in r1[s]["loss"]:
+        if s in r1 and name in r1[s]["loss"]:
             return r1[s]["loss"][name]
         p = done_path(a.out, s, name.replace("@", "_at_"))
         return json.load(open(p))["loss"] if os.path.exists(p) else None
 
+    base_l = [get(s, "A0") for s in SEEDS_]
+    base = None if any(x is None for x in base_l) else np.array(base_l)
+
     def red(name):
-        v = [get(s, name) for s in SEEDS]
-        return None if any(x is None for x in v) else (base - np.array(v)) / base
-    out = {"seeds": SEEDS, "dose_sweep": {}, "missingness": {}}
+        v = [get(s, name) for s in SEEDS_]
+        return None if (base is None or any(x is None for x in v)) else (base - np.array(v)) / base
+    out = {"seeds": SEEDS_, "critical_t_one_sided_5pct": crit, "dose_sweep": {}, "missingness": {}}
     for d in (1, 2, 5, 10, 20):
         A1, A2 = red(f"A1@{d}"), red(f"A2@{d}")
         if A1 is None or A2 is None:
@@ -243,28 +253,28 @@ def analyse(a):
             continue
         r1m, r2m = float(A1.mean()), float(A2.mean())
         out["dose_sweep"][str(d)] = {"complete": True, "r1": r1m, "r2": r2m, "r2_over_r1": r2m / r1m if r1m else None,
-                                     "t_v1": tstat(A1), "t_v2": tstat(A1 - A2), "v1_flags": bool(tstat(A1) >= CRIT_T),
-                                     "v2_flags": bool(tstat(A1 - A2) >= CRIT_T), "r2_within_0.005_of_zero": bool(abs(r2m) <= 0.005)}
+                                     "t_v1": tstat(A1), "t_v2": tstat(A1 - A2), "v1_flags": bool(tstat(A1) >= crit),
+                                     "v2_flags": bool(tstat(A1 - A2) >= crit), "r2_within_0.005_of_zero": bool(abs(r2m) <= 0.005)}
     for d in (5, 20):
         A1, A2, A3, A4 = (red(f"{x}@{d}") for x in ("A1", "A2", "A3", "A4"))
         if any(x is None for x in (A1, A2, A3, A4)):
             out["missingness"][str(d)] = {"complete": False}
             continue
         t12, t32, t13 = tstat(A1 - A2), tstat(A3 - A2), tstat(A1 - A3)
-        clears = bool(t12 >= CRIT_T)
+        clears = bool(t12 >= crit)
         r1m, r2m, r3m, r4m = (float(x.mean()) for x in (A1, A2, A3, A4))
         R = (r3m - r2m) / (r1m - r2m) if clears else None
         if R is None:
             verdict = "undetermined"
-        elif R <= 0.25 and t32 < CRIT_T:
+        elif R <= 0.25 and t32 < crit:
             verdict = "values-dominated"
-        elif R >= 0.75 and t13 < CRIT_T:
+        elif R >= 0.75 and t13 < crit:
             verdict = "missingness-dominated"
         else:
             verdict = "mixed"
         out["missingness"][str(d)] = {"complete": True, "r1": r1m, "r2": r2m, "r3": r3m, "r4": r4m, "t_A1_minus_A2": t12,
                                       "t_A3_minus_A2": t32, "t_A1_minus_A3": t13, "R": R, "verdict": verdict}
-    path = os.path.join(a.out, "e9_e5full_summary.json")
+    path = os.path.join(a.out, "e9_e5full_summary.json" if not a.seeds else "e9_more_seeds_summary.json")
     write_atomic(path, out)
     print(json.dumps(out, indent=1))
 
@@ -278,6 +288,7 @@ if __name__ == "__main__":
     ap.add_argument("--only", default=None)
     ap.add_argument("--out", required=True)
     ap.add_argument("--round1")
+    ap.add_argument("--seeds", default=None, help="analyse: comma-separated seeds (default 42..46)")
     ap.add_argument("--threads", type=int, default=3)
     args = ap.parse_args()
     if args.mode in ("run", "verify") and os.environ.get("PCL_TEST_MODE", "1") != "1":
