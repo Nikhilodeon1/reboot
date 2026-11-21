@@ -154,6 +154,9 @@ def score(a):
         ag = sum(ours[i] == theirs[i] for i in idx)
         out["per_stratum_agreement"][s_] = {"agree": ag, "n": len(idx), "cp95": cp(ag, len(idx))}
     col = lambda x: "REACHABLE_UNGUARDED" if x.startswith("RU_") else x
+    import collections
+    conf = collections.Counter((o, t_, st[i]) for i, (o, t_) in enumerate(zip(ours, theirs)))
+    out["confusion_5class"] = [{"ours": o, "coder": t_, "stratum": s_, "n": n} for (o, t_, s_), n in sorted(conf.items())]
     out["weighted_kappa_five_classes"] = kappa_w(ours, theirs, w)
     out["weighted_kappa_four_labels"] = kappa_w([col(x) for x in ours], [col(x) for x in theirs], w)
     ours_raw = ours

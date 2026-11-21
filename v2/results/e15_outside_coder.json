@@ -145,6 +145,80 @@
    "coder_note": "Self-contained unit test using finite np.random.rand/randn and np.ones arrays of length 100 (NaN is excluded by construction, and assert would raise AssertionError anyway)."
   }
  ],
+ "confusion_5class": [
+  {
+   "ours": "GUARDED",
+   "coder": "GUARDED",
+   "stratum": "other_applicable",
+   "n": 2
+  },
+  {
+   "ours": "GUARDED",
+   "coder": "RU_ordinary",
+   "stratum": "other_applicable",
+   "n": 1
+  },
+  {
+   "ours": "GUARDED",
+   "coder": "UNREACHABLE",
+   "stratum": "other_applicable",
+   "n": 1
+  },
+  {
+   "ours": "NOT_APPLICABLE",
+   "coder": "GUARDED",
+   "stratum": "not_applicable",
+   "n": 1
+  },
+  {
+   "ours": "NOT_APPLICABLE",
+   "coder": "NOT_APPLICABLE",
+   "stratum": "not_applicable",
+   "n": 4
+  },
+  {
+   "ours": "NOT_APPLICABLE",
+   "coder": "RU_ordinary",
+   "stratum": "not_applicable",
+   "n": 1
+  },
+  {
+   "ours": "NOT_APPLICABLE",
+   "coder": "UNREACHABLE",
+   "stratum": "not_applicable",
+   "n": 6
+  },
+  {
+   "ours": "RU_diverged",
+   "coder": "RU_diverged",
+   "stratum": "positive",
+   "n": 12
+  },
+  {
+   "ours": "RU_diverged",
+   "coder": "UNREACHABLE",
+   "stratum": "positive",
+   "n": 1
+  },
+  {
+   "ours": "RU_ordinary",
+   "coder": "RU_ordinary",
+   "stratum": "positive",
+   "n": 3
+  },
+  {
+   "ours": "UNREACHABLE",
+   "coder": "RU_ordinary",
+   "stratum": "other_applicable",
+   "n": 2
+  },
+  {
+   "ours": "UNREACHABLE",
+   "coder": "UNREACHABLE",
+   "stratum": "other_applicable",
+   "n": 6
+  }
+ ],
  "weighted_kappa_five_classes": 0.44453592403534764,
  "weighted_kappa_four_labels": 0.4234275296262533,
  "weighted_kappa_bootstrap_95": [
