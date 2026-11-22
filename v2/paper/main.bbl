@@ -1,4 +1,4 @@
-\begin{thebibliography}{43}
+\begin{thebibliography}{46}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -24,8 +24,9 @@ Earl~T. Barr, Mark Harman, Phil McMinn, Muzammil Shahbaz, and Shin Yoo.
 \bibitem[Beer et~al.(1997)Beer, Ben-David, Eisner, and Rodeh]{beer1997vacuity}
 Ilan Beer, Shoham Ben-David, Cindy Eisner, and Yoav Rodeh.
 \newblock Efficient detection of vacuity in {ACTL} formulas.
-\newblock In \emph{Computer Aided Verification}, Lecture Notes in Computer
-  Science, pp.\  279--290. Springer, 1997.
+\newblock In \emph{Computer Aided Verification}, volume 1254 of \emph{Lecture
+  Notes in Computer Science}, pp.\  279--290. Springer, 1997.
+\newblock \doi{10.1007/3-540-63166-6_28}.
 
 \bibitem[Bellamy et~al.(2019)Bellamy, Dey, Hind, Hoffman, Houde, Kannan, Lohia,
   Martino, Mehta, Mojsilovi{\'c}, et~al.]{bellamy2019aif360}
@@ -80,6 +81,15 @@ Jacob Cohen.
 \newblock A coefficient of agreement for nominal scales.
 \newblock \emph{Educational and Psychological Measurement}, 20\penalty0
   (1):\penalty0 37--46, 1960.
+
+\bibitem[Collins et~al.(2024)Collins, Moons, Dhiman, Riley, Beam, Van~Calster,
+  et~al.]{collins2024tripodai}
+Gary~S. Collins, Karel G.~M. Moons, Paula Dhiman, Richard~D. Riley, Andrew~L.
+  Beam, Ben Van~Calster, et~al.
+\newblock {TRIPOD+AI} statement: updated guidance for reporting clinical
+  prediction models that use regression or machine learning methods.
+\newblock \emph{BMJ}, 385:\penalty0 e078378, 2024.
+\newblock \doi{10.1136/bmj-2023-078378}.
 
 \bibitem[D'Amour et~al.(2022)D'Amour, Heller, Moldovan, Adlam, Alipanahi,
   Beutel, Chen, Deaton, Eisenstein, Hoffman,
@@ -192,6 +202,14 @@ Orna Kupferman and Moshe~Y. Vardi.
 Mary~L. McHugh.
 \newblock Interrater reliability: The kappa statistic.
 \newblock \emph{Biochemia Medica}, 22\penalty0 (3):\penalty0 276--282, 2012.
+
+\bibitem[Mongan et~al.(2020)Mongan, Moy, and Kahn]{mongan2020claim}
+John Mongan, Linda Moy, and Charles~E. Kahn.
+\newblock Checklist for artificial intelligence in medical imaging ({CLAIM}): A
+  guide for authors and reviewers.
+\newblock \emph{Radiology: Artificial Intelligence}, 2\penalty0 (2):\penalty0
+  e200029, 2020.
+\newblock \doi{10.1148/ryai.2020200029}.
 
 \bibitem[Oakden-Rayner et~al.(2020)Oakden-Rayner, Dunnmon, Carneiro, and
   R{\'e}]{oakdenrayner2020hidden}
@@ -309,6 +327,17 @@ J.-L. Vincent, R.~Moreno, J.~Takala, S.~Willatts, A.~De~Mendon{\c{c}}a,
   describe organ dysfunction/failure.
 \newblock \emph{Intensive Care Medicine}, 22\penalty0 (7):\penalty0 707--710,
   1996.
+
+\bibitem[Wolff et~al.(2019)Wolff, Moons, Riley, Whiting, Westwood, Collins,
+  Reitsma, Kleijnen, Mallett, and {PROBAST Group}]{wolff2019probast}
+Robert~F. Wolff, Karel G.~M. Moons, Richard~D. Riley, Penny~F. Whiting, Marie
+  Westwood, Gary~S. Collins, Johannes~B. Reitsma, Jos Kleijnen, Sue Mallett,
+  and {PROBAST Group}.
+\newblock {PROBAST}: A tool to assess the risk of bias and applicability of
+  prediction model studies.
+\newblock \emph{Annals of Internal Medicine}, 170\penalty0 (1):\penalty0
+  51--58, 2019.
+\newblock \doi{10.7326/M18-1376}.
 
 \bibitem[Wynants et~al.(2020)Wynants, Van~Calster, Collins, Riley, Heinze,
   Schuit, et~al.]{wynants2020prediction}

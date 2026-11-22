@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.24)  12 NOV 2026 00:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.24)  19 NOV 2026 23:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -718,7 +718,7 @@ Package: enumitem 2025/02/06 v3.11 Customized lists
 \enitdp@description=\count334
 )
 \c@definition=\count335
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 23
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 20
 .
 
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
@@ -731,24 +731,24 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 ) (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
 
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
@@ -775,229 +775,268 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 23.
+Package hyperref Info: Link coloring OFF on input line 20.
  (main.out) (main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 2
-5.
+2.
 
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [1{C:/Users/nikhi/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/
 nikhi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}
 
-]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
-1.
-
-(C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 5
-0.
+] [2]
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 6
+4.
 
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 5
-0.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 6
+4.
 
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-50.
+64.
 
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-50.
+64.
 
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 50.
+(Font)              <10> on input line 64.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 50.
+(Font)              <7> on input line 64.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 50.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 50.
+(Font)              <5> on input line 64.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 64.
 
 
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 50.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 64.
 
 
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-[2{C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}{
-C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 79.
+(Font)              <8> on input line 75.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 79.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 9
-3.
+(Font)              <6> on input line 75.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 8
+9.
+
 (C:\Users\nikhi\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [3{C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.
+enc}{C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.
 enc}{C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}
-]
-Underfull \hbox (badness 10000) in paragraph at lines 136--136
-[]\T1/lmr/m/n/8 structural: 4/48 to
+] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
+[]\T1/lmr/m/n/8 exact in-ter-vals;
  []
 
 
-Underfull \hbox (badness 5331) in paragraph at lines 136--136
-\T1/lmr/m/n/8 16/48 ap-pli-ca-ble sites
- []
-
-
-Underfull \hbox (badness 4366) in paragraph at lines 136--136
-\T1/lmr/m/n/8 un-de-fined cells in an
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 137--137
+Underfull \hbox (badness 10000) in paragraph at lines 133--133
 []\T1/lmr/m/n/8 detector 1 (mea-sured;
  []
 
 
-Underfull \hbox (badness 2318) in paragraph at lines 137--137
-[]\T1/lmr/m/n/8 four-fifths rule in 133
+Underfull \hbox (badness 10000) in paragraph at lines 133--133
+\T1/lmr/m/n/8 the audit-size model
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 137--138
+Underfull \hbox (badness 2970) in paragraph at lines 133--133
+\T1/lmr/m/n/8 holds, with one in-for-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
 []\T1/lmr/m/n/8 cohort boot-strap;
  []
 
 
-Underfull \hbox (badness 2285) in paragraph at lines 137--138
-\T1/lmr/m/n/8 au-dit draws; Fig-
+Underfull \hbox (badness 1117) in paragraph at lines 135--135
+\T1/lmr/m/n/8 false neg-a-tives with no
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 139--139
-[]\T1/lmr/m/n/8 two development-time
- []
+Underfull \vbox (badness 1460) has occurred while \output is active []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--139
-\T1/lmr/m/n/8 changes made af-ter
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--139
-\T1/lmr/m/n/8 false neg-a-tives with
- []
-
-
-Underfull \hbox (badness 2644) in paragraph at lines 139--139
-\T1/lmr/m/n/8 no pre-fixed rule; one
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--139
-\T1/lmr/m/n/8 coun-ter-fac-tual (a pre-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--140
-[]\T1/lmr/m/n/8 pre-registration
- []
-
-[4] [5]
-<figs/fig4_external.pdf, id=290, 520.34402pt x 187.902pt>
+ [5]
+<figs/fig4_external.pdf, id=326, 520.34402pt x 187.902pt>
 File: figs/fig4_external.pdf Graphic file (type pdf)
 <use figs/fig4_external.pdf>
-Package pdftex.def Info: figs/fig4_external.pdf  used on input line 178.
+Package pdftex.def Info: figs/fig4_external.pdf  used on input line 167.
 (pdftex.def)             Requested size: 460.35788pt x 166.24881pt.
- [6] [7 <./figs/fig4_external.pdf>]
-<figs/fig2_audit_size.pdf, id=317, 520.34402pt x 209.58301pt>
+
+[6]
+Underfull \vbox (badness 1303) has occurred while \output is active []
+
+ [7 <./figs/fig4_external.pdf>] [8]
+<figs/fig2_audit_size.pdf, id=366, 520.34402pt x 209.58301pt>
 File: figs/fig2_audit_size.pdf Graphic file (type pdf)
 <use figs/fig2_audit_size.pdf>
-Package pdftex.def Info: figs/fig2_audit_size.pdf  used on input line 198.
+Package pdftex.def Info: figs/fig2_audit_size.pdf  used on input line 195.
 (pdftex.def)             Requested size: 460.35788pt x 185.43138pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 6300) has occurred while \output is active []
 
- [8 <./figs/fig2_audit_size.pdf>]
-<figs/fig3_volume_control.pdf, id=340, 260.17201pt x 202.356pt>
+ [9 <./figs/fig2_audit_size.pdf>]
+<figs/fig3_volume_control.pdf, id=398, 260.17201pt x 202.356pt>
 File: figs/fig3_volume_control.pdf Graphic file (type pdf)
 <use figs/fig3_volume_control.pdf>
-Package pdftex.def Info: figs/fig3_volume_control.pdf  used on input line 222.
+Package pdftex.def Info: figs/fig3_volume_control.pdf  used on input line 217.
 (pdftex.def)             Requested size: 244.2746pt x 190.0016pt.
-
-Underfull \vbox (badness 5741) has occurred while \output is active []
-
- [9]
-Underfull \vbox (badness 3690) has occurred while \output is active []
-
- [10 <./figs/fig3_volume_control.pdf>] [11] [12] [13] (main.bbl [14] [15] [16])
-
-Underfull \hbox (badness 10000) in paragraph at lines 333--334
-[]\T1/lmr/m/n/8 full MIMIC-IV,
+ [10] [11 <./figs/fig3_volume_control.pdf>] [12] (main.bbl [13] [14] [15])
+Underfull \hbox (badness 1062) in paragraph at lines 287--287
+\T1/lmr/m/n/8 (main doc-u-ment, site pat-terns and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--335
-[]\T1/lmr/m/n/8 full-scale MIMIC-
+Underfull \hbox (badness 10000) in paragraph at lines 289--290
+[]\T1/lmr/m/n/8 3fc4bdd22e56,
  []
 
 
-Underfull \hbox (badness 1466) in paragraph at lines 337--338
-[]\T1/lmr/m/n/8 ablation on eICU-
+Underfull \hbox (badness 10000) in paragraph at lines 293--293
+[]\T1/lmr/m/n/8 Guarded-pipeline com-par-i-son and
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[16]
+Underfull \hbox (badness 1430) in paragraph at lines 336--337
+[]\T1/lmr/m/n/8 mutation test and the sam-ple of sur-vivors; the 25-
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \vbox (badness 1019) has occurred while \output is active []
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \vbox (badness 4846) has occurred while \output is active []
 
  [17]
-[18] [19] (main.aux)
+[18] [19]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 486--486
+[]\T1/lmr/m/n/8 Fairlearn, de-mo-graphic
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 487--487
+[]\T1/lmr/m/n/8 Fairlearn, false-positive
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 488--488
+[]\T1/lmr/m/n/8 scikit-learn, Co-hen's
+ []
+
+
+Underfull \hbox (badness 2269) in paragraph at lines 488--488
+[]\T1/lmr/m/n/8 constant ref-er-ence
+ []
+
+
+Underfull \hbox (badness 1694) in paragraph at lines 488--489
+[]\T1/lmr/m/n/8 defined on its in-put and doc-u-
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[21]
+Underfull \hbox (badness 1237) in paragraph at lines 514--514
+[]\T1/lmr/m/n/8 4 null rate and nui-sance
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 549--550
+[]\T1/lmr/m/n/8 full MIMIC-IV,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 550--551
+[]\T1/lmr/m/n/8 full-scale MIMIC-
+ []
+
+
+Underfull \hbox (badness 1466) in paragraph at lines 553--554
+[]\T1/lmr/m/n/8 ablation on eICU-
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[22] [23] (main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 18EDFC602ED2216737451CD1818D476A;3937.
+(rerunfilecheck)             Checksum: 48C53CDA90DA5558694076BC09366DD8;5421.
  ) 
 Here is how much of TeX's memory you used:
- 22749 strings out of 467871
- 423889 string characters out of 5418376
- 813023 words of memory out of 5000000
- 51077 multiletter control sequences out of 15000+600000
- 690055 words of font info for 82 fonts, out of 8000000 for 9000
+ 22770 strings out of 467871
+ 423727 string characters out of 5418376
+ 824907 words of memory out of 5000000
+ 51081 multiletter control sequences out of 15000+600000
+ 692806 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,11n,94p,3278b,762s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,12n,94p,2378b,762s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
 b><C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.p
 fb><C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.p
 fb><C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi7.pf
 b><C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb
 ><C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb>
-<C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C
-:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/
-Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/
-Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri8.pfb><C:/U
-sers/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:
-/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:
-/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/
-Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/U
-sers/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
-Output written on main.pdf (19 pages, 470163 bytes).
+<C:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C
+:/Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/
+Users/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Us
+ers/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Us
+ers/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri8.pfb><C:/Use
+rs/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/U
+sers/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/U
+sers/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Us
+ers/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Use
+rs/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Use
+rs/nikhi/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb>
+Output written on main.pdf (23 pages, 536550 bytes).
 PDF statistics:
- 569 PDF objects out of 1000 (max. 8388607)
- 145 named destinations out of 1000 (max. 500000)
- 188 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 655 PDF objects out of 1000 (max. 8388607)
+ 166 named destinations out of 1000 (max. 500000)
+ 260 words of extra memory for PDF output out of 10000 (max. 10000000)
 
