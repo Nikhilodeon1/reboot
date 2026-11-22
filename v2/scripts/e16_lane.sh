@@ -13,6 +13,6 @@ cd "$REPO" || exit 1
 for S in "$@"; do
   echo "=== seed $S start $(date -u +%FT%TZ)"
   PCL_TEST_MODE=1 python -W ignore v2/scripts/e9_full_scale.py run \
-    --arrays "$ARR" --seed "$S" --tasks dose,arms,base --out "$OUT" --threads "$THREADS"
+    --arrays "$ARR" --seed "$S" --tasks dose,arms,base --only A0,A1@2,A2@2,A1@5,A2@5,A1@20,A2@20,A3@5,A4@5,A3@20,A4@20 --out "$OUT" --threads "$THREADS"
   echo "=== seed $S end $(date -u +%FT%TZ)"
 done
