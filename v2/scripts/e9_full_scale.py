@@ -90,6 +90,21 @@ def done_path(out, seed, task):
     return os.path.join(out, f"seed{seed}_{task}.json")
 
 
+def cpu_model():
+    """Processor model and Python version, recorded in every result file (addendum 8)."""
+    import platform
+    name = platform.processor() or platform.machine()
+    try:
+        with open("/proc/cpuinfo") as f:
+            for line in f:
+                if line.startswith("model name"):
+                    name = line.split(":", 1)[1].strip()
+                    break
+    except OSError:
+        pass
+    return f"{name}; python {platform.python_version()}"
+
+
 def write_atomic(path, obj):
     tmp = path + ".tmp"
     json.dump(obj, open(tmp, "w"), indent=1)
@@ -194,7 +209,7 @@ def run(a):
         loss = probe_loss(m, pl, MASK_PROB, device)
         write_atomic(path, {"seed": seed, "task": name, "loss": loss, "n_extra": n, "n_source": int(len(src_idx)), "n_pool": int(len(pool_idx)),
                             "n_probe": int(len(probe_idx)), "epochs": EPOCHS, "device": device, "seconds": round(time.time() - t0, 1),
-                            "torch": torch.__version__, "numpy": np.__version__, "fill": diag})
+                            "torch": torch.__version__, "numpy": np.__version__, "cpu": cpu_model(), "fill": diag})
         print(f"{name} seed {seed}: loss {loss:.6f} in {time.time() - t0:.0f}s", flush=True)
     shutil.rmtree(tmp, ignore_errors=True)
 
