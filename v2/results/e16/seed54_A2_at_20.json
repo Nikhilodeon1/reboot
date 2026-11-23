@@ -1,0 +1,16 @@
+{
+ "seed": 54,
+ "task": "A2@20",
+ "loss": 0.004960859579440925,
+ "n_extra": 11937,
+ "n_source": 59686,
+ "n_pool": 59686,
+ "n_probe": 32612,
+ "epochs": 3,
+ "device": "cpu",
+ "seconds": 360.0,
+ "torch": "2.14.1+cpu",
+ "numpy": "2.4.6",
+ "cpu": "AMD EPYC 7B12; python 3.13.18",
+ "fill": null
+}
