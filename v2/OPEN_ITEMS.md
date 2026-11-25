@@ -2,40 +2,41 @@
 
 Working notes. Not part of the manuscript or the supplementary archive.
 
-## Authors to do
+## Needs you (a person or an account that I do not have)
 
-- Write the AI-use statement and the TMLR first-page note on LLM use. The statement should cover writing, code, labeling and citation checking, and should say what the authors checked by hand. The source file carries a comment where it goes.
-- Read the compiled PDF end to end. Rewrite the passages in `author_pass.md` in your own words, keeping every number, interval and citation.
-- Refresh the anonymized code supplement with the E16 script (`v2/scripts/e9_full_scale.py`, `e16_lane.sh`), the E16 and E13b results, and addenda 7 and 8.
-- Answer one question the reviewer asked and the paper does not: which setting forces a subset audit for detector 1? If none does, say so in Section 5.3.
+1. **AI-use statement and the TMLR note on LLM use.** Write from what was done. The source file has a comment where it goes.
+2. **Benchmark's own data file (E19).** The College Scorecard task of the benchmark reads `Scorecard.csv` from the Kaggle dataset `kaggle/college-scorecard`, which needs a Kaggle login. Download it, then run `python -W ignore v2/scripts/e19_tableshift_own_file.py --data <folder with Scorecard.csv>`. The script reproduces the benchmark's domain split, default model and verbatim preprocessing (read from its source at commit fca9429814, not imported) and has only been smoke-tested on synthetic data. Send me `v2/results/e19_tableshift_own_file.json` and I will add it to the paper and the ledger. Until then the paper states the limit.
+3. **Independent application of the reporting standard.** The kit is in `v2/validation_kit/`. Steps: fill and commit `answers_authors.csv` (about 1 hour), send the rater `CARD.md`, `CASES.md` and `answers_template.csv`, run `score_agreement.py`. The paper says the standard is unvalidated and stays that way until this is done.
+4. **Patient-level bootstraps.** The patient identifiers of the full MIMIC-IV and eICU-CRD cohorts are not on this machine. If you run on the machine that has the credentialed tables, a cluster bootstrap over patients for the whole-cohort kappa and the audit draws would replace the stay-level intervals. The paper states the limit.
+5. **Maintainer replies.** Two of three maintainers were notified on 2026-11-23. Add a sentence if one replies.
+6. **Rewrite the passages in `v2/AUTHOR_PASS.md`** in your own voice, keeping the numbers.
+7. **Read the final PDF end to end**, and decide whether to submit.
 
 ## Done in this pass
 
-- Maintainer notification: two of three repositories notified on 2026-11-23, the third (archived, read-only) could not be. Stated in the Broader impact paragraph.
-- Abstract cut from about 290 to about 190 words, with fewer numbers.
-- Page limit: the conclusion now ends on page 12. Detector 5 and the four-fifths simulation moved to the appendix with a two-sentence summary in Section 5.3. The four-fifths simulation is no longer listed as an external instance of Type 2.
-- Detector 3's abstentions are no longer listed as a Type 1 instance in Table 1.
-- Added the 1.64 against 3 margin explanation, a note on what a user does with an inconclusive verdict, a no-multiplicity-adjustment statement, and a kappa and prevalence caveat.
-- Positive controls no longer carry a ceiling or discriminating class. The reporting card note is no longer numbered as item 6.
-- Three related-work citations verified and added: negative controls (Lipsitch et al. 2010), sanity checks (Adebayo et al. 2018), kappa and prevalence (Feinstein and Cicchetti 1990). The Feinstein and Lipsitch entries rest on the abstract only.
-- Figure 4 now reads "pre-specified" and "open-data scale".
-- Fixed two broken cross-references that earlier scripted edits had introduced.
+- Retitled to "Can This Check Fail? An Audit of Five Clinical Confound Detectors". The failure modes are now silent pass (undefined-input pass and weak-control pass) and threshold sitting. The two development hazards moved to the limitations.
+- E17 (addendum 9): executed degenerate-input test of the five detectors, 19 of 27 undefined cells return a clean verdict. This is now the headline evidence and replaces the rubric-counted prevalence.
+- E18 (addendum 10): the point rule against an interval rule and a bootstrap zone rule on 90 pair and database combinations, the interval rule never resolving the primary control, and prevalence-adjusted kappa.
+- E16 (addenda 7 and 8): detector 2 near-threshold readings with 20 seeds; two verdicts changed.
+- Detector 2, detector 3 outside its home idiom, and the repository reading moved to appendices. The main text ends on page 11.
+- Detector table added to Section 4. Tables for E17 and E18 added to the main text and the appendix. Figure 4 label fixed.
+- The loader paragraph now says our model is the benchmark's default `histgbm` configuration (library defaults). The remaining differences are the data file, the domain split and the feature discretization.
+- Code supplement rebuilt with the new scripts and results (108 tests pass, 7 skip).
+- One fresh-eyes mock review run on the compiled text (see the report that came with this commit).
 
-## Reviewer points not addressed (need a decision or new work)
+## Deviations to know about
 
-- Title and scope: the title says clinical, the external evidence is general-purpose ML code.
-- Rename Type 1 and Type 2 (they collide with statistical Type I and II errors), and the coined labels falsy-as-clean, ceiling control, structural non-discriminability.
-- Define Type 1 by an executable test and count patterns, not occurrences. Treat loader coercion as its own category.
-- Replace rubric-based prevalence with execution-based counts, or have two humans double-code all 88 sites with adjudication. Pin the model versions of the language-model raters.
-- Reframe Type 2 as a short general result and evaluate the three-way verdict against a confidence-interval rule by simulation. Add a dose-response or equivalence-test control for detector 1.
-- Validate the reporting standard on at least three external diagnostics with an independent rater, and map it to TRIPOD+AI, PROBAST and the ML Test Score.
-- Run the TableShift loader task with the repository's own pipeline. Reconcile the two true-label AUROC deltas (-1.5 on overlapping splits, -0.5 in cross-validation).
-- Move detector 2, the mutation test and the development hazards to appendices and cut the main text to about 10 pages.
-- Resample patients, not stays, in the cohort bootstraps; report prevalence and a prevalence-adjusted kappa; use stays, patients and persons consistently.
-- Clarify what detector 1 compares (two operationalizations in one cohort, per Section 4) against the wording in the detector appendix.
-- Citations suggested by the reviewer and not added because they are unverified: Schuirmann 1987 (equivalence testing), Ethayarajh 2020, Cherian and Candes, Snoek et al. 2019.
+- Addendum 9 said cells would not be pooled across detectors, but the paper reports 19 of 27 with a descriptive interval. The paper says the interval treats the cells as independent although they are not.
+- The E17 input list was written after reading the detector code, so the outcomes are not blind. The paper says so.
+- Addendum 10's zone rule uses 200 audits for six pairs, and the interval rule's standard error is an approximation checked against a bootstrap on 100 audits.
+
+## Reviewer points not addressed
+
+- Citations the reviewer suggested and I could not verify: Schuirmann 1987 (equivalence testing), Ethayarajh 2020, Cherian and Candes, Snoek et al. 2019. Not added.
+- Independent coding of all 88 sites by two humans, and pinned model snapshots for the language-model raters. The paper no longer reports a prevalence, and states both limits.
+- Equivalence-test or dose-response controls for detector 1 (a new design, not run).
 
 ## Tooling
 
-- `paperlint.py` is still missing from the ml-paper-writer skill folder. This pass used a saved copy of an earlier version, so macro, venue-overlap and TeX-log checks did not run. Remaining lint errors are 26 "number not in ledger" items, which are rounding, table widths, repository line numbers and "AI Fairness 360".
-- The AAAI-format paper in `cane_ai/` still carries the five-seed detector 2 numbers and a pending-rerun placeholder. Update it from the E16 rows before any further use.
+- `paperlint.py` v3 is extracted from the skill and verified (hash 2b87a01d49cc2ae3...). The skill file on disk had doubled backslashes inside the code block, so I reversed that escaping before the hash matched. Remaining lint items: 30 "number not in ledger" (rounding, table widths, hash prefixes, repository line numbers, "AI Fairness 360"), file names in appendix site locations, number walls in appendix text, and benign word matches.
+- The AAAI-format paper in `cane_ai/` is stale (five-seed numbers, old title) and should not be used.
