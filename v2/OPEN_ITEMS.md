@@ -14,7 +14,7 @@ Working notes. Not part of the manuscript or the supplementary archive.
 
 ## Done in this pass
 
-- Retitled to "Can This Check Fail? An Audit of Five Clinical Confound Detectors". The failure modes are now silent pass (undefined-input pass and weak-control pass) and threshold sitting. The two development hazards moved to the limitations.
+- Retitled twice. Current title: "Clean Verdicts Without Evidence: An Audit of Five Clinical Confound Detectors" (the first retitle, "Can This Check Fail?", promised a sensitivity test that the paper does not run). The failure modes are now silent pass (undefined-input pass and weak-control pass) and threshold sitting. The two development hazards moved to the limitations.
 - E17 (addendum 9): executed degenerate-input test of the five detectors, 19 of 27 undefined cells return a clean verdict. This is now the headline evidence and replaces the rubric-counted prevalence.
 - E18 (addendum 10): the point rule against an interval rule and a bootstrap zone rule on 90 pair and database combinations, the interval rule never resolving the primary control, and prevalence-adjusted kappa.
 - E16 (addenda 7 and 8): detector 2 near-threshold readings with 20 seeds; two verdicts changed.
@@ -22,7 +22,7 @@ Working notes. Not part of the manuscript or the supplementary archive.
 - Detector table added to Section 4. Tables for E17 and E18 added to the main text and the appendix. Figure 4 label fixed.
 - The loader paragraph now says our model is the benchmark's default `histgbm` configuration (library defaults). The remaining differences are the data file, the domain split and the feature discretization.
 - Code supplement rebuilt with the new scripts and results (108 tests pass, 7 skip).
-- One fresh-eyes mock review run on the compiled text (see the report that came with this commit).
+- A fresh-eyes mock review of the restructured text (recommendation: major revision) led to these fixes: the title and abstract now say the test checks one necessary condition and not sensitivity; the interval-rule error figures are consistent (at most 2.3% in the size simulations, 0.8% at n=500 over 2,000 audits, and described as against the whole-cohort verdict because the control's cohort interval contains the cutoff); the settling size and the no-resolution statement are reconciled; 5 degenerate-by-convention cells are split out (14 of 22 remain silent passes, post hoc); the pooling statement is scoped to the internal validation cases; the detector-code date claim replaces the unverifiable "did not change" claim (no detector commit after 2026-10-15, first v2 specification 2026-11-03); the primary control, home idiom and weak-control wording are defined where first used; the loader case is labeled a data-loader line; the narrow-reading count of 4 (3 without the divergence check) is stated; the four-fifths and detector 5 illustrations are one sentence in the main text.
 
 ## Deviations to know about
 
@@ -32,6 +32,9 @@ Working notes. Not part of the manuscript or the supplementary archive.
 
 ## Reviewer points not addressed
 
+- The mock reviewer's most valuable single change: an independent replication of both failure modes on diagnostics other groups wrote. The executed fuzz of 13 public checks and the validation kit are the partial answer; a wider fuzz (more libraries, the same input list) is the cheapest extension and has not been run.
+- Replacing the primary control with a defensible negative control (a pair that experts accept as interchangeable with kappa well above 0.60), or an equivalence-test design, would remove the objection that the whole-cohort verdict is a point estimate on the threshold. It needs a new labeling choice and was not run.
+- Sensitivity of the detectors is measured only by one to eight internal cases each (Appendix Table 19).
 - Citations the reviewer suggested and I could not verify: Schuirmann 1987 (equivalence testing), Ethayarajh 2020, Cherian and Candes, Snoek et al. 2019. Not added.
 - Independent coding of all 88 sites by two humans, and pinned model snapshots for the language-model raters. The paper no longer reports a prevalence, and states both limits.
 - Equivalence-test or dose-response controls for detector 1 (a new design, not run).
