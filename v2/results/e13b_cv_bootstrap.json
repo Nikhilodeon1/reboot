@@ -1,0 +1,53 @@
+{
+ "note": "Non-overlapping 5-fold CV (KFold seed 42) across all 6272 institutions (2278 observed), with 2000 paired institution-level bootstrap resamples (95% percentile CI).",
+ "n_total": 6272,
+ "n_observed": 2278,
+ "boot_resamples": 2000,
+ "point_reported_unguarded": {
+  "accuracy": 0.9260204081632653,
+  "balanced_accuracy": 0.8612810751200763,
+  "auroc": 0.9715689466637578
+ },
+ "point_reported_guarded": {
+  "accuracy": 0.8002633889376646,
+  "balanced_accuracy": 0.8006666604895947,
+  "auroc": 0.8933960923842881
+ },
+ "point_unguarded_on_observed": {
+  "accuracy": 0.8020193151887621,
+  "balanced_accuracy": 0.8039497742280204,
+  "auroc": 0.8880019643088782
+ },
+ "aggregate": {
+  "reported_gap_accuracy": [
+   0.12575701922560067,
+   0.11301703345043292,
+   0.1377060595769278
+  ],
+  "true_label_gap_accuracy": [
+   0.0017559262510975504,
+   -0.010410478968504952,
+   0.01341454234776485
+  ],
+  "reported_gap_balanced_accuracy": [
+   0.06061441463048167,
+   0.047322584837336916,
+   0.0732996892915433
+  ],
+  "true_label_gap_balanced_accuracy": [
+   0.0032831137384257136,
+   -0.009065445102731936,
+   0.014919233557867378
+  ],
+  "reported_gap_auroc": [
+   0.07817285427946974,
+   0.06865026595432511,
+   0.0879998457047456
+  ],
+  "true_label_gap_auroc": [
+   -0.005394128075409843,
+   -0.01264493413303494,
+   0.0012949611588856762
+  ]
+ }
+}

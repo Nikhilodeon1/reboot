@@ -2,8 +2,9 @@
 
     python v2/paper/make_figs.py
 
-Fig. 2 reads v2/results/e3_d1_audit_size.json (E3). Fig. 3 reads the round-1 results for detector 2 (demonstration and
-full scale). Nothing here recomputes a statistic; r2/r1 is the ratio of the arm means in the archived files.
+Fig. 2 reads v2/results/e3_d1_audit_size.json (E3). Fig. 3 reads the round-1 results for detector 2 at demonstration
+scale and v2/results/e16_summary.json (E16, 20 seeds) at full scale. Nothing here recomputes a statistic; r2/r1 is
+the ratio of the arm means in the archived files.
 """
 import os
 import json
@@ -71,12 +72,12 @@ def ratio(path, key, level):
 
 def fig_volume():
     demo = os.path.join(R1, "task2_demo.json")
-    full = os.path.join(R1, "tier2_local.json")
-    _ri = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results", "ratio_interval.json")))
+    _ri = json.load(open(os.path.join(V2, "results", "ratio_interval.json")))
+    _e16 = json.load(open(os.path.join(V2, "results", "e16_summary.json")))["all20"]["dose"]
     FIELLER = {("Demonstration", 5): _ri["demonstration_5pct"]["fieller95"], ("Demonstration", 20): _ri["demonstration_20pct"]["fieller95"],
-               ("Full", 5): _ri["full_5pct"]["fieller95"], ("Full", 20): _ri["full_20pct"]["fieller95"]}
+               ("Full", 5): _e16["5"]["fieller95"], ("Full", 20): _e16["20"]["fieller95"]}
     vals = {("Demonstration", 5): ratio(demo, "demo", 5), ("Demonstration", 20): ratio(demo, "demo", 20),
-            ("Full", 5): ratio(full, "full", 5), ("Full", 20): ratio(full, "full", 20)}
+            ("Full", 5): _e16["5"]["ratio"], ("Full", 20): _e16["20"]["ratio"]}
     fig, ax = plt.subplots(figsize=(3.6, 2.8))
     xs = {("Demonstration", 5): 0, ("Demonstration", 20): 1, ("Full", 5): 2.4, ("Full", 20): 3.4}
     cols = {"Demonstration": "#7f9fbf", "Full": "#1b6ca8"}
@@ -125,8 +126,9 @@ def fig_external():
             ax.errorbar(k / n, y, xerr=[[k / n - lo], [hi - k / n]], fmt="o", ms=4, color=("#1b6ca8" if i == 0 else "#6b6b6b"), capsize=2, lw=1.0)
             ax.text(min(hi + 0.02, 0.98), y, f"{k}/{n}", va="center", fontsize=7.5)
         est, (clo, chi) = coder[reading]
+        ax.axhline(0.5, color="#aaaaaa", ls="--", lw=0.8)
         ax.errorbar(est / 88, 0, xerr=[[est / 88 - clo / 88], [chi / 88 - est / 88]], fmt="s", ms=4, color="#b5472a", capsize=2, lw=1.0)
-        ax.text(min(chi / 88 + 0.02, 0.98), 0, f"about {est:.0f}/88", va="center", fontsize=7.5)
+        ax.text(min(chi / 88 + 0.02, 0.98), 0, f"~{est:.0f}/88 (scaled)", va="center", fontsize=7.2)
         ax.set_title(title, fontsize=9)
         ax.set_xlim(0, 1)
         ax.set_xlabel("share of the 88 sampled sites")
