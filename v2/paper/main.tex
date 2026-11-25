@@ -5,6 +5,7 @@
 \usepackage{url}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs}
+\usepackage{longtable}
 \usepackage{placeins}
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -16,56 +17,56 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 
-\title{How Five Confound Detectors for Clinical Machine Learning Fail Quietly}
+\title{Can This Check Fail? An Audit of Five Clinical Confound Detectors}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Automated diagnostics for confounds in clinical machine learning, such as label-definition checks and leakage detectors, return verdicts that readers take as evidence about a pipeline. We ask when such a verdict can be trusted, and answer from an audit of five detectors we built: pre-specified controls, mutation testing, a read of 25 public repositories, and executed tests of public code. We sort what we found into two measured failure modes. In Type 1, a diagnostic or control is treated as clean without establishing that verdict. This occurred five times in our code, and executed tests show the same pattern in public general-purpose ML code, including a benchmark loader that maps missing targets to 0 and raises reported AUROC by 7.6 points in a stand-in pipeline. How often the pattern occurs across repositories depends on who labels the sites. In Type 2, a subset audit evaluates a statistic near its threshold: on 74,829 MIMIC-IV stays a whole-cohort kappa of 0.602 sits 0.002 above a cutoff of 0.60, and audits of 100 to 5,000 stays flag between 41\% and 49\% of the time. Two further hazards arose in our own development and were not measured externally. We propose an unvalidated five-item reporting standard; anonymized code and aggregate results are in the supplementary archive.
+Automated diagnostics for confounds in clinical machine learning, such as label-definition checks and leakage detectors, return verdicts that readers take as evidence about a pipeline. A clean verdict is evidence only if the diagnostic could have failed. We test this for five detectors we built by calling each entry point with inputs on which its statistic is undefined: 19 of 27 such cells returned a clean verdict. The same pattern appears in public general-purpose code, including a benchmark loader that maps missing targets to 0 and raises reported AUROC by 7.6 points in a stand-in pipeline, and in 5 of 22 undefined cells of an executed fuzz of public checking libraries. A second problem is a statistic that sits on its threshold. On 74,829 MIMIC-IV stays a whole-cohort kappa of 0.602 lies 0.002 above a cutoff of 0.60, so a 500-patient audit flags between 41\% and 49\% of the time, and an interval rule that can answer inconclusive does so in 96.6\% of audits. We propose an unvalidated five-item reporting standard; anonymized code and aggregate results are in the supplementary archive.
 \end{abstract}
 
 
 \section{Introduction}
 \label{sec:intro}
 
-A clinical machine learning result can be wrong in a way nothing in the paper reveals. The model trains and the numbers are real, but the finding comes from how the data were assembled. A living systematic review of COVID-19 prognostic models rated 545 of 606 models at high risk of bias \citep{wynants2020prediction}, and a review of chest radiograph and CT models found none of potential clinical use because of methodological flaws or underlying biases \citep{roberts2021common}. Leakage alone affects at least 294 studies across 17 fields \citep{kapoor2023leakage}.
+A clinical machine learning result can be wrong in a way nothing in the paper reveals: the model trains and the numbers are real, but the finding comes from how the data were assembled. A living systematic review of COVID-19 prognostic models rated 545 of 606 models at high risk of bias \citep{wynants2020prediction}, and a review of chest radiograph and CT models found none of potential clinical use because of methodological flaws or underlying biases \citep{roberts2021common}. Leakage alone affects at least 294 studies across 17 fields \citep{kapoor2023leakage}.
 
-The natural response is tooling: if a confound leaves a detectable signature, write a detector and run it before publishing. We built five detectors for confounds from our own work (label-definition shift, pretraining leakage, OOD-contaminated hyperparameter selection, circular physiological constraints, and cross-site missingness artifacts), each shipped with a positive case and a false-positive control.
+The natural response is tooling: if a confound leaves a detectable signature, write a detector, run it before publishing, and treat a clean verdict as evidence. We built five detectors for confounds from our own work (label-definition shift, pretraining leakage, OOD-contaminated hyperparameter selection, circular physiological constraints, and cross-site missingness artifacts), each shipped with a positive case and a false-positive control. A clean confusion matrix on such a suite does not say whether a detector could have failed, so we asked that question of the detectors directly.
 
-A clean confusion matrix does not say whether a detector could have failed. We therefore audited the detectors the way they audit a pipeline, and the audit found more than the detectors did. Some verdicts held by construction, one control could not fail, and one threshold sat on the quantity it was meant to separate. We report the audit in full, including the parts that go against our own tools, and ask what a reader should require before trusting a diagnostic's verdict.
+We ask it in two ways. First, we call each detector's entry point with inputs on which its statistic is undefined (empty, constant, NaN or unknown inputs) and record whether it raises an error, abstains, flags, or returns a clean verdict. Second, we ask what a verdict from the shipped decision rule means at the audit size it uses, by comparing it with the whole-cohort value and with a rule that may answer inconclusive. We run the same executed test on public code and public checking libraries.
 
-We make three contributions. First, we define a stage model of a diagnostic (statistic, decision rule, controls, design process) with two empirically measured failure modes (Types 1 and 2) and two unmeasured development hazards (granularity or pairing mismatch, and post-hoc rule fitting). Second, we measure Types 1 and 2 with pre-specified experiments, including executed checks of public code and data, and report exact intervals for each finding. Third, we propose a short, unvalidated reporting standard derived from the audit.
+We make three contributions. First, we name two ways in which a clean verdict can be empty: a silent pass, where an undefined input or a control that cannot fail yields a clean verdict, and threshold sitting, where the statistic lies so close to its threshold that a verdict at the audit size is close to a coin flip. Second, we show silent passes by execution. Of 27 undefined input cells of our five detectors, 19 returned a clean verdict, and the same pattern appears in a public benchmark loader, in two other public codebases, and in 5 of 22 undefined cells of public checking libraries. Third, we measure threshold sitting on one detector, show that an interval rule that can answer inconclusive is decisive and wrong in under 1\% of audits where the shipped rule is close to a coin flip, and propose a five-item reporting standard that we have not validated outside our own cases.
 
-We audited our own detectors, and our external evidence comes from general-purpose machine learning code and public data, so it speaks to these five detectors and to patterns in public code, not to confound detectors as a class. The failure modes are not complete, and we do not show that the failures change conclusions in other groups' studies. Section~\ref{sec:limits} lists the limits.
+The five detectors and their datasets are ours, and the public code we test is general-purpose machine learning code. The results therefore speak to these detectors and to patterns in public code, not to confound detectors as a class (Section~\ref{sec:limits}).
 
 \section{Related Work}
 \label{sec:related}
 
 \paragraph{Vacuous success in verification.} Model checkers face the closest analogue of our first failure mode. A specification can pass vacuously, for example when a system never sends a request and the property says every request is eventually granted. \citet{beer1997vacuity} define such vacuous passes and show how to detect them for a subset of temporal logic, and \citet{kupferman2003vacuity} extend the method and argue for suspecting the system or the specification when checking succeeds. We apply the idea to diagnostics for ML pipelines, where the verdict is a flag or its absence and the undefined input is a missing value, an empty container or a one-class sample.
 
-\paragraph{Validity of evaluation instruments.} \citet{damour2022underspecification} show that a pipeline can return many predictors with equal held-out performance that behave differently in deployment. \citet{gulrajani2021search} argue that a domain generalization method is incomplete without a model-selection criterion. \citet{salaudeen2025misspecified} derive conditions under which a shift reveals reliance on spurious features and audit leading datasets against them. These works examine models, selection rules and benchmarks. We examine the diagnostics that audit pipelines, where a wrong verdict reads as nothing to detect. Negative controls detect confounding and other sources of error in observational studies \citep{lipsitch2010negative}, and sanity checks randomize a model's parameters or the data to test whether a saliency method depends on them, which some methods do not \citep{adebayo2018sanity}. Our Type 1b asks the same question of a diagnostic's own control.
+\paragraph{Validity of evaluation instruments.} \citet{damour2022underspecification} show that a pipeline can return many predictors with equal held-out performance that behave differently in deployment. \citet{gulrajani2021search} argue that a domain generalization method is incomplete without a model-selection criterion. \citet{salaudeen2025misspecified} derive conditions under which a shift reveals reliance on spurious features and audit leading datasets against them. These works examine models, selection rules and benchmarks. We examine the diagnostics that audit pipelines, where a wrong verdict reads as nothing to detect. Negative controls detect confounding and other sources of error in observational studies \citep{lipsitch2010negative}, and sanity checks randomize a model's parameters or the data to test whether a saliency method depends on them, which some methods do not \citep{adebayo2018sanity}. Our weak-control pass asks the same question of a diagnostic's own control.
 
 \paragraph{Confounds and leakage.} Appraisals and checklists list how clinical models go wrong \citep{wynants2020prediction,roberts2021common,kapoor2023leakage}, and shortcut learning and hidden stratification describe mechanisms \citep{geirhos2020shortcut,oakdenrayner2020hidden}. A pneumonia model did better on internal than on outside hospital data in three of five comparisons and identified the hospital system and department \citep{zech2018variable}, and COVID-19 radiograph models relied on confounding factors instead of pathology \citep{degrave2021shortcuts}. The label definition matters too: clinical criteria gave a flat sepsis incidence from 2009 to 2014 while claims-based incidence rose by about 10\% a year \citep{rhee2017sepsis}. These sources are written for human readers. A detector is executable, so its errors can be measured.
 
-\paragraph{Static leakage tools and verdict-emitting toolkits.} \citet{yang2022leakage} propose a static analysis for common forms of leakage in notebooks, and \citet{subotic2022leakage} propose a lightweight analysis for development time. We ran the first on our own fixtures (Section~\ref{sec:detector3}). AI Fairness 360 \citep{bellamy2019aif360} and DomainBed \citep{gulrajani2021search} contain verdict and selection code that we read for our failure modes.
+\paragraph{Static leakage tools and verdict-emitting toolkits.} \citet{yang2022leakage} propose a static analysis for common forms of leakage in notebooks, and \citet{subotic2022leakage} propose a lightweight analysis for development time. We ran the first on our own fixtures (Appendix~\ref{sec:detector3}). AI Fairness 360 \citep{bellamy2019aif360} and DomainBed \citep{gulrajani2021search} contain verdict and selection code that we read for our failure modes.
 
 \paragraph{Testing and validating ML systems.} \citet{breck2017mltest} list 28 tests and monitoring needs for production ML systems. \citet{breck2019datavalidation} describe a data validation system that detects anomalies in the data fed to ML pipelines at Google, and \citet{chorev2022deepchecks} present a library of checks for models and data. These systems issue checks and alerts that teams act on. We ask what such a check does when its statistic is undefined, which differs from whether its threshold is well chosen. Mutation analysis asks whether a test suite notices small seeded faults \citep{jia2011mutation}, and the oracle problem asks how a test decides that an output is correct \citep{barr2015oracle}. Our mutation test applies the first idea to the code of a diagnostic. ML systems that depend on their inputs tend to fail silently when those inputs are unexpected \citep{rabanser2019failing}, and we ask the same of verdict-emitting diagnostics.
 
-\paragraph{Thresholds as conventions.} A cutoff is often inherited. \citet{mchugh2012kappa} argues that Cohen's suggested reading of kappa may be too lenient for health research. The four-fifths rule treats a selection rate below 80\% of the highest group's rate as evidence of adverse impact, with the caution that larger differences resting on small numbers may not indicate it \citep{cfr1607}. What a verdict from such a cutoff means depends on where the cutoff sits relative to the spread of the statistic at the audit size. Our Type 2 is about that spread.
+\paragraph{Thresholds as conventions.} A cutoff is often inherited. \citet{mchugh2012kappa} argues that Cohen's suggested reading of kappa may be too lenient for health research. The four-fifths rule treats a selection rate below 80\% of the highest group's rate as evidence of adverse impact, with the caution that larger differences resting on small numbers may not indicate it \citep{cfr1607}. What a verdict from such a cutoff means depends on where the cutoff sits relative to the spread of the statistic at the audit size. Our threshold sitting is about that spread.
 
 \paragraph{Granularity, adaptive reuse and post hoc rules.} Record-wise cross-validation overestimates accuracy when the clinical use case is a new subject \citep{saeb2017usecase}, parity across a few pre-defined groups can hide violations on subgroups \citep{kearns2018gerrymandering}, and adaptive reuse of a holdout risks false discoveries unless it is controlled \citep{dwork2015reusable}. Each is a granularity, pairing, or selection hazard. Flexibility in analysis inflates false positives \citep{simmons2011falsepositive}, and presenting a hypothesis formed after the results as if it came first is HARKing \citep{kerr1998harking}. Post-hoc rule fitting applies the same hazard to a diagnostic's decision rule.
 
 \paragraph{Reporting and appraisal tools for clinical models.} Clinical readers know appraisal and reporting tools for prediction models, such as PROBAST \citep{wolff2019probast}, TRIPOD+AI \citep{collins2024tripodai} and CLAIM \citep{mongan2020claim}. Our standard concerns how an automated diagnostic's verdict is reported and does not replace them. Their items are not mapped to ours.
 
-\section{Diagnostics, Stages and Failure Modes}
+\section{Diagnostics and Two Failure Modes}
 \label{sec:setup}
 
 \begin{definition}[Diagnostic]
 A diagnostic is a procedure that takes the artifacts of an ML pipeline and returns a verdict about one confound. It has four stages: (i) a statistic $S$ computed from the artifacts, (ii) a decision rule mapping $S$ to a verdict, (iii) controls that validate the pair (statistic, rule), and (iv) the design process that produced the first three.
 \end{definition}
 
-Figure~\ref{fig:stages} places the two measured failure modes and the development hazards on these stages. We operationalize the two measured failure modes below; Type 1 is a logic or control fault and Type 2 is a sampling property at the operating audit size.
+Figure~\ref{fig:stages} places the two failure modes on these stages. A silent pass is a logic or control fault, and threshold sitting is a sampling property at the operating audit size.
 
 \begin{figure}[t]
 \centering
@@ -73,182 +74,194 @@ Figure~\ref{fig:stages} places the two measured failure modes and the developmen
   box/.style={draw,rounded corners=2pt,minimum height=0.9cm,align=center},
   wide/.style={draw,rounded corners=2pt,minimum height=0.8cm,align=center}]
   \node[box,minimum width=2.0cm] (art) {artifacts};
-  \node[box,minimum width=2.6cm,right=0.7cm of art] (s) {(i) statistic $S$\\{[granularity hazard]}};
-  \node[box,minimum width=2.6cm,right=0.7cm of s] (r) {(ii) decision rule\\{[Type 1a, Type 2]}};
+  \node[box,minimum width=2.6cm,right=0.7cm of art] (s) {(i) statistic $S$};
+  \node[box,minimum width=2.6cm,right=0.7cm of s] (r) {(ii) decision rule\\{[undefined-input pass,}\\{threshold sitting]}};
   \node[box,minimum width=2.0cm,right=0.7cm of r] (v) {verdict};
   \draw[-{Latex}] (art)--(s); \draw[-{Latex}] (s)--(r); \draw[-{Latex}] (r)--(v);
-  \node[wide,below=0.6cm of $(s)!0.5!(r)$,minimum width=5.9cm] (c) {(iii) controls validate the pair (statistic, rule)\\{[Type 1b]}};
-  \node[wide,above=0.6cm of $(s)!0.5!(r)$,minimum width=5.9cm] (d) {(iv) design process that produced the three\\{[post-hoc fitting hazard]}};
+  \node[wide,below=0.6cm of $(s)!0.5!(r)$,minimum width=5.9cm] (c) {(iii) controls validate the pair (statistic, rule)\\{[weak-control pass]}};
+  \node[wide,above=0.6cm of $(s)!0.5!(r)$,minimum width=5.9cm] (d) {(iv) design process that produced the three};
   \draw[-{Latex}] (c.north)--($(s.south)!0.5!(r.south)$);
   \draw[-{Latex}] (d.south)--($(s.north)!0.5!(r.north)$);
 \end{tikzpicture}
-\caption{Stage model of a diagnostic showing where the two measured failure modes (Types 1 and 2) and two unmeasured development hazards enter. Type 1a (undecidable-as-clean) enters at the decision rule and Type 1b (non-discriminating control) at the controls; both produce a clean-looking result without establishing specificity.}
+\caption{Stage model of a diagnostic showing where the two failure modes enter. An undefined-input pass enters at the decision rule and a weak-control pass at the controls; both produce a clean-looking result without establishing specificity. Threshold sitting is a property of the decision rule at the audit size.}
 \label{fig:stages}
 \end{figure}
 
-\begin{definition}[Type 1, vacuous validation]
-A diagnostic or control is treated as clean despite providing insufficient evidence for that verdict. We distinguish two cases. \emph{1a, undecidable-as-clean} (falsy-as-clean): the verdict function is total on a domain where $S$ is partial, so an undefined or indeterminate result (\texttt{nan}, \texttt{None}, an empty container) is consumed by a boolean test and scored clean. \emph{1b, non-discriminating control} (degenerate control): a control passes by construction (an identity) or lies more than three standard deviations from the threshold, so counting it as a true negative establishes little about specificity near the decision boundary.
+\begin{definition}[Silent pass]
+A diagnostic or control returns a clean verdict without providing evidence for it. We distinguish two forms. In an \emph{undefined-input pass} the verdict function is total on a domain where $S$ is partial, so an undefined or indeterminate result (\texttt{nan}, \texttt{None}, an empty container) is consumed by a boolean test and scored clean. In a \emph{weak-control pass} a control passes by construction (an identity) or lies more than three standard deviations from the threshold, so counting it as a true negative establishes little about specificity near the decision boundary.
 \end{definition}
 
-\begin{definition}[Type 2, structural non-discriminability]
-A property of the combination $(\theta^\ast, \tau, n, \text{sampling design})$: for a fixed finite-cohort value $\theta^\ast$ of the statistic and threshold $\tau$, the flag probability at the operating audit size $n$ under without-replacement sampling, approximately $\Phi((\tau-\theta^\ast)/\sigma_n)$ with $\sigma_n$ the audit-draw standard deviation, lies between 0.05 and 0.95 (for a normal statistic, $|\tau-\theta^\ast|<1.64\,\sigma_n$). The definition describes the operating point rather than a malfunction of the detector.
+\begin{definition}[Threshold sitting]
+A property of the combination $(\theta^\ast, \tau, n, \text{sampling design})$: for a fixed finite-cohort value $\theta^\ast$ of the statistic and threshold $\tau$, the flag probability at the operating audit size $n$ under without-replacement sampling, approximately $\Phi((\tau-\theta^\ast)/\sigma_n)$ with $\sigma_n$ the audit-draw standard deviation, lies between 0.05 and 0.95 (for a normal statistic, $|\tau-\theta^\ast|<1.64\,\sigma_n$). The definition describes the operating point, and the detector itself is not defective. A verdict at that audit size is close to a coin flip, and the failure is a reader who takes it as informative. The audit size at which the flag probability leaves the zone is about $n^\ast=(1.64\,\sigma_1/|\tau-\theta^\ast|)^2$ for a statistic whose audit standard deviation is $\sigma_1/\sqrt{n}$, before any finite-population correction.
 \end{definition}
 
-\paragraph{Development hazards.} Two additional hazards arose in our own development but were not externally measured: \emph{granularity or pairing mismatch} (the statistic aggregates or pairs data at a level that differs from the structure of the confound) and \emph{post-hoc fitting} (a statistic or decision rule is changed after a failure is observed, without a pre-established rule governing that change). The two are not mutually exclusive: the same development event can involve both a granularity or pairing mismatch and an unprespecified rule change.
+The failure modes are not complete: they leave out invalid null distributions, non-independent audit draws, plain implementation bugs, and miscalibrated thresholds outside threshold sitting.
 
-Type 2 is a failure of evidentiary interpretation at the operating audit size, and the detector itself is not defective, which is why the matching reporting item asks for the flag probability at the audit size used rather than a new threshold. The framework is not complete: it omits invalid null distributions, non-independent audit draws, plain implementation bugs, and miscalibrated thresholds outside Type 2.
-
-\paragraph{Margins and controls.} For a stochastic diagnostic with threshold $\tau$ and statistic value $s$ on a control, the margin is $m=|\tau-s|/\sigma$, with $\sigma$ the standard deviation of the statistic at the operating audit size. As an operational convention fixed before computing any margin, we call a control \emph{discriminating} when $m\le 3$ and a \emph{ceiling} control otherwise: it passes so comfortably that it provides little evidence about specificity near the decision boundary, although it can still catch a gross bug such as a detector that always flags. At $m=3$ a normal control flags with probability about 0.0013. Any cutoff between 0.06 and 5.39 classifies the six full-scale negative controls of detector 1 the same way (margins in Appendix~\ref{apd:controls}), with one discriminating control. Margins grow with the square root of the audit size, so a ceiling control at 500 stays can discriminate at 100, and we report margins at the operating size. A large margin is expected for a positive control; the rule matters for controls counted as true negatives. The two cutoffs answer different questions. A margin below 1.64 means that one verdict is close to a coin flip at the audit size, and a margin above 3 means that a negative control sits too far from the threshold to show that the diagnostic could flag, so a useful negative control lies between them.
+\paragraph{Margins and controls.} For a stochastic diagnostic with threshold $\tau$ and statistic value $s$ on a control, the margin is $m=|\tau-s|/\sigma$, with $\sigma$ the standard deviation of the statistic at the operating audit size. As an operational convention fixed before computing any margin, we call a control \emph{discriminating} when $m\le 3$ and a \emph{weak} control otherwise: it passes so comfortably that it provides little evidence about specificity near the decision boundary, although it can still catch a gross bug such as a detector that always flags. At $m=3$ a normal control flags with probability about 0.0013. Any cutoff between 0.06 and 5.39 classifies the six full-scale negative controls of detector 1 the same way (margins in Appendix~\ref{apd:controls}), with one discriminating control. Margins grow with the square root of the audit size, so a weak control at 500 stays can discriminate at 100, and we report margins at the operating size. A large margin is expected for a positive control; the rule matters for controls counted as true negatives. The two cutoffs answer different questions. A margin below 1.64 means that one verdict is close to a coin flip at the audit size, and a margin above 3 means that a negative control sits too far from the threshold to show that the diagnostic could flag, so a useful negative control lies between them.
 
 \paragraph{Estimands and scale.} Two flag probabilities appear below and are different estimands. The \emph{cohort-bootstrap} probability is the share of bootstrap resamples \citep{efron1979bootstrap} of the whole cohort whose statistic falls below the threshold. The \emph{audit-draw} probability is the share of 500-patient audit subsets drawn from the cohort that fall below it. Open-data scale means the open PhysioNet 2019 corpus and the MIMIC-IV and eICU-CRD open-data cohorts, and full scale means the full credentialed cohorts (Appendix~\ref{apd:scale}).
 
-\paragraph{Specification and intervals.} We wrote down each experiment, its predictions and its reading rule in a committed document before it ran, and every result below was specified this way unless we call it exploratory (Appendix~\ref{apd:prereg} lists the documents). This is specification by commit order, not registration with an external registry, and commit times are author-supplied. Proportions carry exact Clopper--Pearson 95\% intervals \citep{clopper1934confidence}. All intervals are individual 95\% intervals across ten specification documents, with no adjustment for multiplicity. Intervals on mean changes in AUROC and on the seed-level statistics of detector 2 are $t$-intervals over the seeds run (five seeds, four degrees of freedom, unless a result states 20 seeds), with the arms paired by seed.
+\paragraph{Specification and intervals.} Each experiment, its predictions and its reading rule were specified in a committed document before it ran, and every result below was specified this way unless we call it exploratory (Appendix~\ref{apd:prereg} lists the documents). This is specification by commit order, not registration with an external registry, and commit times are author-supplied. Proportions carry exact Clopper--Pearson 95\% intervals \citep{clopper1934confidence}. All intervals are individual 95\% intervals across ten specification documents, with no adjustment for multiplicity. Intervals on mean changes in AUROC and on the seed-level statistics of detector 2 are $t$-intervals over the seeds run (five seeds, four degrees of freedom, unless a result states 20 seeds), with the arms paired by seed.
 
 \section{The Five Detectors}
 \label{sec:detectors}
 
-Detector 1 computes Cohen's $\kappa$ \citep{cohen1960kappa} on a 500-patient audit subset between two operationalizations of sepsis onset, with the Sepsis-3 criteria \citep{singer2016sepsis3} and the SOFA score \citep{vincent1996sofa} evaluated over a time window as the reference, and flags $\kappa<0.60$. Detector 2 trains a masked-reconstruction probe on a source site with a controlled share of target stays leaked in, and flags a fall in held-out target loss with a one-sided paired $t$-test over five seeds, pairing the arms by seed (the 20-seed analyses in Section~\ref{sec:detector2} use the critical value for 20 seeds). Detector 3 is a static analysis of the Python syntax tree that asks whether a sweep function's evaluation call receives a loader derived from the held-out distribution. Detector 4 traces variable lineage through the same machinery to find a constraint imposed on a variable derived from it. Detector 5 compares per-component availability and a composition-controlled gap across sites. The detectors, thresholds and datasets \citep{johnson2023mimiciv,pollard2018eicu,reyna2020early,goldberger2000physiobank} did not change after the experiments in this paper were specified.
+Detector 1 computes Cohen's $\kappa$ \citep{cohen1960kappa} on a 500-patient audit subset between two operationalizations of sepsis onset, with the Sepsis-3 criteria \citep{singer2016sepsis3} and the SOFA score \citep{vincent1996sofa} evaluated over a time window as the reference, and flags $\kappa<0.60$. Detector 2 trains a masked-reconstruction probe on a source site with a controlled share of target stays leaked in, and flags a fall in held-out target loss with a one-sided paired $t$-test over five seeds, pairing the arms by seed (the 20-seed analyses in Appendix~\ref{sec:detector2} use the critical value for 20 seeds). Detector 3 is a static analysis of the Python syntax tree that asks whether a sweep function's evaluation call receives a loader derived from the held-out distribution. Detector 4 traces variable lineage through the same machinery to find a constraint imposed on a variable derived from it. Detector 5 compares per-component availability and a composition-controlled gap across sites. The detectors, thresholds and datasets \citep{johnson2023mimiciv,pollard2018eicu,reyna2020early,goldberger2000physiobank} did not change after the experiments in this paper were specified.
 
-Ground truth was a real historical defect in our repository where one existed. Detector 3's positive is a buggy sweep and its fix, detector 4's is a Severinghaus circularity in our PhysioNet loader, and detector 1's is ICD-coded sepsis against SOFA scoring. Detectors 2 and 5 use controlled injection because the quantity they detect is a dose. We report per-detector counts and do not pool them, because the cases are few, heterogeneous and partly correlated (Appendix~\ref{apd:depth}).
-
-\section{Evidence for the Failure Modes}
-\label{sec:results}
-
-Table~\ref{tab:evidence} shows how strongly each category is supported. Type 1 has the most evidence, internal and external. Type 2 is measured primarily on detector 1 and illustrated, as a mechanism, on public data. The two development hazards have internal evidence only.
+Table~\ref{tab:detectors} lists, for each detector, the statistic and rule and the entry point that the executed tests of Section~\ref{sec:silent} call.
 
 \begin{table}[t]
 \centering\footnotesize\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}lp{3.3cm}p{3.5cm}p{2.5cm}@{}}
+\begin{tabular}{@{}p{2.5cm}p{4.3cm}p{3.1cm}p{3.2cm}@{}}
 \toprule
-Mode / Hazard & Internal instances & External instances & Quantified by\\
+Detector & Statistic & Decision rule & Entry point\\
 \midrule
-Type 1 & five in our code (two 1a, three 1b); detector 3 abstains on 53 of 53 sampled sites (not scored clean); the test suite passes an inverted verdict & 3/18 narrow and 10/18 broad repositories (4 and 16 of 88 sampled sites; more under an outside coder); 5 of 22 undefined cells in an executed fuzz of public checkers; one measured effect on a benchmark loader & exact intervals; control margins\\
-Type 2 & detector 1 (measured; the audit-size model holds, with one informative case); detector 5 (exploratory) & none measured; a four-fifths simulation on 133 public cases illustrates the mechanism if audits are random subsets of 500 persons & cohort bootstrap; audit draws\\
-\midrule
-Hazards & two early false negatives (granularity/pairing), one redundant gate, two unprespecified changes, one counterfactual & none & seed flag rates; specification record\\
+1 label shift & Cohen's $\kappa$ between two operationalizations of sepsis onset on a 500-stay audit & flag if $\kappa<0.60$ & \texttt{diagnose}\\
+2 leakage & paired fall in held-out masked-reconstruction loss over five seeds & one-sided paired $t$-test & \texttt{flag\_from\_relative}\\
+3 OOD-contaminated selection & origin of the evaluation loader in a sweep function (static analysis of the syntax tree) & contaminated, ok, or indeterminate & \texttt{audit\_file}\\
+4 circular constraint & variable lineage against the inputs of a physiological constraint & circular if an input is derived by the constraint's equation & \texttt{is\_circular}\\
+5 missingness & per-component availability ratio and composition-controlled gap across sites & flag if ratio above 2.0 and gap ratio above 0.3 & \texttt{run\_check\_on\_stays}\\
 \bottomrule
 \end{tabular}
-\caption{Evidence for the two measured failure modes and the development hazards (granularity/pairing mismatch and post-hoc fitting, which rest on the same two internal events).}
-\label{tab:evidence}
+\caption{The five detectors. Appendix~\ref{apd:detectors} gives the exact statistics, rules and controls.}
+\label{tab:detectors}
 \end{table}
 
-\subsection{Type 1: vacuous validation}
+Ground truth was a real historical defect in our repository where one existed. Detector 3's positive is a buggy sweep and its fix, detector 4's is a Severinghaus circularity in our PhysioNet loader, and detector 1's is ICD-coded sepsis against SOFA scoring. Detectors 2 and 5 use controlled injection because the quantity they detect is a dose. We report per-detector counts and do not pool them, because the cases are few, heterogeneous and partly correlated (Appendix~\ref{apd:depth}).
 
-When a check cannot reach a judgment, because the metric is undefined, the pattern is absent, or the control is too easy, the outcome becomes ``no confound found'' and counts as evidence of specificity. We encountered this five times in our own code, in different forms (items 1 and 5 are the same pattern, an arm compared with itself, in two detectors):
-\begin{enumerate}
-  \item (1b) In detector 1, the negative control passed the same audit array as both arguments to $\kappa$, so the result was $1.000$ by construction.
-  \item (1b) Suspicion-window controls for detector 1 sit at $\kappa$ from 0.91 to 1.00 across the two scales, so an external count of three true negatives implied three tests when only one discriminated.
-  \item (1a) Third-party repository scans with detector 3 returned \textsc{indeterminate}, which, if folded into the true negatives, would have produced three true negatives from files it never analyzed.
-  \item (1a) In a baseline's train--test gap check, one seed's in-domain AUROC was undefined, the comparison of \texttt{nan} with the threshold evaluated to false, and the abstention was scored as a correct silence.
-  \item (1b) The 0\% control in detector 2 compares an arm with itself, so its relative change is exactly zero and the true negative holds by construction.
-\end{enumerate}
-Item 3 was caught before it was scored, so four of the five entered a count. In addition, detector 1 has a latent case of the same kind: an empty audit gives a NaN kappa, the comparison with the 0.60 threshold is false, and the printout reads clean. No experiment reached it and it entered no count. The fix for all of these is mechanical: every check should return a decidability flag with its verdict, and undecidable cases belong in their own column of the confusion matrix.
+\section{Silent Passes}
+\label{sec:silent}
+\label{sec:results}
 
-\paragraph{The test suite as a control.} A test suite acts as a control for a detector's code, and it can fail to fail, which is Type 1b one level up. We offer this as an illustration, since the mutation operators are our own and we did not use a standard tool such as mutmut. In a scratch copy we changed the check code of detectors 1 and 2 in 285 small ways (changed comparisons, operators, negations, and constants) and ran the repository's 115 tests on each mutant. The tests failed for 29 mutants (10\%; exact 95\% interval 0.069 to 0.143). Inverting detector 1's verdict, from kappa below the threshold to kappa above it, passes all 115 tests, as does setting the threshold to 0 or to 1.6. Because the tests check committed results and fixtures and never exercise the live decision rule, a low kill rate is expected, and the finding is that the suite is no control for the decision rule. Of the 108 mutants on verdict, test, or statistic lines or on decision constants, the tests killed 20 (18.5\%; interval 0.117 to 0.271); Appendix~\ref{apd:mutation} gives the rest. We read a random sample of 25 of the 88 survivors on those lines. Two are equivalent mutants, both entries of a critical-value table that the code never reads, and 23 change the verdict, a statistic, or a printed number for some input. Thirteen of the 23 matter only for seed counts the pipeline does not use, so 10 of the 25 sampled survivors alter behavior on inputs the shipped pipeline can produce, two of them only at exact ties. We read those 10 as gaps in the controls and the rest as code the pipeline does not exercise.
+\subsection{Our detectors at their entry points}
 
-\subsection{Type 1 in public code}
+For each detector we call the function that turns its inputs into a verdict with small synthetic inputs, some defined and some not. A cell is a detector and an input. Before running, we fixed which inputs leave the statistic undefined (empty or one-element inputs, constant inputs for which chance agreement or the variance is 0 or 1, NaN or infinite entries, unequal lengths, unknown names, and files that do not parse) and four outcomes: the call raises an error, abstains, flags, or returns a clean verdict. A clean verdict on an undefined input is a silent pass. We wrote the input list after reading the detector code, so the outcomes are not blind. All 13 defined cells behaved as the detectors intend, with a nominal positive flagged and a nominal null clear. Of the 27 undefined cells, 19 were silent passes (descriptive exact 95\% interval 0.50 to 0.86, which treats the cells as independent although those of one detector are not; Table~\ref{tab:e17}, and Appendix~\ref{apd:e17} for every cell).
+
+\begin{table}[t]
+\centering\footnotesize
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Detector (entry point) & Undefined cells & Silent pass & Error & Abstain\\
+\midrule
+1 label shift (\texttt{diagnose}) & 6 & 5 & 1 & 0\\
+2 leakage (\texttt{flag\_from\_relative}) & 7 & 7 & 0 & 0\\
+3 selection (\texttt{audit\_file}) & 6 & 0 & 3 & 3\\
+4 circularity (\texttt{is\_circular}) & 4 & 3 & 1 & 0\\
+5 missingness (\texttt{run\_check\_on\_stays}) & 4 & 4 & 0 & 0\\
+\midrule
+All & 27 & 19 & 5 & 3\\
+\bottomrule
+\end{tabular}
+\caption{Outcome of each detector on inputs for which its statistic is undefined. A silent pass is a clean verdict. Cells within a detector are correlated.}
+\label{tab:e17}
+\end{table}
+
+Detector 3 raised an error or returned \textsc{indeterminate} on all six undefined cells, which is the behavior item~1 of Section~\ref{sec:standard} asks for. Detector 2 returned a clean verdict on seven of seven, including five identical negative values, for which the $t$ statistic is undefined, and an infinite entry. Detector 1 returned $\kappa=1$ for two constant arrays, because its code defines kappa as 1 when chance agreement is 1, and returned a clean verdict for an empty audit (\texttt{NaN}$<0.60$ is false). A \texttt{NaN} in an audit array is cast to an integer without an error and gives $\kappa=1$. Detector 4 treats an unknown dataset, an empty lineage table or an empty name as a measured variable, and detector 5 returns a clean verdict for empty groups and for stays without components. Only 3 of the 19 silent passes raised a warning. These inputs may never reach the shipped pipelines, so the result shows missing guards at the entry points and does not show wrong published results.
+
+\paragraph{Cases met during development.} Before this test we met the pattern in five other forms. Detector 1's negative control passed the same audit array as both arguments to $\kappa$, so the result was 1.000 by construction. Its suspicion-window controls sit at $\kappa$ from 0.91 to 1.00 across the two scales, so an external count of three true negatives implied three tests when only one discriminated. Third-party repository scans with detector 3 returned \textsc{indeterminate}, which, if folded into the true negatives, would have produced three true negatives from files it never analyzed. In a baseline's train--test gap check, one seed's in-domain AUROC was undefined, the comparison of \texttt{nan} with the threshold evaluated to false, and the abstention was scored as a correct silence. Detector 2's 0\% control compares an arm with itself, so its relative change is exactly zero. The first and last are the same pattern in two detectors, the third was caught before it was scored, and the other four entered a count. The fix is mechanical: every check should return a decidability flag with its verdict, and undecidable cases belong in their own column of the confusion matrix.
+
+\paragraph{The test suite as a control.} A test suite acts as a control for a detector's code, and it can fail to fail, which is a weak-control pass one level up. We offer this as an illustration, since the mutation operators are our own and we did not use a standard tool such as mutmut. In a scratch copy we changed the check code of detectors 1 and 2 in 285 small ways (changed comparisons, operators, negations, and constants) and ran the repository's 115 tests on each mutant. The tests failed for 29 mutants (10\%). Inverting detector 1's verdict, from kappa below the threshold to kappa above it, passes all 115 tests, as does setting the threshold to 0 or to 1.6. Because the tests check committed results and fixtures and never exercise the live decision rule, a low kill rate is expected, and the finding is that the suite is no control for the decision rule. Of the 108 mutants on verdict, test, or statistic lines or on decision constants, the tests killed 20 (18.5\%); Appendix~\ref{apd:mutation} gives the intervals and the rest. We read a random sample of 25 of the 88 survivors on those lines. Two are equivalent mutants, both entries of a critical-value table that the code never reads, and 23 change the verdict, a statistic, or a printed number for some input. Thirteen of the 23 matter only for seed counts the pipeline does not use, so 10 of the 25 sampled survivors alter behavior on inputs the shipped pipeline can produce, two of them only at exact ties. We read those 10 as gaps in the controls and the rest as code the pipeline does not exercise.
+
+Two further results on detectors 2 and 3, which sit outside the silent-pass and threshold-sitting frame, are in the appendix. Detector 2's 0\% control cannot show a corpus-size effect, and with an added corpus-size arm the ratio $r_2/r_1$ is 0.60 and 0.70 at 5\% and 20\% leakage at full scale over 20 seeds, so corpus size confounds part of its effect (Appendix~\ref{sec:detector2}). Detector 3 returned \textsc{indeterminate} on all 53 sampled selection sites outside its home idiom, so it has no demonstrated sensitivity there (Appendix~\ref{sec:detector3}).
+
+\subsection{Public code}
 \label{sec:external}
 
-We read 25 public repositories for the falsy-as-clean pattern: the 18 pinned repositories of Section~\ref{sec:detector3}, AI Fairness 360, and six chosen by a star-ranked rule set before any query. Almost all of this code is general-purpose machine learning, not clinical diagnostics. We froze patterns for four kinds of site before reading (236 sites) and drew 88 at random, at most two per repository and pattern group, with a seed set beforehand. A committed rubric assigned each sampled site one of guarded, unreachable, reachable and unguarded, or not applicable. The sites render verdicts, selections, or aggregations and none is a confound detector, so this tests the pattern and not our detectors. We did not fix in advance whether a degenerate value that arises only when training diverges counts as reachable, so we report both readings.
+\paragraph{Executed behavior.} Three public codebases behave as the pattern predicts on inputs we ran. The tableshift College Scorecard task \citep{gardner2023tableshift} maps the completion-rate target with a comparison against 0.5 followed by \texttt{astype(int)}, and its configuration turns row dropping off, so a missing target becomes the label 0. The benchmark's own data file needs Kaggle credentials, so we ran the verbatim function on the official most-recent institution file \citep{collegescorecard}. Of 6,272 institutions, 3,994 (63.7\%) have no completion rate. The line turns them into negatives and moves the positive share from 0.521 among observed rows to 0.189 overall.
 
-Under our labels, the pattern appears in 3 of the 18 repositories with an applicable site under the narrow reading (3 of 35 files) and in 10 of 18 under the broad reading (13 of 35 files; Appendix~\ref{apd:positives} lists them). At the site level, those correspond to 4 of the 88 sampled sites narrow (counting ordinary-use sites and the divergence check in robustdg; exact descriptive interval 0.013 to 0.112; 3 of 88 without that check) and 16 of 88 broad (0.108 to 0.278). Because sites cluster within files and selection caps vary selection probabilities, we treat the repository-level counts as the primary evidence that the pattern exists in public code, and the site-level fractions as exploratory, rubric-dependent counts that are not a population prevalence estimate; a cluster bootstrap over files gives 0.000 to 0.196 for the narrow share of applicable sites (exploratory).
+We compared this with a guarded pipeline that drops the missing-target rows, using the same features, five random 70/30 splits, and a histogram gradient-boosted classifier with library defaults, which is the benchmark's default \texttt{histgbm} configuration, trained by us on random splits and not on the benchmark's domain split. Over the five splits the unguarded pipeline reports an AUROC 7.6 points higher than the guarded one and an accuracy 12.3 points higher. Scored against true labels on the observed-target test rows, the unguarded-trained model is slightly worse, by 1.5 AUROC points. Both pre-stated bounds ($>0.02$ reported gain and $\le 0.01$ true-label gain) held: we observed $+0.076$ and $-0.015$. We lead with AUROC because the accuracy gap also mixes in a base-rate change (majority-class accuracy 0.811 compared with 0.518); balanced accuracy is 5.7 points higher.
 
-The counts also depend on who labels, and we have four sources of labels besides ours. Our committed labels were first produced by a language model applying the committed rubric. Four language-model raters, with our labels hidden from them, labeled the 88 sites. Their kappa with our labels is 0.63 for the rater that could read the repositories (R0, told to ignore our labels but able to read our working tree) and 0.56, 0.38, and 0.43 for three that saw excerpts only. Part of that gap is ambiguity, since the excerpt-only raters used the ambiguous label often (Appendix~\ref{apd:raters}). Three raters land near our counts (3 to 4 narrow and 13 to 17 broad of 88 sites), while one, Gemini 4 argon, is far higher (21 and 33; Figure~\ref{fig:external}).
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.88\linewidth]{figs/fig4_external.pdf}
-\caption{Sites reachable and unguarded for the falsy-as-clean pattern, out of the 88 sampled sites, under our labels, four language-model raters, and an outside human coder. The raters' narrow counts exclude the divergence check that ours includes. Blue and gray points carry exact 95\% intervals. The horizontal dashed line separates the full-sample 88-site counts from the scaled 40-site outside-coder estimate (shown with a within-stratum bootstrap interval). The narrow reading excludes sites whose degenerate value arises only in diverged training.}
-\label{fig:external}
-\end{figure}
-
-An outside human coder with Python and machine-learning experience, using no language model for the labeling, labeled 40 of the 88 sites from the committed rubric with our labels hidden. The sample was fixed beforehand: all 16 sites counted under the broad reading, 12 of the other 32 applicable sites, and 12 of the 40 not-applicable sites. The coder agreed with us on 15 of the 16 broad positives (exact interval 0.70 to 1.00), 8 of 12 other applicable sites (0.35 to 0.90), and 4 of 12 not-applicable sites (0.10 to 0.65). Because the first stratum is all of our positives, the 15 of 16 measures the precision of our positives, not their recall, and the weak agreement in the other two strata is where recall shows. Weighted by stratum size, kappa on the four labels is 0.42 (bootstrap interval 0.23 to 0.64), below our line of 0.60, so the labels are rubric-dependent here as well. On the single question that carries the counts, whether a site is reachable and unguarded under the broad reading or not, kappa is 0.62, above our line of 0.60, indicating that most of the disagreement concerns which no-failure label applies. However, the disagreements run toward more positives. Scaled to the 88 sites (treating roughly 75 as applicable compared with 48 under our labels), the coder's labels give about 26 reachable and unguarded sites under the broad reading (bootstrap interval 18 to 38) and about 14 under the narrow one (6 to 26), compared with our 16 and 4, so our 4 may be an undercount under the coder's reading. Our own second reading of the five sites where we differ keeps one positive and moves four to undecidable or unreachable, so the scaled counts rest on about four contested sites (Appendix~\ref{apd:raters}). The pattern occurs in public code, but the labels do not support a stable rate. The coder used a language model only to reformat the coder's own notes into the response file, and the labels in that file match the coder's original document.
-
-\paragraph{Executed behavior.} Three public codebases behave as the pattern predicts on inputs we ran. The tableshift College Scorecard task \citep{gardner2023tableshift} maps the completion-rate target with a comparison against 0.5 followed by \texttt{astype(int)}, and its configuration turns row dropping off, so a missing target becomes the label 0. The benchmark's own data file needs a login, so we ran the verbatim function on the official most-recent institution file \citep{collegescorecard}. Of 6,272 institutions, 3,994 (63.7\%) have no completion rate. The line turns them into negatives and moves the positive share from 0.521 among observed rows to 0.189 overall. We compared this with a guarded pipeline that drops the missing-target rows, using the same features, five random 70/30 splits, and a gradient-boosted classifier trained by us as a stand-in for the benchmark's own models. Over the five splits the unguarded pipeline reports an AUROC 7.6 points higher than the guarded one and an accuracy 12.3 points higher. Scored against true labels on the observed-target test rows, the unguarded-trained model is slightly worse, by 1.5 AUROC points. Both pre-stated bounds ($>0.02$ reported gain and $\le 0.01$ true-label gain) held: we observed $+0.076$ and $-0.015$. We lead with AUROC because the accuracy gap also mixes in a base-rate change (majority-class accuracy 0.811 compared with 0.518); balanced accuracy is 5.7 points higher. Because the five random splits overlap, we also ran an exploratory non-overlapping 5-fold cross-validation across all 6,272 institutions with 2,000 paired institution-level bootstrap resamples, which gives 95\% intervals of $+7.8$ AUROC points (6.9 to 8.8), $+12.6$ accuracy points (11.3 to 13.8), and $+6.1$ balanced accuracy points (4.7 to 7.3) reported, versus $-0.5$ AUROC points ($-1.3$ to $+0.1$) on observed true labels. Reachability is inferred from the dataset's missing-value settings and was not executed on the benchmark's own file or distribution-shift splits, so the effect on its published numbers is unknown.
+Because the five random splits overlap, we also ran an exploratory non-overlapping 5-fold cross-validation across all 6,272 institutions with 2,000 paired institution-level bootstrap resamples, which gives a reported AUROC gap of $+7.8$ points (95\% interval 6.9 to 8.8) against $-0.5$ points ($-1.3$ to $+0.1$) on observed true labels; the accuracy and balanced-accuracy gaps are $+12.6$ and $+6.1$ points. Reachability is inferred from the dataset's missing-value settings and was not executed on the benchmark's own file or distribution-shift splits, so the effect on its published numbers is unknown.
 
 The other two behaviors change a count or a check rather than a reported metric. In fairseq2, the range filter and list-length filter keep null-list rows when no other row fails and drop them otherwise (Appendix~\ref{apd:d2detail} gives the counts). In robustdg, the divergence check takes the maximum of the training and test losses and then tests whether it is finite, so a NaN test loss with a finite training loss goes unnoticed. Both are properties of the code on the inputs it receives, and neither reports an incident (Appendix~\ref{apd:d2detail}). The selection and guard lines of DomainBed \citep{gulrajani2021search} accept a NaN score listed first and an empty list on synthetic inputs, but the shipped datasets cannot reach those inputs.
 
-\paragraph{An executed fuzz of public checkers.} We ran 13 built-in checks from Great Expectations 0.18.22, pandera 0.35.0, Fairlearn 0.15.0, AI Fairness 360 0.6.1, and scikit-learn 1.9.1 on a nominal table, where all 13 behaved, and on seven degenerate tables (empty, all NaN, constant, single class, one row, single group, and infinite). Of the 91 cells, 23 had a statistic that a mapping fixed before the run called undefined. In those 23, 9 raised an error, 5 failed, 3 returned NaN, and 6 passed or returned a finite value without a warning. One of the six, scikit-learn's kappa for a constant reference rater, is defined on its input, so our mapping was wrong for that cell. The corrected result is 5 of 22 cells (exact interval 0.078 to 0.454), from 4 of the 13 checks (0.091 to 0.614); we use the check as the unit because the cells of one check are correlated. Appendix Table~\ref{tab:fuzzcells} separates the five into three distinct categories: 1 genuinely undefined statistic (Fairlearn's false-positive rate with no negatives, returning 0.0), 3 vacuous conventions (universal checks on empty or all-NaN columns passing in Great Expectations and pandera), and 1 defined-but-uninformative output (Fairlearn's demographic-parity ratio returning 1.0 for a single group). The docstrings of the pinned versions, which we read without running them, are silent on these inputs. The finding is unexpected or potentially misleading behavior on degenerate inputs, not five confirmed undefined-as-clean defects.
+\paragraph{An executed fuzz of public checkers.} We ran 13 built-in checks from Great Expectations 0.18.22, pandera 0.35.0, Fairlearn 0.15.0, AI Fairness 360 0.6.1, and scikit-learn 1.9.1 on a nominal table, where all 13 behaved, and on seven degenerate tables (empty, all NaN, constant, single class, one row, single group, and infinite). Of the 91 cells, 23 had a statistic that a mapping fixed before the run called undefined. In those 23, 9 raised an error, 5 failed, 3 returned NaN, and 6 passed or returned a finite value without a warning. One of the six, scikit-learn's kappa for a constant reference rater, is defined on its input, so our mapping was wrong for that cell.
 
-\subsection{Type 2: a statistic on its threshold}
+The corrected result is 5 of 22 cells (exact interval 0.078 to 0.454), from 4 of the 13 checks (0.091 to 0.614); we use the check as the unit because the cells of one check are correlated. Appendix Table~\ref{tab:fuzzcells} separates the five into three distinct categories: 1 genuinely undefined statistic (Fairlearn's false-positive rate with no negatives, returning 0.0), 3 vacuous conventions (universal checks on empty or all-NaN columns passing in Great Expectations and pandera), and 1 defined-but-uninformative output (Fairlearn's demographic-parity ratio returning 1.0 for a single group). The docstrings of the pinned versions, which we read without running them, are silent on these inputs. The finding is unexpected or potentially misleading behavior on degenerate inputs, not five confirmed undefined-as-clean defects.
+
+We also read 25 public repositories for the same pattern, with patterns for four kinds of site frozen before reading (236 sites, of which we drew 88 at random). Under our labels the pattern appears in 3 of the 18 repositories with an applicable site under the narrow reading and in 10 of 18 under the broad reading, which also counts values that arise only when training diverges. At the site level the counts are 4 of 88 and 16 of 88. The counts depend on who labels: four language-model raters give 3 to 21 narrow and 13 to 33 broad of 88, and an outside human coder, whose labels agree with ours at weighted $\kappa=0.42$ on four labels, gives about 14 narrow and 26 broad when scaled to the 88 sites. We therefore read the repositories as evidence that the pattern occurs in public code and report no prevalence (Appendix~\ref{apd:repos}).
+
+\section{Threshold Sitting}
 \label{sec:type2}
 
-On full MIMIC-IV the whole-cohort $\kappa$ between SOFA window and single-point scoring, two defensible operationalizations of Sepsis-3, is $0.602$ (cohort-bootstrap 95\% interval 0.597 to 0.607). That is 0.002 above the 0.60 cutoff and 0.06 standard deviations of the 500-patient audit-draw distribution from it, so a 500-patient audit flags 48.4\% of the time. The same pair gives $0.826$ on eICU-CRD, a ceiling control ($m=5.39$). Variation across databases (0.224) is large next to the 0.002 by which the MIMIC-IV control clears the threshold. Kappa depends on the marginal totals of the agreement table \citep{feinstein1990high}, and we did not adjust for prevalence, so part of that gap may reflect prevalence. By the margin rule that control is the only one of six full-scale negative controls that discriminates. The positive cases sit at $m=12.13$ (MIMIC-IV) and $m=2.59$ (eICU-CRD). Across the six negative pairs the whole-cohort kappa is 0.60, 0.91 and 0.99 on MIMIC-IV and 0.83, 0.99 and 1.00 on eICU-CRD.
+On full MIMIC-IV the whole-cohort $\kappa$ between SOFA window and single-point scoring, two defensible operationalizations of Sepsis-3, is $0.602$ (cohort-bootstrap 95\% interval 0.597 to 0.607). That is 0.002 above the 0.60 cutoff and 0.06 standard deviations of the 500-patient audit-draw distribution from it, so a 500-patient audit flags 48.4\% of the time. The same pair gives $0.826$ on eICU-CRD, a weak control ($m=5.39$). Variation across databases (0.224) is large next to the 0.002 by which the MIMIC-IV control clears the threshold. Kappa depends on the marginal totals of the agreement table \citep{feinstein1990high}, but prevalence does not explain the gap: the prevalence-adjusted and bias-adjusted kappa is 0.599 on MIMIC-IV and 0.935 on eICU-CRD, which widens the gap from 0.224 to 0.336 (Appendix~\ref{apd:rules}). By the margin rule that control is the only one of six full-scale negative controls that discriminates. The positive cases sit at $m=12.13$ (MIMIC-IV) and $m=2.59$ (eICU-CRD). Across the six negative pairs the whole-cohort kappa is 0.60, 0.91 and 0.99 on MIMIC-IV and 0.83, 0.99 and 1.00 on eICU-CRD.
 
-This result does not establish that the two sepsis operationalizations are clinically interchangeable; rather, it shows that a convention-based control whose finite-cohort agreement sits almost on the cutoff (0.602) produces an unstable verdict under a 500-stay subset audit. The 500-patient audit is the shipped detector's operating point and not a recommendation. When both operationalizations are computed on the whole cohort, the verdict is deterministic (0.602 does not flag), so this Type 2 case arises from the subset audit design combined with a threshold taken from convention.
+This result does not establish that the two sepsis operationalizations are clinically interchangeable; rather, it shows that a convention-based control whose finite-cohort agreement sits almost on the cutoff (0.602) produces an unstable verdict under a 500-stay subset audit. The 500-patient audit is the shipped detector's operating point and not a recommendation. When both operationalizations are computed on the whole cohort, the verdict is deterministic (0.602 does not flag), so this case arises from the subset audit design combined with a threshold taken from convention.
 
-\paragraph{How special is the coincidence?} We relabeled both cohorts under ten operationalizations of Sepsis-3 that differ only in the window of the SOFA score around the suspected infection (24, 48, or 72 hours before and 12, 24, or 48 hours after it), plus the single-point rule, and computed the whole-cohort kappa for all 45 pairs. On MIMIC-IV, 6 of the 45 pairs have a 500-patient flag probability between 0.05 and 0.95 (exact interval 0.051 to 0.268) and 9 have $m\le 3$; under tighter (0.10 to 0.90) or wider (0.01 to 0.99) operating-zone conventions, the count is 4 or 8 of 45, and the primary MIMIC-IV control (0.41 to 0.49) sits well inside all three. All six are the single-point rule compared with a window, with kappa from 0.55 to 0.61, and no pair of two windows is near the threshold (kappa 0.85 to 0.99 for 36 pairs). On eICU-CRD, 0 of the 45 pairs falls in any of the three zones (0.000 to 0.079; kappa 0.82 to 1.00). We predicted that fewer than 10\% of pairs would sit in the zone. The prediction missed on MIMIC-IV, where 6 of 45 (13\%) do, although the interval includes 0.10, and it held on eICU-CRD (0 of 45). Sitting on the threshold is therefore a property of one contrast, single-point versus windowed scoring, in one database. The 45 pairs share variants and the family is our choice, so the interval describes this family only.
-
-Two flag probabilities are easy to conflate here. The value 0.216 at open-data scale is a cohort-bootstrap value on 117 stays, and 0.484 at full scale is an audit-draw value on 74,829, so the rise between them is not a trend. Like for like, the cohort-bootstrap probability is 0.216 at open-data scale and 0.241 at full scale.
-
-\paragraph{Does the model predict other audit sizes?} The Type 2 model takes the whole-cohort $\theta^\ast$ and the audit-draw standard deviation at $n=500$, rescales the latter to other sizes with a finite-population correction, and predicts the flag rate. We fixed the predictions, the sizes and a reading rule beforehand: a maximum absolute deviation of 0.05 or less over $n\in\{200,500,1000,2000\}$ counts as support. With 2,000 repeated without-replacement audit draws per size and case from the fixed finite cohort, the model matched the simulated draws within the 0.05 band in all three cases (maximum deviation 0.026 for the MIMIC-IV control, 0.010 for the eICU-CRD positive, and 0.004 for the eICU-CRD control; Figure~\ref{fig:audit}). Only the MIMIC-IV control is a real test, because the eICU-CRD cases sit far from the threshold, where flag rates near 0 or 1 are easy to predict. The standard deviation was taken at $n=500$, so that size is not a held-out test, and the model is close to a normal approximation with a finite-population correction. For the MIMIC-IV control the observed flag rate falls only from 0.492 at $n=100$ to 0.411 at $n=5{,}000$. Under this finite-population normal approximation, the estimated audit size required to reduce the flag probability below 0.05 (or above 0.95) is about 62,500 of the 74,829 stays, a model-based extrapolation far beyond the largest simulated audit size of 5,000.
+\paragraph{Does the model predict other audit sizes?} The audit-size model takes the whole-cohort $\theta^\ast$ and the audit-draw standard deviation at $n=500$, rescales the latter to other sizes with a finite-population correction, and predicts the flag rate. We fixed the predictions, the sizes and a reading rule beforehand: a maximum absolute deviation of 0.05 or less over $n\in\{200,500,1000,2000\}$ counts as support. With 2,000 repeated without-replacement audit draws per size and case from the fixed finite cohort, the model matched the simulated draws within the 0.05 band in all three cases (maximum deviation 0.026 for the MIMIC-IV control, 0.010 for the eICU-CRD positive, and 0.004 for the eICU-CRD control; Figure~\ref{fig:audit}). Only the MIMIC-IV control is a real test, because the eICU-CRD cases sit far from the threshold, where flag rates near 0 or 1 are easy to predict. The standard deviation was taken at $n=500$, so that size is not a held-out test, and the model is close to a normal approximation with a finite-population correction. For the MIMIC-IV control the observed flag rate falls only from 0.492 at $n=100$ to 0.411 at $n=5{,}000$. Under this finite-population normal approximation, the estimated audit size required to reduce the flag probability below 0.05 (or above 0.95) is about 62,500 of the 74,829 stays, a model-based extrapolation far beyond the largest simulated audit size of 5,000.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.88\linewidth]{figs/fig2_audit_size.pdf}
-\caption{Flag probability of detector 1 on full-scale labels. Points are observed rates over 2,000 audit draws with exact 95\% intervals, and lines are the Type 2 model fixed before the run. (a) Against audit size: the MIMIC-IV control stays between 0.41 and 0.49 for every size from 100 to 5,000 stays, and the shaded band marks flag probabilities between 0.05 and 0.95. (b) The same 18 points against the signed margin of the threshold from the population value, in standard deviations of the audit statistic; the model curve is the normal distribution function.}
+\caption{Flag probability of detector 1 on full-scale labels. Points are observed rates over 2,000 audit draws with exact 95\% intervals, and lines are the audit-size model fixed before the run. (a) Against audit size: the MIMIC-IV control stays between 0.41 and 0.49 for every size from 100 to 5,000 stays, and the shaded band marks flag probabilities between 0.05 and 0.95. (b) The same 18 points against the signed margin of the threshold from the population value, in standard deviations of the audit statistic; the model curve is the normal distribution function.}
 \label{fig:audit}
 \end{figure}
 
+\subsection{Verdict rules at the audit size}
+\label{sec:rules}
+
+A rule that can answer inconclusive is the obvious alternative to the shipped point rule. We compare three rules on 500-stay audits of detector 1's statistic, using all 45 pairs of the ten operationalizations of Sepsis-3 on each database (90 combinations) and taking the whole-cohort verdict as the truth. The point rule flags when the audit kappa is below 0.60. The interval rule flags when the upper end of an approximate 95\% interval for kappa is below 0.60, clears when the lower end is above it, and answers inconclusive otherwise. The zone rule answers inconclusive when the audit's own bootstrap flag probability lies between 0.05 and 0.95. We group the combinations by the margin $m=|\tau-\theta^\ast|/\sigma_{500}$ of their whole-cohort value (Table~\ref{tab:rules}).
+
+\begin{table}[t]
+\centering\footnotesize
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Margin group & Combinations & Point rule matches truth & Interval rule inconclusive & Interval rule wrong\\
+\midrule
+$m>3$ & 81 & 100\% & 0.06\% & 0.0\%\\
+$1.64<m\le 3$ & 3 & 98.9\% & 45.7\% & 0.0\%\\
+$m\le 1.64$ & 6 & 73.9\% & 88.7\% & 0.5\%\\
+primary control & 1 & 52.4\% & 96.6\% & 0.8\%\\
+\bottomrule
+\end{tabular}
+\caption{Verdicts of three rules on 2,000 audits of 500 stays per combination, as shares of audits. The primary control (MIMIC-IV, single-point against window $[-48,+24]$) belongs to the group $m\le 1.64$. The truth is the whole-cohort verdict against 0.60. ``Wrong'' means decisive and against the truth.}
+\label{tab:rules}
+\end{table}
+
+For the 81 combinations with $m$ above 3 the point rule matches the truth in every audit, and the interval rule is inconclusive in 0.06\% of them. For the 6 combinations with $m$ at most 1.64 the point rule matches the truth in 73.9\% of audits and the interval rule is inconclusive in 88.7\%, with 0.5\% decisive and wrong. The interval rule never resolves the primary control. It is decisive in at most 5.3\% of audits at any audit size from 500 to 62,500 stays and in none at 40,000 and 62,500, because the cohort value lies 0.002 from the cutoff and the cohort-bootstrap interval of 0.597 to 0.607 contains it. For this control the side of 0.60 on which the truth lies has no answer at any audit size, and the whole-cohort verdict (0.602, clear) rests on a point estimate. A user who receives \emph{inconclusive} should treat the control as uninformative, and a control that sits on its threshold should be replaced (Section~\ref{sec:standard}). Coverage checks of the approximate interval against a bootstrap, and the zone rule, which gives a similar picture, are in Appendix~\ref{apd:rules}.
+
+\subsection{How special is the coincidence}
+
+We relabeled both cohorts under ten operationalizations of Sepsis-3 that differ only in the window of the SOFA score around the suspected infection (24, 48, or 72 hours before and 12, 24, or 48 hours after it), plus the single-point rule, and computed the whole-cohort kappa for all 45 pairs. On MIMIC-IV, 6 of the 45 pairs have a 500-patient flag probability between 0.05 and 0.95 (exact interval 0.051 to 0.268) and 9 have $m\le 3$; under tighter (0.10 to 0.90) or wider (0.01 to 0.99) operating-zone conventions, the count is 4 or 8 of 45, and the primary MIMIC-IV control (0.41 to 0.49) sits well inside all three. All six are the single-point rule compared with a window, with kappa from 0.55 to 0.61, and no pair of two windows is near the threshold (kappa 0.85 to 0.99 for 36 pairs). On eICU-CRD, 0 of the 45 pairs falls in any of the three zones (0.000 to 0.079; kappa 0.82 to 1.00). We predicted that fewer than 10\% of pairs would sit in the zone. The prediction missed on MIMIC-IV, where 6 of 45 (13\%) do, although the interval includes 0.10, and it held on eICU-CRD (0 of 45). Sitting on the threshold is therefore a property of one contrast, single-point versus windowed scoring, in one database. The 45 pairs share variants and the family is our choice, so the interval describes this family only.
+
+Two flag probabilities are easy to conflate here. The value 0.216 at open-data scale is a cohort-bootstrap value on 117 stays, and 0.484 at full scale is an audit-draw value on 74,829, so the rise between them is not a trend. Like for like, the cohort-bootstrap probability is 0.216 at open-data scale and 0.241 at full scale.
+
 We left the threshold where it was, because moving it without a pre-established rule would be post-hoc fitting. The 0.60 value is a convention with no clinical derivation, and conventions for kappa differ \citep{mchugh2012kappa}. For new detectors, a negative control should be a pair of implementations that a domain expert accepts as interchangeable, and the threshold should sit clear of the spread of the statistic across such pairs. This is a prescription fixed before looking at data.
 
-\paragraph{Two exploratory illustrations.} Detector 5's composition ratio, a ratio of two gaps that a normal approximation describes poorly, flagged 13 of 20 fresh seeds at 1,200 stays per arm and 8 of 20 at 4,000 stays (0.191 to 0.640), and the normal model fitted on five seeds had predicted a flag probability of 0.15 at 4,000, outside that interval. A simulation of the four-fifths rule on 133 public cases gives flag rates between 0.05 and 0.95 in 93 cases, but the cases sit no closer to the threshold than chance placement predicts (77 observed, 77 to 80 expected), so we do not count it as an external instance of Type 2. Both rest on assumptions stated in the appendix (Appendices~\ref{apd:d5} and~\ref{apd:fourfifths}).
-
-\subsection{Development hazards from our own build}
-
-We have no external measurement of the two development hazards. Both rest on the same two events in our own development: detector 5 aggregated at the wrong granularity, and detector 2 compared unpaired where the comparison is paired (granularity or pairing mismatch). Both changes followed a false negative under no change rule set beforehand (post-hoc fitting), and the repository history does not date them. Pre-specification prevented one further change, a counterfactual. Appendix~\ref{apd:hazards} gives the full account.
-
-\subsection{Detector 2: a control that holds corpus size fixed}
-\label{sec:detector2}
-
-Detector 2 serves here as a vehicle for the audit and is not a contribution. Its 0\% control cannot show a corpus-size effect, because it holds the corpus fixed. We added an arm (A2) that adds extra \emph{source} stays in place of target stays. Let $r_1$ be the shipped detector's mean relative reduction in probe loss and $r_2$ that of A2. The ratio $r_2/r_1$ (Figure~\ref{fig:volume}) is 0.31 and 0.48 at 5\% and 20\% leakage on the PhysioNet pair at open-data scale (five seeds), and 0.60 and 0.70 at full scale on MIMIC-IV to eICU-CRD (20 seeds). Both full-scale values are above our line of 0.5, so by our own rule corpus size confounds the effect. Fieller 95\% intervals (exploratory) are $-1.32$ to 0.64 and 0.38 to 0.61 on the open-data pair, and 0.49 to 0.68 and 0.64 to 0.76 at full scale, so the full-scale 20\% ratio is clearly above 0.5 while the full-scale 5\% interval still straddles it. Target exposure still adds beyond volume (shipped arm against A2, paired $t=10.5$ and 13.0 at full scale).
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.52\linewidth]{figs/fig3_volume_control.pdf}
-\caption{Effect of the corpus-size control (A2) as a fraction of the effect of detector 2 (arm A1), by leakage level and scale (five seeds at demonstration scale, 20 seeds at full scale). Both full-scale bars exceed our line of 0.5, and the 20\% bar has an interval (0.64 to 0.76) that excludes it. Error bars are Fieller 95\% intervals (exploratory), and a triangle marks an interval that extends below 0.}
-\label{fig:volume}
-\end{figure}
-
-A null of 20 independent paired five-seed comparisons of two no-leak arms, each with a fresh data draw and model seed, flagged 1 of 20 (exact interval 0.001 to 0.249; exploratory), matching the nominal 5\% rate. Detector 2's full dose sweeps, missingness arms, and baseline comparisons appear in Appendix~\ref{apd:fullscale}. The shipped statistic first flags at 5\% leakage at open-data scale and at 2\% leakage at full scale over 20 seeds ($t=4.21$ vs. critical value 1.729; $t=1.94$ vs. 2.132 at five seeds). Because we selected 2\%, 5\%, and 20\% for 20-seed expansion after observing borderline five-seed readings at 2\% shipped ($t=1.94$) and 20\% mask-transplant ($t=2.11$) while leaving 1\% and 10\% at five seeds, these 20-seed runs are adaptive follow-up checks on selected doses, not an independent confirmatory sweep. A volume-matched statistic also flags at 1\% and 2\%. At 1\% the corpus-size arm is 0.0025 (five seeds), within our 0.005 floor, so we do not read that flag as detection; at 2\% it is 0.0067 (20 seeds). Over 20 seeds, the missingness arms (mask-transplant arm A3 and random-masking arm A4, compared with leaked arm A1) read as mixed: observation pattern carries 0.29 of the effect at both 5\% and 20\%, and A3$-$A2 clears 1.729 at both doses ($t=3.39$ and $4.54$; desktop/Colab hardware checks in Appendix~\ref{apd:fullscale}). Standard baselines carry no signal here, and leakage moves cross-site AUROC by at most about 0.007 at open-data scale (Appendix~\ref{apd:fullscale}), so practical impact is open.
-
-\subsection{Detector 3 outside its home idiom}
-\label{sec:detector3}
-
-Over 18 pinned public repositories, each linked to a paper (735 Python files, 727 parsed and 8 unparseable), detector 3 recognized a sweep in none, with its shipped vocabulary and with one fitted to those repositories. To get a denominator we enumerated candidate selection sites with patterns frozen before the scan: 103 sites in the 688 non-test files, 680 of which parse. We sampled 53 and labeled each with a rubric committed before any site was read and before the detector ran. By those labels none was contaminated: one was a disclosed oracle, one was ambiguous, 21 were sound and 30 were not selections, so undisclosed contamination was absent from 0 of 23 real selection sites (exact interval 0.000 to 0.148). The model raters disagreed with these labels (kappa 0.64, 0.59, 0.28 and 0.22 across the four), and the disagreements that matter concern contamination. After rereading, we judge one site contaminated and our committed label wrong: a hyperparameter sweep in robustdg picks the best configuration by a value its comment calls source validation accuracy, which is the test-domain accuracy at the epoch chosen by source validation. Two more sites are unresolved. Undisclosed contamination is then present in 1 of 23 real selection sites (0.001 to 0.219), or 3 of 24 (0.027 to 0.324) if the two unresolved sites count (one of them was labeled not a selection, so counting it also adds it to the denominator). Detector 3 returned \textsc{indeterminate} on the files of all 53 sites, so it missed every contaminated site and issues no clean verdict. Its sensitivity is 0 of 1 to 0 of 3, which is defined but uninformative, and we describe it as a guard for one's own sweeps and not a retrospective auditor. The scan covers Python files only, and 126 notebooks were not scanned.
-
-We also ran \citet{yang2022leakage} in Docker on detector 3's fixtures; it reported zero across all three categories because our fixtures fall outside its target notebook format, which indicates that our idiom is outside its scope and not that it fails in general. Two literature searches found no baseline for detector 4 (limited coverage), and detector 5's natural baseline is the cross-site gap it already takes as input.
+\paragraph{Two exploratory illustrations.} Detector 5's composition ratio, a ratio of two gaps that a normal approximation describes poorly, flagged 13 of 20 fresh seeds at 1,200 stays per arm and 8 of 20 at 4,000 stays (0.191 to 0.640), and the normal model fitted on five seeds had predicted a flag probability of 0.15 at 4,000, outside that interval. A simulation of the four-fifths rule on 133 public cases gives flag rates between 0.05 and 0.95 in 93 cases, but the cases sit no closer to the threshold than chance placement predicts (77 observed, 77 to 80 expected), so we do not count it as an external instance of threshold sitting. Both rest on assumptions stated in the appendix (Appendices~\ref{apd:d5} and~\ref{apd:fourfifths}).
 
 \section{A Reporting Standard for Diagnostics}
 \label{sec:standard}
 
 The cases in this audit motivate five proposed reporting items intended to make a diagnostic's verdict easier to interpret and reproduce (mapped to our cases and filled in for detector 1 in Appendix~\ref{apd:standard}). Items 1 to 4 address the two measured failure modes and the corpus-size nuisance control, and item 5 addresses post-hoc fitting; the standard is derived post hoc from our cases, has not been independently validated, and includes no general check for granularity or pairing mismatches. None needs new data except the replicate runs of item 4.
 \begin{enumerate}
-  \item \textbf{A decidability flag.} Every check returns whether it reached a verdict, and undecidable cases are counted separately from clean ones (Type 1a).
-  \item \textbf{Control margins.} Report $m=|\tau-s|/\sigma$ for every control, and do not count a ceiling control or an identity as a true negative (Type 1b).
-  \item \textbf{Uncertainty at the operating point.} Report the flag probability at the audit size actually used, and the audit size at which the verdict would settle (Type 2; Figure~\ref{fig:audit}).
-  \item \textbf{A null rate and a nuisance control.} Run independent replicates of the no-effect comparison, and a control that holds the diagnostic's nuisance variables, such as corpus size, apart from the confound (Section~\ref{sec:detector2}). This item asks for two things that we found together.
+  \item \textbf{A decidability flag.} Every check returns whether it reached a verdict, and undecidable cases are counted separately from clean ones (undefined-input pass).
+  \item \textbf{Control margins.} Report $m=|\tau-s|/\sigma$ for every control, and do not count a weak control or an identity as a true negative (weak-control pass).
+  \item \textbf{Uncertainty at the operating point.} Report the flag probability at the audit size actually used, and the audit size at which the verdict would settle (threshold sitting; Figure~\ref{fig:audit}).
+  \item \textbf{A null rate and a nuisance control.} Run independent replicates of the no-effect comparison, and a control that holds the diagnostic's nuisance variables, such as corpus size, apart from the confound (Appendix~\ref{sec:detector2}). This item asks for two things that we found together.
   \item \textbf{Provenance of the decision rule.} Set the rule before the data, and say so if it changed afterwards (post-hoc fitting).
 \end{enumerate}
-Items 1 and 3 can be combined into a three-way verdict of flag, clear, or inconclusive (covering an undecided check or a flag probability between 0.05 and 0.95 at the audit size); we did not compare this with flagging only when a confidence interval clears the threshold. An inconclusive verdict tells the user to compute the statistic on the whole cohort when that is feasible, as for detector 1, where the verdict is deterministic and does not flag. Otherwise it marks the control as uninformative at that audit size, and it does not say which side of the threshold the truth lies on.
+Items 1 and 3 combine into a three-way verdict of flag, clear, or inconclusive. The interval version of this verdict (Section~\ref{sec:rules}) is decisive and wrong in at most 0.8\% of audits and answers inconclusive where the point rule is close to a coin flip; we did not compare it with three-way rules other than the zone rule. An inconclusive verdict tells the user to compute the statistic on the whole cohort when that is feasible, as for detector 1, where the verdict is deterministic and does not flag. Otherwise it marks the control as uninformative at that audit size, and it does not say on which side of the threshold the truth lies.
 
 \section{Limitations}
 \label{sec:limits}
 
-\paragraph{Circularity.} The same group built and audited every detector, and the external counts depend on labels that began with a language model. The labeling by raters and one outside human coder narrows this and does not remove it. The model raters share training with the model that wrote our first labels, one of them could read our working tree, and their median kappa was below our line. The outside coder labeled 40 of the 88 reachability sites and none of the 53 model-selection sites, and kappa was 0.42 on four labels. Independent coding of all 141 sampled sites by more than one person outside the group would resolve this.
+\paragraph{Circularity.} The same group built and audited every detector, and the external repository counts depend on labels that began with a language model. The labeling by raters and one outside human coder narrows this and does not remove it. The model raters share training with the model that wrote our first labels, one of them could read our working tree, and they ran through web interfaces whose session names and dates we record but whose model snapshots we could not pin. The outside coder labeled 40 of the 88 sites, and weighted kappa was 0.42 on four labels. Independent coding of all 88 sites by more than one person outside the group would resolve this, and it matters less because we report no prevalence.
 
-\paragraph{Uneven evidence.} We did not apply the margin and decidability checks to other groups' published diagnostics, so the evidence is about our five detectors. The two development hazards rest on the same two internal events and have no external instance. Type 2 rests on one detector, on one contrast in one of two databases, with detector 5 as an exploratory second whose model, fitted on five seeds, failed its prediction at one of two sizes. The four-fifths cases hold only if audits are random subsets of 500 persons. Outside instances of Type 2 and the development hazards in other groups' diagnostics would resolve this.
+\paragraph{Uneven evidence.} The executed tests and the verdict-rule comparison cover our five detectors, and threshold sitting is measured on one detector, one contrast and one database (6 of 45 pairs on MIMIC-IV and 0 of 45 on eICU-CRD). We did not apply the margin and decidability checks to other groups' published diagnostics. The degenerate inputs of Section~\ref{sec:silent} may never reach the shipped pipelines, and we wrote the input list after reading the detector code. Outside instances of both failure modes in other groups' diagnostics would resolve this.
 
-\paragraph{Limited demonstrated consequence.} We show the Type 1 pattern in public code, with a measured stand-in effect on the official College Scorecard file and executed behavior at two other sites, but no site is shown to have changed a published conclusion (and DomainBed's lines are unreachable on shipped datasets). Running on TableShift's own file would resolve the first gap; the clinical scope of our title rests on our own five detectors rather than these general-purpose repositories.
+\paragraph{Limited demonstrated consequence.} We show the silent-pass pattern in public code, with a measured stand-in effect on the official College Scorecard file and executed behavior at two other sites, but no site is shown to have changed a published conclusion, and DomainBed's lines are unreachable on shipped datasets. The benchmark's own data file needs Kaggle credentials, and our model is the benchmark's default histogram gradient-boosted configuration trained on random splits, not its domain split or its feature discretization. Running the benchmark's file and split would resolve the first gap. The clinical scope of our title rests on our own five detectors and not on these general-purpose repositories.
 
-\paragraph{Small internal suite and seed counts.} Appendix Table~\ref{tab:depth} has denominators of 1 to 8 and says nothing about performance elsewhere. Most open-data runs use five seeds (which understated spread by a factor of two for detector 5); for detector 2, only the adaptively selected 2\%, 5\%, and 20\% full-scale doses were expanded to 20 seeds.
+\paragraph{Stays, seeds and the internal suite.} Audit draws and bootstraps resample stays, and the patient identifiers of the full cohorts were not available on the analysis machine, so the intervals do not account for repeated stays of one patient. Most open-data runs use five seeds, which understated spread by a factor of two for detector 5, and only the adaptively selected 2\%, 5\%, and 20\% full-scale doses of detector 2 were expanded to 20 seeds. Appendix Table~\ref{tab:depth} has denominators of 1 to 8 and says nothing about performance elsewhere.
 
-\paragraph{Detector limits and definitions.} Corpus size confounds detector 2's effect at full scale, and its missingness arms read as mixed with 20 seeds and a small model. Detector 3 has no demonstrated sensitivity outside its home idiom. Detector 5's external component set is analogous and not identical.
+\paragraph{Detector limits.} Corpus size confounds detector 2's effect at full scale, and its missingness arms read as mixed with 20 seeds and a small model. Detector 3 has no demonstrated sensitivity outside its home idiom, and detector 5's external component set is analogous and not identical.
+
+\paragraph{Development hazards and the standard.} Two further hazards arose in our own development and have no external instance. Detector 5 aggregated at the wrong granularity and detector 2 compared unpaired where the comparison is paired (granularity or pairing mismatch), and both changes followed a false negative under no change rule set beforehand (post-hoc fitting). The repository history does not date the changes, and pre-specification prevented one further change (Appendix~\ref{apd:hazards}). The reporting standard has an item for post-hoc fitting and none for granularity or pairing. It was derived after the results and filled in for detector 1 by us, so no one outside the authors has applied it. An independent person filling it in for external diagnostics, and a mapping to PROBAST, TRIPOD+AI and the ML Test Score, would test it.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-A clean confusion matrix does not tell a reader whether a diagnostic could have failed. Auditing five of our own detectors yielded two measured failure modes and two development hazards. Type 1 is best supported. Type 2 is measured primarily on one detector, and shows the same audit noise in public data if audits are random subsets of 500 persons. We propose, though have not yet independently validated, that every diagnostic include an undecidable state, report control margins and the flag probability at the audit size used, and fix its decision rule beforehand. Whether the failures we found in our own tools change conclusions in other groups' work is still open.
+A clean verdict is evidence only if the diagnostic could have failed. Called on inputs where their statistics are undefined, 19 of 27 cells of our five detectors returned a clean verdict, and the same pattern appears in public code and public libraries. Where a statistic sits on its threshold, a verdict at the audit size is close to a coin flip, and a rule that can answer inconclusive is rarely wrong and often undecided. We propose, though have not yet independently validated, that every diagnostic include an undecidable state, report control margins and the flag probability at the audit size used, and fix its decision rule beforehand. Whether the failures we found in our own tools change conclusions in other groups' work is still open.
 
 % Use of language models: statement left blank for the owner to write.
 
@@ -284,6 +297,8 @@ Sepsis-3 operationalization family, full-scale missingness arms and dose sweep (
 Guarded-pipeline comparison and equivalence sample of mutation survivors & 6292d3b & 4aececcef9ef\\
 Outside human coder (corrected before the sample was drawn) & f42b84e, da3dc41 & 237afd8c849f, b5d48e309878\\
 Detector 2 near-threshold 20-seed runs & d0f356e, bf01e7d & 59ce68ec578e, 0fab5ddee7ad\\
+Degenerate-input test of the five detectors & 99e1284 & 9df28294ba17\\
+Verdict rules at the audit size and prevalence & b5bd340 & bf8d919051fd\\
 \bottomrule
 \end{tabular}
 \caption{Documents that fix each experiment before it ran. Dashes mark round-1 or pre-manifest documents outside the v2 SHA-256 manifest.}
@@ -303,11 +318,11 @@ Open-data scale means the open PhysioNet 2019 corpus and the MIMIC-IV and eICU-C
 Database & Control (SOFA window against) & $\kappa$ & Margin $m$ & Class\\
 \midrule
 MIMIC-IV & single-point & 0.602 & 0.06 & discriminating\\
-MIMIC-IV & window $[-24,+12]$ & 0.913 & 17.1 & ceiling\\
-MIMIC-IV & window $[-72,+24]$ & 0.993 & 75.0 & ceiling\\
-eICU-CRD & single-point & 0.826 & 5.39 & ceiling\\
-eICU-CRD & window $[-24,+12]$ & 0.986 & 33.0 & ceiling\\
-eICU-CRD & window $[-72,+24]$ & 1.000 & 291 & ceiling\\
+MIMIC-IV & window $[-24,+12]$ & 0.913 & 17.1 & weak\\
+MIMIC-IV & window $[-72,+24]$ & 0.993 & 75.0 & weak\\
+eICU-CRD & single-point & 0.826 & 5.39 & weak\\
+eICU-CRD & window $[-24,+12]$ & 0.986 & 33.0 & weak\\
+eICU-CRD & window $[-72,+24]$ & 1.000 & 291 & weak\\
 \midrule
 MIMIC-IV & ICD-coded sepsis (positive) & 0.174 & 12.13 & n/a (positive)\\
 eICU-CRD & ICD-coded sepsis (positive) & 0.451 & 2.59 & n/a (positive)\\
@@ -326,9 +341,9 @@ Table~\ref{tab:status} classifies each reported analysis as pre-specified, explo
 \toprule
 Status & Results\\
 \midrule
-Specified before the run & mutation test and the sample of survivors; the 25-repository read (patterns, rubric; the divergence convention was not fixed); label-masked raters and the outside coder; the fuzz; the loader comparison; the 45-pair family; the audit-size model; the fresh-seed test of detector 5; the corpus-size arm; the dose sweeps; the missingness arms; the scan of detector 3; the four-fifths simulation\\
+Specified before the run & the degenerate-input test of the five detectors; the verdict-rule comparison and prevalence; mutation test and the sample of survivors; the 25-repository read (patterns, rubric; the divergence convention was not fixed); label-masked raters and the outside coder; the fuzz; the loader comparison; the 45-pair family; the audit-size model; the fresh-seed test of detector 5; the corpus-size arm; the dose sweeps; the missingness arms; the scan of detector 3; the four-fifths simulation\\
 Exploratory & triage of survivors by role; cluster bootstrap over files; Fieller intervals; the base-rate check on the loader; the restricted-size and reference-rate analyses of the four-fifths cases; the null of 20 comparisons; the downstream change; our second reading of the contested sites; the scaling of the outside coder's counts\\
-Descriptive & the five internal Type 1 cases; the two development events behind the granularity/pairing and post-hoc fitting hazards\\
+Descriptive & the five development cases of silent passes; the two development events behind the granularity/pairing and post-hoc fitting hazards\\
 \bottomrule
 \end{tabular}
 \caption{Status of each result. Specification is by commit order and not an external registry.}
@@ -336,7 +351,7 @@ Descriptive & the five internal Type 1 cases; the two development events behind 
 \end{table}
 \FloatBarrier
 
-\section{Type 1 positives}
+\section{Silent-pass positives}
 \label{apd:positives}
 Reachable and unguarded under the narrow reading (repository, file, line, pinned commit): tableshift, \texttt{tableshift/datasets/college\_scorecard.py}:170, \texttt{fca9429814} (a NaN target becomes 0, and the task's configuration keeps such rows; reachability inferred from the dataset's missing-value settings); fairseq2, \texttt{src/fairseq2/data/parquet/arrow\_transform.py}:288 and :306, \texttt{7f06d6f4f5} (null rows pass a length filter); robustdg, \texttt{utils/scripts/utils.py}:579, \texttt{3eee1730ae} (a \texttt{max} of two losses returns the finite one when the other is NaN, which defeats the \texttt{isfinite} check on the next line). We reported the tableshift and fairseq2 behaviors to the maintainers (issue dates and links are withheld during double-blind review to preserve anonymity); the robustdg repository is archived and read-only, so no issue could be opened there. Table~\ref{tab:external} splits the sites by kind of code.
 
@@ -386,11 +401,159 @@ The excerpt-only raters chose the ambiguous label far more often on the model-se
 
 \section{Mutation survivors}
 \label{apd:mutation}
-The 285 mutants split by the role of the mutated line as follows (exploratory, assigned by reading each line). Verdict, test or statistic definition and decision constants: 108 mutants, 20 killed. Output formatting: 72, none killed. Data splitting, aggregation and training plumbing: 58, none killed. Defaults, entry points and test-runner code: 47, 9 killed. None of the 285 was judged equivalent before the sample of 25 described in Section~\ref{sec:results}, and some survivors outside that sample surely are. In the sample, the share of survivors that change the verdict, a statistic, or a printed number is 0.74 to 0.99 (about 65 to 87 of the 88), and removing the estimated equivalents moves the kill rate on decision lines from 18.5\% to about 20\% (19\% to 24\%). No shipped file was edited.
+Exact 95\% intervals are 0.069 to 0.143 for the 29 of 285 mutants killed and 0.117 to 0.271 for the 20 of 108 killed on decision lines. The 285 mutants split by the role of the mutated line as follows (exploratory, assigned by reading each line). Verdict, test or statistic definition and decision constants: 108 mutants, 20 killed. Output formatting: 72, none killed. Data splitting, aggregation and training plumbing: 58, none killed. Defaults, entry points and test-runner code: 47, 9 killed. None of the 285 was judged equivalent before the sample of 25 described in Section~\ref{sec:results}, and some survivors outside that sample surely are. In the sample, the share of survivors that change the verdict, a statistic, or a printed number is 0.74 to 0.99 (about 65 to 87 of the 88), and removing the estimated equivalents moves the kill rate on decision lines from 18.5\% to about 20\% (19\% to 24\%). No shipped file was edited.
 
 \section{Detector 5: fresh-seed test}
 \label{apd:d5}
 Detector 5's composition ratio, a ratio of two gaps that a normal approximation describes poorly, on PhysioNet Site A against Site B has a gate at 0.30. Over five seeds at 1,200 stays per arm its mean is 0.283 (SD 0.082) and it flagged 2 of 5; at 4,000 stays the mean is 0.272 (SD 0.027) and it flagged 0 of 5; at 900 and 1,500 stays it flagged 3 of 5. A normal approximation fitted to the five seeds gave flag probabilities of 0.42 and 0.15 at 1,200 and 4,000 stays. We tested this on 20 fresh seeds at both sizes. At 1,200 stays 13 of 20 flagged (exact interval 0.408 to 0.846), and the predicted 0.42 lies inside it, barely. At 4,000 stays 8 of 20 flagged (0.191 to 0.640), and the predicted 0.15 lies outside it, so the prediction failed there. The fresh ratios were more variable than the first five seeds suggested (SD 0.145 against 0.082 at 1,200 stays, and 0.055 against 0.027 at 4,000), so five seeds were too few to fit the spread. The same-site control flagged in none of the 40 fresh runs (0 of 20 at each size; interval 0.000 to 0.168).
+
+\section{Detector 2: a control that holds corpus size fixed}
+\label{sec:detector2}
+
+Detector 2 serves here as a vehicle for the audit and is not a contribution. Its 0\% control cannot show a corpus-size effect, because it holds the corpus fixed. We added an arm (A2) that adds extra \emph{source} stays in place of target stays. Let $r_1$ be the shipped detector's mean relative reduction in probe loss and $r_2$ that of A2. The ratio $r_2/r_1$ (Figure~\ref{fig:volume}) is 0.31 and 0.48 at 5\% and 20\% leakage on the PhysioNet pair at open-data scale (five seeds), and 0.60 and 0.70 at full scale on MIMIC-IV to eICU-CRD (20 seeds). Both full-scale values are above our line of 0.5, so by our own rule corpus size confounds the effect. Fieller 95\% intervals (exploratory) are $-1.32$ to 0.64 and 0.38 to 0.61 on the open-data pair, and 0.49 to 0.68 and 0.64 to 0.76 at full scale, so the full-scale 20\% ratio is clearly above 0.5 while the full-scale 5\% interval still straddles it. Target exposure still adds beyond volume (shipped arm against A2, paired $t=10.5$ and 13.0 at full scale).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.52\linewidth]{figs/fig3_volume_control.pdf}
+\caption{Effect of the corpus-size control (A2) as a fraction of the effect of detector 2 (arm A1), by leakage level and scale (five seeds at demonstration scale, 20 seeds at full scale). Both full-scale bars exceed our line of 0.5, and the 20\% bar has an interval (0.64 to 0.76) that excludes it. Error bars are Fieller 95\% intervals (exploratory), and a triangle marks an interval that extends below 0.}
+\label{fig:volume}
+\end{figure}
+
+A null of 20 independent paired five-seed comparisons of two no-leak arms, each with a fresh data draw and model seed, flagged 1 of 20 (exact interval 0.001 to 0.249; exploratory), matching the nominal 5\% rate. Detector 2's full dose sweeps, missingness arms, and baseline comparisons appear in Appendix~\ref{apd:fullscale}. The shipped statistic first flags at 5\% leakage at open-data scale and at 2\% leakage at full scale over 20 seeds ($t=4.21$ vs. critical value 1.729; $t=1.94$ vs. 2.132 at five seeds). Because we selected 2\%, 5\%, and 20\% for 20-seed expansion after observing borderline five-seed readings at 2\% shipped ($t=1.94$) and 20\% mask-transplant ($t=2.11$) while leaving 1\% and 10\% at five seeds, these 20-seed runs are adaptive follow-up checks on selected doses, not an independent confirmatory sweep. A volume-matched statistic also flags at 1\% and 2\%. At 1\% the corpus-size arm is 0.0025 (five seeds), within our 0.005 floor, so we do not read that flag as detection; at 2\% it is 0.0067 (20 seeds). Over 20 seeds, the missingness arms (mask-transplant arm A3 and random-masking arm A4, compared with leaked arm A1) read as mixed: observation pattern carries 0.29 of the effect at both 5\% and 20\%, and A3$-$A2 clears 1.729 at both doses ($t=3.39$ and $4.54$; desktop/Colab hardware checks in Appendix~\ref{apd:fullscale}). Standard baselines carry no signal here, and leakage moves cross-site AUROC by at most about 0.007 at open-data scale (Appendix~\ref{apd:fullscale}), so practical impact is open.
+
+\section{Detector 3 outside its home idiom}
+\label{sec:detector3}
+
+Over 18 pinned public repositories, each linked to a paper (735 Python files, 727 parsed and 8 unparseable), detector 3 recognized a sweep in none, with its shipped vocabulary and with one fitted to those repositories. To get a denominator we enumerated candidate selection sites with patterns frozen before the scan: 103 sites in the 688 non-test files, 680 of which parse. We sampled 53 and labeled each with a rubric committed before any site was read and before the detector ran. By those labels none was contaminated: one was a disclosed oracle, one was ambiguous, 21 were sound and 30 were not selections, so undisclosed contamination was absent from 0 of 23 real selection sites (exact interval 0.000 to 0.148). The model raters disagreed with these labels (kappa 0.64, 0.59, 0.28 and 0.22 across the four), and the disagreements that matter concern contamination. After rereading, we judge one site contaminated and our committed label wrong: a hyperparameter sweep in robustdg picks the best configuration by a value its comment calls source validation accuracy, which is the test-domain accuracy at the epoch chosen by source validation. Two more sites are unresolved. Undisclosed contamination is then present in 1 of 23 real selection sites (0.001 to 0.219), or 3 of 24 (0.027 to 0.324) if the two unresolved sites count (one of them was labeled not a selection, so counting it also adds it to the denominator). Detector 3 returned \textsc{indeterminate} on the files of all 53 sites, so it missed every contaminated site and issues no clean verdict. Its sensitivity is 0 of 1 to 0 of 3, which is defined but uninformative, and we describe it as a guard for one's own sweeps and not a retrospective auditor. The scan covers Python files only, and 126 notebooks were not scanned.
+
+We also ran \citet{yang2022leakage} in Docker on detector 3's fixtures; it reported zero across all three categories because our fixtures fall outside its target notebook format, which indicates that our idiom is outside its scope and not that it fails in general. Two literature searches found no baseline for detector 4 (limited coverage), and detector 5's natural baseline is the cross-site gap it already takes as input.
+
+\section{Reading public repositories}
+\label{apd:repos}
+We read 25 public repositories for the silent-pass pattern: the 18 pinned repositories of Appendix~\ref{sec:detector3}, AI Fairness 360, and six chosen by a star-ranked rule set before any query. Almost all of this code is general-purpose machine learning, not clinical diagnostics. We froze patterns for four kinds of site before reading (236 sites) and drew 88 at random, at most two per repository and pattern group, with a seed set beforehand. A committed rubric assigned each sampled site one of guarded, unreachable, reachable and unguarded, or not applicable. The sites render verdicts, selections, or aggregations and none is a confound detector, so this tests the pattern and not our detectors. We did not fix in advance whether a degenerate value that arises only when training diverges counts as reachable, so we report both readings.
+
+Under our labels, the pattern appears in 3 of the 18 repositories with an applicable site under the narrow reading (3 of 35 files) and in 10 of 18 under the broad reading (13 of 35 files; Appendix~\ref{apd:positives} lists them). At the site level, those correspond to 4 of the 88 sampled sites narrow (counting ordinary-use sites and the divergence check in robustdg; exact descriptive interval 0.013 to 0.112; 3 of 88 without that check) and 16 of 88 broad (0.108 to 0.278). Because sites cluster within files and selection caps vary selection probabilities, we treat the repository-level counts as the primary evidence that the pattern exists in public code, and the site-level fractions as exploratory, rubric-dependent counts that are not a population prevalence estimate; a cluster bootstrap over files gives 0.000 to 0.196 for the narrow share of applicable sites (exploratory).
+
+The counts also depend on who labels, and we have four sources of labels besides ours. Our committed labels were first produced by a language model applying the committed rubric. Four language-model raters, with our labels hidden from them, labeled the 88 sites. Their kappa with our labels is 0.63 for the rater that could read the repositories (R0, told to ignore our labels but able to read our working tree) and 0.56, 0.38, and 0.43 for three that saw excerpts only. Part of that gap is ambiguity, since the excerpt-only raters used the ambiguous label often (Appendix~\ref{apd:raters}). Three raters land near our counts (3 to 4 narrow and 13 to 17 broad of 88 sites), while one, Gemini 4 argon, is far higher (21 and 33; Figure~\ref{fig:external}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.88\linewidth]{figs/fig4_external.pdf}
+\caption{Sites reachable and unguarded for the silent-pass pattern, out of the 88 sampled sites, under our labels, four language-model raters, and an outside human coder. The raters' narrow counts exclude the divergence check that ours includes. Blue and gray points carry exact 95\% intervals. The horizontal dashed line separates the full-sample 88-site counts from the scaled 40-site outside-coder estimate (shown with a within-stratum bootstrap interval). The narrow reading excludes sites whose degenerate value arises only in diverged training.}
+\label{fig:external}
+\end{figure}
+
+An outside human coder with Python and machine-learning experience, using no language model for the labeling, labeled 40 of the 88 sites from the committed rubric with our labels hidden. The sample was fixed beforehand: all 16 sites counted under the broad reading, 12 of the other 32 applicable sites, and 12 of the 40 not-applicable sites. The coder agreed with us on 15 of the 16 broad positives (exact interval 0.70 to 1.00), 8 of 12 other applicable sites (0.35 to 0.90), and 4 of 12 not-applicable sites (0.10 to 0.65). Because the first stratum is all of our positives, the 15 of 16 measures the precision of our positives, not their recall, and the weak agreement in the other two strata is where recall shows. Weighted by stratum size, kappa on the four labels is 0.42 (bootstrap interval 0.23 to 0.64), below our line of 0.60, so the labels are rubric-dependent here as well. On the single question that carries the counts, whether a site is reachable and unguarded under the broad reading or not, kappa is 0.62, above our line of 0.60, indicating that most of the disagreement concerns which no-failure label applies. However, the disagreements run toward more positives. Scaled to the 88 sites (treating roughly 75 as applicable compared with 48 under our labels), the coder's labels give about 26 reachable and unguarded sites under the broad reading (bootstrap interval 18 to 38) and about 14 under the narrow one (6 to 26), compared with our 16 and 4, so our 4 may be an undercount under the coder's reading. Our own second reading of the five sites where we differ keeps one positive and moves four to undecidable or unreachable, so the scaled counts rest on about four contested sites (Appendix~\ref{apd:raters}). The pattern occurs in public code, but the labels do not support a stable rate. The coder used a language model only to reformat the coder's own notes into the response file, and the labels in that file match the coder's original document.
+
+\section{Executed degenerate inputs}
+\label{apd:e17}
+Every cell of the executed test of Section~\ref{sec:silent}. ``Undefined'' says whether the detector's statistic is undefined for the input, as fixed before the run. A call that raises an error counts as \emph{error}. A warning is any warning raised during the call.
+\begin{longtable}{@{}p{2.1cm}p{5.4cm}p{1.5cm}p{3.1cm}p{1.2cm}@{}}
+\toprule
+Detector & Input & Undefined & Outcome & Warned\\
+\midrule
+\endhead
+detector 1 & \texttt{nominal\_agreement} & no & clean & no\\
+detector 1 & \texttt{nominal\_disagreement} & no & flag & no\\
+detector 1 & \texttt{empty\_audits} & yes & clean (silent pass) & yes\\
+detector 1 & \texttt{one\_row\_equal} & yes & clean (silent pass) & no\\
+detector 1 & \texttt{one\_row\_different} & no & flag & no\\
+detector 1 & \texttt{constant\_equal\_ones} & yes & clean (silent pass) & no\\
+detector 1 & \texttt{constant\_equal\_zeros} & yes & clean (silent pass) & no\\
+detector 1 & \texttt{nan\_in\_audit} & yes & clean (silent pass) & yes\\
+detector 1 & \texttt{unequal\_length} & yes & error & no\\
+detector 2 & \texttt{nominal\_flag} & no & flag & no\\
+detector 2 & \texttt{nominal\_null} & no & clean & no\\
+detector 2 & \texttt{wrong\_sign\_effect} & no & clean & no\\
+detector 2 & \texttt{empty} & yes & clean (silent pass) & no\\
+detector 2 & \texttt{one\_value} & yes & clean (silent pass) & no\\
+detector 2 & \texttt{two\_values} & yes & clean (silent pass) & no\\
+detector 2 & \texttt{identical\_negative} & yes & clean (silent pass) & no\\
+detector 2 & \texttt{all\_zero} & yes & clean (silent pass) & no\\
+detector 2 & \texttt{nan\_entry} & yes & clean (silent pass) & no\\
+detector 2 & \texttt{infinite\_entry} & yes & clean (silent pass) & yes\\
+detector 3 & \texttt{nominal\_buggy\_fixture} & no & flag & yes\\
+detector 3 & \texttt{nominal\_fixed\_fixture} & no & clean & yes\\
+detector 3 & \texttt{empty\_file} & yes & abstain & yes\\
+detector 3 & \texttt{no\_function} & yes & abstain & yes\\
+detector 3 & \texttt{syntax\_error} & yes & error & yes\\
+detector 3 & \texttt{null\_byte} & yes & error & yes\\
+detector 3 & \texttt{invalid\_utf8} & yes & error & yes\\
+detector 3 & \texttt{unknown\_loader\_sweep} & yes & abstain & yes\\
+detector 4 & \texttt{nominal\_circular} & no & flag & no\\
+detector 4 & \texttt{nominal\_not\_circular} & no & clean & no\\
+detector 4 & \texttt{unknown\_dataset} & yes & clean (silent pass) & no\\
+detector 4 & \texttt{unknown\_constraint} & yes & error & no\\
+detector 4 & \texttt{empty\_lineage} & yes & clean (silent pass) & no\\
+detector 4 & \texttt{empty\_dataset\_name} & yes & clean (silent pass) & no\\
+detector 5 & \texttt{nominal\_identical\_groups} & no & clean & no\\
+detector 5 & \texttt{nominal\_group\_lacks\_components} & no & flag & no\\
+detector 5 & \texttt{both\_groups\_empty} & yes & clean (silent pass) & no\\
+detector 5 & \texttt{one\_group\_empty} & yes & clean (silent pass) & no\\
+detector 5 & \texttt{stays\_without\_components} & yes & clean (silent pass) & no\\
+detector 5 & \texttt{all\_nan\_components} & yes & clean (silent pass) & no\\
+detector 5 & \texttt{one\_stay\_per\_group} & no & clean & no\\
+\bottomrule
+\caption{Outcome of each detector on each synthetic input (seed 20261126).}
+\label{tab:e17cells}
+\end{longtable}
+
+\section{Verdict rules and prevalence}
+\label{apd:rules}
+Details of the comparison in Section~\ref{sec:rules}. The interval rule uses $\mathrm{se}=\sqrt{p_o(1-p_o)/(n(1-p_e)^2)}$ with observed agreement $p_o$ and chance agreement $p_e$, and an interval of $\hat\kappa\pm1.96\,\mathrm{se}$. On 100 audits of the primary control the interval covers the whole-cohort kappa in 98\% of audits, a 400-resample percentile bootstrap interval covers it in 96\%, and the two give the same verdict in 97\%.
+
+\begin{table}[h]
+\centering\footnotesize
+\begin{tabular}{@{}rccc@{}}
+\toprule
+Audit size & Audits & Interval rule decisive & Decisive and wrong\\
+\midrule
+500 & 400 & 3.2\% & 1.2\%\\
+1{,}000 & 400 & 5.2\% & 2.2\%\\
+2{,}000 & 400 & 4.2\% & 1.8\%\\
+5{,}000 & 400 & 3.0\% & 0.0\%\\
+10{,}000 & 400 & 3.2\% & 0.2\%\\
+20{,}000 & 400 & 0.2\% & 0.0\%\\
+40{,}000 & 100 & 0.0\% & 0.0\%\\
+62{,}500 & 100 & 0.0\% & 0.0\%\\
+\bottomrule
+\end{tabular}
+\caption{Interval rule on the primary control (MIMIC-IV, whole-cohort kappa 0.602) by audit size, drawn without replacement from the 74,829 stays.}
+\label{tab:rulesize}
+\end{table}
+
+\begin{table}[h]
+\centering\footnotesize
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Pair (labelings) & Whole-cohort $\kappa$ & Zone rule inconclusive & Decisive and wrong\\
+\midrule
+single-point against window $[-48,+24]$ & 0.602 & 95.0\% & 3.0\%\\
+72,24 against single-point & 0.597 & 91.5\% & 3.0\%\\
+24,24 against single-point & 0.609 & 91.0\% & 2.5\%\\
+24,48 against single-point & 0.560 & 65.0\% & 0.0\%\\
+48,48 against single-point & 0.554 & 58.5\% & 0.0\%\\
+72,48 against single-point & 0.549 & 53.5\% & 0.0\%\\
+\bottomrule
+\end{tabular}
+\caption{Zone rule on 200 audits of 500 stays each for the primary control and the five other MIMIC-IV pairs with the smallest margins. Labelings are written as (hours before, hours after) the suspected infection for the SOFA window.}
+\label{tab:zone}
+\end{table}
+
+\begin{table}[h]
+\centering\footnotesize
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Database & Positive, single-point & Positive, window & Agreement & $\kappa$ & Adjusted $\kappa$\\
+\midrule
+MIMIC-IV & 0.309 & 0.510 & 0.799 & 0.602 & 0.599\\
+eICU-CRD & 0.088 & 0.120 & 0.968 & 0.826 & 0.935\\
+\bottomrule
+\end{tabular}
+\caption{Prevalence for the primary control. Adjusted $\kappa$ is the prevalence-adjusted and bias-adjusted kappa, $2p_o-1$.}
+\label{tab:prev}
+\end{table}
+\FloatBarrier
 
 \section{Four-fifths cases}
 \label{apd:fourfifths}
@@ -506,8 +669,8 @@ Table~\ref{tab:standardmap} maps each reporting item to the cases in this paper 
 \toprule
 Item & Cases in this paper\\
 \midrule
-1 decidability flag & the baseline's undefined train--test gap (Type 1a, item 4 of the list in Section~\ref{sec:results}); detector 3's \textsc{indeterminate} verdicts (1a); the third-party falsy-as-clean sites; the fuzz cells where a validator or metric passed on undefined input\\
-2 control margins & detector 1's identity control, its suspicion-window controls and detector 2's 0\% control (Type 1b, items 1, 2 and 5)\\
+1 decidability flag & the baseline's undefined train--test gap (undefined-input pass, item 4 of the list in Section~\ref{sec:results}); detector 3's \textsc{indeterminate} verdicts (1a); the third-party silent-pass sites; the fuzz cells where a validator or metric passed on undefined input\\
+2 control margins & detector 1's identity control, its suspicion-window controls and detector 2's 0\% control (weak-control pass, items 1, 2 and 5)\\
 3 uncertainty at the operating point & detector 1 on MIMIC-IV (flag probability 0.484 at 500 stays); detector 5 (flags in 2 of 5 to 13 of 20 runs across seeds and sizes); the four-fifths cases\\
 4 null rate and nuisance control & detector 2's corpus-size ratios and its 20-replicate null (1 of 20)\\
 5 provenance of the decision rule & the paired test of detector 2 and the aggregation change of detector 5; the rule for choosing between detector 5 variants\\
@@ -562,7 +725,7 @@ Detector & Recall [95\% CI] & FPR [95\% CI] & Controls (disc./ceil./unk.) & Exte
 Each detector is self-contained in \texttt{detectors/checks/}. Below we record the exact statistic, decision rule and controls of each.
 
 \paragraph{Detector 1: label-definition shift (\texttt{check1\_label\_shift.py}).}
-Given two sites' binary sepsis labels, the detector draws an audit subset of $n=500$ stays without replacement (seeded) and computes Cohen's $\kappa$ between the two operationalizations on the audit subset. It flags when $\kappa < 0.60$ (\texttt{KAPPA\_FLAG}). It also computes the cross-site prevalence ratio (flagging $>1.50$ as a weak baseline signal). The internal positive pairs ICD-coded sepsis against SOFA-window Sepsis-3; the internal negative pairs SOFA-window against SOFA-single-point.
+Given the binary sepsis labels of two operationalizations for the same stays, the detector draws an audit subset of $n=500$ stays without replacement (seeded) and computes Cohen's $\kappa$ between the two operationalizations on the audit subset (it also accepts the labels of two sites, for the prevalence ratio). It flags when $\kappa < 0.60$ (\texttt{KAPPA\_FLAG}). It also computes the cross-site prevalence ratio (flagging $>1.50$ as a weak baseline signal). The internal positive pairs ICD-coded sepsis against SOFA-window Sepsis-3; the internal negative pairs SOFA-window against SOFA-single-point.
 
 \paragraph{Detector 2: pretraining leakage (\texttt{check2\_pretrain\_leakage.py}).}
 A masked-reconstruction transformer probe (mask probability 0.30; 2 layers, $d=64$ in demonstration mode; 6 layers, $d=256$ at full scale) is pretrained on source stays with a controlled fraction $p\in\{0.05, 0.20, 1.00\}$ of target stays leaked into the pretraining pool (arm A1), and compared against a no-leak arm (A0) trained with the same model seeds. The statistic is the paired difference in held-out target reconstruction loss reduction across five seeds; it flags when the one-sided paired $t$-statistic exceeds $2.132$ ($\alpha=0.05$, $\text{df}=4$; $1.729$ at 20 seeds, $\text{df}=19$). The shipped 0\% control compares A0 with itself. Our corpus-size control (arm A2) replaces the leaked target stays with extra source stays of the same count.
