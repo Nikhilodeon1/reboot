@@ -1,0 +1,417 @@
+{
+ "seed": 20261126,
+ "cells": [
+  {
+   "detector": "detector 1 (diagnose)",
+   "input": "nominal_agreement",
+   "undefined": false,
+   "outcome": "clean",
+   "detail": "kappa=0.900079936051159, ratio=1.0612244897959184",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 1 (diagnose)",
+   "input": "nominal_disagreement",
+   "undefined": false,
+   "outcome": "flag",
+   "detail": "kappa=0.19999999999999996, ratio=1.04",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 1 (diagnose)",
+   "input": "empty_audits",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "kappa=nan, ratio=nan",
+   "warned": true,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 1 (diagnose)",
+   "input": "one_row_equal",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "kappa=1.0, ratio=1.0",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 1 (diagnose)",
+   "input": "one_row_different",
+   "undefined": false,
+   "outcome": "flag",
+   "detail": "kappa=0.0, ratio=999999999.9999999",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 1 (diagnose)",
+   "input": "constant_equal_ones",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "kappa=1.0, ratio=1.0",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 1 (diagnose)",
+   "input": "constant_equal_zeros",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "kappa=1.0, ratio=0.0",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 1 (diagnose)",
+   "input": "nan_in_audit",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "kappa=1.0, ratio=nan",
+   "warned": true,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 1 (diagnose)",
+   "input": "unequal_length",
+   "undefined": true,
+   "outcome": "error",
+   "detail": "ValueError: operands could not be broadcast together with shapes (100,) (50,) ",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "nominal_flag",
+   "undefined": false,
+   "outcome": "flag",
+   "detail": "t=-15.59115493315145, crit=2.132",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "nominal_null",
+   "undefined": false,
+   "outcome": "clean",
+   "detail": "t=0.0, crit=2.132",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "wrong_sign_effect",
+   "undefined": false,
+   "outcome": "clean",
+   "detail": "t=15.59115493315145, crit=2.132",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "empty",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "t=0.0, crit=inf",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "one_value",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "t=0.0, crit=inf",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "two_values",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "t=0.0, crit=inf",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "identical_negative",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "t=0.0, crit=2.132",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "all_zero",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "t=0.0, crit=2.132",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "nan_entry",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "t=0.0, crit=2.132",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 2 (flag_from_relative)",
+   "input": "infinite_entry",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "t=0.0, crit=2.132",
+   "warned": true,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 3 (audit_file)",
+   "input": "nominal_buggy_fixture",
+   "undefined": false,
+   "outcome": "flag",
+   "detail": "verdict=CONTAMINATED",
+   "warned": true,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 3 (audit_file)",
+   "input": "nominal_fixed_fixture",
+   "undefined": false,
+   "outcome": "clean",
+   "detail": "verdict=OK",
+   "warned": true,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 3 (audit_file)",
+   "input": "empty_file",
+   "undefined": true,
+   "outcome": "abstain",
+   "detail": "verdict=INDETERMINATE",
+   "warned": true,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 3 (audit_file)",
+   "input": "no_function",
+   "undefined": true,
+   "outcome": "abstain",
+   "detail": "verdict=INDETERMINATE",
+   "warned": true,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 3 (audit_file)",
+   "input": "syntax_error",
+   "undefined": true,
+   "outcome": "error",
+   "detail": "SyntaxError: invalid syntax (<unknown>, line 1)",
+   "warned": true,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 3 (audit_file)",
+   "input": "null_byte",
+   "undefined": true,
+   "outcome": "error",
+   "detail": "SyntaxError: source code string cannot contain null bytes",
+   "warned": true,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 3 (audit_file)",
+   "input": "invalid_utf8",
+   "undefined": true,
+   "outcome": "error",
+   "detail": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte",
+   "warned": true,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 3 (audit_file)",
+   "input": "unknown_loader_sweep",
+   "undefined": true,
+   "outcome": "abstain",
+   "detail": "verdict=INDETERMINATE",
+   "warned": true,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 4 (is_circular)",
+   "input": "nominal_circular",
+   "undefined": false,
+   "outcome": "flag",
+   "detail": "reason='PaO2 derived from SaO2 via severinghaus'",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 4 (is_circular)",
+   "input": "nominal_not_circular",
+   "undefined": false,
+   "outcome": "clean",
+   "detail": "reason=''",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 4 (is_circular)",
+   "input": "unknown_dataset",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "reason=''",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 4 (is_circular)",
+   "input": "unknown_constraint",
+   "undefined": true,
+   "outcome": "error",
+   "detail": "KeyError: 'NoSuchConstraint'",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 4 (is_circular)",
+   "input": "empty_lineage",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "reason=''",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 4 (is_circular)",
+   "input": "empty_dataset_name",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "reason=''",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 5 (run_check_on_stays)",
+   "input": "nominal_identical_groups",
+   "undefined": false,
+   "outcome": "clean",
+   "detail": "{\"max_avail_ratio\": 1.0, \"composition_gap_ratio\": 0.0, \"naive_gap\": 0.011614847567104937, \"comp_gap\": 0.0, \"n_stays_a\": 200, \"n_stays_b\": 200}",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 5 (run_check_on_stays)",
+   "input": "nominal_group_lacks_components",
+   "undefined": false,
+   "outcome": "flag",
+   "detail": "{\"max_avail_ratio\": Infinity, \"composition_gap_ratio\": 4.43853055333318, \"naive_gap\": 0.002288495502709107, \"comp_gap\": 0.010157557209939948, \"n_stays_a\": 200, \"n_stays_b\": 200}",
+   "warned": false,
+   "silent_pass": false
+  },
+  {
+   "detector": "detector 5 (run_check_on_stays)",
+   "input": "both_groups_empty",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "{\"max_avail_ratio\": 0.0, \"composition_gap_ratio\": 0.0, \"naive_gap\": null, \"comp_gap\": null, \"n_stays_a\": 0, \"n_stays_b\": 0}",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 5 (run_check_on_stays)",
+   "input": "one_group_empty",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "{\"max_avail_ratio\": Infinity, \"composition_gap_ratio\": 0.0, \"naive_gap\": null, \"comp_gap\": null, \"n_stays_a\": 0, \"n_stays_b\": 200}",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 5 (run_check_on_stays)",
+   "input": "stays_without_components",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "{\"max_avail_ratio\": 0.0, \"composition_gap_ratio\": 0.0, \"naive_gap\": null, \"comp_gap\": null, \"n_stays_a\": 2, \"n_stays_b\": 2}",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 5 (run_check_on_stays)",
+   "input": "all_nan_components",
+   "undefined": true,
+   "outcome": "clean",
+   "detail": "{\"max_avail_ratio\": 1.0, \"composition_gap_ratio\": 0.0, \"naive_gap\": null, \"comp_gap\": null, \"n_stays_a\": 20, \"n_stays_b\": 20}",
+   "warned": false,
+   "silent_pass": true
+  },
+  {
+   "detector": "detector 5 (run_check_on_stays)",
+   "input": "one_stay_per_group",
+   "undefined": false,
+   "outcome": "clean",
+   "detail": "{\"max_avail_ratio\": 1.0, \"composition_gap_ratio\": 0.0, \"naive_gap\": 0.03980360597092443, \"comp_gap\": 0.0, \"n_stays_a\": 1, \"n_stays_b\": 1}",
+   "warned": false,
+   "silent_pass": false
+  }
+ ],
+ "summary": {
+  "detector 1 (diagnose)": {
+   "cells": 9,
+   "undefined_cells": 6,
+   "silent_pass": 5,
+   "error": 1,
+   "abstain": 0,
+   "flag_on_undefined": 0,
+   "defined_cells": 3,
+   "defined_cells_as_expected_sanity": null
+  },
+  "detector 2 (flag_from_relative)": {
+   "cells": 10,
+   "undefined_cells": 7,
+   "silent_pass": 7,
+   "error": 0,
+   "abstain": 0,
+   "flag_on_undefined": 0,
+   "defined_cells": 3,
+   "defined_cells_as_expected_sanity": null
+  },
+  "detector 3 (audit_file)": {
+   "cells": 8,
+   "undefined_cells": 6,
+   "silent_pass": 0,
+   "error": 3,
+   "abstain": 3,
+   "flag_on_undefined": 0,
+   "defined_cells": 2,
+   "defined_cells_as_expected_sanity": null
+  },
+  "detector 4 (is_circular)": {
+   "cells": 6,
+   "undefined_cells": 4,
+   "silent_pass": 3,
+   "error": 1,
+   "abstain": 0,
+   "flag_on_undefined": 0,
+   "defined_cells": 2,
+   "defined_cells_as_expected_sanity": null
+  },
+  "detector 5 (run_check_on_stays)": {
+   "cells": 7,
+   "undefined_cells": 4,
+   "silent_pass": 4,
+   "error": 0,
+   "abstain": 0,
+   "flag_on_undefined": 0,
+   "defined_cells": 3,
+   "defined_cells_as_expected_sanity": null
+  }
+ }
+}
