@@ -1,9 +1,19 @@
-\begin{thebibliography}{46}
+\begin{thebibliography}{49}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Adebayo et~al.(2018)Adebayo, Gilmer, Muelly, Goodfellow, Hardt, and
+  Kim]{adebayo2018sanity}
+Julius Adebayo, Justin Gilmer, Michael Muelly, Ian Goodfellow, Moritz Hardt,
+  and Been Kim.
+\newblock Sanity checks for saliency maps.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~31, 2018.
+\newblock URL
+  \url{https://papers.nips.cc/paper/2018/hash/294a8ed24b1ad22ec2e7efea049b8737-Abstract.html}.
 
 \bibitem[Angwin et~al.(2016)Angwin, Larson, Mattu, and
   Kirchner]{angwin2016machinebias}
@@ -127,6 +137,14 @@ B.~Efron.
 \newblock \emph{The Annals of Statistics}, 7\penalty0 (1):\penalty0 1--26,
   1979.
 
+\bibitem[Feinstein \& Cicchetti(1990)Feinstein and
+  Cicchetti]{feinstein1990high}
+Alvan~R. Feinstein and Domenic~V. Cicchetti.
+\newblock High agreement but low kappa: {I}. the problems of two paradoxes.
+\newblock \emph{Journal of Clinical Epidemiology}, 43\penalty0 (6):\penalty0
+  543--549, 1990.
+\newblock \doi{10.1016/0895-4356(90)90158-L}.
+
 \bibitem[Gardner et~al.(2023)Gardner, Popovi{\'c}, and
   Schmidt]{gardner2023tableshift}
 Josh Gardner, Zoran Popovi{\'c}, and Ludwig Schmidt.
@@ -197,6 +215,14 @@ Orna Kupferman and Moshe~Y. Vardi.
 \newblock Vacuity detection in temporal model checking.
 \newblock \emph{International Journal on Software Tools for Technology
   Transfer}, 4\penalty0 (2):\penalty0 224--233, 2003.
+
+\bibitem[Lipsitch et~al.(2010)Lipsitch, Tchetgen~Tchetgen, and
+  Cohen]{lipsitch2010negative}
+Marc Lipsitch, Eric Tchetgen~Tchetgen, and Ted Cohen.
+\newblock Negative controls: A tool for detecting confounding and bias in
+  observational studies.
+\newblock \emph{Epidemiology}, 21\penalty0 (3):\penalty0 383--388, 2010.
+\newblock \doi{10.1097/EDE.0b013e3181d61eeb}.
 
 \bibitem[McHugh(2012)]{mchugh2012kappa}
 Mary~L. McHugh.
