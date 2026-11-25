@@ -18,6 +18,7 @@ Working notes. Not part of the manuscript or the supplementary archive.
 - Added the 1.64 against 3 margin explanation, a note on what a user does with an inconclusive verdict, a no-multiplicity-adjustment statement, and a kappa and prevalence caveat.
 - Positive controls no longer carry a ceiling or discriminating class. The reporting card note is no longer numbered as item 6.
 - Three related-work citations verified and added: negative controls (Lipsitch et al. 2010), sanity checks (Adebayo et al. 2018), kappa and prevalence (Feinstein and Cicchetti 1990). The Feinstein and Lipsitch entries rest on the abstract only.
+- Figure 4 now reads "pre-specified" and "open-data scale".
 - Fixed two broken cross-references that earlier scripted edits had introduced.
 
 ## Reviewer points not addressed (need a decision or new work)
@@ -32,7 +33,6 @@ Working notes. Not part of the manuscript or the supplementary archive.
 - Move detector 2, the mutation test and the development hazards to appendices and cut the main text to about 10 pages.
 - Resample patients, not stays, in the cohort bootstraps; report prevalence and a prevalence-adjusted kappa; use stays, patients and persons consistently.
 - Clarify what detector 1 compares (two operationalizations in one cohort, per Section 4) against the wording in the detector appendix.
-- Use "pre-specified" in Figure 4 and in the figure script (still reads "pre-registered"), and "open-data scale" in place of "demonstration scale" in the figure.
 - Citations suggested by the reviewer and not added because they are unverified: Schuirmann 1987 (equivalence testing), Ethayarajh 2020, Cherian and Candes, Snoek et al. 2019.
 
 ## Tooling
