@@ -17,7 +17,7 @@ features are left raw, which a histogram gradient-boosted model bins itself), an
 Pipelines: unguarded keeps every row, so a missing completion rate becomes the label 0 (the shipped line). Guarded drops rows with a missing
 completion rate before splitting. Reported per pipeline on its own out-of-domain test split: accuracy (the benchmark's reported metric), AUROC and
 balanced accuracy. Both models are also scored on the observed-target out-of-domain test rows with true labels. 95% intervals are percentile
-bootstraps over out-of-domain test institutions (2,000 resamples). Output: v2/results/e19_tableshift_own_file.json (aggregates only).
+bootstraps that resample institutions (UNITID), not rows, because the file stacks years (2,000 resamples). Output: v2/results/e19_tableshift_own_file.json (aggregates only).
 """
 import os
 import sys
@@ -88,12 +88,18 @@ def main():
     if a.smoke:
         rng = np.random.default_rng(0)
         n = 4000
-        raw = pd.DataFrame({"C150_4": np.where(rng.random(n) < 0.4, np.nan, rng.random(n)),
+        raw = pd.DataFrame({"UNITID": rng.integers(0, 900, n), "C150_4": np.where(rng.random(n) < 0.4, np.nan, rng.random(n)),
                             "CCBASIC": rng.choice(OOD_VALUES + ["Doctoral Universities", "Baccalaureate Colleges--Arts & Sciences"], n),
                             "CONTROL": rng.choice(["Public", "Private"], n), "ADM_RATE": rng.random(n), "UGDS": rng.random(n) * 1e4})
     else:
         path = os.path.join(a.data, "Scorecard.csv")
-        raw = pd.read_csv(path, low_memory=False, na_values=["NULL", "PrivacySuppressed"])
+        header = list(pd.read_csv(path, nrows=0).columns)
+        needed = [c for c in header if c in set(feats_all) | {"C150_4", "CCBASIC", "UNITID", "Year"}]
+        missing = [c for c in ("C150_4", "CCBASIC", "UNITID") if c not in needed]
+        if missing:
+            raise SystemExit(f"columns missing from Scorecard.csv: {missing}; first columns are {header[:10]}")
+        parts = pd.read_csv(path, usecols=needed, na_values=["NULL", "PrivacySuppressed"], chunksize=20000, low_memory=False)
+        raw = pd.concat(parts, ignore_index=True)
     feats = [f for f in feats_all if f in raw.columns and f not in ("C150_4", "CCBASIC")]
     X = raw[feats].copy()
     for c in X.columns:
@@ -129,32 +135,43 @@ def main():
     res["observed_rows_unguarded_model"] = metrics(y_g[oo_obs], pu2, pru2)
     res["observed_rows_guarded_model"] = metrics(y_g[oo_obs], pg2, prg2)
     res["n_observed_ood_rows"] = int(len(oo_obs))
-    # bootstrap intervals for the reported gaps and the true-label gaps (resampling out-of-domain institutions of each set)
-    for key in ("accuracy", "auroc", "balanced_accuracy"):
-        def rep_gap(i, j, key=key):
-            a_ = metrics(y_un[oot][i], pu[i], pru[i])[key]
-            b_ = metrics(yg[ootg][j], pg[j], prg[j])[key]
-            return None if a_ is None or b_ is None else a_ - b_
-        vals = []
-        for _ in range(2000):
-            i, j = rng.integers(0, len(oot), len(oot)), rng.integers(0, len(ootg), len(ootg))
-            v = rep_gap(i, j)
-            if v is not None:
-                vals.append(v)
-        res[f"reported_gap_{key}"] = {"point": (res["reported_unguarded"][key] - res["reported_guarded"][key]) if res["reported_unguarded"][key] is not None else None,
-                                      "ci95": [float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))]}
+    # percentile bootstrap that resamples institutions (UNITID), because the file stacks years and one institution has many rows;
+    # one draw of institutions weights both pipelines' test rows
+    unit = raw["UNITID"].to_numpy()
+    rows_g = keep[ootg]  # row numbers in the full frame of the guarded out-of-domain test rows
+    ids = np.unique(np.concatenate([unit[oot], unit[rows_g]]))
+    pos = {u: k for k, u in enumerate(ids)}
+    at_u = np.array([pos[u] for u in unit[oot]])
+    at_g = np.array([pos[u] for u in unit[rows_g]])
+    at_o = np.array([pos[u] for u in unit[oo_obs]])
 
-        def true_gap(i, key=key):
-            a_ = metrics(y_g[oo_obs][i], pu2[i], pru2[i])[key]
-            b_ = metrics(y_g[oo_obs][i], pg2[i], prg2[i])[key]
-            return None if a_ is None or b_ is None else a_ - b_
-        vals = []
-        for _ in range(2000):
-            v = true_gap(rng.integers(0, len(oo_obs), len(oo_obs)))
-            if v is not None:
-                vals.append(v)
-        res[f"true_label_gap_{key}"] = {"point": (res["observed_rows_unguarded_model"][key] - res["observed_rows_guarded_model"][key]) if res["observed_rows_unguarded_model"][key] is not None else None,
-                                        "ci95": [float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))]}
+    def wmetrics(y, p, prob, w):
+        m_ = w > 0
+        y, p, prob, w = y[m_], p[m_], prob[m_], w[m_]
+        if len(np.unique(y)) < 2:
+            return None
+        return {"accuracy": float(np.average(p == y, weights=w)), "auroc": float(roc_auc_score(y, prob, sample_weight=w)),
+                "balanced_accuracy": float(balanced_accuracy_score(y, p, sample_weight=w))}
+
+    keys = ("accuracy", "auroc", "balanced_accuracy")
+    rep_vals, true_vals = {k: [] for k in keys}, {k: [] for k in keys}
+    for _ in range(2000):
+        mult = np.bincount(rng.integers(0, len(ids), len(ids)), minlength=len(ids)).astype(float)
+        a_ = wmetrics(y_un[oot], pu, pru, mult[at_u])
+        b_ = wmetrics(yg[ootg], pg, prg, mult[at_g])
+        c_ = wmetrics(y_g[oo_obs], pu2, pru2, mult[at_o])
+        d_ = wmetrics(y_g[oo_obs], pg2, prg2, mult[at_o])
+        for k in keys:
+            if a_ and b_:
+                rep_vals[k].append(a_[k] - b_[k])
+            if c_ and d_:
+                true_vals[k].append(c_[k] - d_[k])
+    res["institutions_in_bootstrap"] = int(len(ids))
+    for k in keys:
+        for name, vals, first, second in (("reported_gap", rep_vals, "reported_unguarded", "reported_guarded"),
+                                          ("true_label_gap", true_vals, "observed_rows_unguarded_model", "observed_rows_guarded_model")):
+            point = None if res[first][k] is None or res[second][k] is None else res[first][k] - res[second][k]
+            res[f"{name}_{k}"] = {"point": point, "ci95": [float(np.percentile(vals[k], 2.5)), float(np.percentile(vals[k], 97.5))]}
     out["result"] = res
     if a.smoke:
         print(json.dumps(out, indent=1)[:1500])
