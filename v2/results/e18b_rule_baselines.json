@@ -1,0 +1,38 @@
+{
+ "m>3": {
+  "combos": 81,
+  "point_match": 1.0,
+  "point_against": 0.0,
+  "interval_match": 0.9993950617283948,
+  "interval_against": 0.0,
+  "interval_inconclusive": 0.0006049382716049383,
+  "interval_against_share_of_decisive": 0.0
+ },
+ "1.64<m<=3": {
+  "combos": 3,
+  "point_match": 0.9886666666666667,
+  "point_against": 0.011333333333333306,
+  "interval_match": 0.5433333333333333,
+  "interval_against": 0.0,
+  "interval_inconclusive": 0.4566666666666667,
+  "interval_against_share_of_decisive": 0.0
+ },
+ "m<=1.64": {
+  "combos": 6,
+  "point_match": 0.7390833333333333,
+  "point_against": 0.2609166666666667,
+  "interval_match": 0.1085,
+  "interval_against": 0.005,
+  "interval_inconclusive": 0.8865,
+  "interval_against_share_of_decisive": 0.04405286343612335
+ },
+ "primary": {
+  "combos": 1,
+  "point_match": 0.524,
+  "point_against": 0.476,
+  "interval_match": 0.0265,
+  "interval_against": 0.008,
+  "interval_inconclusive": 0.9655,
+  "interval_against_share_of_decisive": 0.23188405797101447
+ }
+}
