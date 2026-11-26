@@ -2,6 +2,13 @@
 
 Working notes. Not part of the manuscript or the supplementary archive.
 
+## Roadmap in progress (review of 2026-11-26; approved: cut repository reading and raters, patch detector copies, run third-party code in the authors' Colab, skip the replacement control, one human labeler)
+
+- Done: Phase 0 consistency fixes; 1a baselines (E18b); 1d patched copies (E22).
+- Waiting on the author: 1b, E21 in Colab (addendum 12; script copy in pclCodebase/colab_upload/). Gate: if the benchmark pipeline removes rows without a completion rate, delete the loader claim.
+- Next: 1c, external library test (needs a spec drafted from documentation, then the author's own labels of which cells are undefined). Then Phase 2 cuts and rewrite, Phase 3 author ownership, Phase 4 final checks.
+- The GitHub repository should be private and nothing should be pushed until that is decided.
+
 ## Needs you (a person or an account that I do not have)
 
 1. **AI-use statement and the TMLR note on LLM use.** Write from what was done. The source file has a comment where it goes.
