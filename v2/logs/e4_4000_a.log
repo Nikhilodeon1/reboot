@@ -1,5 +1,0 @@
-n=4000 seed=5 ratio=0.269 flagged=False neg_flagged=False
-n=4000 seed=6 ratio=0.305 flagged=True neg_flagged=False
-n=4000 seed=7 ratio=0.219 flagged=False neg_flagged=False
-n=4000 seed=8 ratio=0.327 flagged=True neg_flagged=False
-n=4000 seed=9 ratio=0.231 flagged=False neg_flagged=False
