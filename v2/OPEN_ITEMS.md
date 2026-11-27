@@ -5,8 +5,10 @@ Working notes. Not part of the manuscript or the supplementary archive.
 ## Roadmap in progress (review of 2026-11-26; approved: cut repository reading and raters, patch detector copies, run third-party code in the authors' Colab, skip the replacement control, one human labeler)
 
 - Done: Phase 0 consistency fixes; 1a baselines (E18b); 1d patched copies (E22).
-- Waiting on the author: 1b, E21 in Colab (addendum 12; script copy in pclCodebase/colab_upload/). Gate: if the benchmark pipeline removes rows without a completion rate, delete the loader claim.
-- Next: 1c, external library test (needs a spec drafted from documentation, then the author's own labels of which cells are undefined). Then Phase 2 cuts and rewrite, Phase 3 author ownership, Phase 4 final checks.
+- Waiting on the author: E21 and E23 in Colab, one notebook in pclCodebase/colab_upload/ (addenda 12, 14, 15 for E21; addendum 16 for E23). E23 needs the author's 53 labels first, given with no assistant. E21 gate: if the benchmark pipeline removes rows without a completion rate, delete the loader claim.
+- Then: analyse E21 and E23 (`v2/scripts/e23_analyse.py`), ledger rows, rebuild the supplement. That ends the methodology work. Then Phase 2 cuts and rewrite, Phase 3 author ownership, Phase 4 final checks.
+- Reproduction check (2026-11-26), from a clean copy of the committed repository: E3, E8 analysis, E6 (mutation test), E13, E13b, E17, E18 and E22 returned identical result files; the 108 detector tests passed (7 skipped). E19 did not (unseeded model): replaced by E19b. The paper still shows the E19 numbers: replace them with E21, or E19b, in the rewrite. In E19b the reported accuracy gap has an interval above zero in only 6 of 10 seeds, so the paper must not say that reported accuracy is higher. The E16 and E18b analysis scripts and the seed 42 to 46 losses were not in the repository; they are now, and reproduce the committed summaries exactly. Not rerun: E1 (needs the third-party container), E9 and E16 training (hours of compute; their stored losses were reanalysed).
+- Paper updates owed by these changes: appendix list of specification documents (now 16 plus 2B and the first), the loader paragraph and abstract.
 - The GitHub repository should be private and nothing should be pushed until that is decided.
 
 ## Needs you (a person or an account that I do not have)
