@@ -1,0 +1,15 @@
+{
+ "seed": 45,
+ "task": "A2@2",
+ "loss": 0.0053988137666474605,
+ "n_extra": 1194,
+ "n_source": 59686,
+ "n_pool": 59686,
+ "n_probe": 32612,
+ "epochs": 3,
+ "device": "cpu",
+ "seconds": 577.6,
+ "torch": "2.13.0+cpu",
+ "numpy": "2.4.3",
+ "fill": null
+}
