@@ -1,11 +1,24 @@
+# data and anything derived from credentialed data
 data/
-__pycache__/
-*.pyc
-detectors/checks/_leak_*.pt
-#detectors/results/*.npz
 detectors/results/*.pkl
 detectors/results/*.pt
-rebuttal/comments/*.txt
+detectors/checks/_leak_*.pt
 
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# LaTeX build files (main.pdf is kept)
+v2/paper/*.aux
+v2/paper/*.bbl
+v2/paper/*.blg
+v2/paper/*.fdb_latexmk
+v2/paper/*.fls
+v2/paper/*.log
+v2/paper/*.out
+
+# local only: run logs, editor settings, unsent notes
+v2/logs/
+.vscode/
 v2/DISCLOSURE_DRAFTS.md
-v2/MOCK_REVIEW_BRIEF*.md

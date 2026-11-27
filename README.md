@@ -1,108 +1,48 @@
-# Auditing the Auditor
+# Clean Verdicts Without Evidence
 
-Code, tests and aggregate results for *Auditing the Auditor: Four
-Failure Modes of Confound Detection in Clinical Machine Learning* (under review).
-Anonymized for double-blind review.
-
-Five detectors, one per confound type:
-
-| # | Confound | Module |
-|---|---|---|
-| 1 | Label-definition shift | `detectors/checks/check1_label_shift.py` |
-| 2 | Pretraining leakage | `detectors/checks/check2_pretrain_leakage.py` |
-| 3 | OOD-contaminated hyperparameter selection | `detectors/checks/check3_selection_audit.py` |
-| 4 | Circular derived constraints | `detectors/checks/check4_circularity.py` |
-| 5 | Missingness / scale artifacts | `detectors/checks/check5_missingness_scale.py` |
+Code, tests, specification documents and aggregate results for *Clean Verdicts Without Evidence: An Audit of Five Clinical
+Confound Detectors* (under review; anonymized).
 
 ## Layout
 
-    detectors/
-      checks/       the five detectors
-      harness.py    Case type, confusion counts, uncertainty rendering
-      run_all.py    reproduces the results table
-      run_seeds.py  multi-seed stability for detectors 1, 2, 5
-      baselines/    standard evaluation checks, for comparison
-      external/     full-scale and third-party validation
-      fixtures/     historical buggy sweep and its fix (detector 3 ground truth)
-      results/      aggregate results (JSON); scale per file in results/README.md
-      tests/        unit and regression tests
-    src/, config.py         data loaders and model used by detectors 1, 2, 5
-    scripts/                training scripts from the underlying model; not used by the detectors
-    TAXONOMY.md             the four diagnostic failure modes
-    detectors/PREREGISTRATION.md
-    rebuttal/manuscript/main_revised.pdf   revised manuscript
+    detectors/          the five detectors (checks/), their tests, baselines and third-party scans; frozen
+    src/, config.py     data loaders and the small model that detectors 1, 2 and 5 use
+    v2/scripts/         one script per experiment (see each docstring)
+    v2/results/         aggregate result files
+    v2/patched_detectors/  copies of the detectors with an explicit "undecidable" verdict
+    v2/battery/         label sheet for the external-library test
+    v2/validation_kit/  material for applying the reporting standard to external diagnostics
+    v2/evidence_r1/     first-round specifications, results and ledger
+    v2/PREREG_*.md      specification documents; PREREG_MANIFEST.txt lists each one's commit and hash
+    v2/EXPERIMENT_STATUS.md  which results were fixed in advance and which were exploratory
+    v2/LEDGER_V2.md     every number with its source file and command
+    v2/CITATIONS_V2.md  citation log
+    v2/paper/           the manuscript; make_figs.py rebuilds its figures
 
-## Requirements
+## Install and test
 
 Python 3.14, CPU only.
 
     pip install -r requirements.txt
+    python -m pytest detectors/tests
 
-## Reproduce the results table
+Without the credentialed or PhysioNet data, 108 tests pass and 7 are skipped.
 
-No clinical data needed.
+## Reproduce
+
+    python v2/scripts/reproduce.py
+
+reruns the experiments that need no data, in a scratch copy, and compares each result file with the committed one. Options
+add the experiments on public files, on the benchmark's data file and on credentialed data; see the docstring.
 
     PCL_TEST_MODE=1 python detectors/run_all.py
 
-Expected last line:
+reproduces the detectors' internal validation table (last line: `TOTAL  TP=6  FP=0  FN=1  TN=12 prec=1.00 rec=0.86 fpr=0.00`).
 
-    TOTAL  TP=6  FP=0  FN=1  TN=12 prec=1.00 rec=0.86 fpr=0.00
-
-Detectors 3 and 4 run live (static analysis). Detectors 1, 2 and 5 load
-`detectors/results/check{1,2,5}.json`.
-
-## Tests
-
-    PCL_TEST_MODE=1 python -m unittest discover -s detectors/tests -t . -q
-
-Tests that require restricted PhysioNet data may skip when those files are not
-available locally.
+Two scripts install and run third-party code and are meant for a disposable hosted runtime:
+`v2/scripts/e21_tableshift_run.py` and `v2/scripts/e23_battery.py`.
 
 ## Data
 
-Not included. All three datasets require PhysioNet credentialing and a signed
-data use agreement:
-
-- PhysioNet/Computing in Cardiology Challenge 2019
-- MIMIC-IV v3.1
-- eICU-CRD v2.0
-
-Point the loaders at local copies:
-
-    export PHYSIONET_DIR=/path/to/physionet2019   # contains training_setA/, training_setB/
-    export MIMIC_DIR=/path/to/mimiciv/3.1
-    export EICU_DIR=/path/to/eicu-crd/2.0
-
-Or place them under `data/` as `physionet2019/`, `mimic4-demo/`, `eICU-demo/`.
-`data/` is gitignored. If `data/` is a symlink or junction, remove the link, not
-its target.
-
-## Run detectors on data
-
-    python detectors/checks/check3_selection_audit.py
-    python detectors/checks/check4_circularity.py
-    PCL_TEST_MODE=1 python detectors/checks/check1_label_shift.py
-    python detectors/checks/check5_missingness_scale.py 1200
-    PCL_TEST_MODE=1 python detectors/checks/check2_pretrain_leakage.py --stays 900 --seeds 3 --epochs 3
-
-## Results
-
-Internal validation suite, demonstration scale:
-
-| Detector | TP/FP/FN/TN | Note |
-|---|---|---|
-| 1 label shift | 1/0/0/1 | κ 0.467 positive, 0.771 control |
-| 2 pretraining leakage | 3/0/0/1 | detection floor 5% |
-| 3 OOD selection | 1/0/0/1 | historical bug |
-| 4 circularity | 1/0/0/8 | |
-| 5 missingness/scale | 0/0/1/1 | false negative |
-| **Total** | **6/0/1/12** | precision 1.00, recall 0.86 |
-
-Full-scale external results and uncertainty findings are reported in the revised
-manuscript. Scale and contents of each committed result file:
-`detectors/results/README.md`.
-
-## Not included
-
-- Per-stay caches derived from restricted data (`*.npz`, `*.pkl`).
-- Restricted clinical data.
+No patient-level data and no per-stay arrays are included. MIMIC-IV, eICU-CRD and the PhysioNet 2019 challenge data need
+PhysioNet access; point the loaders at local copies with `MIMIC_DIR`, `EICU_DIR` and `PHYSIONET_DIR`.

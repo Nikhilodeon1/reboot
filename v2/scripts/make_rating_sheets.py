@@ -8,7 +8,6 @@ neutral key (site number to repository, file, lines). The order is shuffled with
 The label files (task3b_labels.json, task4c_labels.json) are not opened.
 """
 import os
-import sys
 import json
 import random
 import argparse
