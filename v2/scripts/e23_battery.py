@@ -31,6 +31,11 @@ PINS = {
     "datacompy": ["datacompy==1.2.0", "pandas<3"],
     "nannyml": ["nannyml==0.13.1"],
 }
+# Dependencies are resolved as of 30 days after each library's own release on PyPI (PREREG_V2_ADDENDUM_17.md), so that a library
+# is not run against a later major version of something it depends on. Release dates: pointblank 2026-11-12, patito 2026-02-04,
+# dataframely 2026-11-18, cuallee 2025-10-07, frictionless 2026-10-15, whylogs 2024-12-03, datacompy 2026-10-27, nannyml 2025-07-12.
+AS_OF = {"pointblank": "2026-12-12", "patito": "2026-03-06", "dataframely": "2026-12-18", "cuallee": "2025-11-06",
+         "frictionless": "2026-11-14", "whylogs": "2025-01-02", "datacompy": "2026-11-26", "nannyml": "2025-08-11"}
 
 # ---------------------------------------------------------------- what is labeled
 
@@ -464,7 +469,7 @@ def selftest():
     assert len(CHECKS) == 34 and len({c[0] for c in CHECKS}) == 8 and len({(c[0], c[1]) for c in CHECKS}) == 34
     assert len(pairs()) == 53 and len({p for p, _, _ in pairs()}) == 53
     assert {c[2] for c in CHECKS} == set(STATISTICS)
-    assert set(ADAPTERS) == set(PINS) == {c[0] for c in CHECKS}
+    assert set(ADAPTERS) == set(PINS) == set(AS_OF) == {c[0] for c in CHECKS}
     n_cells = 0
     for _, _, stat, spec in CHECKS:
         for which in ["pass", "fail", *inputs_for(stat)]:
@@ -514,13 +519,14 @@ def driver(a):
     env = {k: v for k, v in os.environ.items() if k not in ("PYTHONPATH", "PYTHONHOME", "MPLBACKEND")}
     env["WHYLOGS_NO_ANALYTICS"] = "true"
     for lib in wanted:
-        entry = {"pins": PINS[lib], "harness_sha256": harness_hash}
+        entry = {"pins": PINS[lib], "dependencies_as_of": AS_OF[lib], "harness_sha256": harness_hash}
         try:
             venv = os.path.join(a.work, "venv_" + lib)
             py = os.path.join(venv, "bin", "python")
             if not os.path.exists(py):
                 sh(sys.executable, "-m", "uv", "venv", "-q", "--python", PYTHON, venv, check=True)
-            sh(sys.executable, "-m", "uv", "pip", "install", "-q", "--python", py, *PINS[lib], check=True)
+            sh(sys.executable, "-m", "uv", "pip", "install", "-q", "--python", py,
+               "--exclude-newer", AS_OF[lib] + "T00:00:00Z", *PINS[lib], check=True)
             part = os.path.join(a.work, f"part_{lib}.json")
             if os.path.exists(part):
                 os.remove(part)
